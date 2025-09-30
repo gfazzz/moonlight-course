@@ -1,0 +1,22 @@
+=== MOONLIGHT DECODER v1.0 ===
+Decrypting message from Victor...
+
+Message length: 75 bytes
+XOR Key: 0x42
+
+--- DECRYPTED MESSAGE ---
+MOONLIGHT activated.
+They know.
+Files at old place.
+Trust only code.
+— V.
+--- END MESSAGE ---
+
+=== STATISTICS ===
+Letters: 55
+Digits:  0
+Spaces:  8
+Others:  12
+Checksum: 0xA4
+
+=== DECRYPTION COMPLETE ===

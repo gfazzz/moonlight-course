@@ -1,0 +1,66 @@
+# MOONLIGHT Course - Git Ignore
+
+# Build artifacts
+build/
+*/build/
+*/*/build/
+
+# Compiled binaries
+*.o
+*.out
+*.exe
+a.out
+
+# Student solutions (optional - uncomment to hide student code)
+# **/artifacts/*.c
+# Allow .gitkeep to preserve folder structure
+!**/artifacts/.gitkeep
+
+# Test outputs
+**/tests/output.txt
+output.txt
+
+# Debug files
+*.dSYM/
+*.pdb
+core
+core.*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Personal notes
+**/notes.md
+**/NOTES.md
+**/personal/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+*.cache
+
+# Environment
+.env
+.venv
+venv/
+
+# Arduino build files
+*.hex
+*.elf
+*.eep
+*.lss
+*.map
+*.sym
+
+# GDB
+.gdb_history
+
+# Valgrind
+valgrind-out.txt
+*.memcheck
