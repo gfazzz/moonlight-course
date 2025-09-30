@@ -335,8 +335,15 @@ gdb ./program                # Запуск в отладчике
 
 ### Проверка утечек памяти (Season 2+):
 ```bash
-valgrind ./program
+# macOS (встроенная утилита)
+leaks --atExit -- ./program
+
+# Linux
+valgrind --leak-check=full ./program
 ```
+
+> **macOS:** Используйте `leaks` (встроен в систему, работает на Apple Silicon)  
+> **Linux:** Используйте `valgrind` (нужно установить: `sudo apt-get install valgrind`)
 
 ---
 
