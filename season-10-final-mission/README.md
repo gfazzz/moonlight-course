@@ -364,56 +364,73 @@ printf("Network throughput: %.1fx\n", after->net_mbps / before->net_mbps);
 
 ---
 
-### Episode 42: The Final Operation 🎯
-**"MOONLIGHT: Activated"**
+### Episode 42: The Final Operation 🎯🚀
+**"MOONLIGHT: Activated — From Earth to Orbit"**
 
 **Сюжет:**  
-Всё готово. Операция MOONLIGHT начинается. Используйте всю систему для выполнения комплексной миссии:
-1. Обнаружить вражескую сеть
-2. Проникнуть в систему
-3. Извлечь разведданные
+Финальная миссия выходит за пределы Земли. Противник запустил спутник-шпион на орбиту. Ваша задача:
+1. Обнаружить вражескую сеть (наземную и космическую)
+2. Проникнуть в систему управления спутником
+3. Извлечь разведданные с орбиты
 4. Нейтрализовать угрозу
 5. Защитить союзников
 6. Раскрыть правду
+7. 🚀 **КОСМИЧЕСКАЯ МИССИЯ:** Перехватить спутник или нейтрализовать его
 
 **Финальная миссия:**
 ```c
 /*
  * OPERATION MOONLIGHT - FINAL MISSION
+ * "From Earth to Orbit"
  * 
  * Objectives:
- * 1. Locate enemy command center
+ * 1. Locate enemy command center (Earth + Space)
  * 2. Infiltrate their network
  * 3. Extract classified intelligence
  * 4. Neutralize quantum crypto threat
  * 5. Protect financial systems
- * 6. Expose the truth to the world
+ * 6. Intercept spy satellite
+ * 7. Expose the truth to the world
  */
 
 int main() {
     // Initialize MOONLIGHT
     moonlight_init_full();
     
-    printf("🌙 OPERATION MOONLIGHT: ACTIVATED\n\n");
+    printf("🌙 OPERATION MOONLIGHT: ACTIVATED\n");
+    printf("🚀 SPACE OPERATIONS ENABLED\n\n");
     
     // === PHASE 1: RECONNAISSANCE ===
-    printf("Phase 1: Reconnaissance...\n");
+    printf("Phase 1: Reconnaissance (Earth & Orbit)...\n");
     NetworkMap *map = network_discover_global();
     Target *hq = identify_command_center(map);
     printf("✓ Enemy HQ located: %s\n", hq->ip);
     
+    // Detect satellite
+    Satellite *spy_sat = track_satellite_norad(12345);
+    printf("✓ Spy satellite detected: Orbit %.1f km\n", 
+           spy_sat->altitude_km);
+    
     // === PHASE 2: INFILTRATION ===
-    printf("\nPhase 2: Infiltration...\n");
+    printf("\nPhase 2: Infiltration (Ground & Space)...\n");
     Exploit *entry = find_exploit(hq);
     Session *sess = gain_access(hq, entry);
-    printf("✓ Access gained\n");
+    printf("✓ Ground network access gained\n");
+    
+    // Hack satellite uplink
+    SatelliteLink *uplink = intercept_satellite_uplink(spy_sat);
+    printf("✓ Satellite uplink intercepted\n");
     
     // === PHASE 3: INTELLIGENCE ===
     printf("\nPhase 3: Intelligence gathering...\n");
     Data *classified = extract_all_data(sess);
     
+    // Download satellite data
+    Data *orbital_data = download_satellite_telemetry(uplink);
+    
     // Decrypt with quantum-resistant algorithms
     quantum_decrypt(classified);
+    quantum_decrypt(orbital_data);
     
     // Analyze with AI
     AIAnalysis *analysis = ai_analyze_intel(classified);
@@ -425,8 +442,25 @@ int main() {
     Actors *perpetrators = identify_bad_actors(graph);
     printf("✓ Identified %d bad actors\n", perpetrators->count);
     
-    // === PHASE 5: NEUTRALIZATION ===
-    printf("\nPhase 5: Threat neutralization...\n");
+    // === PHASE 5: SPACE OPERATIONS 🚀 ===
+    printf("\nPhase 5: SPACE OPERATIONS...\n");
+    
+    // Calculate orbital mechanics
+    Orbit current = satellite_get_orbit(spy_sat);
+    printf("  Current orbit: %.1f × %.1f km, inc: %.1f°\n",
+           current.perigee, current.apogee, current.inclination);
+    
+    // Option A: Deorbit satellite
+    ManeuverPlan deorbit = calculate_deorbit_burn(spy_sat);
+    printf("  Deorbit burn: Δv = %.2f m/s\n", deorbit.delta_v);
+    
+    // Option B: Disable satellite
+    Command disable_cmd = create_satellite_command(CMD_SHUTDOWN);
+    transmit_to_satellite(uplink, disable_cmd);
+    printf("✓ Satellite neutralized\n");
+    
+    // === PHASE 6: NEUTRALIZATION ===
+    printf("\nPhase 6: Threat neutralization...\n");
     
     // Disable quantum attack
     quantum_threat_neutralize(hq);
@@ -438,38 +472,47 @@ int main() {
     deploy_honeypots_global();
     activate_ids_ips_network_wide();
     
-    printf("✓ Threats neutralized\n");
+    printf("✓ All threats neutralized\n");
     
-    // === PHASE 6: EXPOSURE ===
-    printf("\nPhase 6: Expose the truth...\n");
+    // === PHASE 7: EXPOSURE ===
+    printf("\nPhase 7: Expose the truth...\n");
     
     // Create immutable evidence (blockchain)
     Blockchain *evidence = blockchain_create();
     blockchain_add_evidence(evidence, classified);
+    blockchain_add_evidence(evidence, orbital_data);
     blockchain_add_evidence(evidence, analysis);
     blockchain_add_evidence(evidence, perpetrators);
     
     // Distribute to journalists & authorities
     distribute_evidence_globally(evidence);
     
+    // Broadcast from space (satellite takeover)
+    broadcast_truth_from_orbit(uplink, evidence);
+    
     // Activate dead man's switch
     deadman_switch_activate(evidence);
     
-    printf("✓ Truth exposed - evidence distributed\n");
+    printf("✓ Truth exposed - evidence distributed globally\n");
+    printf("✓ Broadcast from orbit complete\n");
     
     // === MISSION COMPLETE ===
     printf("\n");
     printf("╔════════════════════════════════════╗\n");
-    printf("║   🎯 MISSION ACCOMPLISHED 🎯      ║\n");
+    printf("║   🎯🚀 MISSION ACCOMPLISHED 🚀🎯  ║\n");
     printf("║                                    ║\n");
     printf("║  OPERATION MOONLIGHT: SUCCESS     ║\n");
+    printf("║  Space Operations: COMPLETE       ║\n");
     printf("║                                    ║\n");
-    printf("║  \"The truth shall set you free\"   ║\n");
+    printf("║  \"The truth reaches the stars\"    ║\n");
     printf("║           — Viktor                ║\n");
     printf("╚════════════════════════════════════╝\n");
     
     // Generate mission report
     generate_full_report(analysis, perpetrators, evidence);
+    generate_orbital_report(spy_sat, deorbit);
+    
+    printf("\n🌍→🚀→🌌 From Earth to Orbit and Beyond!\n");
     
     return 0;
 }

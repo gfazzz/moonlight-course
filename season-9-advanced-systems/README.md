@@ -185,67 +185,81 @@ while (1) {
 
 ---
 
-### Episode 36: Military Ballistics 🎯⚙️
-**"Баллистический компьютер"** (МИЛИТАРИ ЭПИЗОД)
+### Episode 36: Military Systems & Radar 🎯📡
+**"Системы обнаружения и целеуказания"** (МИЛИТАРИ ЭПИЗОД)
 
 **Сюжет:**  
-Обнаружена вражеская база за горным хребтом. Для точного удара нужен баллистический компьютер, учитывающий все физические факторы.
+Противник использует stealth-технологии. Создайте систему обнаружения и tracking целей в реальном времени с применением radar processing и military-grade алгоритмов.
 
 **Что вы построите:**
-- Ballistic trajectory calculator
-- Wind & Coriolis compensation
-- Artillery fire control system
-- Missile intercept calculator
+- Radar signal processing (FFT)
+- Target detection & tracking (Kalman filter)
+- Multi-target tracker
+- Ballistic trajectory prediction
+- GPS/GLONASS navigation
 
 **Технологии:**
-- Differential equations (Runge-Kutta 4)
-- Physics simulation
-- Geodetic calculations
-- Real-time numerical methods
+- FFT (Fast Fourier Transform) для radar
+- Kalman filtering для tracking
+- Differential equations (баллистика)
+- Geodetic calculations (GPS)
+- Real-time processing
 
 **Практика:**
-Создайте "BallisticCore":
+Создайте "MilitaryCore" — военная система C4ISR:
 ```c
-// Target data
-Target enemy = {
-    .lat = 47.123, .lon = 30.456,
-    .elevation = 150,  // meters above sea level
-    .distance = 15000  // meters
-};
+// === RADAR PROCESSING ===
+RadarSweep *sweep = capture_radar_data(antenna);
+process_fft(sweep->raw_data, sweep->spectrum);
 
-// Environmental conditions
-Environment env = {
-    .wind_speed = 5.2,    // m/s
-    .wind_dir = 270,      // degrees
-    .temperature = 15,    // celsius
-    .pressure = 1013,     // hPa
-    .humidity = 60        // percent
-};
+// Detect targets
+Target *targets = detect_targets(sweep, THRESHOLD);
+printf("Detected %d targets\n", num_targets);
 
-// Artillery position
-Position gun = { .lat = 47.050, .lon = 30.400, .elevation = 50 };
+// === MULTI-TARGET TRACKING ===
+for (int i = 0; i < num_targets; i++) {
+    // Kalman filter prediction
+    kalman_predict(&trackers[i]);
+    kalman_update(&trackers[i], targets[i]);
+    
+    // Classify threat
+    ThreatLevel threat = classify_target(&trackers[i]);
+    
+    if (threat == THREAT_HIGH) {
+        printf("⚠️  HOSTILE at %.2f km, bearing %.1f°\n",
+               trackers[i].range_km, trackers[i].bearing);
+    }
+}
 
-// Calculate firing solution
-FireSolution sol = ballistic_solve(gun, enemy, env);
+// === BALLISTIC CALCULATION ===
+// If interception needed
+if (intercept_required) {
+    Intercept sol = calculate_intercept(
+        missile_pos,
+        target_track,
+        &env
+    );
+    printf("🎯 Intercept in %.1fs\n", sol.time_to_intercept);
+}
 
-printf("🎯 FIRING SOLUTION:\n");
-printf("Elevation angle: %.2f°\n", sol.elevation);
-printf("Azimuth: %.2f°\n", sol.azimuth);
-printf("Charge: %d\n", sol.charge);
-printf("Time of flight: %.1fs\n", sol.tof);
-printf("Impact velocity: %.1f m/s\n", sol.impact_vel);
-printf("Coriolis drift: %.2fm\n", sol.coriolis_drift);
+// === GPS NAVIGATION ===
+GPSFix fix = gps_get_position();
+printf("Position: %.6f°N, %.6f°E, altitude: %.1fm\n",
+       fix.lat, fix.lon, fix.altitude);
 
-// Simulate trajectory (for verification)
-trajectory_simulate(&sol, 0.01, "trajectory.dat");
+// Calculate distance to target
+double distance = haversine_distance(fix, target_pos);
+double bearing = calculate_bearing(fix, target_pos);
+printf("Target: %.2f km, bearing %.1f°\n", distance, bearing);
 ```
 
 **Теория:**
-- External ballistics physics
-- Runge-Kutta numerical integration
-- Atmospheric drag models
-- Coriolis & Earth curvature effects
-- Geodetic calculations
+- Radar principles (FFT, Doppler)
+- Kalman filtering (state estimation)
+- Multi-target tracking
+- Ballistic physics (basic)
+- Geodetic calculations (GPS)
+- Signal processing (noise reduction)
 
 ---
 
@@ -369,8 +383,8 @@ quantum_teleport(alpha, beta);  // Teleport |ψ⟩ = α|0⟩ + β|1⟩
 Episode 33 (Language)      [████████░░] 80% theory, 20% implementation
 Episode 34 (Database)      [██████████] 90% from scratch
 Episode 35 (TUI Framework) [███████░░░] 70% ncurses, 30% design
-Episode 36 (Ballistics)    [█████████░] 85% classical physics (МИЛИТАРИ)
-Episode 37 (Quantum)       [███████░░░] 70% quantum mechanics (НАУКА!)
+Episode 36 (Military)      [█████████░] 85% radar + tracking (МИЛИТАРИ 🎯)
+Episode 37 (Quantum)       [███████░░░] 70% quantum mechanics (НАУКА ⚛️)
 ```
 
 ---
@@ -432,11 +446,11 @@ brew install gsl            # GNU Scientific Library (Episode 36 - ballistics)
 - ✅ Создать свой язык программирования (interpreter)
 - ✅ Реализовать database engine с нуля
 - ✅ Написать профессиональный TUI framework
-- ✅ Рассчитывать баллистические траектории (военные системы) 🎯
+- ✅ Построить военные системы (radar, tracking, GPS) 🎯
 - ✅ Симулировать квантовый компьютер (квантовая физика) ⚛️
 
 **Уровень:** Senior/Staff Engineer 🎖️  
-**Темы:** Компиляторы + Базы данных + UI + Физика (классическая + квантовая)
+**Темы:** Compilers + Databases + UI + Military Systems + Quantum Physics
 
 ---
 
@@ -456,10 +470,11 @@ brew install gsl            # GNU Scientific Library (Episode 36 - ballistics)
 - "ncurses Programming HOWTO"
 - "Terminal emulators" (xterm docs)
 
-### Баллистика (Episode 36 - милитари)
-- "Modern Exterior Ballistics" — Robert McCoy ⭐
-- "Principles of Naval Weapon Systems" — NAVEDTRA
-- "Numerical Recipes in C" — Press et al.
+### Военные системы (Episode 36 - милитари)
+- "Introduction to Radar Systems" — Merrill Skolnik ⭐
+- "Principles of GNSS, Inertial, and Multisensor Integrated Navigation"
+- "Fundamentals of Kalman Filtering" — Paul Zarchan
+- "Electronic Warfare and Radar Systems Engineering Handbook"
 
 ### Квантовые вычисления (Episode 37 - наука!)
 - "Quantum Computation and Quantum Information" — Nielsen & Chuang ⭐⭐⭐
