@@ -1,39 +1,56 @@
-# Episode 34: Database
-> *"Season 9"*
+# Episode 34: "Database from Scratch" 💾
+## Season 9: Advanced Systems | Episode 34/42
 
-## 📖 Briefing
+> *"Data is power. Build your fortress."*
 
-**Episode:** 34  
-**Season:** Season 9  
-**Technologies:** B+Tree, SQL
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Создать собственную БД: B+Tree, SQL parser, transactions.
 
-## 📚 Theory
+**Задачи:**
+1. Storage engine (B+Tree)
+2. Query parser
+3. Index management
+4. ACID transactions
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### B+Tree Node
 
-## 🏗 Project Structure
+```c
+#define ORDER 4
 
-```
-episode-34/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+typedef struct BTreeNode {
+    int keys[ORDER - 1];
+    void *values[ORDER - 1];
+    struct BTreeNode *children[ORDER];
+    int num_keys;
+    bool is_leaf;
+} BTreeNode;
+
+void insert(BTreeNode *root, int key, void *value) {
+    // B+Tree insertion logic
+}
+
+void *search(BTreeNode *root, int key) {
+    // B+Tree search logic
+}
 ```
 
 ---
 
-**Next:** Episode 35
+## 🛠 Практика
+
+**Задачи:**
+1. Key-value store
+2. SQL-like parser
+3. Index structures
+4. Transaction log
+
+---
+
+**Next:** [Episode 35: TUI Framework →](../episode-35-tui-framework/)

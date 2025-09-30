@@ -1,39 +1,53 @@
-# Episode 29: Big Data
-> *"Season 8"*
+# Episode 29: "Big Data Processing" 📊
+## Season 8: AI & Data Science | Episode 29/42
 
-## 📖 Briefing
+> *"В данных скрыта истина. Нужно лишь найти её."*
 
-**Episode:** 29  
-**Season:** Season 8  
-**Technologies:** mmap, streaming
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Терабайты логов, network dumps, sensor data. Нужна обработка больших данных в C.
 
-## 📚 Theory
+**Задачи:**
+1. Memory-mapped файлы (mmap)
+2. Stream processing
+3. Parallel data processing
+4. Binary file formats
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### mmap для больших файлов
 
-## 🏗 Project Structure
+```c
+#include <sys/mman.h>
 
-```
-episode-29/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+int fd = open("huge_log.dat", O_RDONLY);
+struct stat sb;
+fstat(fd, &sb);
+
+char *data = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+
+// Обработка data как обычного массива
+for (size_t i = 0; i < sb.st_size; i++) {
+    // Process data[i]
+}
+
+munmap(data, sb.st_size);
 ```
 
 ---
 
-**Next:** Episode 30
+## 🛠 Практика
+
+**Задачи:**
+1. Log file parser (GB размера)
+2. CSV to binary converter
+3. Streaming processor
+4. Parallel aggregation
+
+---
+
+**Next:** [Episode 30: Statistical Analysis →](../episode-30-statistical-analysis/)

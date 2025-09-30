@@ -1,39 +1,78 @@
-# Episode 25: Processes & Daemons
-> *"Season 7"*
+# Episode 25: "Processes & Daemons" 🔧
+## Season 7: System Programming | Episode 25/42
 
-## 📖 Briefing
+> *"В тени системы живут процессы. Мы станем одним из них."*
 
-**Episode:** 25  
-**Season:** Season 7  
-**Technologies:** fork(), exec(), daemon()
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Физический доступ получен. Теперь нужно закрепиться в системе на программном уровне.
 
-## 📚 Theory
+**Задачи:**
+1. Создать фоновый процесс (daemon)
+2. Управление процессами (fork, exec)
+3. Обработка сигналов
+4. PID файлы и логирование
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### Процессы в Linux
 
-## 🏗 Project Structure
+```c
+#include <unistd.h>
+#include <sys/types.h>
 
+// Создание нового процесса
+pid_t pid = fork();
+if (pid == 0) {
+    // Дочерний процесс
+    execl("/bin/ls", "ls", "-la", NULL);
+} else if (pid > 0) {
+    // Родительский процесс
+    wait(NULL);
+}
 ```
-episode-25/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+
+### Создание Daemon
+
+```c
+void daemonize() {
+    pid_t pid = fork();
+    if (pid < 0) exit(1);
+    if (pid > 0) exit(0);  // Родитель завершается
+    
+    setsid();  // Новая сессия
+    chdir("/");  // Рабочая директория
+    
+    close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDERR_FILENO);
+}
 ```
 
 ---
 
-**Next:** Episode 26
+## 🛠 Практика
+
+**Задачи:**
+1. Создать простой daemon
+2. Обработка SIGTERM, SIGHUP
+3. PID файл в /var/run/
+4. Логирование в syslog
+
+**Файлы:**
+- `moonlight_daemon.c`
+- `process_manager.c`
+
+**Компиляция:**
+```bash
+make daemon
+sudo ./moonlight_daemon start
+```
+
+---
+
+**Следующий эпизод:** [Episode 26: Threads & Parallelism →](../episode-26-threads-parallelism/)

@@ -1,39 +1,61 @@
-# Episode 41: Performance
-> *"Season 10"*
+# Episode 41: "Performance Optimization" ⚡
+## Season 10: FINAL MISSION | Episode 41/42
 
-## 📖 Briefing
+> *"Speed is life. Optimize everything."*
 
-**Episode:** 41  
-**Season:** Season 10  
-**Technologies:** profiling, SIMD
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Максимальная производительность: profiling, SIMD, cache optimization.
 
-## 📚 Theory
+**Задачи:**
+1. Profiling (gprof, perf)
+2. SIMD vectorization
+3. Cache optimization
+4. Benchmark suite
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### SIMD (SSE/AVX)
 
-## 🏗 Project Structure
+```c
+#include <immintrin.h>
 
+void add_arrays_simd(float *a, float *b, float *c, int n) {
+    for (int i = 0; i < n; i += 8) {
+        __m256 va = _mm256_load_ps(&a[i]);
+        __m256 vb = _mm256_load_ps(&b[i]);
+        __m256 vc = _mm256_add_ps(va, vb);
+        _mm256_store_ps(&c[i], vc);
+    }
+}
 ```
-episode-41/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+
+### Profiling
+
+```bash
+gcc -pg program.c -o program
+./program
+gprof program gmon.out > analysis.txt
+
+# or
+perf record ./program
+perf report
 ```
 
 ---
 
-**Next:** Episode 42
+## 🛠 Практика
+
+**Задачи:**
+1. Hotspot analysis
+2. SIMD crypto
+3. Memory optimization
+4. Parallel optimization
+
+---
+
+**Next:** [Episode 42: THE FINAL OPERATION →](../episode-42-final-operation/)

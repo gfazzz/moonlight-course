@@ -1,39 +1,70 @@
-# Episode 32: Predictive Models
-> *"Season 8"*
+# Episode 32: "Predictive Models" 🔮
+## Season 8: AI & Data Science | Episode 32/42 | Season Finale
 
-## 📖 Briefing
+> *"Predict the future. Prevent the disaster."*
 
-**Episode:** 32  
-**Season:** Season 8  
-**Technologies:** regression, forecasting
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+**SEASON 8 FINALE:**
 
-## 📚 Theory
+Создать систему предсказания угроз на основе исторических данных.
 
-TODO: Add theoretical content
+**Задачи:**
+1. Linear regression
+2. Time series forecasting
+3. Threat prediction model
+4. Real-time inference
 
-## 💡 Tasks
+---
 
-See [mission.md](mission.md) for details.
+## 📚 Теория
 
-## 🏗 Project Structure
+### Linear Regression
 
-```
-episode-32/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+```c
+typedef struct {
+    double slope;
+    double intercept;
+} LinearModel;
+
+LinearModel train_linear(double *X, double *y, int n) {
+    double sum_x = 0, sum_y = 0, sum_xy = 0, sum_xx = 0;
+    
+    for (int i = 0; i < n; i++) {
+        sum_x += X[i];
+        sum_y += y[i];
+        sum_xy += X[i] * y[i];
+        sum_xx += X[i] * X[i];
+    }
+    
+    LinearModel model;
+    model.slope = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+    model.intercept = (sum_y - model.slope * sum_x) / n;
+    
+    return model;
+}
+
+double predict_linear(LinearModel *model, double x) {
+    return model->slope * x + model->intercept;
+}
 ```
 
 ---
 
-**Next:** Episode 33
+## 🛠 Практика
+
+**FINAL CHALLENGE:**
+
+Создать "MOONLIGHT Prophet":
+1. Load historical attack data
+2. Train prediction model
+3. Real-time threat scoring
+4. Alert system
+
+🎉 **SEASON 8 COMPLETE!**
+
+---
+
+**Next:** [Season 9: Advanced Systems →](../../season-9-advanced-systems/)

@@ -1,39 +1,64 @@
-# Episode 33: Language
-> *"Season 9"*
+# Episode 33: "Building a Language" 🔤
+## Season 9: Advanced Systems | Episode 33/42
 
-## 📖 Briefing
+> *"Create your own language. Bend reality to your will."*
 
-**Episode:** 33  
-**Season:** Season 9  
-**Technologies:** interpreter, AST
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Построить собственный язык программирования: lexer, parser, interpreter.
 
-## 📚 Theory
+**Задачи:**
+1. Tokenization (lexer)
+2. AST building (parser)
+3. Interpreter/Eval
+4. Garbage collection
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### Lexer (Tokenizer)
 
-## 🏗 Project Structure
+```c
+typedef enum {
+    TOKEN_NUMBER, TOKEN_PLUS, TOKEN_MINUS, 
+    TOKEN_MUL, TOKEN_DIV, TOKEN_LPAREN, TOKEN_RPAREN, TOKEN_EOF
+} TokenType;
 
-```
-episode-33/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+typedef struct {
+    TokenType type;
+    double value;
+} Token;
+
+Token next_token(const char **input) {
+    while (isspace(**input)) (*input)++;
+    
+    if (isdigit(**input)) {
+        double val = 0;
+        while (isdigit(**input)) {
+            val = val * 10 + (**input - '0');
+            (*input)++;
+        }
+        return (Token){TOKEN_NUMBER, val};
+    }
+    
+    if (**input == '+') { (*input)++; return (Token){TOKEN_PLUS, 0}; }
+    // ... other tokens
+}
 ```
 
 ---
 
-**Next:** Episode 34
+## 🛠 Практика
+
+**Задачи:**
+1. Calculator language (arithmetic)
+2. Variable support
+3. Functions/procedures
+4. Simple GC
+
+---
+
+**Next:** [Episode 34: Database from Scratch →](../episode-34-database/)

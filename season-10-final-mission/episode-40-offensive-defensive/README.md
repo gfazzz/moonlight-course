@@ -1,39 +1,54 @@
-# Episode 40: Offensive/Defensive
-> *"Season 10"*
+# Episode 40: "Offensive & Defensive Operations" ⚔️
+## Season 10: FINAL MISSION | Episode 40/42
 
-## 📖 Briefing
+> *"Attack. Defend. Survive."*
 
-**Episode:** 40  
-**Season:** Season 10  
-**Technologies:** pentesting
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Полный pentesting и защита: IDS/IPS, honeypots, exploit mitigation.
 
-## 📚 Theory
+**Задачи:**
+1. Vulnerability scanner
+2. IDS/IPS system
+3. Honeypot deployment
+4. Exploit detection
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### Simple IDS
 
-## 🏗 Project Structure
+```c
+typedef struct {
+    char signature[256];
+    int severity;
+} ThreatSignature;
 
-```
-episode-40/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+bool detect_threat(const char *packet, ThreatSignature *sigs, int n) {
+    for (int i = 0; i < n; i++) {
+        if (strstr(packet, sigs[i].signature)) {
+            printf("THREAT DETECTED: %s (Severity: %d)\n", 
+                   sigs[i].signature, sigs[i].severity);
+            return true;
+        }
+    }
+    return false;
+}
 ```
 
 ---
 
-**Next:** Episode 41
+## 🛠 Практика
+
+**Задачи:**
+1. Port scanner
+2. Packet sniffer + IDS
+3. Buffer overflow detector
+4. Automated defense
+
+---
+
+**Next:** [Episode 41: Performance Optimization →](../episode-41-performance/)

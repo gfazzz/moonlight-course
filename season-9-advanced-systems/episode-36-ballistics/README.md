@@ -1,39 +1,79 @@
-# Episode 36: Military Systems
-> *"Season 9"*
+# Episode 36: "Military Systems & Radar" 🎯
+## Season 9: Advanced Systems | Episode 36/42
 
-## 📖 Briefing
+> *"Track. Predict. Engage."*
 
-**Episode:** 36  
-**Season:** Season 9  
-**Technologies:** radar, tracking
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+Военные системы: радарное отслеживание, GPS, Kalman фильтр.
 
-## 📚 Theory
+**Задачи:**
+1. Radar signal processing
+2. Kalman filter для tracking
+3. GPS координаты
+4. Target prediction
 
-TODO: Add theoretical content
+---
 
-## 💡 Tasks
+## 📚 Теория
 
-See [mission.md](mission.md) for details.
+### Kalman Filter (Simplified)
 
-## 🏗 Project Structure
+```c
+typedef struct {
+    double x;      // State estimate
+    double P;      // Error covariance
+    double Q;      // Process noise
+    double R;      // Measurement noise
+} KalmanFilter;
 
+void kalman_update(KalmanFilter *kf, double measurement) {
+    // Prediction
+    kf->P = kf->P + kf->Q;
+    
+    // Update
+    double K = kf->P / (kf->P + kf->R);  // Kalman gain
+    kf->x = kf->x + K * (measurement - kf->x);
+    kf->P = (1 - K) * kf->P;
+}
 ```
-episode-36/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+
+### GPS Coordinates
+
+```c
+typedef struct {
+    double lat;
+    double lon;
+    double alt;
+} GPSCoord;
+
+double distance(GPSCoord *a, GPSCoord *b) {
+    // Haversine formula
+    double R = 6371000;  // Earth radius in meters
+    double dlat = (b->lat - a->lat) * M_PI / 180.0;
+    double dlon = (b->lon - a->lon) * M_PI / 180.0;
+    
+    double a_val = sin(dlat/2) * sin(dlat/2) +
+                   cos(a->lat * M_PI / 180.0) * cos(b->lat * M_PI / 180.0) *
+                   sin(dlon/2) * sin(dlon/2);
+    double c = 2 * atan2(sqrt(a_val), sqrt(1-a_val));
+    
+    return R * c;
+}
 ```
 
 ---
 
-**Next:** Episode 37
+## 🛠 Практика
+
+**Задачи:**
+1. Radar simulator
+2. Multi-target tracking
+3. GPS navigation
+4. Threat assessment
+
+---
+
+**Next:** [Episode 37: Quantum Computing →](../episode-37-quantum/)
