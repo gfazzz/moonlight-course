@@ -220,7 +220,154 @@ gcc -o program main.c crypto.c
 
 ---
 
-### 4. Typedef — создание псевдонимов типов
+### 4. Структуры (struct) — группировка данных
+
+**`struct`** позволяет объединить **разнородные данные** в один **пользовательский тип**.
+
+#### Базовый синтаксис
+
+```c
+// Объявление структуры
+struct Person {
+    char name[50];
+    int age;
+    double salary;
+};
+
+// Создание переменной
+struct Person employee;
+
+// Доступ к полям через точку
+employee.age = 30;
+strcpy(employee.name, "Victor");
+employee.salary = 75000.50;
+
+// Вывод
+printf("Name: %s, Age: %d, Salary: %.2f\n", 
+       employee.name, employee.age, employee.salary);
+```
+
+---
+
+#### Инициализация структур
+
+```c
+// 1. Прямая инициализация
+struct Person p1 = {"Alice", 25, 50000.0};
+
+// 2. Designated initializers (C99+)
+struct Person p2 = {
+    .name = "Bob",
+    .age = 30,
+    .salary = 60000.0
+};
+
+// 3. Частичная инициализация (остальное = 0)
+struct Person p3 = {.name = "Charlie"};  // age = 0, salary = 0.0
+```
+
+---
+
+#### Вложенные структуры
+
+```c
+struct Address {
+    char street[100];
+    char city[50];
+    int zip;
+};
+
+struct Employee {
+    char name[50];
+    int age;
+    struct Address address;  // Вложенная структура
+};
+
+// Использование
+struct Employee emp;
+strcpy(emp.name, "Victor");
+strcpy(emp.address.city, "Moscow");
+emp.address.zip = 101000;
+
+// Доступ к вложенным полям через точку
+printf("City: %s\n", emp.address.city);
+```
+
+---
+
+#### Массивы структур
+
+```c
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point points[3] = {
+    {0, 0},
+    {10, 20},
+    {30, 40}
+};
+
+// Обход массива структур
+for (int i = 0; i < 3; i++) {
+    printf("Point %d: (%d, %d)\n", i, points[i].x, points[i].y);
+}
+```
+
+---
+
+#### Структуры и функции
+
+```c
+struct Rectangle {
+    int width;
+    int height;
+};
+
+// Передача структуры по значению (копирование!)
+int area_by_value(struct Rectangle rect) {
+    return rect.width * rect.height;
+}
+
+// Передача структуры по указателю (эффективно!)
+int area_by_pointer(struct Rectangle *rect) {
+    return rect->width * rect->height;  // -> вместо .
+}
+
+// Использование
+struct Rectangle r = {10, 5};
+printf("Area: %d\n", area_by_value(r));      // 50
+printf("Area: %d\n", area_by_pointer(&r));   // 50
+```
+
+**Важно**: `rect->width` — это сокращение для `(*rect).width`
+
+---
+
+#### Реальный пример из курса
+
+```c
+// Episode 04: декодер сообщений
+typedef struct {
+    unsigned char key;
+    int message_length;
+    char encrypted_data[256];
+    char decrypted_data[256];
+} Message;
+
+Message msg;
+msg.key = 0x42;
+msg.message_length = 13;
+// ... декодирование ...
+printf("Decrypted: %s\n", msg.decrypted_data);
+```
+
+**Метафора**: Структура — это папка в архиве, где лежат разные документы (поля разных типов).
+
+---
+
+### 5. Typedef — создание псевдонимов типов
 
 **`typedef`** позволяет создавать **новые имена** для существующих типов.
 
@@ -376,7 +523,7 @@ typedef uint8_t byte;  // Понятно: байт = 8 бит
 
 ---
 
-### 5. Работа с файлами
+### 6. Работа с файлами
 
 #### Открытие файла:
 ```c
@@ -413,7 +560,7 @@ fclose(fp);  // Всегда закрывайте файлы!
 
 ---
 
-### 6. Области видимости (scope)
+### 7. Области видимости (scope)
 
 ```c
 int global_var = 100;  // Глобальная — видна везде

@@ -159,7 +159,105 @@ AND (&&):           OR (||):          NOT (!):
 
 ---
 
-### 3. Switch statement — диспетчер решений
+### 3. #define и макросы препроцессора
+
+**`#define`** создаёт **макросы** — текстовые замены, которые выполняются **до компиляции**.
+
+#### Константы через #define
+
+```c
+#include <stdio.h>
+
+#define PI 3.14159
+#define MAX_SPEED 120
+#define PROJECT_NAME "MOONLIGHT"
+
+int main() {
+    double radius = 5.0;
+    double area = PI * radius * radius;
+    printf("Area: %.2f\n", area);
+    
+    if (speed > MAX_SPEED) {
+        printf("Too fast!\n");
+    }
+    
+    printf("Project: %s\n", PROJECT_NAME);
+    return 0;
+}
+```
+
+**Как это работает?** Препроцессор **заменяет** текст:
+```c
+// До препроцессора:
+double area = PI * radius * radius;
+
+// После препроцессора:
+double area = 3.14159 * radius * radius;
+```
+
+**Зачем `#define` вместо переменных?**
+- ✅ Не занимает память (замена на этапе компиляции)
+- ✅ Может быть использован в размерах массивов: `int arr[MAX_SIZE];`
+- ✅ Традиция для "магических чисел"
+
+**Соглашение**: Макросы пишутся **БОЛЬШИМИ БУКВАМИ**.
+
+---
+
+#### Макрофункции
+
+```c
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define SQUARE(x) ((x) * (x))
+
+int main() {
+    int max_value = MAX(10, 20);  // 20
+    int square = SQUARE(5);        // 25
+    
+    printf("Max: %d, Square: %d\n", max_value, square);
+    return 0;
+}
+```
+
+**Важно**: Скобки вокруг параметров обязательны!
+
+❌ **Без скобок** (опасно):
+```c
+#define SQUARE(x) x * x
+int result = SQUARE(2 + 3);  // Ожидаем 25, получаем 11!
+// Развернётся в: 2 + 3 * 2 + 3 = 2 + 6 + 3 = 11
+```
+
+✅ **Со скобками** (правильно):
+```c
+#define SQUARE(x) ((x) * (x))
+int result = SQUARE(2 + 3);  // Правильно 25
+// Развернётся в: ((2 + 3) * (2 + 3)) = 5 * 5 = 25
+```
+
+---
+
+#### Условная компиляция
+
+```c
+#define DEBUG 1
+
+#if DEBUG
+    printf("Debug: value = %d\n", x);
+#endif
+
+// Или короче:
+#ifdef DEBUG
+    printf("Debug mode\n");
+#endif
+```
+
+**Метафора**: `#define` — это шаблоны в Photoshop: создали один раз → применяется везде.
+
+---
+
+### 4. Switch statement — диспетчер решений
 
 Когда вариантов много, `switch` работает как диспетчер на вокзале:
 
