@@ -1,39 +1,403 @@
-# Episode 24: IoT Integration
-> *"Season 6"*
+# Episode 24: "IoT Integration" 🌐
+## Season 6: Embedded & IoT | Episode 24/42 | Season Finale
 
-## 📖 Briefing
+> *"Всё связано. Всё под контролем."*
 
-**Episode:** 24  
-**Season:** Season 6  
-**Technologies:** MQTT, system integration
+---
 
-## 🎯 What You'll Learn
+## 📋 Briefing
 
-- TODO: Add learning objectives
-- TODO: Add theory
-- TODO: Add practical tasks
+**От:** The Architect  
+**Кому:** Agent [ВАШ_ПОЗЫВНОЙ]  
+**Тема:** Финальная интеграция IoT инфраструктуры  
+**Приоритет:** 🔴🔴 МАКСИМАЛЬНЫЙ
 
-## 📚 Theory
+**Ситуация:**
 
-TODO: Add theoretical content
+У нас есть все части головоломки:
+- ✅ Arduino & GPIO (Episode 21)
+- ✅ СКУД & Modbus (Episode 22)
+- ✅ IP Cameras & RTSP (Episode 23)
 
-## 💡 Tasks
+Теперь нужно объединить всё в единую систему используя **MQTT** — стандартный протокол для IoT.
 
-See [mission.md](mission.md) for details.
+**Финальная миссия Season 6:**
+1. Создать MQTT клиент для C
+2. Интегрировать все IoT устройства через MQTT
+3. Создать центральную систему мониторинга
+4. Обойти систему безопасности дата-центра
 
-## 🏗 Project Structure
+---
+
+## 🎯 Цели эпизода
+
+- ✅ Работать с протоколом MQTT
+- ✅ Publish/Subscribe паттерн
+- ✅ Интегрировать несколько IoT систем
+- ✅ Создать dashboard для мониторинга
+- ✅ Завершить Season 6!
+
+---
+
+## 📚 Теория
+
+### 1. Протокол MQTT (Message Queuing Telemetry Transport)
+
+**MQTT** — легковесный протокол pub/sub для IoT устройств.
+
+#### Архитектура MQTT:
 
 ```
-episode-24/
-├── README.md
-├── mission.md
-├── starter.c
-├── Makefile
-├── artifacts/
-├── tests/
-└── solution/
+[Arduino]──┐
+[RFID]─────┤
+[Camera]───┼──→ [MQTT Broker] ←──→ [Your Dashboard]
+[Sensor]───┤       (mosquitto)
+[Modbus]───┘
+```
+
+#### MQTT Topics (темы):
+
+```
+moonlight/access/door1          # RFID события
+moonlight/camera/cam1/motion    # Детекция движения
+moonlight/sensor/temp           # Датчики
+moonlight/modbus/device1/data   # Modbus данные
+```
+
+#### Основные операции:
+
+| Операция | Описание |
+|----------|----------|
+| CONNECT | Подключение к брокеру |
+| PUBLISH | Публикация сообщения в topic |
+| SUBSCRIBE | Подписка на topic |
+| DISCONNECT | Отключение |
+
+#### Простой MQTT клиент (используя libmosquitto):
+
+```c
+#include <mosquitto.h>
+#include <stdio.h>
+
+void on_connect(struct mosquitto *mosq, void *obj, int rc) {
+    printf("Connected to broker! Result code: %d\n", rc);
+    if (rc == 0) {
+        // Подписаться на все топики moonlight
+        mosquitto_subscribe(mosq, NULL, "moonlight/#", 0);
+    }
+}
+
+void on_message(struct mosquitto *mosq, void *obj, 
+                const struct mosquitto_message *msg) {
+    printf("Message received on %s: %s\n", 
+           msg->topic, (char *)msg->payload);
+}
+
+int main() {
+    mosquitto_lib_init();
+    
+    struct mosquitto *mosq = mosquitto_new("moonlight_client", true, NULL);
+    
+    mosquitto_connect_callback_set(mosq, on_connect);
+    mosquitto_message_callback_set(mosq, on_message);
+    
+    // Подключиться к брокеру
+    if (mosquitto_connect(mosq, "localhost", 1883, 60) != MOSQ_ERR_SUCCESS) {
+        fprintf(stderr, "Unable to connect\n");
+        return 1;
+    }
+    
+    // Главный цикл
+    mosquitto_loop_forever(mosq, -1, 1);
+    
+    mosquitto_destroy(mosq);
+    mosquitto_lib_cleanup();
+    
+    return 0;
+}
+```
+
+**Компиляция:**
+```bash
+gcc mqtt_client.c -o mqtt_client -lmosquitto
 ```
 
 ---
 
-**Next:** Episode 25
+### 2. IoT Integration Architecture
+
+#### Схема интеграции:
+
+```
+┌─────────────────────────────────────────────────────┐
+│                 MQTT Broker                         │
+│              (mosquitto @ localhost:1883)           │
+└──────────────┬──────────────────────────────────────┘
+               │
+     ┌─────────┼─────────┬──────────┬────────────┐
+     │         │         │          │            │
+┌────▼───┐ ┌──▼───┐ ┌───▼────┐ ┌───▼──────┐ ┌──▼───────┐
+│ RFID   │ │Camera│ │ Arduino│ │  Modbus  │ │Dashboard │
+│ Reader │ │ Feed │ │Sensors │ │ Devices  │ │ (You!)   │
+└────────┘ └──────┘ └────────┘ └──────────┘ └──────────┘
+```
+
+#### Topics структура:
+
+```
+moonlight/
+├── access/
+│   ├── door1       # {"card_id": 12345, "granted": true}
+│   └── door2
+├── camera/
+│   ├── cam1/motion # {"detected": true, "timestamp": 123456}
+│   └── cam2/status
+├── sensor/
+│   ├── temp        # {"value": 25.3, "unit": "C"}
+│   └── humidity
+└── status/
+    └── system      # {"online": true, "devices": 5}
+```
+
+---
+
+### 3. Практическая реализация
+
+#### RFID → MQTT Bridge:
+
+```c
+#include <mosquitto.h>
+#include "wiegand.h"  // Из Episode 22
+
+void publish_rfid_event(struct mosquitto *mosq, uint8_t fc, uint16_t id) {
+    char topic[128];
+    char payload[256];
+    
+    snprintf(topic, sizeof(topic), "moonlight/access/door1");
+    snprintf(payload, sizeof(payload), 
+             "{\"fc\": %u, \"id\": %u, \"timestamp\": %ld}", 
+             fc, id, time(NULL));
+    
+    mosquitto_publish(mosq, NULL, topic, strlen(payload), payload, 0, false);
+    printf("Published RFID event: %s\n", payload);
+}
+
+// В главном цикле:
+while (1) {
+    // Читать RFID карты (симуляция)
+    if (rfid_card_detected()) {
+        WiegandCard card = read_rfid_card();
+        publish_rfid_event(mosq, card.facility_code, card.card_id);
+    }
+    sleep(1);
+}
+```
+
+#### Camera → MQTT Bridge:
+
+```c
+void publish_motion_event(struct mosquitto *mosq, const char *camera_id) {
+    char topic[128];
+    char payload[256];
+    
+    snprintf(topic, sizeof(topic), "moonlight/camera/%s/motion", camera_id);
+    snprintf(payload, sizeof(payload), 
+             "{\"detected\": true, \"timestamp\": %ld}", time(NULL));
+    
+    mosquitto_publish(mosq, NULL, topic, strlen(payload), payload, 0, false);
+}
+```
+
+#### Dashboard (подписка на все события):
+
+```c
+void on_message(struct mosquitto *mosq, void *obj, 
+                const struct mosquitto_message *msg) {
+    printf("\n[%s]\n", msg->topic);
+    printf("Data: %s\n", (char *)msg->payload);
+    
+    // Парсинг JSON (простой вариант)
+    if (strstr(msg->topic, "access")) {
+        printf("🚪 Access event detected\n");
+    } else if (strstr(msg->topic, "motion")) {
+        printf("📹 Motion detected\n");
+    } else if (strstr(msg->topic, "sensor")) {
+        printf("📊 Sensor data received\n");
+    }
+}
+```
+
+---
+
+## 🛠 Практика
+
+### Задание 1: MQTT Client (⭐⭐⭐☆☆)
+
+Создать базовый MQTT клиент:
+- Подключение к брокеру
+- Publish сообщений
+- Subscribe на топики
+
+**Файл:** `artifacts/mqtt_client.c`
+
+```bash
+# Установить mosquitto
+# Ubuntu/Debian:
+sudo apt install mosquitto mosquitto-clients libmosquitto-dev
+
+# macOS:
+brew install mosquitto
+
+# Запуск брокера
+mosquitto -v
+
+# Тестирование
+./mqtt_client
+```
+
+---
+
+### Задание 2: IoT Bridge (⭐⭐⭐⭐☆)
+
+Создать мосты для устройств:
+- RFID → MQTT
+- Camera motion → MQTT
+- Arduino sensors → MQTT
+
+**Файл:** `artifacts/iot_bridge.c`
+
+---
+
+### Задание 3: Security Dashboard (⭐⭐⭐⭐⭐)
+
+Создать dashboard для мониторинга:
+- Подписка на все события
+- Визуализация в терминале
+- Логирование в файл
+- Алерты при подозрительных событиях
+
+**Файл:** `artifacts/dashboard.c`
+
+---
+
+### 🎯 Challenge задача (Season 6 Finale!)
+
+**System Bypass:**
+- Обнаружить паттерн движения охраны
+- Подменить видеопоток (loop recording)
+- Эмулировать валидную RFID карту
+- Открыть дверь используя Modbus inject
+- **Проникнуть в дата-центр!**
+
+---
+
+## 💡 Подсказки
+
+<details>
+<summary>Как установить libmosquitto?</summary>
+
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install libmosquitto-dev
+
+# macOS
+brew install mosquitto
+
+# Проверка
+pkg-config --libs libmosquitto
+```
+</details>
+
+<details>
+<summary>Как парсить JSON без библиотеки?</summary>
+
+```c
+// Простой парсинг (для основных случаев)
+char *find_json_value(const char *json, const char *key) {
+    static char value[256];
+    char search[128];
+    snprintf(search, sizeof(search), "\"%s\": ", key);
+    
+    char *start = strstr(json, search);
+    if (!start) return NULL;
+    
+    start += strlen(search);
+    if (*start == '"') start++;  // Строковое значение
+    
+    char *end = strchr(start, ',');
+    if (!end) end = strchr(start, '}');
+    
+    int len = end - start;
+    if (end[-1] == '"') len--;
+    
+    strncpy(value, start, len);
+    value[len] = '\0';
+    return value;
+}
+```
+
+Или используйте **cJSON** библиотеку для полноценного парсинга.
+</details>
+
+---
+
+## ✅ Критерии выполнения
+
+- [ ] MQTT клиент подключается к брокеру
+- [ ] Publish работает корректно
+- [ ] Subscribe получает сообщения
+- [ ] IoT bridge интегрирует устройства
+- [ ] Dashboard отображает события
+- [ ] JSON парсится корректно
+- [ ] Все тесты проходят (`make test`)
+- [ ] **Season 6 завершен!** 🎉
+
+---
+
+## 📚 Дополнительные материалы
+
+- [MQTT.org](https://mqtt.org/)
+- [Eclipse Mosquitto](https://mosquitto.org/)
+- [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
+
+---
+
+## 🎬 Season 6 Finale
+
+После успешной интеграции IoT инфраструктуры, вы получаете сообщение:
+
+```
+═══════════════════════════════════════════════════
+🎉 SEASON 6 COMPLETE! 🎉
+═══════════════════════════════════════════════════
+
+Отличная работа, агент.
+
+IoT инфраструктура под контролем:
+✅ Arduino & GPIO
+✅ СКУД & Modbus
+✅ IP Cameras
+✅ MQTT Integration
+
+Физический доступ получен. Теперь нужно работать
+на системном уровне.
+
+Готовься к Season 7: System Programming
+Процессы. Потоки. IPC. Скрытность.
+
+— The Architect
+
+NEXT: Episode 25 → Processes & Daemons
+═══════════════════════════════════════════════════
+```
+
+---
+
+**Следующий сезон:** [Season 7: System Programming →](../../season-7-system-programming/)
+
+**Назад:** [← Episode 23: IP Cameras](../episode-23-ip-cameras/)
+
+---
+
+*MOONLIGHT Protocol: Season 6 Complete. From bits to bytes, from sensors to systems. 🌐✨*
