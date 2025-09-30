@@ -1,218 +1,363 @@
-# Season 4: Crypto & Algorithms 🔐
+# Season 4: "Crypto & Algorithms" 🔐
 
-> "Безопасность — это не продукт, а процесс." — Bruce Schneier
-
-## 📖 О сезоне
-
-В **Season 4** вы погрузитесь в мир **криптографии и алгоритмов**. После изучения основ C, работы с памятью и сетевого программирования, пришло время защитить свои данные и оптимизировать обработку информации.
-
-**MOONLIGHT** раскрывает новые тайны — зашифрованные архивы, цифровые подписи, поврежденные файлы. Чтобы продвинуться дальше, вам понадобятся знания классической и современной криптографии, а также эффективных алгоритмов.
+> *"In cryptography we trust. In math we believe. In algorithms we build."*
 
 ---
 
-## 🎯 Что вы изучите
+## 🎬 СЕЗОННЫЙ ОБЗОР
 
-### 🔐 Криптография
-- **Классические шифры:** XOR, Caesar, частотный анализ
-- **Хеш-функции:** djb2, SHA-256 (концепт), лавинный эффект
-- **Blockchain:** структура блоков, цепочка хешей, immutability
-- **Proof-of-Work:** mining, difficulty adjustment
+```
+╔══════════════════════════════════════════════════════════════════╗
+║  СЕЗОН:   4 - CRYPTO & ALGORITHMS                                ║
+║  ПЕРИОД:  15-18 декабря 2020                                     ║
+║  СТАТУС:  ✅ ЗАВЕРШЁН                                            ║
+║  ЗАДАЧА:  Расшифровать данные, верифицировать blockchain,        ║
+║           оптимизировать алгоритмы, построить Database Engine    ║
+╚══════════════════════════════════════════════════════════════════╝
+```
 
-### 📊 Алгоритмы
-- **Сортировка:** Bubble, Selection, Merge, Quick Sort
-- **Поиск:** Linear Search, Binary Search
-- **Анализ сложности:** Big O notation (O(1), O(log n), O(n), O(n²))
-- **Benchmarking:** измерение производительности
+**Episode 13 завершён.** Три зашифрованных сообщения раскрыты.  
+**Episode 14 завершён.** Blockchain верифицирован, подделка найдена.  
+**Episode 15 завершён.** Логи отсортированы, алгоритмы освоены.  
+**Episode 16 завершён.** Database Engine создан, встреча состоялась.
 
-### 📦 Структуры данных
-- **Linked Lists:** односвязные, двусвязные
-- **Stacks & Queues:** LIFO, FIFO
-- **Trees:** Binary Search Tree (BST)
-- **Hash Tables:** быстрый поиск O(1)
+**Финал:** V. появляется на Красной площади. *"Настоящая работа только начинается."*
 
-### 🛠️ Практические навыки
-- Криптоанализ простых шифров
-- Верификация целостности данных
-- Выбор оптимального алгоритма
-- Управление динамической памятью
+---
+
+## 📅 Хронология событий
+
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║                    SEASON 4 TIMELINE                              ║
+╠═══════════════════════════════════════════════════════════════════╣
+║                                                                   ║
+║  15 ДЕК, 03:42 → USB от V. с 3 зашифрованными файлами            ║
+║  15 ДЕК, 09:30 → Сообщения расшифрованы, координаты в blockchain ║
+║                                                                   ║
+║  16 ДЕК, 05:27 → Blockchain ledger получен (15,000 блоков)       ║
+║  16 ДЕК, 09:18 → Block #7,250 corrupted, координаты извлечены    ║
+║                                                                   ║
+║  17 ДЕК, 11:15 → 2 млн записей логов, нужна сортировка           ║
+║  17 ДЕК, 16:40 → Алгоритмы реализованы, данные оптимизированы    ║
+║                                                                   ║
+║  17 ДЕК, 22:47 → Финальная задача: 250K документов, Database     ║
+║  18 ДЕК, 17:43 → Database Engine готов                           ║
+║  18 ДЕК, 18:00 → Встреча на Red Square                           ║
+║                                                                   ║
+║  РЕЗУЛЬТАТ: V. появляется. Season 4 завершён.                    ║
+║             "Добро пожаловать в операцию."                        ║
+║                                                                   ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
 
 ---
 
 ## 📚 Эпизоды
 
-### [Episode 13: Crypto Basics](episode-13-crypto-basics/) 🔑
-**Концепции:** XOR шифрование, Caesar cipher, частотный анализ  
-**Задача:** Расшифровать перехваченное сообщение с использованием известного ключа  
-**Навыки:** Побитовые операции, работа с ASCII  
-**Сложность:** ⭐⭐☆☆☆
+### 🔑 [Episode 13: Crypto Basics](episode-13-crypto-basics/)
+```
+┌─────────────────────────────────────────────┐
+│  Сложность: ⭐⭐⭐☆☆                        │
+│  Время:     3-4 часа                        │
+│  Артефакт:  crypto_decoder                  │
+└─────────────────────────────────────────────┘
+```
+
+**Миссия:**  
+15 декабря, 03:42. USB от V. с 3 зашифрованными файлами. Нужно расшифровать XOR, Caesar и multi-layer сообщения за 6 часов.
+
+**Что изучите:**
+- ✅ XOR encryption (reversible, fast)
+- ✅ Caesar cipher + frequency analysis
+- ✅ Chi-squared для автоопределения shift
+- ✅ Vigenère cipher, Affine, ROT13
+- ✅ Known-plaintext attack, brute force
+
+**Результат:**  
+09:30 — все сообщения расшифрованы. Координаты находятся в blockchain ledger.
 
 ---
 
-### [Episode 14: Hash Functions](episode-14-hash-functions/) #️⃣
-**Концепции:** Хеш-функции, контрольные суммы, детектирование изменений  
-**Задача:** Обнаружить поврежденные файлы в архиве операции  
-**Навыки:** Реализация хеш-функций, проверка целостности  
-**Сложность:** ⭐⭐⭐☆☆
+### 🔗 [Episode 14: Blockchain & Hashes](episode-14-blockchain-hashes/)
+```
+┌─────────────────────────────────────────────┐
+│  Сложность: ⭐⭐⭐⭐☆                       │
+│  Время:     4-5 часов                       │
+│  Артефакт:  blockchain_verifier             │
+└─────────────────────────────────────────────┘
+```
+
+**Миссия:**  
+16 декабря, 05:27. Blockchain ledger с 15,000 блоков. Кто-то пытался подделать данные. Нужно верифицировать целостность цепи и найти corrupted blocks.
+
+**Что изучите:**
+- ✅ Hash functions (djb2, SHA-256)
+- ✅ Avalanche effect (лавинный эффект)
+- ✅ Proof-of-Work (mining, difficulty)
+- ✅ Blockchain immutability
+- ✅ Cascade validation, collision resolution
+- ✅ Merkle trees (concept)
+
+**Результат:**  
+09:18 — Block #7,250 corrupted (попытка изменить $15.7M → $25M). Координаты извлечены: Red Square, Dec 18, 18:00.
 
 ---
 
-### [Episode 15: Sorting & Search Algorithms](episode-15-sorting-search/) 🔍
-**Концепции:** Bubble/Quick/Merge Sort, Binary Search, Big O  
-**Задача:** Найти критические данные в миллионах записей логов  
-**Навыки:** Рекурсия, анализ сложности, benchmarking  
-**Сложность:** ⭐⭐⭐☆☆
+### 📊 [Episode 15: Sorting & Search](episode-15-sorting-search/)
+```
+┌─────────────────────────────────────────────┐
+│  Сложность: ⭐⭐⭐⭐⭐                      │
+│  Время:     5-6 часов                       │
+│  Артефакт:  algorithm_suite + log_analyzer  │
+└─────────────────────────────────────────────┘
+```
+
+**Миссия:**  
+17 декабря, 11:15. 2 миллиона записей логов. Нужно найти подозрительные транзакции. Требуется эффективная сортировка и поиск.
+
+**Что изучите (TAOCP concepts):**
+- ✅ Sorting: Bubble, Selection, Insertion, **Shell** (Knuth gaps), Merge, Quick, **Heapsort**
+- ✅ Search: Linear, Binary (with loop invariants)
+- ✅ **Knuth Shuffle** (Fisher-Yates)
+- ✅ **Sentinel optimization** для циклов
+- ✅ Big O analysis: O(1), O(log n), O(n), O(n log n), O(n²)
+- ✅ Mathematical analysis: exact comparisons, best/avg/worst case
+- ✅ **Amortized analysis**
+
+**Результат:**  
+16:40 — Логи отсортированы за O(n log n). Подозрительные транзакции найдены. Данные готовы для финальной фазы.
 
 ---
 
-### [Episode 16: Data Structures](episode-16-data-structures/) 📦
-**Концепции:** Linked Lists, Stacks, Queues, Binary Trees, Hash Tables  
-**Задача:** Построить эффективную архитектуру данных операции  
-**Навыки:** Динамическая память, выбор структуры для задачи  
-**Сложность:** ⭐⭐⭐⭐☆
+### 📦 [Episode 16: Data Structures](episode-16-data-structures/) — **ФИНАЛ СЕЗОНА**
+```
+┌─────────────────────────────────────────────┐
+│  Сложность: ⭐⭐⭐⭐⭐                      │
+│  Время:     6-8 часов                       │
+│  Артефакт:  moonlight_database_engine       │
+└─────────────────────────────────────────────┘
+```
+
+**Миссия:**  
+17 декабря, 22:47. Финальная задача: 250,000 документов операции. Нужна архитектура для мгновенного поиска, сортированного доступа и истории изменений. Встреча через 19 часов.
+
+**Что изучите (TAOCP + advanced structures):**
+- ✅ Linked Lists (single, double, circular)
+- ✅ Stack (LIFO), Queue (FIFO)
+- ✅ Binary Search Tree (O(log n) avg)
+- ✅ **Hash Tables** (O(1) avg, chaining, open addressing, double hashing)
+- ✅ **AVL Trees** (O(log n) guaranteed, 4 rotations: LL, RR, LR, RL)
+- ✅ Load factor monitoring & rehashing
+- ✅ Balance factor & tree rotations
+- ✅ Trade-offs: speed vs memory, average vs worst case
+
+**Результат:**  
+18 декабря, 17:43 — Database Engine готов (Hash Table + AVL Tree + Linked List + Stack/Queue).  
+18:00 — Красная площадь. V. появляется: *"Добро пожаловать в операцию. Настоящая работа только начинается."*
+
+**TO BE CONTINUED IN SEASON 5...**
 
 ---
 
-## 🎬 Сюжет сезона
+## 🎭 Сюжетная арка
 
-> **Внимание! Спойлеры ниже!**
+### АКТ I: Шифрование (Episode 13)
+```
+03:42 → USB от V. с зашифрованными сообщениями
+      → XOR, Caesar, multi-layer encryption
+      → Frequency analysis + Chi-squared
+09:30 → Координаты найдены: "в blockchain ledger"
+```
 
-После успешного анализа сетевого трафика в Season 3, **V.** передает вам новое задание — расшифровать архив с критически важными данными. Файлы защищены многоуровневым шифрованием, а некоторые повреждены.
+### АКТ II: Blockchain (Episode 14)
+```
+05:27 → Blockchain ledger (15,000 блоков)
+      → Попытка подделки финансовых данных
+      → Cascade verification, mining simulation
+09:18 → Block #7,250 corrupted
+      → Координаты извлечены: Red Square, Dec 18, 18:00
+```
 
-**Основные события:**
-1. 🔓 **Episode 13:** Взлом XOR и Caesar шифров — расшифровка сообщений организации
-2. 🛡️ **Episode 14:** Верификация blockchain — обнаружение попыток подделки данных
-3. 🔍 **Episode 15:** Анализ 10 миллионов логов — поиск критических временных меток
-4. 📦 **Episode 16:** Построение архитектуры данных — эффективное хранилище для операции
+### АКТ III: Алгоритмы (Episode 15)
+```
+11:15 → 2 млн записей логов
+      → Сортировка: Bubble → Quick → Heapsort (Knuth!)
+      → Поиск: Linear → Binary
+16:40 → O(n log n) достигнуто
+      → Подозрительные транзакции найдены
+```
 
-**Финал сезона:** Вы создали полную криптографическую и алгоритмическую инфраструктуру. Данные защищены, логи проанализированы, архитектура готова. Теперь можно применить эти знания к финансовым рынкам...
-
----
-
-## 🚀 Как начать
-
-### Предварительные требования
-
-Перед началом Season 4 убедитесь, что вы прошли:
-- ✅ **Season 1:** Основы C (variables, loops, functions, file I/O)
-- ✅ **Season 2:** Указатели и память (pointers, arrays, dynamic memory)
-- ✅ **Season 3:** Сети (sockets, TCP/IP, packet analysis)
-
-### Установка
-
-Все необходимые инструменты уже установлены (gcc, make, gdb).
-
-### Порядок прохождения
-
-1. Начните с **Episode 13** (самый простой)
-2. Проходите эпизоды **последовательно** — каждый строится на предыдущем
-3. Не переходите к следующему эпизоду, пока не пройдете тесты
-4. Изучайте решения **только после** самостоятельных попыток
-
----
-
-## 📊 Прогресс
-
-Отмечайте свои достижения:
-
-- [ ] Episode 13: Crypto Basics
-- [ ] Episode 14: Hash Functions  
-- [ ] Episode 15: Sorting & Search
-- [ ] Episode 16: Data Structures
-
-**Награда за прохождение:** Ключ от базы данных GENESIS 🗝️
-
----
-
-## 🎓 Полезные ресурсы
-
-### Криптография
-- [Applied Cryptography](https://www.schneier.com/books/applied-cryptography/) — Bruce Schneier
-- [Crypto101](https://www.crypto101.io/) — бесплатный учебник
-- [XOR Cipher](https://en.wikipedia.org/wiki/XOR_cipher) — Wikipedia
-
-### Алгоритмы
-- [Introduction to Algorithms (CLRS)](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
-- [Big-O Cheat Sheet](https://www.bigocheatsheet.com/)
-- [VisuAlgo](https://visualgo.net/) — визуализация алгоритмов
-
-### C Programming
-- [CS50 Manual Pages](https://manual.cs50.io/)
-- [C Standard Library](https://en.cppreference.com/w/c)
-
----
-
-## 💡 Советы по прохождению
-
-1. **Не копируйте код слепо** — понимайте каждую строку
-2. **Тестируйте на краевых случаях:** пустой ввод, максимальные значения
-3. **Проверяйте утечки памяти** (`leaks` на macOS, `valgrind` на Linux)
-4. **Измеряйте время выполнения** для оценки производительности
-5. **Рисуйте диаграммы** для визуализации структур данных
-
----
-
-## 🐛 Debugging
-
-Основные инструменты для Season 4:
-
-```bash
-# Компиляция с отладочной информацией
-make debug
-
-# Запуск GDB
-gdb ./your_program
-
-# Проверка утечек памяти
-leaks --atExit -- ./your_program      # macOS
-valgrind --leak-check=full ./your_program  # Linux
-
-# Измерение времени выполнения
-time ./your_program
+### АКТ IV: Структуры данных — ФИНАЛ (Episode 16)
+```
+22:47 → 250K документов операции
+      → Hash Table + AVL Tree + Linked List + Stack/Queue
+      → Database Engine integration
+17:43 → Database Engine готов (O(1) search, O(log n) sorted access)
+18:00 → Red Square, встреча с V.
+      → "Knuth sends his regards" (пароль)
+      → V.: "Добро пожаловать в операцию."
+      → Season 4 завершён ✅
 ```
 
 ---
 
 ## 🏆 Достижения Season 4
 
-- 🔓 **Codebreaker** — расшифровали XOR-сообщение
-- #️⃣ **Hash Master** — реализовали собственную хеш-функцию  
-- ⚡ **Speed Demon** — оптимизировали сортировку до O(n log n)
-- 📦 **Data Architect** — создали работающую структуру данных
+```
+╔════════════════════════════════════════════════════════╗
+║  🎖️ CRYPTO ANALYST                                     ║
+║  Освоены: XOR, Caesar, frequency analysis, blockchain  ║
+╠════════════════════════════════════════════════════════╣
+║  🎖️ BLOCKCHAIN ENGINEER                                ║
+║  Освоены: PoW, hashing, immutability, verification     ║
+╠════════════════════════════════════════════════════════╣
+║  🎖️ ALGORITHM MASTER                                   ║
+║  Освоены: 20+ алгоритмов из TAOCP, Big O analysis      ║
+╠════════════════════════════════════════════════════════╣
+║  🎖️ DATA ARCHITECT                                     ║
+║  Освоены: 7 структур данных, enterprise-grade systems  ║
+╚════════════════════════════════════════════════════════╝
+```
+
+**Технические навыки:**
+- ✅ 4 криптографических алгоритма
+- ✅ 8 алгоритмов сортировки (включая Knuth's Shell Sort, Heapsort)
+- ✅ 2 алгоритма поиска
+- ✅ 7 структур данных (включая AVL Trees, Hash Tables)
+- ✅ Big O анализ и математическая оценка сложности
+- ✅ Blockchain verification и PoW
+- ✅ Database Engine design
+
+**Практические навыки:**
+- ✅ Криптоанализ (frequency analysis, Chi-squared)
+- ✅ Верификация целостности данных
+- ✅ Performance benchmarking
+- ✅ Algorithm selection и optimization
+- ✅ System architecture design
 
 ---
 
-## ❓ FAQ
+## 🥚 Easter Eggs Season 4
 
-**Q: Нужно ли знать математику для криптографии?**  
-A: Базовые знания (модульная арифметика, побитовые операции) достаточно для этого сезона.
-
-**Q: Какой алгоритм сортировки использовать?**  
-A: Начните с Bubble Sort для понимания, затем переходите к Quick Sort для производительности.
-
-**Q: Безопасны ли реализованные шифры?**  
-A: Нет! Это учебные примеры. Для реальных проектов используйте проверенные библиотеки (OpenSSL, libsodium).
+1. **Key 0x42** (Episode 13) → "Answer to Everything" (Hitchhiker's Guide)
+2. **ROT13** → Симметричный шифр (shift 13)
+3. **GENESIS** → Genesis Block (Bitcoin, Jan 3, 2009)
+4. **$15.7M** → Первая Bitcoin транзакция Pizza Day
+5. **djb2 = 5381** → Magic number от Daniel J. Bernstein (1991)
+6. **Block #7,250** → 50 × 145 (не случайность!)
+7. **Red Square coordinates** → 55.7558, 37.6173 (точный центр Кремля)
+8. **Dec 18, 18:00** → 18/18 (двойное 18, символическое значение)
+9. **SHA-256 дважды** → Bitcoin uses SHA256(SHA256(data)) для защиты от length-extension attack
+10. **Merkle Root** → Ralph Merkle (изобретатель в 1979)
+11. **Difficulty 10²²** → Bitcoin 2020 требовал ~150 exahashes/sec (энергия малой страны!)
+12. **Shell Sort gaps** → Knuth's sequence: 1, 4, 13, 40, 121... (3^k - 1) / 2
+13. **Heapsort** → O(n log n) worst case (в отличие от Quick Sort!)
+14. **Knuth Shuffle** → Fisher-Yates algorithm (unbiased permutation)
+15. **Sentinel optimization** → TAOCP Vol. 3 (экономия одной проверки = миллионы циклов!)
+16. **AVL height = 18** → log₂(250,000) ≈ 17.93 (идеальная балансировка!)
+17. **Load factor 0.68** → Оптимальный баланс для Hash Table (< 0.7)
+18. **"Knuth sends his regards"** → Пароль встречи, отсылка к Donald Knuth
+19. **Hash Table size = 10,000** → Prime number для better distribution
+20. **"Trust in Math, Not in People"** → Философия криптографии и blockchain
 
 ---
 
-## 📞 Поддержка
+## 📊 Статистика Season 4
 
-Столкнулись с проблемой?
+```
+┌──────────────────────────────────────────────┐
+│  Эпизоды пройдено:         4 / 4             │
+│  Алгоритмов реализовано:   20+               │
+│  Структур данных освоено:  7                 │
+│  Строк кода написано:      ~2,500            │
+│  Документов обработано:    250,000           │
+│  Blockchain блоков:        15,000            │
+│  Логов отсортировано:      2,000,000         │
+│  Database Engine:          ✅ READY          │
+└──────────────────────────────────────────────┘
+```
 
-1. Проверьте `tests/` — там есть примеры ввода/вывода
-2. Изучите `solution/` — но только после своих попыток
-3. Откройте Issue на GitHub с описанием проблемы
+**Сложность операций (достигнуто):**
+- ⚡ Hash Table: O(1) average search
+- 🚀 AVL Tree: O(log n) guaranteed
+- 📈 Heapsort: O(n log n) worst case
+- 🔍 Binary Search: O(log n)
+- 🔗 Linked List: O(1) insertion
 
 ---
 
-**Следующий сезон:** [Season 5: Embedded & Arduino →](../season-5-embedded-arduino/)
+## 🔜 Что дальше?
+
+```
+╔══════════════════════════════════════════════════════════╗
+║  SEASON 5: COMING SOON...                                ║
+╠══════════════════════════════════════════════════════════╣
+║                                                          ║
+║  V.: "Добро пожаловать в операцию."                      ║
+║                                                          ║
+║  Красная площадь, 18:00, 18 декабря.                     ║
+║  Встреча состоялась.                                     ║
+║                                                          ║
+║  Database Engine создан.                                 ║
+║  Алгоритмы готовы.                                       ║
+║  Криптография освоена.                                   ║
+║                                                          ║
+║  Теперь — настоящая работа...                            ║
+║                                                          ║
+╚══════════════════════════════════════════════════════════╝
+```
+
+**Вопросы к Season 5:**
+- Кто такой V.? Почему встреча именно на Red Square?
+- Что за "настоящая работа"?
+- Для чего нужны 250,000 документов?
+- Какая роль Database Engine в операции MOONLIGHT?
+- Что находится в "активной фазе" операции?
+
+---
+
+## 🎓 Что вы теперь умеете
+
+После Season 4 вы — **полноценный Computer Scientist**:
+
+### Криптография & Security
+- Реализовывать классические шифры (XOR, Caesar, Vigenère)
+- Проводить frequency analysis и Chi-squared tests
+- Понимать blockchain и Proof-of-Work
+- Верифицировать целостность данных через хеши
+- Детектировать подделки через cascade validation
+
+### Алгоритмы (TAOCP)
+- Реализовывать 8 алгоритмов сортировки (включая Knuth's Shell Sort, Heapsort)
+- Выбирать оптимальный алгоритм для задачи
+- Проводить математический анализ сложности
+- Использовать Knuth Shuffle для честной рандомизации
+- Применять sentinel optimization
+
+### Структуры данных
+- Создавать Hash Tables с O(1) поиском
+- Реализовывать AVL Trees с автобалансировкой
+- Интегрировать множество структур в единую систему
+- Анализировать trade-offs (speed vs memory)
+- Проектировать enterprise-grade архитектуры
 
 ---
 
 <div align="center">
 
-**MOONLIGHT OPERATION**  
-*Season 4 of 8*
+**🌙 MOONLIGHT OPERATION**  
+*Season 4 of 8 — Complete*
 
-[← Season 3](../season-3-networks/) | [Main README](../README.md) | [Season 5 →](../season-5-embedded-arduino/)
+**"The Art of Computer Programming is not just a book. It's a philosophy."** — V.
+
+[← Season 3: Networks](../season-3-networks/) | [Main README](../README.md) | Season 5 (Coming Soon)
+
+---
+
+**Season 4 Complete!** ✅  
+Crypto → Blockchain → Algorithms → Data Structures
+
+**4 Episodes • 20+ Algorithms • 7 Data Structures • 250K Documents**
 
 </div>
