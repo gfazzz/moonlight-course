@@ -140,8 +140,18 @@
 
 ### Установка
 ```bash
-cd /Users/sergiokilluminati/Dev/dev-c/custom
-# Курс готов к использованию!
+# Клонируйте репозиторий
+git clone https://github.com/yourusername/moonlight-course.git
+cd moonlight-course
+
+# Изучите структуру курса
+cat README.md
+cat SCENARIO.md
+cat CURRICULUM.md
+
+# Начните с первого эпизода
+cd season-1-foundations/episode-01-strange-message
+cat README.md
 ```
 
 ### Первые шаги
@@ -151,22 +161,25 @@ cd /Users/sergiokilluminati/Dev/dev-c/custom
 
 ---
 
-## 📋 Прогресс
+## 📋 Статус разработки курса
 
-Отмечайте прогресс по мере прохождения:
+```
+╔═══════════════════════════════════════════════════════╗
+║  MOONLIGHT COURSE - Development Status                ║
+╠═══════════════════════════════════════════════════════╣
+║  ✅ Season 1: Foundations          [████████] 100%   ║
+║  ✅ Season 2: Memory & Pointers    [████████] 100%   ║
+║  ✅ Season 3: Networks             [████████] 100%   ║
+║  ✅ Season 4: Crypto & Algorithms  [████████] 100%   ║
+║  📝 Season 5: Financial Markets    [░░░░░░░░]   0%   ║
+║  📝 Season 6: Embedded & IoT       [░░░░░░░░]   0%   ║
+║  📝 Season 7: System Programming   [░░░░░░░░]   0%   ║
+║  📝 Season 8: AI & Data Science    [░░░░░░░░]   0%   ║
+╚═══════════════════════════════════════════════════════╝
 
-- [x] **Season 1: Foundations** ✅ (Episodes 1-4)
-- [x] **Season 2: Memory & Pointers** ✅ (Episodes 5-8)
-- [x] **Season 3: Networks** ✅ (Episodes 9-12)
-- [x] **Season 4: Crypto & Algorithms** ✅ 75% (Episodes 13-16)
-- [x] **Season 5: Financial Markets** ✅💰 (Episodes 17-20)
-- [ ] **Season 6: Embedded & IoT** (Episodes 21-24)
-- [ ] **Season 7: System Programming** (Episodes 25-28)
-- [ ] **Season 8: AI & Data Science** (Episodes 29-32)
-- [ ] **Season 9: Advanced Systems** 🚀⚛️ (Episodes 33-37)
-- [ ] **Season 10: Final Mission** 🌌🚀 (Episodes 38-42)
-
-**Прогресс:** 21/42 эпизода (50% структура) | **Готовых сезонов:** 5/10 🎉
+📊 Всего готово: 16/32 эпизодов (50%)
+🎯 Следующий этап: Season 5 (Financial Markets)
+```
 
 ---
 
