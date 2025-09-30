@@ -9,8 +9,8 @@
 
 ### 1. Проверьте установку компилятора
 
-На macOS компилятор уже установлен. Проверьте:
-
+#### На macOS:
+Компилятор уже установлен. Проверьте:
 ```bash
 gcc --version
 # Должно вывести версию GCC или Apple clang
@@ -19,6 +19,21 @@ gcc --version
 Если не установлен:
 ```bash
 xcode-select --install
+```
+
+#### На Linux (Ubuntu/Debian):
+```bash
+gcc --version
+# Если не установлен:
+sudo apt update
+sudo apt install build-essential
+```
+
+#### На Linux (Fedora/RHEL):
+```bash
+gcc --version
+# Если не установлен:
+sudo dnf install gcc make
 ```
 
 ### 2. Убедитесь, что вы в правильной директории
