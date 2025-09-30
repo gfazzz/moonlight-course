@@ -1,8 +1,6 @@
 /*
- * MOONLIGHT Protocol - Episode 22
+ * MOONLIGHT Protocol - Episode 22 SOLUTION
  * Industrial Protocols: Wiegand & Modbus
- * 
- * ЗАДАНИЕ: Реализовать парсер Wiegand-26 и Modbus RTU client
  */
 
 #include <stdio.h>
@@ -12,127 +10,119 @@
 #include <stdlib.h>
 
 // ============================================================================
-// ЧАСТЬ 1: WIEGAND PROTOCOL
+// WIEGAND PROTOCOL
 // ============================================================================
 
 typedef struct {
-    uint8_t facility_code;  // 8 бит
-    uint16_t card_id;       // 16 бит
-    bool valid;             // Проверка чётности
+    uint8_t facility_code;
+    uint16_t card_id;
+    bool valid;
 } WiegandCard;
 
-/**
- * Парсинг Wiegand-26 формата
- * 
- * Формат: [P0][FC:8][ID:16][P1]
- * P0 = even parity первых 13 бит
- * P1 = odd parity последних 13 бит
- * 
- * Пример: 0x1A2B3C4 = 00011010001010110011110001100100
- */
 WiegandCard parse_wiegand26(uint32_t raw_data) {
     WiegandCard card = {0};
     
-    // TODO: Извлечь биты чётности, FC и Card ID
-    // uint8_t p0 = ...
-    // uint8_t fc = ...
-    // uint16_t card_id = ...
-    // uint8_t p1 = ...
+    // Извлечь биты
+    uint8_t p0 = (raw_data >> 25) & 0x01;
+    uint8_t fc = (raw_data >> 17) & 0xFF;
+    uint16_t id = (raw_data >> 1) & 0xFFFF;
+    uint8_t p1 = raw_data & 0x01;
     
-    // TODO: Проверить even parity для первых 13 бит (включая P0)
-    // Подсказка: используйте __builtin_popcount()
+    // Проверка чётности P0 (even parity для первых 13 бит)
+    uint32_t first_half = (raw_data >> 13) & 0x1FFF;
+    int count0 = __builtin_popcount(first_half);
+    bool p0_valid = ((count0 % 2) == 0);
     
-    // TODO: Проверить odd parity для последних 13 бит (включая P1)
+    // Проверка P1 (odd parity для последних 13 бит)
+    uint32_t second_half = raw_data & 0x1FFF;
+    int count1 = __builtin_popcount(second_half);
+    bool p1_valid = ((count1 % 2) == 1);
     
-    // TODO: Заполнить структуру card
+    card.facility_code = fc;
+    card.card_id = id;
+    card.valid = p0_valid && p1_valid;
     
     return card;
 }
 
-/**
- * Генерация валидного Wiegand-26 кода
- */
-uint32_t generate_wiegand26(uint8_t facility_code, uint16_t card_id) {
+uint32_t generate_wiegand26(uint8_t fc, uint16_t card_id) {
     uint32_t data = 0;
     
-    // TODO: Собрать средние биты (FC и ID)
+    // Собрать средние биты (без чётности)
+    data = ((uint32_t)fc << 17) | ((uint32_t)card_id << 1);
     
-    // TODO: Вычислить P0 (even parity)
+    // Вычислить P0 (even parity)
+    uint32_t first_half = (data >> 13) & 0x1FFF;
+    int count0 = __builtin_popcount(first_half);
+    uint8_t p0 = (count0 % 2 == 0) ? 0 : 1;
     
-    // TODO: Вычислить P1 (odd parity)
+    // Вычислить P1 (odd parity)
+    uint32_t second_half = data & 0x1FFF;
+    int count1 = __builtin_popcount(second_half);
+    uint8_t p1 = (count1 % 2 == 1) ? 1 : 0;
     
-    // TODO: Добавить биты чётности
+    // Добавить биты чётности
+    data |= ((uint32_t)p0 << 25);
+    data |= p1;
     
     return data;
 }
 
-/**
- * Проверка валидности Wiegand кода
- */
 bool wiegand_is_valid(uint32_t raw_data) {
     WiegandCard card = parse_wiegand26(raw_data);
     return card.valid;
 }
 
 // ============================================================================
-// ЧАСТЬ 2: MODBUS RTU PROTOCOL
+// MODBUS RTU PROTOCOL
 // ============================================================================
 
-/**
- * Вычисление Modbus CRC16
- * Полином: 0xA001 (LSB first)
- * 
- * Алгоритм:
- * 1. CRC = 0xFFFF
- * 2. Для каждого байта:
- *    - XOR с CRC
- *    - 8 раз: если младший бит = 1, сдвиг вправо и XOR с 0xA001
- *             иначе просто сдвиг вправо
- */
 uint16_t modbus_crc16(const uint8_t *data, size_t len) {
     uint16_t crc = 0xFFFF;
     
-    // TODO: Реализовать CRC16 по алгоритму Modbus
+    for (size_t i = 0; i < len; i++) {
+        crc ^= (uint16_t)data[i];
+        
+        for (int j = 0; j < 8; j++) {
+            if (crc & 0x0001) {
+                crc = (crc >> 1) ^ 0xA001;
+            } else {
+                crc >>= 1;
+            }
+        }
+    }
     
     return crc;
 }
 
-/**
- * Создать Modbus RTU запрос "Read Holding Registers" (0x03)
- * 
- * Формат: [Slave ID][0x03][Start Addr Hi][Start Addr Lo][Count Hi][Count Lo][CRC Lo][CRC Hi]
- * 
- * Возвращает длину запроса (обычно 8 байт)
- */
 int modbus_read_holding_registers(uint8_t *buf, uint8_t slave_id, 
                                    uint16_t start_addr, uint16_t count) {
-    // TODO: Заполнить буфер
-    // buf[0] = slave_id;
-    // buf[1] = 0x03; // Function code
-    // ...
+    buf[0] = slave_id;
+    buf[1] = 0x03;  // Read Holding Registers
+    buf[2] = (start_addr >> 8) & 0xFF;
+    buf[3] = start_addr & 0xFF;
+    buf[4] = (count >> 8) & 0xFF;
+    buf[5] = count & 0xFF;
     
-    // TODO: Вычислить и добавить CRC
+    // Добавить CRC
+    uint16_t crc = modbus_crc16(buf, 6);
+    buf[6] = crc & 0xFF;
+    buf[7] = (crc >> 8) & 0xFF;
     
     return 8;
 }
 
-/**
- * Проверить CRC в Modbus ответе
- */
 bool modbus_check_crc(const uint8_t *frame, size_t len) {
     if (len < 4) return false;
     
-    // TODO: Извлечь полученный CRC (последние 2 байта, LSB first)
+    uint16_t received_crc = frame[len-2] | (frame[len-1] << 8);
+    uint16_t calculated_crc = modbus_crc16(frame, len - 2);
     
-    // TODO: Вычислить CRC для данных (все кроме последних 2 байт)
-    
-    // TODO: Сравнить
-    
-    return false;
+    return received_crc == calculated_crc;
 }
 
 // ============================================================================
-// ЧАСТЬ 3: RFID EMULATOR
+// RFID EMULATOR
 // ============================================================================
 
 #define MAX_CARDS 256
@@ -148,15 +138,6 @@ typedef struct {
     int count;
 } CardList;
 
-/**
- * Загрузить список карт из файла
- * Формат: FC,ID (одна карта на строку)
- * 
- * Пример:
- * 123,45678
- * 123,45679
- * 200,12345
- */
 int load_cards(const char *filename, CardList *list) {
     FILE *f = fopen(filename, "r");
     if (!f) {
@@ -166,26 +147,28 @@ int load_cards(const char *filename, CardList *list) {
     
     list->count = 0;
     
-    // TODO: Читать строки и парсить FC,ID
-    // Подсказка: fscanf(f, "%hhu,%hu", &fc, &id)
+    while (list->count < MAX_CARDS) {
+        unsigned int fc, id;
+        if (fscanf(f, "%u,%u", &fc, &id) == 2) {
+            list->cards[list->count].fc = (uint8_t)fc;
+            list->cards[list->count].id = (uint16_t)id;
+            list->count++;
+        } else {
+            break;
+        }
+    }
     
     fclose(f);
     return list->count;
 }
 
-/**
- * Сгенерировать Wiegand коды для всех карт
- */
 void generate_all_codes(CardList *list) {
     for (int i = 0; i < list->count; i++) {
-        // TODO: Сгенерировать Wiegand код для каждой карты
-        // list->cards[i].wiegand_code = generate_wiegand26(...)
+        list->cards[i].wiegand_code = 
+            generate_wiegand26(list->cards[i].fc, list->cards[i].id);
     }
 }
 
-/**
- * Вывести все коды
- */
 void print_codes(const CardList *list) {
     printf("=== RFID CARDS ===\n");
     for (int i = 0; i < list->count; i++) {
@@ -196,13 +179,12 @@ void print_codes(const CardList *list) {
 }
 
 // ============================================================================
-// MAIN - ТЕСТИРОВАНИЕ
+// MAIN
 // ============================================================================
 
 void test_wiegand() {
     printf("\n=== WIEGAND TEST ===\n");
     
-    // Тест 1: Генерация и парсинг
     uint32_t code = generate_wiegand26(123, 45678);
     printf("Generated: FC=123, ID=45678 -> 0x%08X\n", code);
     
@@ -210,8 +192,7 @@ void test_wiegand() {
     printf("Parsed: FC=%u, ID=%u, Valid=%s\n", 
            card.facility_code, card.card_id, card.valid ? "YES" : "NO");
     
-    // Тест 2: Известный код
-    uint32_t known = 0x1A2B3C4;  // Пример кода
+    uint32_t known = 0x1A2B3C4;
     WiegandCard card2 = parse_wiegand26(known);
     printf("Known code 0x%08X: FC=%u, ID=%u, Valid=%s\n",
            known, card2.facility_code, card2.card_id, 
@@ -221,12 +202,10 @@ void test_wiegand() {
 void test_modbus() {
     printf("\n=== MODBUS TEST ===\n");
     
-    // Тест CRC16
     uint8_t test_data[] = {0x01, 0x03, 0x00, 0x00, 0x00, 0x0A};
     uint16_t crc = modbus_crc16(test_data, sizeof(test_data));
     printf("CRC16 of request: 0x%04X (expected: 0xC5CD)\n", crc);
     
-    // Тест создания запроса
     uint8_t request[8];
     int len = modbus_read_holding_registers(request, 1, 0, 10);
     
@@ -240,7 +219,6 @@ void test_modbus() {
 void test_rfid_emulator() {
     printf("\n=== RFID EMULATOR TEST ===\n");
     
-    // Создать тестовый файл
     FILE *f = fopen("test_cards.txt", "w");
     if (f) {
         fprintf(f, "123,45678\n");
@@ -274,7 +252,6 @@ int main(int argc, char *argv[]) {
             printf("Usage: %s [--wiegand|--modbus|--rfid]\n", argv[0]);
         }
     } else {
-        // Запустить все тесты
         test_wiegand();
         test_modbus();
         test_rfid_emulator();
