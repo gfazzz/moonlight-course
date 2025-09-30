@@ -912,22 +912,22 @@
 
 **Артефакт:** UI framework `MoonUI`
 
-### Episode 36: "Military Ballistics" 🎯
-**Сюжет:** Баллистический компьютер для точных расчетов
+### Episode 36: "Military Systems & Radar" 🎯
+**Сюжет:** Создание системы отслеживания и целеуказания
 
 **Технологии:**
-- Differential equations (Runge-Kutta)
-- Physics simulation
-- Geodetic calculations
-- Wind compensation
+- Radar signal processing
+- Kalman filtering (tracking)
+- GPS coordinate systems
+- Target prediction
 
 **Задачи:**
-1. **physics.c** — Физическая модель
-2. **rk4.c** — Численный solver
-3. **ballistic.c** — Расчет траекторий
-4. **targeting.c** — Система целеуказания
+1. **radar.c** — Обработка радарных данных
+2. **kalman.c** — Kalman filter для трекинга
+3. **gps.c** — GPS координаты и преобразования
+4. **tracking.c** — Система отслеживания целей
 
-**Артефакт:** `BallisticCore` — милитари-расчеты
+**Артефакт:** `MilitaryTracker` — система отслеживания
 
 ### Episode 37: "Quantum Computing" ⚛️
 **Сюжет:** "RSA падёт. Шор докажет" — Виктор
@@ -998,8 +998,8 @@
 
 **Артефакт:** Optimized MOONLIGHT system
 
-### Episode 42: "The Final Operation"
-**Сюжет:** OPERATION MOONLIGHT: ACTIVATED
+### Episode 42: "The Final Operation" 🚀🌌
+**Сюжет:** OPERATION MOONLIGHT: TO THE MOON AND BEYOND!
 
 **Задачи:**
 1. Locate enemy command center
@@ -1007,7 +1007,8 @@
 3. Extract intelligence
 4. Neutralize quantum threat
 5. Protect financial systems
-6. Expose the truth
+6. **SPACE MISSION:** Track satellite, calculate orbital mechanics
+7. Expose the truth
 
 **Финальный артефакт:**  
 **Полноценная система MOONLIGHT** — интегрированная платформа для:
@@ -1016,8 +1017,9 @@
 - Intelligence gathering
 - System monitoring
 - Threat detection
+- **🚀 Satellite tracking & orbital mechanics**
 
-**🏆 MISSION ACCOMPLISHED!**
+**🏆 MISSION ACCOMPLISHED! From Earth to the Stars! 🌍→🌌**
 
 ---
 
@@ -1033,8 +1035,8 @@
 | Season 6 | 21-24 | 14-18 |
 | Season 7 | 25-28 | 12-16 |
 | Season 8 | 29-32 | 14-18 |
-| Season 9 ⭐ | 33-37 | 16-20 |
-| Season 10 🎯 | 38-42 | 25-35 |
+| Season 9 🚀⚛️ | 33-37 | 18-24 |
+| Season 10 🌌🚀 | 38-42 | 20-30 |
 | **ИТОГО** | **42 эпизода** | **~145-200 часов** |
 
 ---
@@ -1063,6 +1065,7 @@
 
 ### Платформы
 - macOS (основная)
+- Linux (Ubuntu/Debian/Fedora)
 - FreeBSD (опционально, для системного программирования)
 - Arduino (для embedded)
 

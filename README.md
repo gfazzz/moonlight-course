@@ -107,23 +107,23 @@
 - Episode 32: Predictive Models
 - **Проект**: ML-система предсказания угроз
 
-### Season 9: Advanced Systems ⭐
+### Season 9: Advanced Systems 🚀⚛️
 *"От компиляторов до квантовой физики"*
 - Episode 33: Building a Language (interpreter, AST, GC)
 - Episode 34: Database from Scratch (B+Tree, SQL parser)
 - Episode 35: Terminal UI Framework (ncurses, widgets)
-- Episode 36: Military Ballistics 🎯 (physics, Runge-Kutta)
-- Episode 37: Quantum Computing ⚛️ (qubits, Shor's algorithm)
+- Episode 36: Military Systems & Radar 🎯 (tracking, Kalman filter, GPS)
+- Episode 37: Quantum Computing ⚛️ (qubits, Shor's algorithm, superposition)
 - **Проект**: Продвинутые инструменты для MOONLIGHT
 
-### Season 10: FINAL MISSION 🎯
-*"Всё сходится воедино"*
+### Season 10: FINAL MISSION 🌌🚀
+*"Всё сходится воедино. До луны и дальше!"*
 - Episode 38: System Architecture (microservices, message bus)
 - Episode 39: Intelligence Dashboard (real-time TUI)
-- Episode 40: Offensive & Defensive Ops (pentesting, IDS/IPS)
-- Episode 41: Performance Optimization (profiling, SIMD)
-- Episode 42: The Final Operation (MOONLIGHT activated!)
-- **Проект**: Полная система MOONLIGHT — финальная операция
+- Episode 40: Offensive & Defensive Ops (pentesting, IDS/IPS, honeypots)
+- Episode 41: Performance Optimization (profiling, perf, SIMD)
+- Episode 42: The Final Operation 🚀 (MOONLIGHT + SPACE: satellite tracking, orbital mechanics!)
+- **Проект**: Полная система MOONLIGHT — от Земли до космоса! 🌍→🌌
 
 ---
 
@@ -163,10 +163,10 @@ cd /Users/sergiokilluminati/Dev/dev-c/custom
 - [ ] **Season 6: Embedded & IoT** (Episodes 21-24)
 - [ ] **Season 7: System Programming** (Episodes 25-28)
 - [ ] **Season 8: AI & Data Science** (Episodes 29-32)
-- [ ] **Season 9: Advanced Systems** ⭐ (Episodes 33-37)
-- [ ] **Season 10: Final Mission** 🎯 (Episodes 38-42)
+- [ ] **Season 9: Advanced Systems** 🚀⚛️ (Episodes 33-37)
+- [ ] **Season 10: Final Mission** 🌌🚀 (Episodes 38-42)
 
-**Прогресс:** 20/42 эпизода (47.6%) | **Готовых сезонов:** 5/10 🎉
+**Прогресс:** 21/42 эпизода (50% структура) | **Готовых сезонов:** 5/10 🎉
 
 ---
 

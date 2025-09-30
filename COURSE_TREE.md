@@ -92,17 +92,26 @@
 │
 ├── 📁 season-8-ai-and-data/            # ИИ и анализ данных
 │   ├── 📄 README.md
-│   ├── 📁 episode-29-big-data/
-│   ├── 📁 episode-30-statistical-analysis/
-│   ├── 📁 episode-31-neural-network/
-│   └── 📁 episode-32-prediction/
+│   ├── 📁 episode-29-big-data/              # Big Data parsing
+│   ├── 📁 episode-30-statistical-analysis/  # Stats & GSL
+│   ├── 📁 episode-31-neural-network/        # Neural nets from scratch
+│   └── 📁 episode-32-prediction/            # Predictive models
 │
-└── 📁 final-operation/                 # Финальный проект
+├── 📁 season-9-advanced-systems/      # Продвинутые системы 🚀⚛️
+│   ├── 📄 README.md
+│   ├── 📁 episode-33-language/              # Compiler/Interpreter
+│   ├── 📁 episode-34-database/              # Database engine
+│   ├── 📁 episode-35-tui-framework/         # TUI framework
+│   ├── 📁 episode-36-ballistics/            # 🎯 Military: Radar & GPS tracking
+│   └── 📁 episode-37-quantum/               # ⚛️ Quantum computing
+│
+└── 📁 season-10-final-mission/        # Финальная миссия 🌌🚀
     ├── 📄 README.md
-    ├── 📄 briefing.md
-    ├── 📄 spec.md
-    ├── 📁 modules/                     # Модули из предыдущих сезонов
-    └── 📁 integration/                 # Код интеграции
+    ├── 📁 episode-38-architecture/          # System architecture
+    ├── 📁 episode-39-dashboard/             # Intelligence dashboard
+    ├── 📁 episode-40-offensive-defensive/   # Offensive & Defensive ops
+    ├── 📁 episode-41-performance/           # Performance profiling
+    └── 📁 episode-42-final-operation/       # 🚀 THE FINAL: Space Operations!
 ```
 
 ---
@@ -118,11 +127,12 @@
 | Season 3 ✅ | 9-12 | 12-16 | TCP/IP, сокеты, протоколы |
 | Season 4 ⏳ | 13-16 | 12-16 | Криптография, blockchain, алгоритмы, структуры данных |
 | Season 5 ✅💰 | 17-20 | 12-16 | Финансовые рынки, трейдинг, риски, crypto (Шиллер) |
-| Season 6 | 21-24 | 14-18 | Embedded & IoT: Arduino, СКУД, видео, промышленные протоколы |
-| Season 7 | 25-28 | 12-16 | Процессы, потоки, IPC, системные вызовы |
-| Season 8 | 29-32 | 14-18 | Большие данные, статистика, ML на C |
-| Final | - | 20-30 | Комплексный проект |
-| **ИТОГО** | **32+** | **~108-150** | **Полный стек C** |
+| Season 6 📟 | 21-24 | 14-18 | Embedded & IoT: Arduino, СКУД, видео, промышленные протоколы |
+| Season 7 🖥️ | 25-28 | 12-16 | Процессы, потоки, IPC, системные вызовы |
+| Season 8 🤖 | 29-32 | 14-18 | Большие данные, статистика, ML на C |
+| Season 9 🚀⚛️ | 33-37 | 18-24 | Компиляторы, БД, TUI, военные системы, квантовая физика |
+| Season 10 🌌 | 38-42 | 20-30 | Финальная интеграция: Архитектура, Offensive/Defensive, КОСМОС! |
+| **ИТОГО** | **42** | **145-200** | **Полный стек C от основ до космоса** 🌍→🚀→🌌 |
 
 ---
 
@@ -131,16 +141,19 @@
 ```
 Сложность
     ↑
-    │                                              ╱╲  Final
-    │                                            ╱    ╲
-    │                                          ╱        ╲
-    │                                  ╱────╲            ╲
-    │                          ╱────╲╱  S7   ╲      S8    ╲
-    │                  ╱────╲╱  S5   ╲────────╲──────────  ╲
-    │          ╱────╲╱  S3   ╲────────╲   S6   ╲            ╲
-    │  ╱────╲╱  S1   ╲────────╲   S4   ╲────────╲            ╲
-    │╱  Intro ╲──────────╲S2   ╲────────╲────────╲────────────╲
-    └──────────────────────────────────────────────────────────→ Время
+    │                                                            🚀 S10 (SPACE!)
+    │                                                          ╱╲
+    │                                                        ╱    ╲
+    │                                              ⚛️ S9  ╱        ╲
+    │                                            ╱────╲╱            ╲
+    │                                    🤖 S8╱        ╲              ╲
+    │                          🖥️ S7  ╱────╲            ╲              ╲
+    │                  📟 S6 ╱────╲╱        ╲              ╲            ╲
+    │          💰 S5 ╱────╲╱        ╲   🔐 S4╲              ╲            ╲
+    │  🌐 S3 ╱────╲╱        ╲          ╲────────╲              ╲          ╲
+    │╱────╲╱  S1   ╲  🧠 S2  ╲            ╲        ╲              ╲          ╲
+    │  Intro ╲──────────╲────────╲────────╲────────╲──────────────╲──────────╲
+    └──────────────────────────────────────────────────────────────────────────→ Время
 ```
 
 **Легенда:**
@@ -171,15 +184,18 @@ Season 1 (Foundations) ✅
     │                                          ↓
     └──────────────────────────────→ Season 8 (AI & Data)
                                                ↓
-                                      FINAL OPERATION
+                                      Season 9 (Advanced)
+                                               ↓
+                                     Season 10 (FINAL 🚀)
 ```
 
 **Обязательный порядок:**
-- Season 1 → всё остальное
-- Season 2 → Season 7
-- Seasons 3-6 можно проходить в любом порядке (но лучше по номерам)
+- Season 1 → всё остальное (ОБЯЗАТЕЛЬНА первой!)
+- Season 2 → Season 7 (память → системное программирование)
+- Seasons 3-6 можно проходить в любом порядке (но рекомендуется по номерам)
 - Season 7-8 требуют знания предыдущих
-- Final требует всё
+- Season 9 требует знания Seasons 1-8 (продвинутый уровень)
+- Season 10 требует ВСЁ (финальная интеграция всего курса)
 
 ---
 
@@ -192,13 +208,15 @@ Season 1 (Foundations) ✅
 | S1 | `crypto_utils`, `file_io` | Базовые утилиты |
 | S2 | `memory_manager`, `data_structures` | Управление памятью |
 | S3 | `moonlight_client`, `packet_sniffer` | Сетевая коммуникация |
-| S4 | `libmoonlight-crypto`, `algos` | Криптография |
-| S5 | Arduino прошивки, embedded код | Управление устройствами |
-| S6 | `access_controller`, `camera_api` | Слаботочные системы |
+| S4 | `libmoonlight-crypto`, `blockchain`, `algos` | Криптография + алгоритмы |
+| S5 | `finance_engine`, `trading_algo` | Финансовый анализ |
+| S6 | Arduino прошивки, `iot_controller` | Embedded & IoT |
 | S7 | `moonlight-agent`, IPC модули | Системный уровень |
-| S8 | `moonlight-prophet`, ML модели | Анализ данных |
+| S8 | `moonlight-prophet`, ML модели | Анализ данных, AI |
+| S9 | `moonlang`, `moondb`, `MoonUI`, `quantum_sim` | Продвинутые инструменты |
+| S10 | **ПОЛНАЯ ИНТЕГРАЦИЯ** | Вся система MOONLIGHT 🌌 |
 
-**Финал:** Всё объединяется в единую систему MOONLIGHT
+**Season 10:** Всё объединяется в единую систему MOONLIGHT — от Земли до космоса! 🌍→🚀→🌌
 
 ---
 
@@ -221,48 +239,66 @@ Season 1 (Foundations) ✅
 ✅ Протоколы  
 
 ### Season 4: Crypto & Algorithms
-✅ Алгоритмы  
-✅ Криптография  
-✅ Оптимизация  
+✅ Криптография (XOR, Caesar, blockchain)  
+✅ Алгоритмы (сортировки, поиск)  
+✅ Структуры данных (деревья, хеш-таблицы)  
 
-### Season 5: Embedded
-✅ Arduino  
-✅ GPIO, сенсоры  
-✅ I2C, SPI  
+### Season 5: Financial Markets 💰
+✅ Микроструктура рынка  
+✅ Торговые алгоритмы  
+✅ Риск-менеджмент  
+✅ Crypto & DeFi  
 
-### Season 6: Low-voltage
-✅ СКУД  
-✅ Видеонаблюдение  
-✅ Modbus  
+### Season 6: Embedded & IoT 📟
+✅ Arduino & GPIO  
+✅ Промышленные протоколы (Modbus, Wiegand, СКУД)  
+✅ IP-камеры (RTSP), видеонаблюдение  
+✅ IoT интеграция (MQTT)  
 
-### Season 7: System Programming
-✅ Процессы, потоки  
-✅ IPC  
+### Season 7: System Programming 🖥️
+✅ Процессы, демоны  
+✅ Потоки, параллелизм  
+✅ IPC (pipes, queues, shared memory)  
 ✅ Системные вызовы  
 
-### Season 8: AI & Data
-✅ Большие данные  
-✅ Статистика  
-✅ Нейронные сети  
+### Season 8: AI & Data 🤖
+✅ Big Data processing  
+✅ Статистический анализ  
+✅ Нейронные сети с нуля  
+✅ Предсказательные модели  
+
+### Season 9: Advanced Systems 🚀⚛️
+✅ Компиляторы/интерпретаторы  
+✅ Базы данных с нуля  
+✅ TUI фреймворки  
+✅ Военные системы (радар, GPS, Kalman) 🎯  
+✅ Квантовые вычисления (Shor, Grover) ⚛️  
+
+### Season 10: Final Mission 🌌🚀
+✅ Системная архитектура  
+✅ Intelligence Dashboard  
+✅ Offensive & Defensive Ops  
+✅ Профилирование производительности  
+✅ **КОСМИЧЕСКАЯ ОПЕРАЦИЯ** (спутники, орбитальная механика) 🛰️  
 
 ---
 
 ## 🚀 Рекомендуемый темп
 
 ### Интенсивный (full-time обучение):
-- **1-2 эпизода в день**
-- **Season 1:** 2-4 дня
-- **Весь курс:** ~1-1.5 месяца
+- **2 эпизода в день**
+- **Season 1:** 2-3 дня
+- **Весь курс (42 эпизода):** ~3-4 недели
 
 ### Умеренный (part-time):
-- **2-3 эпизода в неделю**
+- **3-4 эпизода в неделю**
 - **Season 1:** 1-2 недели
 - **Весь курс:** ~3-4 месяца
 
 ### Расслабленный (выходные):
-- **1 эпизод в выходные**
-- **Season 1:** ~1 месяц
-- **Весь курс:** ~6-8 месяцев
+- **1-2 эпизода в неделю**
+- **Season 1:** ~3-4 недели
+- **Весь курс:** ~6-10 месяцев
 
 **Совет:** Качество важнее скорости. Лучше понять глубоко, чем пройти быстро.
 
@@ -271,15 +307,15 @@ Season 1 (Foundations) ✅
 ## 📁 Размер файлов (примерно)
 
 ```
-custom/
-├── README, docs                ~50 KB
-├── Season 1 (4 эпизода)        ~500 KB
-├── Season 2-8 (28 эпизодов)    ~3.5 MB
-├── Final operation             ~500 KB
-├── Ваш код (artifacts/)        ~2-5 MB
-└── Скомпилированные бинарники  ~10-20 MB
+moonlight-course/
+├── README, docs                ~80 KB
+├── Seasons 1-5 (20 эпизодов)   ~2.5 MB
+├── Seasons 6-8 (12 эпизодов)   ~1.8 MB
+├── Seasons 9-10 (10 эпизодов)  ~1.5 MB
+├── Ваш код (artifacts/)        ~3-8 MB
+└── Скомпилированные бинарники  ~15-30 MB
 
-ИТОГО: ~15-30 MB
+ИТОГО: ~20-40 MB (621 файл | 42 эпизода | 10 сезонов)
 ```
 
 **Курс очень компактный!** Основной объём — ваш код и знания.
