@@ -1,0 +1,8 @@
+The quick brown fox jumps over the lazy dog. This is a sample text for frequency analysis.
+In English, the letter E is the most common letter, appearing approximately 12.7 percent of the time.
+The letters T, A, O, I, N are also very frequent. By analyzing the frequency distribution of letters,
+we can often break simple substitution ciphers like the Caesar cipher. This technique, known as
+frequency analysis, was discovered by the Arab mathematician Al-Kindi in the 9th century.
+It revolutionized cryptanalysis and remained one of the most powerful tools for breaking ciphers
+for over a thousand years. Even today, understanding letter frequencies is fundamental to cryptography.
+
