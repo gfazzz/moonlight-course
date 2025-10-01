@@ -9,6 +9,16 @@ DECODER="$ARTIFACTS_DIR/decoder"
 EXPECTED="expected.txt"
 OUTPUT="output.txt"
 
+# Check if byte_printer.c exists and run its test first
+if [ -f "$ARTIFACTS_DIR/byte_printer.c" ]; then
+    echo "Found byte_printer.c - running optional test first..."
+    echo ""
+    ./test_byte_printer.sh
+    echo ""
+    echo "─────────────────────────────────────────"
+    echo ""
+fi
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'

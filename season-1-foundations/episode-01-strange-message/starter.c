@@ -34,6 +34,47 @@ void warmup_example() {
 
 
 /* ========================================
+ * BYTE_PRINTER.C - Array Processing (NEW!)
+ * ======================================== */
+
+// TODO: Complete this byte array analysis program
+void byte_printer_example() {
+    // Task: Work with byte arrays
+    
+    // TODO: 1. Declare byte array
+    // unsigned char bytes[] = {0x42, 0x1A, 0xFF, 0x00, 0x7E};
+    
+    // TODO: 2. Calculate array length
+    // int length = sizeof(bytes) / sizeof(bytes[0]);
+    
+    // TODO: 3. Print header
+    // printf("=== BYTE ARRAY ANALYSIS ===\n");
+    
+    // TODO: 4. Loop through and print each byte
+    // for (int i = 0; i < length; i++) {
+    //     printf("Byte %d: 0x%02X (%d decimal)\n", i, bytes[i], bytes[i]);
+    // }
+    // printf("\n");
+    
+    // TODO: 5. Calculate sum of all bytes
+    // unsigned int sum = 0;
+    // for (int i = 0; i < length; i++) {
+    //     sum += bytes[i];
+    // }
+    // printf("Sum of all bytes: %u\n", sum);
+    
+    // TODO: 6. Find maximum byte
+    // unsigned char max = bytes[0];
+    // for (int i = 1; i < length; i++) {
+    //     if (bytes[i] > max) {
+    //         max = bytes[i];
+    //     }
+    // }
+    // printf("Max byte: 0x%02X (%u)\n", max, max);
+}
+
+
+/* ========================================
  * DECODER.C - Main Decoder
  * ======================================== */
 
