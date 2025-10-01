@@ -44,9 +44,9 @@ sudo dnf install gcc make
 ### 2. Убедитесь, что вы в правильной директории
 
 ```bash
-cd /Users/sergiokilluminati/Dev/dev-c/custom
+cd ~/moonlight-course
 pwd
-# Должно показать: /Users/sergiokilluminati/Dev/dev-c/custom
+# Должно показать: /home/USERNAME/moonlight-course
 ```
 
 ### 3. Проверьте структуру
@@ -403,7 +403,7 @@ valgrind --leak-check=full ./program
 
 ```bash
 # Вернитесь в корень курса
-cd /Users/sergiokilluminati/Dev/dev-c/custom
+cd ~/moonlight-course
 
 # Перейдите в первый эпизод
 cd season-1-foundations/episode-01-strange-message/
