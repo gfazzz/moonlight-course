@@ -1,7 +1,7 @@
 # OPERATION MOONLIGHT - Main Makefile
 # Root makefile for the entire course
 
-.PHONY: help list status clean-all
+.PHONY: help list status clean clean-all
 
 # Default target
 help:
@@ -14,7 +14,8 @@ help:
 	@echo "  make help        - Show this help message"
 	@echo "  make list        - List all seasons and episodes"
 	@echo "  make status      - Show course progress"
-	@echo "  make clean-all   - Clean all build artifacts"
+	@echo "  make clean       - Clean all binaries and build artifacts"
+	@echo "  make clean-all   - Same as clean"
 	@echo ""
 	@echo "To work on specific episode:"
 	@echo "  cd season-X-name/episode-XX-name/"
@@ -75,15 +76,21 @@ status:
 	@echo ""
 	@echo "To update progress, complete episodes and run tests."
 
-# Clean all build directories
-clean-all:
-	@echo "Cleaning all build artifacts..."
+# Clean compiled binaries and intermediate files
+clean:
+	@echo "Cleaning compiled binaries and intermediate files..."
 	@find . -type d -name "build" -exec rm -rf {} + 2>/dev/null || true
 	@find . -type f -name "*.o" -delete
 	@find . -type f -name "*.out" -delete
 	@find . -type f -name "a.out" -delete
 	@find . -type f -name "output.txt" -delete
-	@echo "✓ All build artifacts cleaned"
+	@echo "Removing episode executables..."
+	@find season-*/episode-* -maxdepth 1 -type f -executable -delete 2>/dev/null || true
+	@find season-*/episode-*/artifacts -maxdepth 1 -type f -executable -delete 2>/dev/null || true
+	@echo "✓ All build artifacts and executables cleaned"
+
+# Alias for clean
+clean-all: clean
 
 # Initialize course (create necessary directories)
 init:

@@ -11,6 +11,35 @@ build/
 *.exe
 a.out
 
+# Compiled executables without extension in episode directories
+# Pattern: ignore files with common executable suffixes
+**/episode-*/*_analyzer
+**/episode-*/*_swap
+**/episode-*/*_string
+**/episode-*/*_printer
+**/episode-*/*_mapper
+**/episode-*/*_navigator
+**/episode-*/*_loader
+**/episode-*/*_logger
+**/episode-*/*_decoder
+**/episode-*/*_monitor
+**/episode-*/*_solution
+**/episode-*/*_test
+**/episode-*/moonlight_*
+**/episode-*/moonlight-*
+**/episode-*/test_*
+
+# Specific known executables (Season 1 & 2)
+**/episode-*/array_analyzer
+**/episode-*/pointer_swap
+**/episode-*/dynamic_string
+**/episode-*/byte_printer
+**/episode-*/memory_mapper
+**/episode-*/pointer_navigator
+**/episode-*/dynamic_loader
+**/episode-*/fixed_logger
+**/episode-*/buggy_logger
+
 # Student solutions (optional - uncomment to hide student code)
 # **/artifacts/*.c
 # Allow .gitkeep to preserve folder structure
