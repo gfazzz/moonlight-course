@@ -17,6 +17,7 @@
 - **Практический подход**: Задачи-матрёшки, где каждое упражнение — часть большого проекта
 - **Реальные технологии**: FreeBSD, Arduino, сетевые протоколы, криптография, embedded systems
 - **Прогрессивное обучение**: От основ до продвинутых концепций
+- **🔗 Cumulative Code Reuse**: Переиспользование своего кода через `#include` — строишь арсенал инструментов! (см. [PROJECTS.md](PROJECTS.md))
 
 ### 🛠 Предметные области
 
@@ -44,12 +45,13 @@
 
 ## 🗂 Структура курса
 
-### Season 1: Foundations (Основы)
+### Season 1: Foundations (Основы) ✅
 *"Всё начинается с простого..."*
-- Типы данных, переменные, операторы
-- Условия и циклы
-- Функции и области видимости
-- **Проект**: Первый контакт — расшифровка перехваченного сообщения
+- Episode 01: Типы данных, переменные, операторы — byte operations
+- Episode 02: Условия (if/else/switch) — классификация данных
+- Episode 03: Циклы (for/while/do-while) — поиск паттернов
+- Episode 04: Функции и модульность — многофайловые программы
+- **Season Project**: `moonlight_decoder` — твой первый инструмент для расшифровки сообщений V.
 
 ### Season 2: Memory & Pointers (Память и указатели) ✅
 *"Знание того, где хранится информация — половина успеха"*
@@ -57,7 +59,7 @@
 - Episode 06: Указатели — навигация по цепочкам данных
 - Episode 07: Динамическая память — malloc/free, загрузчик архивов
 - Episode 08: Утечки памяти — поиск с valgrind/leaks
-- **Проект**: Система логирования без утечек
+- **Season Project**: `memory_manager` — контроль памяти + leak detector
 
 ### Season 3: Networks (Сети) ✅
 *"Всё связано. Нужно лишь найти нить"*
@@ -65,7 +67,7 @@
 - Episode 10: Socket programming — TCP клиент-сервер
 - Episode 11: Raw sockets — packet sniffer (требует root)
 - Episode 12: Перехват зашифрованных коммуникаций (финал Season 3)
-- **Проект**: Система перехвата и дешифровки сетевого трафика
+- **Season Project**: `network_interceptor` — перехват и анализ трафика агентов Z.
 
 ### Season 4: Crypto & Algorithms ✅ (упрощён v0.3.1)
 *"Секреты защищены не замками, а математикой"*
@@ -73,58 +75,59 @@
 - Episode 14: Blockchain & Hashes (Proof-of-Work, djb2)
 - Episode 15: Sorting & Search (5 базовых алгоритмов, Big O)
 - Episode 16: Data Structures (linked lists, stack/queue, BST, hash table basic)
-- **Проект**: Взлом криптосистемы + blockchain integrity
+- **Season Project**: `crypto_toolkit` — криптография + алгоритмы + структуры данных
 - **Время**: ~12-15ч (упрощён на 40% для плавной кривой обучения)
 
-### Season 5: Financial Markets ✅💰
+### Season 5: Financial Markets 💰
 *"Follow the money"*
 - Episode 17: Market Microstructure (OHLCV, bid-ask, depth)
 - Episode 18: Trading Algorithms (SMA, RSI, backtesting)
 - Episode 19: Risk & Portfolio (VaR, Sharpe ratio, Markowitz)
 - Episode 20: Crypto & DeFi (exchanges, liquidity pools, arbitrage)
-- **Проект**: Анализ финансовых потоков для обнаружения манипуляций
+- **Season Project**: `trading_system` — **использует Seasons 1-4** (crypto, memory, network, algorithms)
 
 ### Season 6: Embedded & IoT
 *"Реальный мир управляется кодом"*
 - Episode 21: Arduino & GPIO (sensors, actuators)
 - Episode 22: Industrial Protocols (СКУД, Wiegand, Modbus)
-- Episode 23: IP Cameras (RTSP, видеонаблюдение)
+- Episode 23: IP Cameras (RTSP, видеонаблюдение) + Drones/UAV 🚁
 - Episode 24: IoT Integration (MQTT, system bypass)
-- **Проект**: Компрометация IoT инфраструктуры
+- **Season Project**: `iot_controller` — **использует Seasons 1-4** (network для MAVLink, crypto для команд)
 
 ### Season 7: System Programming
 *"ОС — это поле боя"*
-- Episode 25: Processes & Daemons
+- Episode 25: Processes & Daemons (FreeBSD/macOS/Linux)
 - Episode 26: Threads & Parallelism
 - Episode 27: IPC (pipes, queues, shared memory)
 - Episode 28: Stealth Operation
-- **Проект**: Скрытый системный агент
+- **Season Project**: `stealth_agent` — **использует Seasons 1-6** (все инструменты для скрытой операции)
 
 ### Season 8: AI & Data Science
 *"Паттерны везде. Нужно научиться их видеть"*
-- Episode 29: Big Data Processing (mmap, stream processing)
-- Episode 30: Statistical Analysis (anomaly detection)
-- Episode 31: Neural Networks from Scratch
+- Episode 29: Big Data Processing (mmap, stream processing) — Heapsort, Shell Sort перенесены сюда
+- Episode 30: Statistical Analysis (anomaly detection) — Knuth Shuffle для Monte Carlo
+- Episode 31: Neural Networks from Scratch (C + Python для сравнения)
 - Episode 32: Predictive Models
-- **Проект**: ML-система предсказания угроз
+- **Season Project**: `ml_predictor` — **использует Seasons 1-7** (memory для datasets, algorithms для matrix ops)
 
 ### Season 9: Advanced Systems 🚀⚛️
 *"От компиляторов до квантовой физики"*
 - Episode 33: Building a Language (interpreter, AST, GC)
-- Episode 34: Database from Scratch (B+Tree, SQL parser)
+- Episode 34: Database from Scratch (B+Tree, SQL parser) — AVL Trees, Advanced Hash Tables, Merkle Trees
 - Episode 35: Terminal UI Framework (ncurses, widgets)
-- Episode 36: Military Systems & Radar 🎯 (tracking, Kalman filter, GPS)
-- Episode 37: Quantum Computing ⚛️ (qubits, Shor's algorithm, superposition)
-- **Проект**: Продвинутые инструменты для MOONLIGHT
+- Episode 36: Military Systems & Radar 🎯 (tracking, Kalman filter, GPS, drones)
+- Episode 37: Quantum Computing ⚛️ (qubits, Shor's algorithm, C для скорости, C++ для ООП паттернов)
+- **Season Project**: `advanced_systems` — **использует Seasons 1-8** (database engine = memory + data structures + IPC + ML)
 
-### Season 10: FINAL MISSION 🌌🚀
+### Season 10: FINAL MISSION 🌌🚀 (Mission Impossible)
 *"Всё сходится воедино. До луны и дальше!"*
 - Episode 38: System Architecture (microservices, message bus)
 - Episode 39: Intelligence Dashboard (real-time TUI)
 - Episode 40: Offensive & Defensive Ops (pentesting, IDS/IPS, honeypots)
 - Episode 41: Performance Optimization (profiling, perf, SIMD)
-- Episode 42: The Final Operation 🚀 (MOONLIGHT + SPACE: satellite tracking, orbital mechanics!)
-- **Проект**: Полная система MOONLIGHT — от Земли до космоса! 🌍→🌌
+- Episode 42: The Final Operation 🚀 (satellite tracking, orbital mechanics!)
+- **Season Project**: `moonlight_core` — **использует ВСЕ Seasons 1-9** — ФИНАЛЬНАЯ ИНТЕГРАЦИЯ! 🌍→🌌
+- **Сложность**: Максимальная автономия, минимум подсказок, ты сам ставишь задачи
 
 ---
 
@@ -158,7 +161,8 @@ cat README.md
 ### Первые шаги
 1. Прочитайте [SCENARIO.md](SCENARIO.md) — узнайте предысторию
 2. Изучите [CURRICULUM.md](CURRICULUM.md) — детальный план обучения
-3. Начните с `season-1-foundations/episode-01/`
+3. Прочитайте [PROJECTS.md](PROJECTS.md) — узнайте о Season Projects и переиспользовании кода
+4. Начните с `season-1-foundations/episode-01/`
 
 ---
 
@@ -194,9 +198,10 @@ cat README.md
 
 1. **Читайте теорию** — каждый эпизод начинается с объяснения концепций
 2. **Решайте задачи** — практика важнее всего
-3. **Собирайте артефакты** — код из задач формирует финальный проект
-4. **Используйте AI** — учитесь работать с Cursor и ChatGPT как инструментами
-5. **Экспериментируйте** — ломайте и чините, это лучший способ учиться
+3. **Собирайте артефакты** — код из эпизодов формирует **Season Project**
+4. **Переиспользуйте свой код** — начиная с Season 5, подключай инструменты через `#include` (см. [PROJECTS.md](PROJECTS.md))
+5. **Используйте AI** — учитесь работать с Cursor и ChatGPT как инструментами
+6. **Экспериментируйте** — ломайте и чините, это лучший способ учиться
 
 ---
 
