@@ -67,13 +67,14 @@
 - Episode 12: Перехват зашифрованных коммуникаций (финал Season 3)
 - **Проект**: Система перехвата и дешифровки сетевого трафика
 
-### Season 4: Crypto & Algorithms ✅
+### Season 4: Crypto & Algorithms ✅ (упрощён v0.3.1)
 *"Секреты защищены не замками, а математикой"*
 - Episode 13: Crypto Basics (XOR, Caesar, frequency analysis)
-- Episode 14: Blockchain & Hashes (Proof-of-Work, SHA-256)
-- Episode 15: Sorting & Search (Big O, quicksort, binary search)
-- Episode 16: Data Structures (lists, trees, hash tables)
+- Episode 14: Blockchain & Hashes (Proof-of-Work, djb2)
+- Episode 15: Sorting & Search (5 базовых алгоритмов, Big O)
+- Episode 16: Data Structures (linked lists, stack/queue, BST, hash table basic)
 - **Проект**: Взлом криптосистемы + blockchain integrity
+- **Время**: ~12-15ч (упрощён на 40% для плавной кривой обучения)
 
 ### Season 5: Financial Markets ✅💰
 *"Follow the money"*

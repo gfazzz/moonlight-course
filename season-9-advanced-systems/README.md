@@ -94,6 +94,14 @@ print(counter());  // 2
 - Simple SQL parsing
 - Write-Ahead Logging
 
+**Продвинутые структуры данных** (перенесено из Season 4):
+- ✨ **AVL Trees** (4 rotations: LL, RR, LR, RL) — prerequisite для понимания B+Tree
+- ✨ **Advanced Hash Tables** (double hashing, load factor monitoring, rehashing) — для efficient hash indexes
+- ✨ **Merkle Trees** (полная реализация) — database indexing и integrity checking
+- ✨ **Sentinel optimization** — inner loop optimization в критичных секциях
+- ✨ **Amortized analysis** — понимание dynamic arrays в БД
+- Почему здесь: эти структуры нужны для построения production-grade database engine
+
 **Практика:**
 Создайте "MoonDB":
 ```c
@@ -121,9 +129,14 @@ db_commit(db);
 
 **Теория:**
 - Database architecture
-- B+Tree vs B-Tree
+- **AVL Trees** → понимание самобалансирующихся деревьев
+- B+Tree vs B-Tree (AVL как foundation)
+- **Advanced Hash Tables** (double hashing, load factor, rehashing)
+- **Merkle Trees** (integrity verification)
 - ACID properties
 - Query optimization basics
+- **Amortized analysis** для dynamic arrays
+- **Sentinel optimization** для критических циклов
 
 ---
 

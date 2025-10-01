@@ -77,9 +77,9 @@
 ║     • Load factor monitoring                            ║
 ║                                                         ║
 ║  2. BINARY SEARCH TREE (BST)                            ║
-║     • O(log n) search/insert/delete                     ║
+║     • O(log n) average search/insert/delete             ║
 ║     • In-order traversal for sorted data                ║
-║     • BONUS: AVL Tree (self-balancing)                  ║
+║     • Базовая версия (unbalanced)                       ║
 ║                                                         ║
 ║  3. LINKED LIST                                         ║
 ║     • Version history (append-only log)                 ║
@@ -355,155 +355,7 @@ if (load_factor > 0.7) {
 
 ---
 
-### 6. AVL Trees (Самобалансирующиеся деревья)
-
-**Проблема BST:** В worst case (упорядоченная вставка) деградирует до linked list → O(n).
-
-**AVL Tree** — BST с **балансировкой** через ротации → **гарантированный O(log n)**.
-
-**Баланс-фактор:**
-```c
-typedef struct AVLNode {
-    int data;
-    int height;  // Высота поддерева
-    struct AVLNode *left;
-    struct AVLNode *right;
-} AVLNode;
-
-int get_height(AVLNode *node) {
-    return node ? node->height : 0;
-}
-
-int get_balance_factor(AVLNode *node) {
-    return node ? get_height(node->left) - get_height(node->right) : 0;
-}
-
-// Правило AVL: |balance_factor| ≤ 1
-// Если |BF| > 1 → нужна ротация!
-```
-
-**Ротации (4 случая):**
-
-1. **Left-Left (LL) → Right Rotation:**
-   ```
-        z                    y
-       /                    / \
-      y         →          x   z
-     /
-    x
-   ```
-
-2. **Right-Right (RR) → Left Rotation:**
-   ```
-    z                        y
-     \                      / \
-      y       →            z   x
-       \
-        x
-   ```
-
-3. **Left-Right (LR) → Left + Right Rotation:**
-   ```
-      z                z               x
-     /                /               / \
-    y       →        x       →       y   z
-     \              /
-      x            y
-   ```
-
-4. **Right-Left (RL) → Right + Left Rotation**
-
-**Реализация rotations:**
-
-```c
-// Right rotation
-AVLNode* rotate_right(AVLNode *y) {
-    AVLNode *x = y->left;
-    AVLNode *T2 = x->right;
-    
-    x->right = y;
-    y->left = T2;
-    
-    y->height = 1 + max(get_height(y->left), get_height(y->right));
-    x->height = 1 + max(get_height(x->left), get_height(x->right));
-    
-    return x;  // Новый корень
-}
-
-// Left rotation
-AVLNode* rotate_left(AVLNode *x) {
-    AVLNode *y = x->right;
-    AVLNode *T2 = y->left;
-    
-    y->left = x;
-    x->right = T2;
-    
-    x->height = 1 + max(get_height(x->left), get_height(x->right));
-    y->height = 1 + max(get_height(y->left), get_height(y->right));
-    
-    return y;
-}
-
-// Вставка с балансировкой
-AVLNode* insert_avl(AVLNode *node, int data) {
-    if (node == NULL) {
-        AVLNode *new_node = malloc(sizeof(AVLNode));
-        new_node->data = data;
-        new_node->height = 1;
-        new_node->left = new_node->right = NULL;
-        return new_node;
-    }
-    
-    if (data < node->data)
-        node->left = insert_avl(node->left, data);
-    else
-        node->right = insert_avl(node->right, data);
-    
-    // Обновить высоту
-    node->height = 1 + max(get_height(node->left), get_height(node->right));
-    
-    // Получить balance factor
-    int balance = get_balance_factor(node);
-    
-    // Ротации (4 случая)
-    if (balance > 1 && data < node->left->data)  // LL
-        return rotate_right(node);
-    
-    if (balance < -1 && data > node->right->data)  // RR
-        return rotate_left(node);
-    
-    if (balance > 1 && data > node->left->data) {  // LR
-        node->left = rotate_left(node->left);
-        return rotate_right(node);
-    }
-    
-    if (balance < -1 && data < node->right->data) {  // RL
-        node->right = rotate_right(node->right);
-        return rotate_left(node);
-    }
-    
-    return node;
-}
-```
-
-**AVL vs BST:**
-
-| Характеристика | BST | AVL Tree |
-|----------------|-----|----------|
-| Search | O(log n) avg, O(n) worst | **O(log n) гарантированно** |
-| Insert | O(log n) avg, O(n) worst | **O(log n) гарантированно** |
-| Delete | O(log n) avg, O(n) worst | **O(log n) гарантированно** |
-| Balance | ❌ Не балансируется | ✅ Автоматическая балансировка |
-| Память | Меньше | Больше (храним height) |
-
-**Когда использовать AVL:**
-- Частые поиски, редкие вставки/удаления
-- Нужна гарантия O(log n)
-- Критична скорость чтения
-
----
-
-### 7. Сравнение всех структур
+### 6. Сравнение всех структур
 
 | Структура | Search | Insert | Delete | Memory | Use Case |
 |-----------|--------|--------|--------|--------|----------|
@@ -511,9 +363,10 @@ AVLNode* insert_avl(AVLNode *node, int data) {
 | **Linked List** | O(n) | O(1) | O(1)* | Extra | История, очереди |
 | **Stack** | O(n) | O(1) | O(1) | Compact | Undo, DFS |
 | **Queue** | O(n) | O(1) | O(1) | Compact | BFS, tasks |
-| **BST** | O(log n) avg | O(log n) avg | O(log n) avg | Extra | Sorted data |
-| **AVL Tree** | **O(log n)** | **O(log n)** | **O(log n)** | Extra | Guaranteed speed |
-| **Hash Table** | **O(1) avg** | **O(1) avg** | **O(1) avg** | Most | Fast lookup |
+| **BST** | O(log n) avg, O(n) worst | O(log n) avg | O(log n) avg | Extra | Sorted data |
+| **Hash Table** | **O(1) avg** | **O(1) avg** | **O(1) avg** | Most | **Fast lookup** |
+
+**Примечание:** Самобалансирующиеся деревья (AVL, Red-Black) с гарантированным O(log n) будут изучены в Season 9 Episode 34.
 
 ---
 
@@ -611,29 +464,6 @@ float get_load_factor(HashTable *ht);
 
 ---
 
-### 🏆 BONUS: AVL Tree Implementation ⭐⭐⭐⭐⭐
-
-Реализуйте самобалансирующееся AVL-дерево:
-
-```c
-// TODO: AVL Tree
-AVLNode* insert_avl(AVLNode *root, int data);
-AVLNode* delete_avl(AVLNode *root, int data);
-int get_balance_factor(AVLNode *node);
-AVLNode* rotate_left(AVLNode *x);
-AVLNode* rotate_right(AVLNode *y);
-void print_tree_structure(AVLNode *root, int level);  // Визуализация
-```
-
-**Критерии:**
-- Автоматическая балансировка после каждой вставки/удаления
-- |balance_factor| ≤ 1 для всех узлов
-- Гарантированный O(log n) для всех операций
-
-**Миссия:** Создать эффективную систему управления данными операции.
-
----
-
 ## 📝 Структура эпизода
 
 ```
@@ -643,9 +473,8 @@ episode-16-data-structures/
 │   ├── linked_list.c       ← Linked List реализация
 │   ├── stack_queue.c       ← Stack & Queue
 │   ├── bst.c               ← Binary Search Tree
-│   ├── hash_table.c        ← Hash Table
-│   ├── avl_tree.c          ← AVL Tree (BONUS)
-│   └── database_engine.c   ← Интеграция всех структур
+│   ├── hash_table.c        ← Hash Table (chaining)
+│   └── database_demo.c     ← Интеграция базовых структур
 ├── data/
 │   ├── agents.dat          ← 10,000 агентов
 │   ├── documents.dat       ← 250,000 документов
@@ -653,8 +482,7 @@ episode-16-data-structures/
 ├── starter.c               ← Шаблоны структур
 ├── tests/
 │   ├── test_list.c
-│   ├── test_hash.c
-│   └── test_avl.c
+│   └── test_hash.c
 └── Makefile
 ```
 
@@ -662,15 +490,14 @@ episode-16-data-structures/
 
 ## 💡 Как работать
 
-1. **Изучите теорию** выше (все 7 структур данных!)
+1. **Изучите теорию** выше (все 5 базовых структур данных!)
 2. **Откройте `starter.c`** — там шаблоны всех структур
 3. **Реализуйте поэтапно:**
    - Задание 1: Linked List (простое, начните с него)
    - Задание 2: Stack
    - Задание 3: Queue
    - Задание 4: BST
-   - Задание 5: Hash Table
-   - BONUS: AVL Tree (сложное, но мощное!)
+   - Задание 5: Hash Table (с chaining)
 4. **Интеграция:** Создайте `database_engine.c`, который использует ВСЕ структуры вместе
 5. **Тестируйте:** `make test`
 
@@ -711,8 +538,8 @@ episode-16-data-structures/
 **18 детальных вопросов** интегрированных в сюжет финальной миссии и эпического завершения Season 4!
 
 **Категории:**
-- **Базовое понимание (6):** Hash vs BST, Linked List vs Array, LIFO vs FIFO, AVL balancing, Chaining vs Open Addressing
-- **Структуры данных (6):** Floyd's algorithm, Load factor, In-order traversal, Stack Array vs Linked, AVL rotations, Circular buffer
+- **Базовое понимание (6):** Hash vs BST, Linked List vs Array, LIFO vs FIFO, Chaining collision handling, BST worst case
+- **Структуры данных (6):** Floyd's algorithm, Load factor, In-order traversal, Stack Array vs Linked, Hash functions, Circular buffer
 - **Сюжет и финал (6):** Database Engine интеграция, Связь с Season 2, Deadline давление, Season 5 transition, Красная площадь timeline, **Готовы ли вы к Season 5?**
 
 Все вопросы проверяют понимание через призму миссии: "В 22:47 V. сказал...", "В 17:43 Database Engine готов...", "На Красной площади координаты появлялись..."
@@ -922,62 +749,7 @@ process() → Task 3
 
 ---
 
-#### 5. AVL Tree "самобалансируется" с помощью ротаций. Зачем балансировка? BST без балансировки не работает?
-
-**Ответ:**
-
-**BST БЕЗ балансировки на sorted data:**
-```
-Вставляем 1, 2, 3, 4, 5:
-
-    1
-     \
-      2
-       \
-        3
-         \
-          4
-           \
-            5
-
-Это НЕ дерево! Это СПИСОК! ❌
-Search(5): 1→2→3→4→5 = O(n)!
-```
-
-**AVL Tree (balanced):**
-```
-Вставляем те же 1, 2, 3, 4, 5:
-
-       3
-      / \
-     2   4
-    /     \
-   1       5
-
-Search(5): 3→4→5 = O(log n) ✅
-```
-
-**Производительность:**
-- Balanced: height = O(log n) → Search O(log n) ✅
-- Unbalanced: height = O(n) → Search O(n) ❌
-
-**В миссии Episode 16:**
-250,000 документов с timestamps в порядке (16:00, 16:01, 16:02...)
-
-- Обычный BST → превращается в список O(n) ❌
-- AVL Tree → остаётся balanced O(log n) ✅
-- log₂(250,000) ≈ 18 операций вместо 250,000!
-
-**Реальные системы:**
-- Databases: B-Tree (balanced)
-- C++ std::map: Red-Black Tree (balanced)
-- File systems: B+ Tree (balanced)
-
-**Никто не использует небалансированный BST в продакшене!**
-
----
-
-#### 6. Hash Table использует "chaining" или "open addressing" для коллизий. В чём разница?
+#### 5. Hash Table использует "chaining" для коллизий. Как это работает?
 
 **Ответ:**
 
@@ -1246,107 +1018,7 @@ pop:  O(1) (free)
 
 ---
 
-#### 11. AVL Tree делает 4 типа ротаций (LL, RR, LR, RL). Когда каждая используется?
-
-**Ответ:**
-
-**AVL Balance Factor:** BF(node) = height(left) - height(right)
-
-Balanced: -1 ≤ BF ≤ 1  
-Unbalanced: |BF| > 1 → ROTATION!
-
-**4 случая:**
-
-**1. Left-Left (LL) — Right Rotation**
-```
-Вставляем 3, 2, 1:
-
-    3  (BF = +2)
-   /
-  2  (BF = +1)  ← LL pattern!
- /
-1
-
-Right Rotation:
-    2
-   / \
-  1   3  ✅
-```
-
-**2. Right-Right (RR) — Left Rotation**
-```
-Вставляем 1, 2, 3:
-
-  1  (BF = -2)
-   \
-    2  (BF = -1)  ← RR pattern!
-     \
-      3
-
-Left Rotation:
-    2
-   / \
-  1   3  ✅
-```
-
-**3. Left-Right (LR) — Double Rotation**
-```
-Вставляем 3, 1, 2:
-
-    3  (BF = +2)
-   /
-  1  (BF = -1)  ← LR pattern (зигзаг!)
-   \
-    2
-
-Шаг 1: Left Rotation вокруг 1
-Шаг 2: Right Rotation вокруг 3
-
-Результат:
-    2
-   / \
-  1   3  ✅
-```
-
-**4. Right-Left (RL) — Double Rotation**
-```
-Вставляем 1, 3, 2:
-
-  1  (BF = -2)
-   \
-    3  (BF = +1)  ← RL pattern (зигзаг!)
-   /
-  2
-
-Шаг 1: Right Rotation вокруг 3
-Шаг 2: Left Rotation вокруг 1
-
-Результат:
-    2
-   / \
-  1   3  ✅
-```
-
-**Decision Tree:**
-```
-BF = +2 (left-heavy):
-  ├─ left child BF = +1 → LL → Right Rotation
-  └─ left child BF = -1 → LR → Double (Left-Right)
-
-BF = -2 (right-heavy):
-  ├─ right child BF = -1 → RR → Left Rotation
-  └─ right child BF = +1 → RL → Double (Right-Left)
-```
-
-**Вывод:**
-- **LL/RR:** прямые линии → single rotation
-- **LR/RL:** зигзаги → double rotation
-
-**Episode 16:** 250K timestamps в порядке → AVL автоматически балансирует, сохраняя O(log n)!
-
----
-
-#### 12. Queue можно реализовать на массиве (circular buffer). Зачем circular, не проще линейный?
+#### 11. Queue можно реализовать на массиве (circular buffer). Зачем circular, не проще линейный?
 
 **Ответ:**
 
@@ -2112,7 +1784,6 @@ V. протягивает руку. Вы пожимаете её.
 - ✅ Реализовывать **Stack** (LIFO) и **Queue** (FIFO)
 - ✅ Работать с **Binary Search Tree** (O(log n) average)
 - ✅ Создавать **Hash Tables** с collision resolution (O(1) average)
-- ✅ Реализовывать **AVL Trees** с автобалансировкой (O(log n) гарантированно)
 - ✅ Анализировать сложность операций для каждой структуры
 - ✅ Выбирать оптимальную структуру данных для задачи
 - ✅ Интегрировать множество структур в единую систему

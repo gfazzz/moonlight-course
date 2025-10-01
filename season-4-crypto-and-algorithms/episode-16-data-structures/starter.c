@@ -111,25 +111,6 @@ float get_load_factor(HashTable *ht) { return 0.0; }
 void free_hash_table(HashTable *ht) {}
 
 // ============================================================
-// 6. AVL TREE (BONUS)
-// ============================================================
-
-typedef struct AVLNode {
-    int data;
-    int height;
-    struct AVLNode *left;
-    struct AVLNode *right;
-} AVLNode;
-
-// TODO: Реализовать функции
-int get_height(AVLNode *node) { return 0; }
-int get_balance_factor(AVLNode *node) { return 0; }
-AVLNode* rotate_left(AVLNode *x) { return NULL; }
-AVLNode* rotate_right(AVLNode *y) { return NULL; }
-AVLNode* insert_avl(AVLNode *root, int data) { return NULL; }
-void free_avl(AVLNode *root) {}
-
-// ============================================================
 // MAIN - ДЕМОНСТРАЦИЯ
 // ============================================================
 
@@ -154,8 +135,6 @@ int main() {
     printf("--- HASH TABLE DEMO ---\n");
     printf("TODO: Реализовать hash table\n\n");
     
-    printf("--- AVL TREE DEMO (BONUS) ---\n");
-    printf("TODO: Реализовать AVL tree с балансировкой\n\n");
     
     return 0;
 }

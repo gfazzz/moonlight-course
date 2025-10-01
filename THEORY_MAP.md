@@ -1,7 +1,7 @@
 # 🗺️ Карта теории курса MOONLIGHT
 
 **Последнее обновление:** 1 октября 2025  
-**Версия курса:** v0.3.0  
+**Версия курса:** v0.3.1 (Simplified Season 4)  
 **Статус:** 🟢 Season 1-4 @ 80% (готовы к прохождению) | 🟡 Season 5-10 @ 20%
 
 ## 📋 Распределение тем по сезонам
@@ -84,41 +84,106 @@
 
 ---
 
-### **Season 4: Crypto & Algorithms** — Криптография и алгоритмы 🟢 80%
+### **Season 4: Crypto & Algorithms** — Криптография и алгоритмы (УПРОЩЁН v0.3.1) 🟢 80%
 
-| Тема                            | Ep  | Зависит от           | Новые концепции                    |
+| Тема                            | Ep  | Зависит от           | Уровень сложности                  |
 |---------------------------------|-----|----------------------|------------------------------------|
-| Caesar cipher                   | 13  | S1E01                | Частотный анализ                   |
-| XOR cipher (углублённо)         | 13  | S1E01                | Криптоанализ                       |
-| **Chi-squared test**            | 13  | S1E02                | Автоопределение shift              |
-| **Known-plaintext attack**      | 13  | S1E01                | Криптоанализ                       |
-| Хеш-функции (djb2, SHA-256)     | 14  | S1E02                | **Avalanche effect**               |
-| Blockchain                      | 14  | S1E04                | Immutability, PoW                  |
-| **Merkle Trees (concept)**      | 14  | S1E04                | Корневой хеш                       |
-| Bubble/Selection/Insertion      | 15  | S1E03                | Big O notation                     |
-| **Shell Sort** (Knuth)          | 15  | S1E03                | O(n^3/2), gap sequence             |
-| **Heapsort**                    | 15  | S1E03                | O(n log n) worst case              |
-| Merge/Quick Sort                | 15  | S1E04                | Divide & Conquer                   |
-| **Knuth Shuffle**               | 15  | S1E03                | Fisher-Yates                       |
-| **Sentinel optimization**       | 15  | S1E03                | Loop optimization                  |
-| Binary Search                   | 15  | S1E03                | O(log n), loop invariants          |
-| **Amortized analysis**          | 15  | S1E02                | Average performance                |
-| Linked Lists (single, double)   | 16  | S2E07                | Динамические структуры             |
-| Stacks & Queues                 | 16  | S2E07                | LIFO/FIFO                          |
-| Binary Search Tree (BST)        | 16  | S2E07                | O(log n) average                   |
-| **AVL Trees**                   | 16  | S2E07, S4E16         | O(log n) guaranteed, rotations     |
-| **Hash Tables** (advanced)      | 16  | S4E14, S2E07         | Chaining, Open addressing          |
-| **Load factor & Rehashing**     | 16  | S4E14                | Performance optimization           |
-| **Database Engine**             | 16  | S1-S4                | System integration                 |
+| **EPISODE 13: Crypto Basics**   |     |                      |                                    |
+| Caesar cipher                   | 13  | S1E01                | ⭐⭐⭐☆☆ Частотный анализ          |
+| XOR cipher (углублённо)         | 13  | S1E01                | ⭐⭐☆☆☆ Криптоанализ               |
+| **Chi-squared test**            | 13  | S1E02                | ⭐⭐⭐☆☆ Автоопределение shift     |
+| **Known-plaintext attack**      | 13  | S1E01                | ⭐⭐⭐☆☆ Криптоанализ               |
+|                                 |     |                      |                                    |
+| **EPISODE 14: Blockchain**      |     |                      |                                    |
+| Хеш-функции (djb2)              | 14  | S1E02                | ⭐⭐⭐☆☆ Avalanche effect           |
+| Blockchain basics               | 14  | S1E04                | ⭐⭐⭐⭐☆ Immutability, PoW         |
+| Proof-of-Work (simple)          | 14  | S1E03                | ⭐⭐⭐☆☆ Mining simulation          |
+|                                 |     |                      |                                    |
+| **EPISODE 15: Sorting (БАЗОВЫЙ)**|    |                      |                                    |
+| Bubble/Selection/Insertion      | 15  | S1E03                | ⭐⭐☆☆☆ Big O notation (базовое)   |
+| Merge Sort                      | 15  | S1E04                | ⭐⭐⭐☆☆ Divide & Conquer           |
+| Quick Sort (basic)              | 15  | S1E04                | ⭐⭐⭐☆☆ Recursion                  |
+| Binary Search                   | 15  | S1E03                | ⭐⭐☆☆☆ O(log n)                   |
+|                                 |     |                      |                                    |
+| **EPISODE 16: Data Structures (БАЗОВЫЙ)** |  |                 |                                    |
+| Linked Lists (single, double)   | 16  | S2E07                | ⭐⭐⭐☆☆ Динамические структуры    |
+| **Floyd's Cycle Detection**     | 16  | S2E06                | ⭐⭐⭐☆☆ O(1) memory (callback S2) |
+| Stacks & Queues                 | 16  | S2E07                | ⭐⭐☆☆☆ LIFO/FIFO                  |
+| Binary Search Tree (basic)      | 16  | S2E07                | ⭐⭐⭐☆☆ O(log n) average           |
+| **Hash Tables (chaining only)** | 16  | S4E14, S2E07         | ⭐⭐⭐☆☆ Basic collision handling   |
 
-**✨ Новое в v2.0 Enhanced (Season 4):**
-- ✅ TAOCP концепции: Shell Sort (Knuth), Heapsort, Knuth Shuffle, Sentinel optimization
-- ✅ Advanced structures: AVL Trees с автобалансировкой (4 типа rotations)
-- ✅ Hash Tables: chaining, open addressing, double hashing, load factor
-- ✅ Database Engine: интеграция Hash Table + AVL Tree + Linked List + Stack/Queue
-- ✅ Mathematical analysis: Big O, amortized analysis, loop invariants
-- ✅ Криптоанализ: frequency analysis, Chi-squared, known-plaintext attack
-- ✅ Blockchain: avalanche effect, cascade validation, Merkle Trees
+**✂️ Что УБРАНО из Season 4 (v0.3.0 → v0.3.1):**
+- ❌ **Heapsort** → перенесён в **Season 8 Ep29** (Big Data - priority queue)
+- ❌ **Shell Sort** (Knuth) → перенесён в **Season 8 Ep29** (специализированная оптимизация)
+- ❌ **Knuth Shuffle** → перенесён в **Season 8 Ep30** (Statistical Analysis - Monte Carlo)
+- ❌ **Sentinel optimization** → перенесён в **Season 9 Ep34** (Database - loop optimization)
+- ❌ **Amortized analysis** → перенесён в **Season 9 Ep34** (Database - dynamic arrays)
+- ❌ **AVL Trees** (4 rotations) → перенесён в **Season 9 Ep34** (Database - B+Tree prereq)
+- ❌ **Advanced Hash** (double hashing, load factor) → перенесён в **Season 9 Ep34**
+- ❌ **Merkle Trees** (full impl) → перенесён в **Season 9 Ep34** (Database indexing)
+- ❌ **Database Engine** (complex integration) → упрощён до базовой демонстрации
+
+**✅ Что ОСТАЛОСЬ в Season 4 v0.3.1:**
+- ✅ Криптография: XOR, Caesar, Chi-squared, frequency analysis
+- ✅ Blockchain: djb2 hash, immutability, PoW (простой)
+- ✅ Сортировки: Bubble, Selection, Insertion, Merge, Quick (базовые)
+- ✅ Поиск: Linear, Binary
+- ✅ Структуры: Linked List, Stack, Queue, BST (базовый), Hash Table (chaining)
+- ✅ Floyd's Cycle Detection (callback к Season 2 Episode 06)
+
+**📊 Результат упрощения:**
+- 🕐 **Время:** 18-23ч → **~12-15ч** (сокращение ~40%)
+- ⭐ **Сложность:** ⭐⭐⭐⭐⭐ → **⭐⭐⭐⭐☆** (более доступно)
+- 📈 **Кривая обучения:** Плавнее переход от Season 3 к Season 4
+- 🎯 **Фокус:** Базовое понимание алгоритмов и структур данных
+
+---
+
+### **Season 8: AI & Data** — Большие данные и ML (обновлено) 🟡 20%
+
+| Тема                            | Ep  | Откуда перенесено    | Зачем нужно здесь                  |
+|---------------------------------|-----|----------------------|------------------------------------|
+| **EPISODE 29: Big Data**        |     |                      |                                    |
+| Stream processing               | 29  | —                    | Обработка терабайтов               |
+| **Heapsort** (advanced)         | 29  | ← **S4E15**          | Priority queue для больших данных  |
+| **Shell Sort** (Knuth gaps)     | 29  | ← **S4E15**          | Специализированная оптимизация     |
+| Out-of-core algorithms          | 29  | —                    | Данные не влезают в RAM            |
+| Memory-mapped files             | 29  | —                    | Эффективная работа с диском        |
+|                                 |     |                      |                                    |
+| **EPISODE 30: Statistical Analysis** |  |                  |                                    |
+| Descriptive statistics          | 30  | —                    | Mean, median, variance             |
+| **Knuth Shuffle** (advanced)    | 30  | ← **S4E15**          | Monte Carlo симуляции              |
+| Hypothesis testing              | 30  | —                    | Статистическая значимость          |
+| Anomaly detection               | 30  | —                    | Outlier detection                  |
+| Probability distributions       | 30  | —                    | Normal, Poisson, etc.              |
+
+**🎓 Обоснование переноса:**
+- Heapsort нужен для реализации priority queue при обработке больших потоков данных
+- Shell Sort — специализированная оптимизация для частично отсортированных данных
+- Knuth Shuffle критичен для Monte Carlo симуляций и честной рандомизации
+
+---
+
+### **Season 9: Advanced Systems** — Продвинутые системы (обновлено) 🟡 20%
+
+| Тема                            | Ep  | Откуда перенесено    | Зачем нужно здесь                  |
+|---------------------------------|-----|----------------------|------------------------------------|
+| **EPISODE 34: Database Engine** |     |                      |                                    |
+| B+Tree implementation           | 34  | —                    | Индексы БД                         |
+| **AVL Trees** (4 rotations)     | 34  | ← **S4E16**          | Prerequisite для B+Tree            |
+| **Advanced Hash Tables**        | 34  | ← **S4E16**          | Double hashing, load factor        |
+| **Sentinel optimization**       | 34  | ← **S4E15**          | Inner loop optimization            |
+| **Amortized analysis**          | 34  | ← **S4E15**          | Dynamic arrays в БД                |
+| **Merkle Trees** (full impl)    | 34  | ← **S4E14**          | Database indexing                  |
+| Page-based storage              | 34  | —                    | Disk I/O optimization              |
+| Write-Ahead Logging             | 34  | —                    | ACID properties                    |
+
+**🎓 Обоснование переноса:**
+- AVL Trees — prerequisite для понимания B+Tree (основа database indexes)
+- Advanced Hash (double hashing, load factor) — нужны для efficient hash indexes
+- Sentinel optimization — критична для inner loops в database engine
+- Amortized analysis — для понимания dynamic arrays в БД
+- Merkle Trees — используются для indexing и integrity checking
 
 ---
 
@@ -144,10 +209,31 @@ S3E10-12 (Сокеты и перехват)
 S4E16 (Data Structures)
   └─→ S2E07 (malloc/free)      ✅ Объяснено в S2!
   └─→ S1E04 (struct)           ✅ Объяснено в S1!
+  └─→ S2E06 (Floyd's algo)     ✅ Объяснено в S2!
   
 S4E14 (Blockchain)
   └─→ S1E04 (struct)           ✅ Объяснено в S1!
   └─→ S4E13 (хеш-функции)      ✅ Будет объяснено в S4E13!
+```
+
+### Season 8 ← Season 4 (новое в v0.3.1):
+```
+S8E29 (Big Data Processing)
+  └─→ S4E15 (сортировки базовые) ✅ Базовое понимание Big O
+  └─→ S4E15 (Merge/Quick Sort)   ✅ Понимание O(n log n)
+  
+S8E30 (Statistical Analysis)
+  └─→ S4E15 (сортировки)         ✅ Понимание алгоритмов
+  └─→ S1E03 (циклы, массивы)     ✅ Базовый C
+```
+
+### Season 9 ← Season 4 (новое в v0.3.1):
+```
+S9E34 (Database Engine)
+  └─→ S4E16 (BST базовый)        ✅ Понимание деревьев
+  └─→ S4E16 (Hash Table basic)   ✅ Базовое хеширование
+  └─→ S4E14 (хеш-функции)        ✅ Понимание хешей
+  └─→ S4E15 (Big O)              ✅ Анализ сложности
 ```
 
 ---

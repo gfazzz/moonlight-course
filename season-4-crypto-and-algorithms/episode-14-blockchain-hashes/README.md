@@ -2146,22 +2146,7 @@ All blocks properly mined ✓
 
 ## 🏆 Бонусные задания
 
-### Bonus 1: Merkle Tree ⭐⭐⭐⭐⭐
-Реализуйте Merkle Tree для эффективной верификации транзакций в одном блоке.
-
-**Подсказка:**
-```c
-typedef struct MerkleNode {
-    unsigned long hash;
-    struct MerkleNode *left;
-    struct MerkleNode *right;
-} MerkleNode;
-
-MerkleNode* build_merkle_tree(unsigned long *hashes, int count);
-unsigned long get_merkle_root(MerkleNode *tree);
-```
-
-### Bonus 2: SHA-256 Implementation ⭐⭐⭐⭐⭐
+### Bonus 1: SHA-256 Implementation ⭐⭐⭐⭐⭐
 Реализуйте настоящий SHA-256 (сложно, но очень полезно для понимания!)
 
 ### Bonus 3: Dynamic Difficulty Adjustment ⭐⭐⭐⭐☆

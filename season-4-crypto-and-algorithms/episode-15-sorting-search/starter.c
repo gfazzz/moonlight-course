@@ -23,12 +23,6 @@ void insertion_sort(int arr[], int n) {
     // TODO: Реализовать
 }
 
-// Shell Sort - O(n log n) to O(n²) (Knuth's gaps)
-void shell_sort(int arr[], int n) {
-    // TODO: Реализовать с Knuth gap sequence
-    // Gaps: 1, 4, 13, 40, 121, ... (3^k - 1) / 2
-}
-
 // Merge Sort - O(n log n)
 void merge(int arr[], int l, int m, int r) {
     // TODO: Реализовать merge helper
@@ -46,15 +40,6 @@ int partition(int arr[], int low, int high) {
 
 void quick_sort(int arr[], int low, int high) {
     // TODO: Реализовать
-}
-
-// Heapsort - O(n log n) worst case (TAOCP!)
-void heapify(int arr[], int n, int i) {
-    // TODO: Реализовать heapify
-}
-
-void heap_sort(int arr[], int n) {
-    // TODO: Реализовать heapsort
 }
 
 // ============================================================
@@ -76,11 +61,6 @@ int binary_search(int arr[], int n, int target) {
 // ============================================================
 // UTILITY FUNCTIONS
 // ============================================================
-
-// Knuth Shuffle (Fisher-Yates) - O(n)
-void knuth_shuffle(int arr[], int n) {
-    // TODO: Реализовать unbiased shuffle
-}
 
 // Печать массива
 void print_array(int arr[], int n) {

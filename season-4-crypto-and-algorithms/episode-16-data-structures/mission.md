@@ -41,7 +41,7 @@ V. has 250,000 operation documents. Each with unique ID, metadata, cross-referen
 ## 💡 Hints
 
 - Hash function: use modulo with prime number for better distribution
-- BST: balance is optional, but consider AVL/Red-Black for O(log n)
+- BST: базовая реализация без балансировки (O(log n) average, O(n) worst case)
 - Linked List: doubly-linked makes deletion O(1)
 - Stack: LIFO — perfect for undo/redo
 - Queue: FIFO — perfect for task scheduling

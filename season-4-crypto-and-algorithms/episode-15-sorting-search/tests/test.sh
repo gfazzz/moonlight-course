@@ -49,14 +49,12 @@ echo "Test 2: Checking sorting algorithm implementations..."
 if [ -f "starter.c" ]; then
     QUICKSORT=$(grep -c "quicksort\|quick_sort" starter.c 2>/dev/null || echo "0")
     MERGESORT=$(grep -c "mergesort\|merge_sort" starter.c 2>/dev/null || echo "0")
-    HEAPSORT=$(grep -c "heapsort\|heap_sort" starter.c 2>/dev/null || echo "0")
     
     echo "  Quicksort: $QUICKSORT references"
     echo "  Mergesort: $MERGESORT references"
-    echo "  Heapsort:  $HEAPSORT references"
     
-    if [ "$QUICKSORT" -gt 0 ] && [ "$MERGESORT" -gt 0 ] && [ "$HEAPSORT" -gt 0 ]; then
-        echo -e "${GREEN}✅ All three algorithms found${NC}"
+    if [ "$QUICKSORT" -gt 0 ] && [ "$MERGESORT" -gt 0 ]; then
+        echo -e "${GREEN}✅ Main algorithms found${NC}"
     else
         echo -e "${YELLOW}⚠️  Not all algorithms implemented yet${NC}"
     fi
@@ -88,7 +86,7 @@ fi
 echo ""
 echo "Test 5: Checking performance comparison..."
 
-if grep -qi "quicksort\|mergesort\|heapsort" /tmp/episode15_output.txt; then
+if grep -qi "quicksort\|mergesort" /tmp/episode15_output.txt; then
     echo -e "${GREEN}✅ Algorithm names found in output${NC}"
     
     if grep -E "[0-9]+\s*(ms|seconds|µs)" /tmp/episode15_output.txt > /dev/null; then
@@ -149,16 +147,13 @@ echo "================================================"
 echo -e "${BLUE}📝 Implementation checklist:${NC}"
 echo "================================================"
 echo ""
-echo "Sorting Algorithms (O(n log n)):"
+echo "Sorting Algorithms:"
 echo "  ☐ Quicksort (average O(n log n), worst O(n²))"
 echo "    - Partition function"
-echo "    - Random pivot selection"
+echo "    - Median-of-three pivot selection"
 echo "  ☐ Merge Sort (guaranteed O(n log n))"
 echo "    - Merge function"
 echo "    - Recursive split"
-echo "  ☐ Heap Sort (O(n log n), in-place)"
-echo "    - Heapify function"
-echo "    - Build heap"
 echo ""
 echo "Search:"
 echo "  ☐ Binary Search (O(log n))"
@@ -167,9 +162,8 @@ echo "    - Returns index or -1"
 echo ""
 echo "Performance Testing:"
 echo "  ☐ Time measurement (clock_gettime or clock())"
-echo "  ☐ Comparison of 3 algorithms"
-echo "  ☐ Test with 10,000 records"
-echo "  ☐ Test with 1,000,000 records (if possible)"
+echo "  ☐ Comparison of algorithms"
+echo "  ☐ Test with different dataset sizes"
 echo "  ☐ Print Big O complexity"
 echo ""
 echo "Mission:"
@@ -184,7 +178,6 @@ echo ""
 echo "Expected performance on 10M records:"
 echo "  Quicksort: ~2-3 seconds"
 echo "  Merge Sort: ~3-4 seconds"
-echo "  Heap Sort: ~5-6 seconds"
 echo "  Binary Search: < 1 millisecond"
 echo ""
 echo "Next: Episode 16 - Data Structures (FINALE)"

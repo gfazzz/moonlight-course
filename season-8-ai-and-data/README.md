@@ -35,11 +35,17 @@
 - Parallel processing
 - Out-of-core algorithms
 
+**Продвинутые алгоритмы сортировки** (перенесено из Season 4):
+- ✨ **Heapsort** (O(n log n) worst case, priority queue)
+- ✨ **Shell Sort** (Knuth's gap sequence, специализированная оптимизация)
+- Когда нужны: обработка больших потоков данных, частично отсортированные данные
+
 **Практика:**
 - Log parser (multi-threaded)
-- Data aggregation
+- Data aggregation с Heapsort
 - Real-time statistics
 - Disk-efficient algorithms
+- Priority queue для обработки событий
 
 ---
 
@@ -56,10 +62,15 @@
 - Anomaly detection
 - Correlation analysis
 
+**Продвинутые алгоритмы** (перенесено из Season 4):
+- ✨ **Knuth Shuffle** (Fisher-Yates) — честная рандомизация для Monte Carlo симуляций
+- Когда нужен: тестирование гипотез, симуляции, bootstrap resampling
+
 **Практика:**
 - Statistical library
 - Anomaly detector
 - Time series analysis
+- Monte Carlo симуляции с Knuth Shuffle
 - Visualization (ASCII art charts)
 
 ---
