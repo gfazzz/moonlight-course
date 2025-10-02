@@ -1,0 +1,151 @@
+# ============================================================================
+# MOONLIGHT OPERATION - Season 4 Project
+# crypto_toolkit - Universal Cryptographic Toolkit
+# ============================================================================
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -std=c11 -O2 -g
+LDFLAGS = -lm
+TARGET = crypto_toolkit
+SRC = season_project_starter.c
+OBJ = $(SRC:.c=.o)
+
+# Test files
+TEST_DIR = tests
+TEST_SCRIPT = $(TEST_DIR)/test_all.sh
+
+# Data directory
+DATA_DIR = data
+
+# ============================================================================
+# TARGETS
+# ============================================================================
+
+.PHONY: all clean test install help benchmark
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	@echo "🔨 Building crypto_toolkit..."
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	@echo "✅ Build complete!"
+	@echo ""
+	@echo "Run: ./$(TARGET) --help"
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# ============================================================================
+# TESTING
+# ============================================================================
+
+test: $(TARGET)
+	@echo "╔══════════════════════════════════════════════════════════╗"
+	@echo "║           RUNNING CRYPTO TOOLKIT TESTS                   ║"
+	@echo "╚══════════════════════════════════════════════════════════╝"
+	@echo ""
+	@echo "Testing Crypto Module..."
+	@./$(TARGET) encrypt --help || echo "❌ Crypto module not implemented"
+	@echo ""
+	@echo "Testing Blockchain Module..."
+	@./$(TARGET) blockchain --help || echo "❌ Blockchain module not implemented"
+	@echo ""
+	@echo "Testing Algorithms Module..."
+	@./$(TARGET) sort --help || echo "❌ Algorithms module not implemented"
+	@echo ""
+	@echo "Testing Data Structures Module..."
+	@./$(TARGET) database --help || echo "❌ Database module not implemented"
+	@echo ""
+	@echo "✅ Basic tests complete!"
+
+# ============================================================================
+# BENCHMARK
+# ============================================================================
+
+benchmark: $(TARGET)
+	@echo "🏁 Running performance benchmarks..."
+	@echo ""
+	@echo "1. XOR Encryption (1MB file):"
+	@dd if=/dev/urandom of=$(DATA_DIR)/test_1mb.bin bs=1M count=1 2>/dev/null
+	@time ./$(TARGET) encrypt --xor --key 0x42 --input $(DATA_DIR)/test_1mb.bin || echo "Not implemented"
+	@echo ""
+	@echo "2. Quick Sort (100K integers):"
+	@time ./$(TARGET) sort --algorithm quick --size 100000 || echo "Not implemented"
+	@echo ""
+	@echo "3. Binary Search (1M sorted integers):"
+	@time ./$(TARGET) search --binary --size 1000000 --target 500000 || echo "Not implemented"
+	@echo ""
+	@echo "4. Hash Table (10K operations):"
+	@time ./$(TARGET) database --benchmark --operations 10000 || echo "Not implemented"
+
+# ============================================================================
+# VALGRIND (Memory Leak Check)
+# ============================================================================
+
+valgrind: $(TARGET)
+	@echo "🔍 Checking for memory leaks..."
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+		./$(TARGET) --version 2>&1 | grep "no leaks are possible" \
+		&& echo "✅ No memory leaks!" \
+		|| echo "⚠️  Memory leaks detected - check output above"
+
+# ============================================================================
+# INSTALL
+# ============================================================================
+
+install: $(TARGET)
+	@echo "📦 Installing crypto_toolkit..."
+	@install -m 755 $(TARGET) /usr/local/bin/$(TARGET)
+	@echo "✅ Installed to /usr/local/bin/$(TARGET)"
+	@echo ""
+	@echo "Run: crypto_toolkit --help"
+
+uninstall:
+	@echo "🗑️  Uninstalling crypto_toolkit..."
+	@rm -f /usr/local/bin/$(TARGET)
+	@echo "✅ Uninstalled!"
+
+# ============================================================================
+# CLEAN
+# ============================================================================
+
+clean:
+	@echo "🧹 Cleaning build artifacts..."
+	@rm -f $(OBJ) $(TARGET)
+	@rm -f $(DATA_DIR)/*.bin $(DATA_DIR)/*.dat
+	@echo "✅ Clean complete!"
+
+# ============================================================================
+# HELP
+# ============================================================================
+
+help:
+	@echo "╔══════════════════════════════════════════════════════════╗"
+	@echo "║        MOONLIGHT CRYPTO TOOLKIT - Makefile Help          ║"
+	@echo "╚══════════════════════════════════════════════════════════╝"
+	@echo ""
+	@echo "Available targets:"
+	@echo "  make all         - Build crypto_toolkit (default)"
+	@echo "  make test        - Run all tests"
+	@echo "  make benchmark   - Run performance benchmarks"
+	@echo "  make valgrind    - Check for memory leaks"
+	@echo "  make install     - Install to /usr/local/bin"
+	@echo "  make uninstall   - Remove from /usr/local/bin"
+	@echo "  make clean       - Remove build artifacts"
+	@echo "  make help        - Show this help message"
+	@echo ""
+	@echo "Examples:"
+	@echo "  make                    # Build the toolkit"
+	@echo "  make test               # Run tests"
+	@echo "  make benchmark          # Performance test"
+	@echo "  make clean all          # Clean build"
+	@echo "  sudo make install       # Install system-wide"
+	@echo ""
+	@echo "Season 4 Project - Operation MOONLIGHT"
+
+# ============================================================================
+# PHONY TARGETS
+# ============================================================================
+
+.DEFAULT_GOAL := all
+
