@@ -90,7 +90,7 @@
 - Episode 07: Динамическая память — malloc/free, загрузчик архивов (realloc в реальном времени)
 - Episode 08: Утечки памяти — поиск с valgrind/leaks (**ФИНАЛ**: встреча с Viktor!)
 - **Season Project**: `memory_manager` — контроль памяти + leak detector
-- **Новое в v3.0**: Interleaving (теория→вопросы→сюжет), 6 персонажей, финал на Красной площади
+- **v3.0**: Interleaving, 6 персонажей, финал на Красной площади
 
 ### Season 3: Networks (Сети) ✅
 *"Всё связано. Нужно лишь найти нить"*
@@ -100,14 +100,15 @@
 - Episode 12: Перехват зашифрованных коммуникаций (финал Season 3)
 - **Season Project**: `network_interceptor` — перехват и анализ трафика агентов Z.
 
-### Season 4: Crypto & Algorithms ✅ (упрощён v0.3.1)
+### Season 4: Crypto & Algorithms ✅ v3.0 Expanded Cast Edition
 *"Секреты защищены не замками, а математикой"*
-- Episode 13: Crypto Basics (XOR, Caesar, frequency analysis)
-- Episode 14: Blockchain & Hashes (Proof-of-Work, djb2)
-- Episode 15: Sorting & Search (5 базовых алгоритмов, Big O)
-- Episode 16: Data Structures (linked lists, stack/queue, BST, hash table basic)
-- **Season Project**: `crypto_toolkit` — криптография + алгоритмы + структуры данных
-- **Время**: ~12-15ч (упрощён на 40% для плавной кривой обучения)
+- Episode 13: Crypto Basics (XOR, Caesar, frequency analysis) — Eva главный криптограф!
+- Episode 14: Blockchain & Hashes (Proof-of-Work, djb2) — IP 185.220.101.47 из Season 2!
+- Episode 15: Sorting & Search (5 алгоритмов, Big O) — Deadline pressure, сегодня вечером!
+- Episode 16: Data Structures (Hash Table, BST, Linked List) — **ФИНАЛ**: встреча на Красной площади!
+- **Season Project**: `crypto_toolkit` — CLI инструмент (encrypt, blockchain, sort, database)
+- **v3.0**: 6 персонажей (Eva ⭐, Dr. Weiss, Dmitry, Ghost/Alex, Viktor, Architect), 17 сцен, 100% interleaving, эпилог, twist "Viktor работает на НАС"
+- **Время**: ~16-20ч
 
 ### Season 5: Financial Markets 💰
 *"Follow the money"*
