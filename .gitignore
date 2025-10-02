@@ -62,6 +62,7 @@ core.*
 *.swo
 *~
 .DS_Store
+.cursor
 
 # Personal notes
 **/notes.md
