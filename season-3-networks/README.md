@@ -2,11 +2,12 @@
 
 > *"Everything is connected. You just need to find the thread."*
 
-**Version:** v2.0-enhanced  
+**Version:** v3.0 Expanded Cast Edition  
 **Status:** ✅ Professional Quality 95%  
-**Контрольные вопросы:** 60 (полностью интегрированы в сюжет)  
+**Контрольные вопросы:** 60+ (полностью интегрированы в сюжет)  
 **Промежуточные задачи:** 3 (с автотестами)  
-**Метафоры:** 3 (с ASCII-диаграммами)
+**Метафоры:** 4 (с ASCII-диаграммами)  
+**Персонажи (Accumulating Cast):** Viktor, "Призрак" (Алекс Соколов), Маркус Вебер, Дмитрий Орлов, Анна Ковалёва, Полковник Крылов
 
 📄 [CHANGELOG](./CHANGELOG.md) | 📊 [IMPROVEMENTS SUMMARY](./IMPROVEMENTS_SUMMARY.md)
 
@@ -238,14 +239,114 @@ socket()=взять трубку, connect()=набрать номер, send()=г
 └──────────────────────────────────────────────────────────┘
 ```
 
-**Новое в v2.0:**
+**Новое в v3.0 Expanded Cast Edition:**
+- ✅ **Accumulating Cast**: 6 персонажей (Viktor, Ghost, Marcus, Dmitry, Anna, Krylov)
+- ✅ **Interleaving**: теория→вопросы→сюжет в каждом эпизоде
+- ✅ **Character Integration**: Ghost раскрывает личность (Ep11), Viktor появляется лично (Ep12)
+- ✅ **Dramatic Plot**: DDoS-атака, контр-слежка, финальная встреча на Красной площади
+- ✅ **Season Project**: network_interceptor (см. ниже)
+
+**Обновлено с v2.0:**
 - ✅ GPS-декодирование из IP (Episode 09)
 - ✅ DDoS-атака + deadline (Episode 10)
 - ✅ Counter-surveillance, взаимный sniffing (Episode 11)
 - ✅ Финальная встреча с Viktor на Красной площади (Episode 12)
 - ✅ 3 промежуточные задачи (ip_converter, simple_echo_client, header_parser)
-- ✅ 60 контрольных вопросов, 100% привязаны к сюжету миссий
-- ✅ 3 визуальные метафоры с ASCII-диаграммами
+- ✅ 60+ контрольных вопросов, 100% привязаны к сюжету миссий
+- ✅ 4 визуальные метафоры с ASCII-диаграммами
+
+---
+
+## 🚀 Season Project: network_interceptor
+
+После прохождения Episodes 09-12 вы создадите **финальный проект сезона** — универсальный инструмент сетевого анализа!
+
+```
+╔══════════════════════════════════════════════════════════╗
+║        SEASON PROJECT: network_interceptor               ║
+║        Собери свой инструмент из компонентов миссий      ║
+╚══════════════════════════════════════════════════════════╝
+```
+
+### Что это?
+
+**network_interceptor** — это интегрированный инструмент, объединяющий **ВСЕ** компоненты Season 3:
+
+```
+Episode 09: ip_tools          ─┐
+Episode 10: tcp_client        ─┤
+Episode 11: packet_sniffer    ─┼─→  network_interceptor
+Episode 12: session_reconstructor ─┘
+```
+
+### Возможности:
+
+1. **IP Conversion & GPS** (Episode 09)
+   - Конвертация IP string ↔ uint32_t
+   - Декодирование GPS из IP
+   - Классификация адресов
+
+2. **TCP Client** (Episode 10)
+   - Подключение к серверам
+   - Challenge-response auth
+   - Error handling
+
+3. **Packet Sniffing** (Episode 11)
+   - Raw sockets
+   - IP/TCP header parsing
+   - Payload extraction
+
+4. **Session Reconstruction** (Episode 12)
+   - Сортировка по SEQ
+   - Gap detection
+   - Stream reassembly
+   - XOR decryption
+
+### Как начать:
+
+```bash
+cd season-3-networks/
+
+# 1. Читаем задание
+cat season_project_mission.md
+
+# 2. Изучаем starter template
+cat season_project_starter.c
+
+# 3. Создаём структуру
+mkdir season-project/
+
+# 4. Извлекаем компоненты из Episodes 09-12
+# (детальные инструкции в season_project_mission.md)
+
+# 5. Собираем проект
+make season_project
+
+# 6. Запускаем
+./network_interceptor --help
+./network_interceptor --mode ip --host 203.0.113.42
+sudo ./network_interceptor --mode full  # Требует root для raw sockets
+```
+
+### Критерии успеха:
+
+- ✅ Компилируется без warnings
+- ✅ Valgrind без утечек памяти
+- ✅ 5 режимов работают (`ip`, `tcp`, `sniff`, `session`, `full`)
+- ✅ Модульная архитектура (4 компонента)
+- ✅ Код готов для использования в Season 5-10!
+
+### Зачем это важно?
+
+**network_interceptor будет использоваться в:**
+- **Season 5** (Financial): анализ HFT трафика
+- **Season 6** (Embedded/IoT): перехват команд дронов
+- **Season 7** (System Programming): мониторинг операций
+- **Season 10** (ФИНАЛ): satellite tracking + intercept
+
+**Это НЕ учебная задача. Это КРИТИЧЕСКИ ВАЖНЫЙ инструмент для финала курса!** 🚀
+
+📄 **Подробнее:** [`season_project_mission.md`](./season_project_mission.md)
 
 ---
 
