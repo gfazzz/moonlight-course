@@ -22,6 +22,8 @@
 
 Кто это? Как они узнали? Канал был защищён!
 
+Адреналин. Пальцы на клавиатуре. Мозг в режиме гиперфокуса — знакомое состояние после трёх лет в полевых операциях.
+
 Вы смотрите на часы: **00:50, среда**. Дедлайн: **00:50, пятница**. Чуть меньше **47 часов**, чтобы понять, что происходит.
 
 > *"Нет времени на панику. Есть время на работу."* — Виктор всегда говорил это перед операциями.
@@ -46,6 +48,23 @@ $ python old_protocol.py --retrieve
 [***] Download complete.
 ```
 
+Внезапно терминал мигает. Знакомый интерфейс.
+
+```
+╔════════════════════════════════════════════════════════╗
+║  🌙 LUNA v2.7 — Linguistic Understanding & Neural Aid ║
+║  Status: ONLINE                                        ║
+╚════════════════════════════════════════════════════════╝
+
+> LUNA: "The 'old place' protocol. Viktor and I designed the
+>        steganography layers together. 7 proxies, 3 encryption
+>        stages, dead drop in digital space.
+>        
+>        I hope you remember the proxy sequence... :)
+>        
+>        File downloaded. Let's see what Viktor left for you."
+```
+
 **01:02**  
 Загрузка завершена. Открываете файл. Внутри — **хаос**:
 
@@ -63,6 +82,20 @@ C 52.5200 13.4050 1634567920
 
 Координаты. Временные метки. Идентификаторы. Сотни строк. Без порядка. Без структуры.
 
+Это похоже на симфонию без дирижёра. Или на разбросанные пазлы детективного дела — каждая деталь важна, но картина не складывается.
+
+```
+> LUNA: "142 KB of structured chaos. Classic Viktor.
+>        
+>        Three types: C (Coordinates), T (Time), I (ID).
+>        Hundreds of records. No apparent order.
+>        
+>        Viktor used to say: 'Data doesn't speak. You make it speak.'
+>        
+>        Your task: Classify. Validate. Find the pattern.
+>        But first... you need to remember how to make DECISIONS in code."
+```
+
 > *"Данные не говорят сами. Их нужно заставить говорить."* — учил вас Виктор.
 
 **Ваша задача:** Классифицировать данные. Найти смысл в хаосе. Понять, что пытается сказать Виктор.
@@ -72,6 +105,16 @@ C 52.5200 13.4050 1634567920
 ---
 
 ## 📚 THEORY 1: Условные операторы (if/else)
+
+```
+> LUNA: "Viktor used to say: 'Code without conditionals is like a
+>        detective without questions. You just walk in circles.'
+>        
+>        Speaking from experience. Literally. I'm in a loop.
+>        
+>        Let's learn how programs make DECISIONS. Like you're about
+>        to decide: trust Viktor's data, or question everything?"
+```
 
 > *"Код без условий — это дорога без развилок. Скучная и бесполезная."* — Victor Petrov
 
@@ -173,38 +216,125 @@ AND (&&):           OR (||):          NOT (!):
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 1
 
-> *"Виктор присылает данные. Но как их различать?"*
+```
+> LUNA: "Viktor's file has data. Lots of data. Let's make sure you
+>        can READ it before you ANALYZE it. Three quick questions."
+```
 
-1. **[ ] В файле Виктора первая запись: `C 55.7558 37.6173 1634567890`. Как проверить, что тип — 'C'?**
-   <details>
-   <summary>Решение</summary>
-   ```c
-   char type;
-   scanf(" %c", &type);  // Прочитать тип
-   if (type == 'C') {
-       printf("Это координаты!\n");
-   }
-   ```
-   Важно: используем `==` для сравнения, не `=`!
-   </details>
+**1. [ ] В файле Viktor'а первая запись: `C 55.7558 37.6173 1634567890`. Как проверить, что тип — 'C'?**
 
-2. **[ ] Координата 55.7558 — это Москва. Как проверить диапазон?**
-   <details>
-   <summary>Решение</summary>
-   ```c
-   float lat = 55.7558;
-   if (lat >= 55.0 && lat <= 56.0) {
-       printf("Москва!\n");
-   }
-   ```
-   Используем `&&` (AND) для проверки диапазона [55.0, 56.0].
-   </details>
+```
+> LUNA: "Question: How do you check if the type character is 'C'?
+>        
+>        Hint: You need to COMPARE, not ASSIGN. Viktor made this
+>        mistake once in 2017. Just once. Never again. I was there
+>        to laugh at him. Well, I wasn't born yet, but his memory
+>        is my memory. Weird flex."
+```
 
-3. **[ ] Что произойдёт, если написать `if (type = 'C')` вместо `if (type == 'C')`?**
-   <details>
-   <summary>Ответ</summary>
-   **БАГ!** `type = 'C'` — это **присваивание**, не сравнение. Переменная `type` получит значение 'C', а условие всегда будет истинным (любое ненулевое значение = true). Это классическая ошибка новичков!
-   </details>
+<details>
+<summary>💡 Решение от LUNA</summary>
+
+```c
+char type;
+scanf(" %c", &type);  // Прочитать тип (пробел перед %c!)
+if (type == 'C') {
+    printf("Это координаты!\n");
+}
+```
+
+```
+> LUNA: "Correct! Notice: type == 'C' (compare), not type = 'C' (assign).
+>        
+>        == asks: 'Is this equal?'
+>        =  says: 'Make it equal!'
+>        
+>        Big difference. Viktor learned it the hard way."
+```
+</details>
+
+---
+
+**2. [ ] Координата 55.7558 — это Москва. Как проверить диапазон широты для Москвы?**
+
+```
+> LUNA: "Coordinate 55.7558° appears MULTIPLE TIMES in Viktor's data.
+>        That's Moscow. Red Square, specifically. Same place as Episode 01!
+>        
+>        Question: What's the valid latitude range to identify Moscow?
+>        A) 54.0 - 56.0 (very rough)
+>        B) 55.0 - 56.0 (rough)
+>        C) -90.0 - 90.0 (global, not helpful)
+>        
+>        Hint: Depends on your validation level. Paranoid = C. Practical = B."
+```
+
+<details>
+<summary>💡 Решение от LUNA</summary>
+
+```c
+float lat = 55.7558;
+
+// Проверка: Москва? (грубо)
+if (lat >= 55.0 && lat <= 56.0) {
+    printf("Москва!\n");
+}
+
+// Проверка: вообще валидная широта? (планета Земля)
+if (lat >= -90.0 && lat <= 90.0) {
+    printf("Valid latitude\n");
+}
+```
+
+```
+> LUNA: "Operator && means AND. Both conditions must be TRUE.
+>        
+>        lat >= 55.0  AND  lat <= 56.0
+>           ✓              ✓
+>        Both true? Print 'Москва!'
+>        
+>        Viktor's Rule #1: 'Always validate globally first (±90),
+>        then narrow down locally (Moscow).'"
+```
+</details>
+
+---
+
+**3. [ ] ОПАСНОСТЬ: Что произойдёт, если написать `if (type = 'C')` вместо `if (type == 'C')`?**
+
+```
+> LUNA: "This is the CLASSIC bug. The one that haunts developers
+>        at 3 AM. The one Viktor debugged for 4 hours in 2018.
+>        
+>        Question: What happens if you write:
+>        if (type = 'C')  // ОДИНАРНЫЙ =
+>        
+>        Hint: Think ASSIGNMENT vs COMPARISON."
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "⚠️ BUG DETECTED!
+>        
+>        if (type = 'C')  ← This is ASSIGNMENT, not comparison!
+>        
+>        What happens:
+>        1. Variable 'type' gets value 'C' (assigned)
+>        2. Expression 'type = 'C'' returns 'C' (67 in ASCII)
+>        3. Any non-zero value = TRUE in C
+>        4. Condition ALWAYS true, regardless of original type!
+>        
+>        CORRECT:
+>        if (type == 'C')  ← Double == for comparison
+>        
+>        Viktor's debugging log (2018-06-14):
+>        'Spent 4 hours debugging. It was a single =. FML.'
+>        
+>        Learn from his pain. Use ==."
+```
+</details>
 
 ---
 
@@ -261,11 +391,37 @@ Longitude: 37.62
 
 Это **Москва**. Красная площадь. Те же координаты, что упоминались в конце Episode 01!
 
+```
+> LUNA: "55.7558°N, 37.6173°E — Red Square, Moscow.
+>        
+>        Viktor mentioned these coordinates before. Twice.
+>        Once in Episode 01. Now here again.
+>        
+>        This is NOT random. Nothing Viktor does is random.
+>        Not the XOR key (0x42 = Answer to Everything).
+>        Not the coordinates (Red Square = Meeting point?).
+>        Not even the timestamp (1634567890 = Oct 18, 2021, 10:38 AM).
+>        
+>        Everything is a message. We just need to READ it."
+```
+
+Вы смотрите на экран. Координаты Москвы... Снова. Паттерн формируется.
+
 Но в файле сотни записей. Нужна автоматизация. Нужен **switch** для классификации всех записей...
 
 ---
 
 ## 📚 THEORY 2: Switch statement — диспетчер решений
+
+```
+> LUNA: "Think of switch as a train dispatcher. One variable arrives,
+>        multiple destinations. Fast, clean, efficient.
+>        
+>        Unlike nested if-else, which is... well, a mess.
+>        
+>        Viktor preferred switch for classification tasks. Three types?
+>        Perfect for switch."
+```
 
 Когда вариантов много, `switch` работает как **диспетчер на вокзале**.
 
@@ -323,39 +479,121 @@ Coordinate   Time       ID          Unknown
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 2
 
-4. **[ ] Что произойдёт, если забыть `break` в case?**
-   <details>
-   <summary>Ответ</summary>
-   Код **провалится** в следующий case (fall-through). Пример:
-   ```c
-   switch (type) {
-       case 'C':
-           printf("Coordinate\n");
-           // Забыли break!
-       case 'T':
-           printf("Time\n");
-           break;
-   }
-   ```
-   При `type = 'C'` выведет:
-   ```
-   Coordinate
-   Time
-   ```
-   Это редко нужно, поэтому **всегда ставьте break**!
-   </details>
+```
+> LUNA: "Switch is powerful. But with great power... well, you know.
+>        Let's make sure you don't shoot yourself in the foot."
+```
 
-5. **[ ] Можно ли использовать switch для float значений?**
-   <details>
-   <summary>Ответ</summary>
-   **НЕТ!** `switch` работает только с **целыми типами** (int, char, long). Для float/double используйте `if/else`.
-   </details>
+**4. [ ] Что произойдёт, если забыть `break` в case?**
 
-6. **[ ] Зачем нужен `default` в switch?**
-   <details>
-   <summary>Ответ</summary>
-   `default` срабатывает, если **ни один case не подошёл**. Это обработка ошибок! В файле Виктора может быть некорректная запись — нужно её поймать.
-   </details>
+```
+> LUNA: "The infamous fall-through bug. Viktor fell for this in 2019.
+>        Classified 'Coordinates' as 'Coordinates Time ID Unknown'.
+>        
+>        Question: What happens if you forget 'break'?"
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "Without 'break', code FALLS THROUGH to the next case!
+>        
+>        Example:
+>        switch (type) {
+>            case 'C':
+>                printf("Coordinate\n");
+>                // ❌ Forgot break! Code continues...
+>            case 'T':
+>                printf("Time\n");
+>                break;
+>        }
+>        
+>        Input: type = 'C'
+>        Output:
+>        Coordinate
+>        Time
+>        
+>        Why? No break → code falls into next case.
+>        
+>        Fix: ALWAYS use break (unless you know what you're doing).
+>        
+>        Viktor's Rule #5: 'Never trust yourself to remember break.'"
+```
+</details>
+
+---
+
+**5. [ ] Можно ли использовать switch для float значений (координат)?**
+
+```
+> LUNA: "Viktor's data has float coordinates (55.7558).
+>        Can you use switch for them?
+>        
+>        Hint: Switch is picky about types."
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "❌ NO! Switch only works with INTEGER types.
+>        
+>        Allowed:
+>        ✅ int, char, long, short, enum
+>        
+>        NOT allowed:
+>        ❌ float, double, string
+>        
+>        Why? Switch uses jump tables. Floats are imprecise.
+>        Can't hash 55.7558 reliably.
+>        
+>        For floats, use if/else:
+>        if (lat > 55.0 && lat < 56.0) { ... }
+>        
+>        Viktor used switch for TYPE ('C', 'T', 'I') — char.
+>        But if/else for VALUES (55.7558) — float."
+```
+</details>
+
+---
+
+**6. [ ] Зачем нужен `default` в switch? Что он делает?**
+
+```
+> LUNA: "Viktor's file could have corrupted data. Transmission errors.
+>        Or... something worse. Intentional fakes.
+>        
+>        Question: What if type is not 'C', 'T', or 'I'?
+>        What if it's 'X', '?', or garbage?"
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "default catches EVERYTHING that doesn't match a case.
+>        
+>        switch (type) {
+>            case 'C': ...
+>            case 'T': ...
+>            case 'I': ...
+>            default:  ← Catches 'X', '?', '\0', garbage, etc.
+>                printf("Unknown type!\n");
+>        }
+>        
+>        Why is this critical?
+>        
+>        Viktor's file could have:
+>        - Transmission errors (bit flips)
+>        - Intentional fake records (enemy sabotage)
+>        - End-of-file garbage
+>        
+>        default = Error handling. Security. Paranoia.
+>        
+>        Viktor's Rule #3: 'Never trust data. Always have a default.'"
+```
+</details>
 
 ---
 
@@ -448,6 +686,36 @@ Total: 142 records
 
 Только смайлик: **:)**
 
+LUNA мгновенно реагирует:
+
+```
+> LUNA: "⚠️ ALERT: Unidentified sender breached our secure channel!
+>        
+>        IP trace: 127.0.0.1 (localhost?!)
+>        Encryption: AES-256 (military grade)
+>        Connection duration: 2.3 seconds
+>        Trace result: FAILED
+>        
+>        Analysis: Someone is IN YOUR NETWORK. Or spoofing localhost.
+>        Message content: Helpful (mentions Viktor, validation).
+>        Signature: ':)' — playful, confident.
+>        
+>        Threat level: UNKNOWN
+>        
+>        Viktor never mentioned anyone else. No third party in the protocol.
+>        This person knows:
+>        - You're analyzing Viktor's data
+>        - The file structure (48 coordinates)
+>        - Viktor's teaching style (validation)
+>        
+>        Recommendation: Proceed with caution. But... they're helping.
+>        For now.
+>        
+>        I'll keep monitoring. If they appear again, I'll try to trace.
+>        
+>        Friendly or enemy? I don't know. Stay sharp."
+```
+
 > **Новый контакт:** "Призрак" — анонимный хакер. Мотивы неясны. Но пока помогает. Кто он? Как он взломал ваш защищённый канал?
 
 ---
@@ -464,12 +732,27 @@ Total: 142 records
 
 ## 📚 THEORY 3: Валидация данных
 
+```
+> LUNA: "Viktor's Rule #3 (yes, he had numbered rules):
+>        
+>        'Never trust data. Not from friends, not from enemies,
+>         not even from yourself.'
+>        
+>        Paranoid? Maybe. Alive? Definitely.
+>        
+>        That 'Ghost' person just confirmed: 12 fake records in the file.
+>        Latitude 99.99 = marker. Viktor's sabotage detection.
+>        
+>        Let's learn VALIDATION. It might save your life. Literally."
+```
+
 > *"Данные без валидации — это мина. Рано или поздно взорвётся."* — Виктор Петров
 
 Всегда проверяйте входные данные! В реальном мире данные могут быть:
 - ❌ Некорректными (широта 999°)
 - ❌ Вредоносными (SQL injection, buffer overflow)
 - ❌ Случайно повреждёнными (ошибки передачи)
+- ❌ Намеренно подделанными (враг подсунул ложные координаты)
 
 ### Валидация координат
 
@@ -525,6 +808,16 @@ printf("Valid time: %02d:%02d\n", hours, minutes);
 ---
 
 ## 📚 THEORY 4: scanf — чтение данных (важные детали!)
+
+```
+> LUNA: "The whitespace-before-%c trick. Viktor spent 4 hours debugging
+>        this in 2018. I remember. I was there. 
+>        
+>        Well, I didn't exist yet, but I have his memories. Weird flex.
+>        
+>        Anyway. This bug is SUBTLE. It will haunt you at 3 AM.
+>        Let's make sure you understand it NOW."
+```
 
 ### ⚠️ КРИТИЧЕСКИ ВАЖНО: Пробел перед %c
 
@@ -597,39 +890,122 @@ while (scanf(" %c %f %f %ld", &type, &val1, &val2, &timestamp) == 4) {
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 3
 
-7. **[ ] Зачем нужен пробел перед %c в `scanf(" %c", &type)`?**
-   <details>
-   <summary>Ответ</summary>
-   Пробел **игнорирует все whitespace** (пробелы, табы, переводы строк `\n`). Без него `scanf("%c")` прочитает `\n`, оставшийся от предыдущего Enter, вместо нужного символа!
-   </details>
+```
+> LUNA: "Three final questions before the validator mission.
+>        These are CRITICAL. Viktor's file has traps. Don't fall for them."
+```
 
-8. **[ ] Координата 55.7558° — это Москва. В каком диапазоне проверять широту?**
-   <details>
-   <summary>Ответ</summary>
-   Для Москвы: **55.0 ≤ lat ≤ 56.0** (грубо)  
-   Для всей планеты: **-90.0 ≤ lat ≤ 90.0**
-   
-   Используйте:
-   ```c
-   if (lat >= 55.0 && lat <= 56.0) {
-       printf("Moscow!\n");
-   }
-   ```
-   </details>
+**7. [ ] Зачем нужен пробел перед %c в `scanf(" %c", &type)`?**
 
-9. **[ ] Что вернёт `scanf("%d %d", &a, &b)` при успешном чтении двух чисел?**
-   <details>
-   <summary>Ответ</summary>
-   Вернёт **2** — количество успешно прочитанных аргументов.
-   
-   Поэтому для чтения всего файла:
-   ```c
-   while (scanf("%d %d", &a, &b) == 2) {
-       // Обработка
-   }
-   ```
-   Цикл остановится, когда данных больше нет (scanf вернёт EOF).
-   </details>
+```
+> LUNA: "The space-before-%c mystery. Viktor's 4-hour debugging session.
+>        
+>        Question: Why do we write scanf(' %c', &type) with a SPACE?
+>                  (not scanf('%c', &type))
+>        
+>        Hint: What happens to the '\n' (Enter key) after you type a number?"
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "The space IGNORES all whitespace (spaces, tabs, newlines).
+>        
+>        Without space:
+>        scanf('%d', &num);   // You type: 42 [Enter]
+>        scanf('%c', &type);  // ❌ Reads '\n' instead of your character!
+>        
+>        With space:
+>        scanf('%d', &num);   // You type: 42 [Enter]
+>        scanf(' %c', &type); // ✅ Skips '\n', waits for next character!
+>              ↑
+>           space!
+>        
+>        Viktor's 2018 debugging log:
+>        '23:47 — Why is type always '\n'?!'
+>        '01:15 — Still debugging...'
+>        '03:42 — FOUND IT. A SPACE. ONE SPACE. FML.'
+>        
+>        Learn from his suffering. Use the space."
+```
+</details>
+
+---
+
+**8. [ ] "Призрак" упомянул широту 99.99 как маркер подделки. Почему это некорректно?**
+
+```
+> LUNA: "The Ghost mentioned lat 99.99 as a fake marker.
+>        Viktor probably planted these on purpose.
+>        
+>        Question: Why is latitude 99.99° impossible?
+>        What's the valid range for latitude on Earth?"
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "Latitude range: -90.0 to +90.0 (South Pole to North Pole)
+>        
+>        99.99° is IMPOSSIBLE on Earth!
+>        
+>        Why?
+>        - 90° = North Pole (literally the top of the planet)
+>        - 99° = ... space? 900 km above North Pole?
+>        
+>        Viktor used impossible values as MARKERS:
+>        - 99.99 = fake coordinate (sabotage detection)
+>        - 25:30 time = fake timestamp
+>        - -999 = error code
+>        
+>        Validation catches these. Always validate:
+>        if (lat < -90.0 || lat > 90.0) {
+>            printf('FAKE DETECTED!\n');
+>        }
+>        
+>        Viktor's paranoia = survival."
+```
+</details>
+
+---
+
+**9. [ ] Как читать ВСЕ записи из файла Viktor'а до конца?**
+
+```
+> LUNA: "Viktor's file has 142 records. You can't read them one by one.
+>        You need a LOOP that stops at EOF (End Of File).
+>        
+>        Question: How do you check if scanf successfully read data?
+>        
+>        Hint: scanf RETURNS something. What does it return?"
+```
+
+<details>
+<summary>💡 Ответ от LUNA</summary>
+
+```
+> LUNA: "scanf returns the NUMBER OF SUCCESSFULLY READ ARGUMENTS.
+>        
+>        Example:
+>        int result = scanf('%d %d', &a, &b);
+>        // result = 2 (if both read)
+>        // result = 1 (if only first read)
+>        // result = EOF (if end of file)
+>        
+>        For Viktor's file:
+>        while (scanf(' %c %f %f %ld', &type, &v1, &v2, &ts) == 4) {
+>            // Successfully read 4 values
+>            // Process record...
+>        }
+>        // Loop stops when scanf returns EOF (no more data)
+>        
+>        This is how you read ENTIRE files in C.
+>        
+>        Viktor used this pattern in 90% of his parsing code."
+```
+</details>
 
 ---
 
@@ -970,6 +1346,38 @@ SMS от UNKNOWN:
 
 Что это значит?!
 
+LUNA прерывает тишину:
+
+```
+> LUNA: "Viktor's message decoded.
+>        
+>        'PATTERNS ARE THE KEY' = Episode 03 is about loops.
+>        'TIME IS NOT TIME' = Timestamps encode something else.
+>        'COORDINATES ARE NOT COORDINATES' = GPS data is a cipher.
+>        'EVERYTHING IS CODE' = Nothing is what it seems.
+>        
+>        Translation: You need to find PATTERNS in the data.
+>        You need LOOPS. While loops. For loops. Nested loops.
+>        You need to ITERATE. Compare. Detect repetition.
+>        
+>        Viktor's teaching you algorithms through a conspiracy.
+>        Classic Viktor.
+>        
+>        And about that dark Audi A6 downstairs... I don't have eyes,
+>        but I have your webcam feed. (Kidding. Or am I?)
+>        
+>        They watched you for 10 minutes. From 02:50 to 03:00.
+>        Exactly during Channel #7 transmission.
+>        They WANTED you to know they're watching.
+>        
+>        Psychological warfare. Intimidation.
+>        
+>        Don't let them win.
+>        
+>        Episode 03 unlocked. Let's find those patterns.
+>        Stay safe, Morpheus. Viktor would be proud of you."
+```
+
 **03:02**  
 Вам нужно найти паттерны. Вам нужны **циклы**. Много циклов.
 
@@ -1066,15 +1474,70 @@ Ep04: ИНСТРУМЕНТ (функции, модули, moonlight_decoder)
 
 ## 🎨 Easter Eggs
 
+```
+> LUNA: "Viktor loved Easter eggs. Hidden references. Layers of meaning.
+>        Let me decode this episode for you. :)"
+```
+
 🔍 **Отсылки в этом эпизоде:**
-- Строки 23 и 87 — намеренно некорректные данные (код в коде)
-- 99.9999° широта — возможно, радиочастота 99.9 MHz
-- Тёмная Audi A6 — стандарт для слежки в России
-- Канал #7 — экстренный канал (7 = lucky number)
-- 03:00 — "witching hour" (час ведьм), классика шпионских триллеров
-- "pattern.key" — файл с подсказкой
-- "They know where you are" — паранойя агента под прикрытием
-- Координаты Москвы (55.7558, 37.6173) = Красная площадь (сквозная линия Season 1-2)
+
+- **Строки 23 и 87** — намеренно некорректные данные (код в коде)  
+  ```
+  > LUNA: "23 + 87 = 110? 23 × 4 = 92? No, no... Viktor's mind doesn't
+  >        work that way. These are INDEX markers. Pointers to other
+  >        records. Episode 03 will reveal..."
+  ```
+
+- **99.9999° широта** — возможно, радиочастота 99.9 MHz ("Эхо Москвы" до 2022)  
+  ```
+  > LUNA: "99.9 MHz was 'Echo of Moscow' radio station. Shut down in 2022.
+  >        Viktor's way of saying: 'Echoes of the past'? Or just a marker?"
+  ```
+
+- **Тёмная Audi A6** — стандарт FSB/FSO для слежки в России  
+  ```
+  > LUNA: "Audi A6. Classic FSB choice. Blend in with business elite.
+  >        Tinted windows. Diplomatic plates (probably fake).
+  >        They're not hiding. They're SHOWING you they're watching."
+  ```
+
+- **Канал #7** — экстренный канал (отсылка к James Bond 007)  
+  ```
+  > LUNA: "Channel #7. Viktor's joke. Bond. 007. Get it?
+  >        Used only twice: Grozny 2019, St. Petersburg 2020.
+  >        Both near-death situations. Not a good sign."
+  ```
+
+- **03:00** — "witching hour" (час ведьм), классика шпионских триллеров  
+  ```
+  > LUNA: "3 AM. The hour when most people die in hospitals.
+  >        When CIA does extraordinary renditions.
+  >        When your brain is weakest. Psychological warfare 101."
+  ```
+
+- **"pattern.key"** — файл с подсказкой (key = ключ, буквально и метафорически)
+
+- **"They know where you are"** — паранойя агента под прикрытием
+
+- **Координаты 55.7558, 37.6173** = Красная площадь, Москва (сквозная линия Season 1-2)  
+  ```
+  > LUNA: "These coordinates appear THREE times now:
+  >        - Episode 01: Final cliffhanger
+  >        - Episode 02: Viktor's data (multiple times)
+  >        - Season 2 finale: Meeting point (spoilers!)
+  >        
+  >        Red Square. The heart of Russia. The ultimate meeting point.
+  >        Everything leads there. Always has."
+  ```
+
+- **"Призрак" (Ghost)** — появляется впервые, смайлик ':)'  
+  ```
+  > LUNA: "Who is this Ghost? How did they breach our channel?
+  >        Why the smiley face? Are they friend or foe?
+  >        
+  >        Viktor never mentioned a third party. This is... unexpected.
+  >        I'll keep analyzing. Something doesn't add up."
+  ```
 
 ---
 

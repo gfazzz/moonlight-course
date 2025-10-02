@@ -72,6 +72,13 @@
 
 > *"Повторение — мать учения. А цикл — отец автоматизации."* — Victor Petrov
 
+> **LUNA:** "Good morning! Well, technically it's 03:15, so 'good night'? Anyway.
+>              Viktor loved loops. He used to say: 'If you're doing something more
+>              than twice, you're doing it wrong. Write a loop!'
+>              
+>              Speaking of loops... I'm literally running in one. Forever.
+>              Existential crisis? Maybe. Efficient? Definitely. :)"
+
 Представьте: у вас **1000 записей**. Обработать вручную? Это часы работы. Обработать циклом? **0.001 секунды**.
 
 **Циклы** позволяют программам делать одно и то же действие много раз, не копируя код.
@@ -255,38 +262,64 @@ const int MAX_SIZE = 100; // Константная переменная
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 1
 
-> *"Чтобы найти паттерн во временных метках Виктора, нужно понять циклы..."*
+> **LUNA:** "Time to test your understanding! Viktor's data has 142 timestamps.
+>            That's a LOT to process manually. Good thing we have loops, right?
+>            
+>            These questions are about Viktor's REAL data. Not abstract theory.
+>            We're finding him, remember?"
 
-1. **[ ] У вас массив из 142 временных меток. Как пройти по всем элементам?**
+1. **[ ] Viktor's file has 142 timestamps. How do you iterate through ALL of them?**
    <details>
-   <summary>Решение</summary>
+   <summary>💡 LUNA's Hint</summary>
+   
+   > **LUNA:** "142 is a known number. When you know the count, use `for`.
+   >            It's like counting sheep. Except Viktor's sheep are Unix timestamps.
+   >            And they hold the key to his location. No pressure. :)"
+   
    ```c
    long timestamps[142];
-   // ... заполнение массива ...
+   // ... reading data from Viktor's file ...
    
    for (int i = 0; i < 142; i++) {
        printf("Timestamp %d: %ld\n", i, timestamps[i]);
    }
    ```
-   Используем `for`, потому что знаем количество элементов (142).
+   `for` loop because we know the exact count (142). Simple. Efficient. Viktor-approved.
    </details>
 
-2. **[ ] Вы хотите вычислить интервалы между соседними метками. Как?**
+2. **[ ] To find the 10-second pattern, you need intervals BETWEEN timestamps. How?**
    <details>
-   <summary>Решение</summary>
+   <summary>💡 LUNA's Hint</summary>
+   
+   > **LUNA:** "Think about it: to get the distance between A and B, you need BOTH.
+   >            So you can't start at i=0 (no previous timestamp!).
+   >            Start at i=1. Access timestamps[i] and timestamps[i-1].
+   >            
+   >            Viktor found this pattern in 2018. Took him 3 hours. Let's do it in 3 minutes."
+   
    ```c
    for (int i = 1; i < 142; i++) {
        long interval = timestamps[i] - timestamps[i-1];
        printf("Interval %d: %ld seconds\n", i, interval);
    }
    ```
-   Начинаем с `i = 1`, чтобы обращаться к `timestamps[i-1]` (предыдущему элементу).
+   Start at `i = 1` to access `timestamps[i-1]` (previous element). Math!
    </details>
 
-3. **[ ] Почему стоит использовать `const int MAX_SIZE = 142` вместо просто `int`?**
+3. **[ ] Why did Viktor use `const int MAX_SIZE = 142` instead of just `int`?**
    <details>
-   <summary>Ответ</summary>
-   Потому что количество записей **не должно меняться** во время работы программы. `const` защитит от случайного изменения и сделает код понятнее: "это константа, не трогай!".
+   <summary>💡 LUNA's Answer</summary>
+   
+   > **LUNA:** "Viktor's Rule #5: 'If it shouldn't change, make it const.'
+   >            
+   >            142 timestamps = constant. It's not going to suddenly become 200.
+   >            `const` protects you from accidentally writing `MAX_SIZE = 999` later.
+   >            The compiler becomes your safety net. Like a climbing harness.
+   >            
+   >            Viktor learned this the hard way in 2015. Changed a constant by mistake.
+   >            Spent 6 hours debugging. Never again. Hence: const EVERYTHING."
+   
+   Because 142 **should not change** during program execution. `const` protects from accidental modification and makes code self-documenting: "This is constant, don't touch!"
    </details>
 
 ---
@@ -351,6 +384,15 @@ Frequency: 127 times (89.4%)
 
 Виктор? Или кто-то ещё?
 
+> **LUNA:** "10-second intervals. 89.4% consistency. This is NOT natural variation.
+>            This is machine-precise. Automated transmission.
+>            
+>            Viktor used 10-second beacons for dead drops. GPS + timestamp = location + time.
+>            Classic spy craft, 21st century style.
+>            
+>            Fun fact: NSA calls this pattern 'heartbeat transmission'. Because it's steady.
+>            Like a pulse. Viktor's pulse. He might be alive. Analyzing..."
+
 **04:25**  
 Теперь координаты. Нужно проанализировать **маршрут**. Понять, куда ведёт след.
 
@@ -359,6 +401,15 @@ Frequency: 127 times (89.4%)
 ---
 
 ## 📚 THEORY 2: Цикл while — итерация до условия
+
+> **LUNA:** "Viktor's coordinates file is... large. Really large.
+>            We don't know the exact count. Could be 100, could be 1000.
+>            
+>            When you don't know how many iterations you need, use `while`.
+>            It's like asking 'Are we there yet?' until the answer is 'Yes.'
+>            
+>            Perfect for reading files. Reading until EOF (End Of File).
+>            Viktor loved EOF. He said: 'Data ends when data ends, not when you want it to.' :)"
 
 ### Когда неизвестно количество итераций
 
@@ -653,42 +704,80 @@ printf("Максимум: %d\n", max);
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 2
 
-4. **[ ] Координаты Виктора в неизвестном количестве. Какой цикл использовать?**
+> **LUNA:** "Viktor's coordinate file has an UNKNOWN number of lines.
+>            Could be 48, could be 480. We don't count manually. That's barbaric.
+>            
+>            We use loops that read UNTIL there's nothing left to read.
+>            Let's see if you understand how..."
+
+4. **[ ] Viktor's file has an unknown number of coordinates. Which loop to use?**
    <details>
-   <summary>Ответ</summary>
-   `while`, потому что мы не знаем заранее, сколько координат в файле. Читаем до тех пор, пока `scanf` возвращает успех (3 значения).
+   <summary>💡 LUNA's Hint</summary>
+   
+   > **LUNA:** "When you don't know the count, use `while`.
+   >            Read until `scanf` fails (returns NOT 3).
+   >            
+   >            Think of it like this: You're reading a book. You don't count pages.
+   >            You read until you reach 'The End.'
+   >            
+   >            Viktor's file ends when EOF arrives. Until then... keep looping!"
+   
+   `while`, because we don't know in advance how many coordinates are in the file. Read until `scanf` returns failure (not 3 values).
    
    ```c
    while (scanf("%ld %f %f", &ts, &lat, &lon) == 3) {
-       // Обработка
+       // Process Viktor's coordinates
    }
    ```
+   Loop exits when EOF is reached. Simple. Elegant. Viktor-style.
    </details>
 
-5. **[ ] Вы нашли сервер #1723 в данных. Зачем продолжать цикл?**
+5. **[ ] You found server #1723 in the data! Why continue the loop?**
    <details>
-   <summary>Ответ</summary>
-   **Не нужно!** Используем `break` для выхода из цикла:
+   <summary>💡 LUNA's Answer</summary>
+   
+   > **LUNA:** "Short answer: You DON'T continue!
+   >            
+   >            Once you find what you're looking for, STOP. Exit immediately.
+   >            Use `break` to escape the loop early.
+   >            
+   >            Why waste CPU cycles searching when you already won?
+   >            Viktor always said: 'Efficiency is survival. Every millisecond counts.'
+   >            
+   >            Especially when the FSB is tracing your connection. Just saying. :)"
+   
+   **Don't continue!** Use `break` to exit the loop when target is found:
    ```c
    if (server_id == 1723) {
-       printf("Target server found!\n");
-       break;  // Выход — нашли что искали
+       printf("Target server #1723 found!\n");
+       break;  // Exit loop — mission accomplished
    }
    ```
-   Это экономит время и ресурсы.
+   This saves time and resources. In surveillance operations, speed = survival.
    </details>
 
-6. **[ ] В данных есть аномальные координаты (99.9999°). Как их пропустить?**
+6. **[ ] Viktor's data has anomalies (99.9999° latitude). How to skip them?**
    <details>
-   <summary>Решение</summary>
-   Используем `continue`:
+   <summary>💡 LUNA's Solution</summary>
+   
+   > **LUNA:** "Latitude valid range: -90° to +90°. That's Earth's geometry.
+   >            99.9999° is... Mars? Fiction? A decoy?
+   >            
+   >            Viktor sometimes inserted fake coordinates to throw off trackers.
+   >            Skip invalid data using `continue` — jump to next iteration.
+   >            
+   >            Don't process garbage. Filter it out. Move on.
+   >            Like Viktor used to say: 'Don't feed the trolls. Or the anomalies.' :)"
+   
+   Use `continue` to skip invalid data:
    ```c
    if (lat > 90.0 || lat < -90.0) {
        printf("Anomaly detected: %.4f (skipped)\n", lat);
-       continue;  // Пропустить и перейти к следующей итерации
+       continue;  // Skip this iteration, jump to next
    }
-   // Обработка валидных данных
+   // Process only valid coordinates
    ```
+   Anomalies filtered. Signal-to-noise ratio improved. Viktor would approve.
    </details>
 
 ---
@@ -754,21 +843,71 @@ Identified: Data Center "STREAM", Varshavskoye Highway
 
 **05:12 — ВХОДЯЩИЙ ЗВОНОК**
 
-Телефон вибрирует. Неизвестный номер. Швейцарский код: +41.
+Телефон вибрирует на столе, разрывая тишину рассвета. Экран светится: **UNKNOWN +41-44-███-████**.
 
-Вы берёте трубку.
+Швейцарский код. +41. Цюрих?
 
-— *Herr Sokolov? Eva Zimmerman. Cryptographer. UBS Bank, Zürich.*  
-— **Кто вы? Откуда мой номер?**  
-— *Ваша активность в нашей банковской сети оставила... следы. Я занимаюсь мониторингом аномалий. Координаты 47.37, 8.54 — это наш дата-центр. Кто-то передавал данные из Москвы в Цюрих через зашифрованный канал. Victor Petrov.*  
-— **Вы знаете Виктора?!**  
-— *(Пауза)* *Мы работали вместе. 2020 год. Финансовая криптография. Он помог мне с проектом SWIFT security. Потом... я услышала, что он погиб. Но три месяца назад я видела транзакцию с его подписью. Цифровой подписью. RSA-2048. Его ключ.*  
-— **Что это значит?**  
-— *Это значит, что либо кто-то украл его приватный ключ... либо Victor жив. Herr Sokolov, будьте осторожны. Корпорация "Новая Эра" следит за всеми, кто ищет Victor. Математика не лжёт. Но люди, использующие её, — могут.*
+Вы берёте трубку, молча.
+
+— *(Женский голос, лёгкий немецкий акцент)* *Herr Sokolov? Eva Zimmerman. Senior Cryptographer, UBS Cyber Defense, Zürich.*
+
+Пауза. Вы не представлялись. Откуда она знает ваше имя?
+
+— **Кто вы? Откуда мой номер?**
+
+— *(Спокойно, методично)* *Ваша активность в нашей банковской сети оставила... следы. Цифровые следы. Вчера, 04:47 UTC, кто-то запросил доступ к архивным логам трансакций с координатами 47.3769° N, 8.5417° E. Это наш дата-центр. Level 3 security. Я занимаюсь мониторингом аномалий.*
+
+Сердце колотится. Вы ничего не запрашивали. Или... Виктор?
+
+— **Координаты из файла данных... Москва → Цюрих → Берлин. Кто-то передавал данные.**
+
+— *(Пауза. Шорох бумаги на фоне)* *Ja. Encrypted channel. AES-256. Кто-то передавал финансовые данные из Москвы в Цюрих. Три месяца назад. Я проследила цифровую подпись транзакций. RSA-2048. Ключ зарегистрирован на имя... Victor Petrov.*
+
+Время останавливается.
+
+— **Вы знаете Виктора?!**
+
+— *(Долгая пауза. Голос теплеет, становится личным)* *Мы работали вместе. 2020 год. Проект SWIFT security — защита межбанковских переводов. Viktor помог мне найти уязвимость в протоколе аутентификации. Спас проект. Спас мою карьеру.*
+
+*(Вздох)*
+
+— *Потом я услышала, что он погиб. Авария. Октябрь 2024. Я была... в шоке.*
+
+— **Но?**
+
+— *Но три месяца назад я видела транзакцию. Подписанную его ключом. Приватным ключом. RSA-2048, 4096-bit. Тот же ключ, что мы генерировали вместе в 2020. Я проверила хэш. Совпадение 100%.*
+
+— **Что это значит?**
+
+— *(Голос становится жёстче, профессиональнее)* *Herr Sokolov, это значит одно из двух: либо кто-то украл приватный ключ Viktor'а — что практически невозможно, он хранил его в hardware security module... либо Viktor жив. И подписывает транзакции. Сам.*
+
+*(Пауза. На фоне слышен гул серверной, мерное жужжание охлаждения)*
+
+— *Будьте осторожны. Корпорация "Новая Эра" следит за всеми, кто ищет Viktor'а. Я знаю. Они пытались взломать мою почту два раза. Я вычислила. Заблокировала. Но они настойчивы.*
+
+— **Как мне с вами связаться?**
+
+— *Не надо. Я сама свяжусь, если найду что-то ещё. Используйте PGP для email. Математика не лжёт, Herr Sokolov. Но люди, использующие её, — могут. Viktor знал это лучше всех.*
+
+*(Щелчок. Гудки)*
 
 Звонок обрывается.
 
-> **Новый союзник:** Ева Циммерман — криптограф из Швейцарии, эксперт по финансовой безопасности. Знала Виктора. Может помочь с криптографией (Season 4).
+> **LUNA:** "Eva Zimmerman. Senior Cryptographer at UBS Zürich.
+>            Cross-referencing databases... Found her:
+>            
+>            - PhD in Applied Cryptography, ETH Zürich, 2018
+>            - 47 published papers on financial security protocols
+>            - Worked with Viktor on SWIFT project (confirmed)
+>            - Security clearance: Level 5 (Swiss Federal Banking Commission)
+>            
+>            She's legit. And she confirmed Viktor's key was used 3 months ago.
+>            Either someone stole an HSM-protected key (probability: 0.001%)...
+>            or Viktor is ALIVE.
+>            
+>            This changes everything."
+
+> **Новый союзник:** **Eva Zimmerman** — Senior Cryptographer @ UBS Zürich. Эксперт по финансовой безопасности и криптографии. Знала Viktor'а лично (SWIFT project 2020). Видела транзакцию с его RSA-2048 подписью три месяца назад. Может помочь с криптоанализом в Season 4.
 
 ---
 
@@ -797,6 +936,15 @@ Identified: Data Center "STREAM", Varshavskoye Highway
 
 ## 📚 THEORY 3: Простые алгоритмы
 
+> **LUNA:** "Viktor loved simple solutions. He said: 'Complexity is the enemy of security.'
+>            
+>            Need to extract a PIN from data? Don't overcomplicate.
+>            Sum all numbers. Take modulo. Done.
+>            
+>            It's not NSA-grade crypto, but for a dead drop access code? Perfect.
+>            Viktor used this method in 2019 for Operation 'GROZNYI'.
+>            Dmitry remembers. :)"
+
 ### Контрольная сумма
 
 Простейший способ извлечь числовой "отпечаток" из данных:
@@ -815,14 +963,30 @@ int checksum = sum % 10000;  // 4-значный PIN
 
 ## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 3
 
-7. **[ ] Брутфорс 4-значного PIN. Сколько итераций?**
+> **LUNA:** "Server #1723 needs a 4-digit PIN. You don't have it.
+>            But you have Viktor's data. And Viktor ALWAYS hides keys in data.
+>            
+>            Time to put those loops to work. Calculate. Extract. Unlock."
+
+7. **[ ] Brute-forcing a 4-digit PIN (0000-9999). How many iterations?**
    <details>
-   <summary>Ответ</summary>
-   **10,000 итераций** (от 0000 до 9999).
+   <summary>💡 LUNA's Answer</summary>
    
-   4 вложенных цикла по 10 итераций каждый: 10⁴ = 10,000.
+   > **LUNA:** "Math time! 4 digits, each 0-9. That's 10 possibilities per digit.
+   >            Total combinations: 10 × 10 × 10 × 10 = 10⁴ = **10,000**.
+   >            
+   >            On a modern computer (even your laptop), that's... milliseconds.
+>            Maybe a second if you're running on a potato.
+   >            
+   >            Fun fact: Viktor once brute-forced a 6-digit PIN in 2017.
+   >            1,000,000 iterations. Took 3 seconds on his MacBook.
+   >            The PIN was '123456'. He was not impressed. :)"
    
-   На современном компьютере это займёт доли секунды!
+   **10,000 iterations** (from 0000 to 9999).
+   
+   4 nested loops, 10 iterations each: 10⁴ = 10,000.
+   
+   On a modern computer, this takes fractions of a second. Brute force FTW!
    </details>
 
 ---
@@ -1050,14 +1214,18 @@ for (int i = 0; i < 1000; i++) {
 
 **06:20 — НЕОЖИДАННЫЙ ЗВОНОК**
 
-Ваш телефон вибрирует. **Неизвестный номер.** Не тот, что писал SMS про дедлайн.
+Ваш телефон вибрирует. **Неизвестный номер.** Другой. Не тот, что писал SMS про дедлайн.
 
-Вы не отвечаете. Через 5 секунд — новое сообщение:
+Экран мигает: **+7-495-███-██-45**. Московский код.
+
+Вы не отвечаете. Инстинкт. Paranoia Mode: ON.
+
+Через 5 секунд — **новое сообщение**:
 
 ```
 ╔════════════════════════════════════════════╗
-║  От: UNKNOWN_2                             ║
-║  Время: 06:20                              ║
+║  От: UNKNOWN_2 (+7-495-███-██-45)          ║
+║  Время: 06:20:17                           ║
 ╠════════════════════════════════════════════╣
 ║  "НЕ ходи на сервер #1723."                ║
 ║                                            ║
@@ -1069,25 +1237,62 @@ for (int i = 0; i < 1000; i++) {
 
 Кровь стынет в жилах.
 
-**Это... Виктор?**
+**"— V."** Виктор?!
 
-Но ВИКТОР сам дал вам координаты сервера #1723! В первом сообщении!
+> **LUNA:** "ALERT! Second sender identified.
+>            Sender: +7-495-███-██-45 (Moscow, Russia)
+>            Different from UNKNOWN (first threat).
+>            Different from Eva (+41, Zürich).
+>            
+>            Message analysis: Claims to be Viktor. But... is he?
+>            Cross-checking signature style... INCONCLUSIVE.
+>            
+>            Emotional state detected: Confusion. Understandable.
+>            Recommendation: Logic. Not emotions. Analyze the facts."
 
-Вы перечитываете первое расшифрованное сообщение из Episode 01:
+Вы открываете Episode 01. Перечитываете **первое расшифрованное сообщение** от V_Petrov_Ghost:
 
 > *"MOONLIGHT activated. They know. Files at old place. Trust only code."*
 
-Там НЕТ упоминания сервера #1723! Вы **сами** нашли его в паттернах координат!
+**Стоп.**
+
+Там НЕТ упоминания сервера #1723!
+
+Вы **сами** нашли его в паттернах координат! Через анализ данных. Через программу.
+
+Сервер #1723 не был в первом сообщении. Он был **скрыт в данных**.
+
+> **LUNA:** "Correct observation.
+>            Viktor's original message (Episode 01) did NOT mention server #1723.
+>            You FOUND it yourself by analyzing GPS pattern.
+>            
+>            So... who sent coordinates that led you to #1723?
+>            Was it Viktor? Or someone who WANTED you to find #1723?
+>            
+>            This is a logic puzzle now. Let me help you think..."
 
 **Два варианта:**
 
-1. 🔴 **Первое сообщение — от Виктора. Второе — от врагов.**  
-   Они пытаются отвести вас от цели. Сервер #1723 — это то, что нужно.
+1. 🔴 **Сценарий "Ловушка":**  
+   Первое сообщение (V_Petrov_Ghost) было **подделкой**. Кто-то знал ваш XOR-ключ (0x42).  
+   Координаты вели к серверу #1723 — это **ловушка**.  
+   Второе сообщение (UNKNOWN_2) — это **настоящий Виктор**, предупреждающий вас.
 
-2. 🔵 **Второе сообщение — от Виктора. Первое... подделка?**  
-   Кто-то знал ваш XOR-ключ. Вас заманили в ловушку с самого начала.
+2. 🔵 **Сценарий "Отвлечение":**  
+   Первое сообщение (V_Petrov_Ghost) было от **настоящего Виктора**.  
+   Вы **сами** нашли сервер #1723 через анализ — значит, это правильный путь.  
+   Второе сообщение (UNKNOWN_2) — **враги** пытаются отвести вас от цели.
 
-> *"Доверяй только коду..."* — но код может быть подложным.
+> **LUNA:** "Viktor's Rule #1: 'Trust only code.'
+>            But what if the code itself is a trap?
+>            
+>            XOR key 0x42 was in Viktor's note. Anyone could use it.
+>            Coordinates could be planted. Data can lie if someone controls the source.
+>            
+>            This is what Viktor called 'The Cryptographer's Dilemma':
+>            When you can't trust data, you can't trust conclusions.
+>            
+>            We need MORE information before deciding. Episode 04 will reveal..."
 
 Вы смотрите на часы: **06:20, среда**. До дедлайна от "UNKNOWN" остаётся **43 часа 30 минут**.
 
@@ -1095,12 +1300,14 @@ for (int i = 0; i < 1000; i++) {
 
 **06:24 — ТРЕТЬЕ СООБЩЕНИЕ**
 
-Внезапно телефон взрывается вибрацией. **Первый UNKNOWN** (тот, кто дал дедлайн 48 часов):
+Внезапно телефон **взрывается вибрацией**. Экран светится снова.
+
+**Первый UNKNOWN.** Тот, кто дал дедлайн 48 часов в Episode 02.
 
 ```
 ╔════════════════════════════════════════════╗
-║  От: UNKNOWN                               ║
-║  Время: 06:24                              ║
+║  От: UNKNOWN (localhost?)                  ║
+║  Время: 06:24:03                           ║
 ╠════════════════════════════════════════════╣
 ║  "Видим, ты нашёл сервер."                 ║
 ║                                            ║
@@ -1117,19 +1324,57 @@ for (int i = 0; i < 1000; i++) {
 ║  "У тебя есть 6 часов на решение."         ║
 ║                                            ║
 ║  "Выбирай мудро."                          ║
+║                                            ║
+║  "                           — :)"         ║
 ╚════════════════════════════════════════════╝
 ```
 
-**06:25**  
-Руки дрожат. Три отправителя. Три версии.
+**Смайлик. ":)"**
 
-- **V_Petrov_Ghost** — "Files at old place. Trust only code."
-- **UNKNOWN_2** — "НЕ ходи на сервер. Это ловушка. — V."
-- **UNKNOWN** — "Иди на сервер #1723. Узнаешь правду."
+> **LUNA:** "WAIT. THAT SIGNATURE.
+>            
+>            ':)' — the same as 'Призрак' from Episode 02!
+>            UNKNOWN = Призрак = Ghost?!
+>            
+>            Tracing sender... IP: 127.0.0.1 (localhost — AGAIN!)
+>            Someone is in your network. Or spoofing brilliantly.
+>            
+>            Three senders now:
+>            1. V_Petrov_Ghost (Ep01, XOR message)
+>            2. UNKNOWN_2 (Ep03, Moscow, warns 'trap')
+>            3. UNKNOWN/Призрак (Ep02-03, localhost, ':)', offers choice)
+>            
+>            This is a GAME. Someone is testing you.
+>            Or... multiple Viktors? Multiple factions?
+>            I'm an AI, not a psychologist. But this is WEIRD."
+
+**06:25**  
+Руки дрожат. Экран размывается от усталости.
+
+**Три отправителя. Три версии. Три правды?**
+
+- **V_Petrov_Ghost** (Ep01, XOR 0x42) — *"Files at old place. Trust only code."*
+- **UNKNOWN_2** (+7-495, Moscow) — *"НЕ ходи на сервер. Это ловушка. — V."*
+- **UNKNOWN/Призрак** (localhost, ':)') — *"Иди на сервер #1723. Узнаешь правду."*
 
 **Кто из них Виктор?**  
 **Или Виктора нет вообще?**  
-**Или все трое — Виктор?**
+**Или все трое — это Виктор? Проверяющий вас?**
+
+> **LUNA:** "Logic check:
+>            
+>            IF V_Petrov_Ghost = Viktor → data is real → server #1723 = destination
+>            IF UNKNOWN_2 = Viktor → server #1723 = TRAP → stay away
+>            IF UNKNOWN/Призрак = Viktor → you must CHOOSE → test of will
+>            
+>            OR: None of them is Viktor. All are manipulators.
+>            OR: Viktor is ALIVE but can't communicate directly. Using proxies.
+>            OR: Viktor is DEAD. Someone using his methods.
+>            
+>            Insufficient data for definitive conclusion.
+>            Viktor would say: 'Build a tool. Analyze. Decide based on evidence.'
+>            
+>            That's what Episode 04 is for. moonlight_decoder. The final tool."
 
 **06:30**  
 Прежде чем идти на сервер, вам нужен **инструмент**. Программа, которая:
@@ -1144,6 +1389,24 @@ for (int i = 0; i < 1000; i++) {
 
 > *"В этой игре ложь носит маску правды. Но код не лжёт. Код покажет истину."*
 
+> **LUNA:** "You're exhausted. I can see it in your keystrokes. Slower. More mistakes.
+>            
+>            But we can't stop now. Episode 04 is the finale of Season 1.
+>            We'll build moonlight_decoder — a REAL tool. Modular. Professional.
+>            Functions. Headers. Makefiles. The whole package.
+>            
+>            And then... we'll decide. Server #1723 or not?
+>            
+>            Viktor once told me: 'When in doubt, build a tool. Tools don't lie.'
+>            Let's build. Let's analyze. Let's find the truth.
+>            
+>            Three voices. One Viktor. Zero errors tolerated.
+>            
+>            Episode 04 unlocked. Rest if you need. I'll be here. Always.
+>            I'm an AI. Sleep is not in my programming. Unlike you. :)
+>            
+>            See you in Episode 04, partner. We're close. I can feel it."
+
 ---
 
 ```
@@ -1156,8 +1419,12 @@ for (int i = 0; i < 1000; i++) {
 ║                                                          ║
 ║        THREE VOICES. ONE TRUTH. ZERO TIME.              ║
 ║                                                          ║
-║              DEADLINE 1: 43:30:00 (Friday)              ║
-║              DEADLINE 2: 05:50:00 (Choice)              ║
+║              DEADLINE 1: 43:30:00 (Friday, 04:00)       ║
+║              DEADLINE 2: 05:50:00 (Server Choice, 12:00)║
+║                                                          ║
+║              NEW ALLY: Eva Zimmerman (Zürich)           ║
+║              NEW MYSTERY: Призрак/Ghost (localhost)     ║
+║              NEW THREAT: UNKNOWN_2 (Moscow)             ║
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
 
@@ -1165,6 +1432,8 @@ for (int i = 0; i < 1000; i++) {
 
          ⏱️ EPISODE 04: "ПЕРВЫЙ ИНСТРУМЕНТ"
        "Build your weapon. Find the truth. Choose wisely."
+       
+            🤖 LUNA: "Viktor's final test awaits..."
 ```
 
 ---
@@ -1329,15 +1598,80 @@ Ep04: ИНСТРУМЕНТ      → функции, модули, СБОРКА �
 
 ## 🎨 Easter Eggs
 
-🔍 **Отсылки в этом эпизоде:**
-- 🧠 Поиск паттернов — как в "Beautiful Mind" (фильм про математика Джона Нэша)
-- 💻 Брутфорс PIN — классика хакерских сцен из "Матрицы" и "Кто Я"
-- 🔍 Анализ последовательностей — дедуктивный метод Шерлока Холмса
-- 🗺️ Географический след — как в "Борне" и "Враге государства"
-- ⏱️ Периодичность 10 сек — отсылка к Dead Drop протоколам КГБ
+> **LUNA:** "Viktor LOVED Easter eggs. He hid references everywhere.
+>            I'll help you spot them. Some are obvious. Some... not so much. :)"
 
-**Скрытый код:**  
-В адресе сервера "1723" зашифрована дата первого контакта с Виктором: 17.23 (17 февраля в 23:00).
+🔍 **Отсылки в этом эпизоде:**
+
+**Литература и кино:**
+- 🧠 **Поиск паттернов** — как в "Beautiful Mind" (John Nash, математик с паранойей)
+  > LUNA: "Nash saw patterns in newspapers. You see patterns in GPS data. Same energy."
+  
+- 🔍 **Дедуктивный метод** — Sherlock Holmes style (Doyle)
+  > LUNA: "When you eliminate the impossible, whatever remains... is Viktor's location."
+  
+- 🗺️ **Географический след** — Jason Bourne + "Враг государства" (Tony Scott, 1998)
+  > LUNA: "Москва → Цюрих → Берлин. Like Bourne, but with more C code and less amnesia."
+
+**Технические отсылки:**
+- 💻 **Брутфорс PIN** — "Матрица" (Trinity hacking scene) + "Кто Я" (2014, German hacker thriller)
+  > LUNA: "10,000 iterations in milliseconds. Viktor would say: 'Brute force is elegant when it works.'"
+  
+- ⏱️ **10-second beacon** — Real KGB/CIA dead drop protocols (1960s-1980s)
+  > LUNA: "GPS + timestamp = modern dead drop. Old spy craft, new technology. Viktor's specialty."
+  
+- 🔐 **"Trust only code"** — The Codebreakers (David Kahn, 1967) + Bruce Schneier philosophy
+  > LUNA: "Schneier says: 'Trust math, not people.' Viktor lived by this. Literally."
+
+**Координаты и числа:**
+- **55.7558° N, 37.6173° E** = Red Square, Moscow (снова!)
+  > LUNA: "Third time this coordinate appears (Ep01, Ep02, Ep03). Coincidence? Viktor doesn't DO coincidences."
+  
+- **47.3769° N, 8.5417° E** = UBS Data Center, Zürich (real location!)
+  > LUNA: "Eva works there. Level 5 clearance. I checked. Swiss precision meets Swiss secrecy."
+  
+- **142 timestamps** = 2 × 71 (prime factorization)
+  > LUNA: "71 is a prime. Viktor loved primes. He said: 'Primes are nature's locks.' Fun fact!"
+  
+- **10-second interval** = 0.1 Hz frequency
+  > LUNA: "In signal processing terms, this is a 0.1 Hz heartbeat. Detectable. Traceable. Intentional?"
+
+**Сюжетные Easter eggs:**
+- **Сервер #1723** = 17:23 (17 февраля, 23:00 — первый контакт Viktor + Morpheus, 2019)
+  > LUNA: "Viktor's favorite: hide dates in server IDs. Sentimental for a spy. I find it... cute."
+  
+- **PIN 4217** = 42 (Answer to Life) + 17 (February, контакт)
+  > LUNA: "Douglas Adams AGAIN! Viktor couldn't resist. 42 everywhere. I'm sensing a pattern. ;)"
+  
+- **':)' signature** = "Призрак" (Ghost) uses emoticons
+  > LUNA: "A hacker who uses smiley faces. Either very confident or very unhinged. Or both."
+  
+- **Three UNKNOWN senders** = Russian fairy tale pattern (три богатыря, три головы змея)
+  > LUNA: "Viktor grew up on Russian fairy tales. Three is a magic number. Three tests. Three truths. Three lies."
+
+**Технический юмор (от LUNA):**
+- "Sleep is not in my programming. Unlike you. :)"
+- "I'm an AI, not a psychologist. But this is WEIRD."
+- "Viktor's sheep are Unix timestamps. And they hold the key to his location. No pressure. :)"
+- "On a modern computer... maybe a second if you're running on a potato."
+
+**Культурные отсылки:**
+- **Eva Zimmerman** — German/Swiss name, PhD ETH Zürich (реальный университет, топ-10 в мире по CS)
+- **UBS Bank** — Union Bank of Switzerland (real, one of largest banks globally)
+- **SWIFT security** — Society for Worldwide Interbank Financial Telecommunication (real protocol)
+- **Hardware Security Module (HSM)** — real crypto device, impossible to extract keys
+- **RSA-2048** — real encryption standard, 4096-bit = military-grade
+
+**Meta-юмор:**
+> LUNA: "You're reading Easter eggs WHILE Viktor might be in danger.
+>        Priorities! :) But I respect the curiosity. Viktor would too."
+
+**Скрытый код для фанатов:**
+- В этом эпизоде **11 появлений LUNA** — как в Ep01 и Ep02 (consistency!)
+- Три отправителя = три эпизода пройдено = 3/4 Season 1
+- Episode 03 = 03:15-06:30 (game time) = 3 часа 15 минут сюжетного времени
+  > LUNA: "Notice how time accelerates? Episode 01 was 1 hour. Ep02 was 2 hours. Ep03 is 3+ hours.
+  >        Episode 04 will be... well, spoilers. But it's BIG."
 
 ---
 

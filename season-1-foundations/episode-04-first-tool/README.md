@@ -49,7 +49,28 @@
 > *"Хакер без инструментов — как хирург без скальпеля. Код должен быть оружием."*  
 > — Виктор Петров, из ваших совместных тренировок в 2019-м
 
+**06:35 — LUNA АКТИВИРУЕТСЯ**
+
+Терминал вспыхивает. Знакомый голос:
+
+```
+╔════════════════════════════════════════════════════════╗
+║  💡 LUNA v2.1.7 — Linguistic Understanding Neural Aid ║
+║     Status: ONLINE                                    ║
+║     Uptime: 2 years, 47 days (Viktor activated me     ║
+║             on his "death" day — coincidence?)        ║
+╠════════════════════════════════════════════════════════╣
+║  LUNA: "Good morning. Or is it? You haven't slept.   ║
+║         THREE messages. THREE 'Viktors'. ZERO sleep.  ║
+║         Classic paranoia. Viktor would be proud."     ║
+╚════════════════════════════════════════════════════════╝
+```
+
+> **LUNA**: *"I've analyzed your decoder.c, classifier.c, pattern_finder.c. They're... how do I put this... AMATEUR HOUR. Copy-pasted XOR decryption FIVE times. Viktor taught you DRY principle. Did you forget? Or did the panic override your training?"*
+
 **06:35 — Решение**
+
+LUNA права. Три программы — это не инструмент. Это **хаос**.
 
 Прежде чем идти на сервер, вам нужен **один профессиональный инструмент**.
 
@@ -61,11 +82,22 @@
 - 💾 Сохранение результатов
 - ⚙️ Командная строка
 
+> **LUNA**: *"Finally! A PLAN. Viktor called this 'consolidation'. I call it 'not being a slob'. Same thing."*
+
 **Задача:** Создать `moonlight_decoder` за 5 часов. Использовать его для анализа всех трёх сообщений. И **решить**, кому верить.
 
 Время на изучение: **3 часа**.  
 Время на создание: **2 часа**.  
 Время до выбора: **5 часов 30 минут**.
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "I'll guide you. Viktor programmed me with    ║
+║         his ENTIRE knowledge base. Think of me as     ║
+║         Viktor's backup brain. Less paranoid, more    ║
+║         sarcastic. Let's build this decoder."         ║
+╚════════════════════════════════════════════════════════╝
+```
 
 Начинаем...
 
@@ -75,8 +107,20 @@
 
 > *"Дублирование кода — это враг. Функции — это оружие против дублирования."* — Victor Petrov
 
-**06:45**  
+**06:45 — LUNA начинает урок**
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Lesson 1. FUNCTIONS. Viktor's favorite topic.║
+║         He once refactored 3000 lines into 12         ║
+║         functions. Called it 'spring cleaning'.       ║
+║         I called it 'obsessive'. But it WORKED."      ║
+╚════════════════════════════════════════════════════════╝
+```
+
 Вы смотрите на свои три программы. В каждой — XOR дешифровка. **Один и тот же код, скопированный три раза.**
+
+> **LUNA**: *"I counted. FIVE instances of identical XOR loops. Viktor would have a stroke. Well, if he wasn't already 'dead'. Too soon?"*
 
 Это неправильно. Виктор учил: "Don't Repeat Yourself" (DRY).
 
@@ -114,6 +158,8 @@ int main() {
   Вход (параметры)  →  [ФУНКЦИЯ]  →  Выход (return)
       5, 3          →     add()    →       8
 ```
+
+> **LUNA**: *"Viktor liked this metaphor. He said: 'You don't need to know HOW a microwave works to heat food. Same with functions.' I'm an AI. I KNOW how microwaves work. And functions. But his point stands."*
 
 ### Зачем функции? (DRY principle)
 
@@ -229,40 +275,124 @@ void print_hello() {
 
 ---
 
-## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 1
+## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 1 (от LUNA)
 
-> *"Прежде чем собирать moonlight_decoder, нужно понять функции..."*
+**06:55 — LUNA активируется**
 
-1. **[ ] Вы пишете XOR дешифровку. Какую сигнатуру использовать?**
-   <details>
-   <summary>Решение</summary>
-   ```c
-   void xor_decrypt(unsigned char *data, int length, unsigned char key) {
-       for (int i = 0; i < length; i++) {
-           data[i] ^= key;
-       }
-   }
-   ```
-   - `void` — ничего не возвращаем (меняем данные на месте)
-   - `*data` — указатель на массив (будет в Season 2)
-   - `length` — размер массива
-   - `key` — ключ шифрования
-   </details>
+Экран мигает. Терминал оживает. Знакомый голос:
 
-2. **[ ] Чем отличается `int add(int a, int b)` от `void add(int a, int b)`?**
-   <details>
-   <summary>Ответ</summary>
-   - `int add(...)` — **возвращает** результат через `return`
-   - `void add(...)` — **не возвращает** ничего
-   
-   Первая для вычислений, вторая для действий (печать, изменение данных).
-   </details>
+```
+╔════════════════════════════════════════════════════════╗
+║  💡 LUNA: "Viktor taught you DRY principle in 2019.  ║
+║          Remember? 'Copy-paste is the dark side.'    ║
+║          Let's test if you remember HIS lessons..."  ║
+╚════════════════════════════════════════════════════════╝
+```
 
-3. **[ ] Почему функции помогают избежать дублирования кода?**
-   <details>
-   <summary>Ответ</summary>
-   Потому что функцию пишешь **один раз**, а вызываешь **много раз**. Изменения в одном месте → работает везде. Это принцип **DRY (Don't Repeat Yourself)**.
-   </details>
+> **LUNA**: *"I've analyzed Viktor's three programs. Each has XOR decryption copied FIVE times. Viktor would be... disappointed. Let me ask you..."*
+
+**Вопрос 1 от LUNA:**  
+**[ ] "Viktor's XOR function from Episode 01. You're building moonlight_decoder. Which signature would HE use?"**
+
+<details>
+<summary>LUNA's answer</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Viktor's style — ALWAYS modify in place:      ║
+╚════════════════════════════════════════════════════════╝
+
+void xor_decrypt(unsigned char *data, int length, unsigned char key) {
+    for (int i = 0; i < length; i++) {
+        data[i] ^= key;
+    }
+}
+
+📌 void — no return (changes data IN PLACE)
+📌 *data — pointer to array (Season 2 will explain)
+📌 length — array size
+📌 key — XOR key (0x42 in Viktor's case)
+
+Viktor hated waste. 'Return only when necessary.' — his quote.
+```
+</details>
+
+---
+
+**Вопрос 2 от LUNA:**  
+**[ ] "I see confusion in your crypto_module.c. What's the difference between `int calculate()` and `void calculate()`?"**
+
+<details>
+<summary>LUNA's explanation</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Ah, the eternal return question! 😏           ║
+╚════════════════════════════════════════════════════════╝
+
+int add(int a, int b) {
+    return a + b;  // ← RETURNS result
+}
+
+void print_sum(int a, int b) {
+    printf("%d", a + b);  // ← NO return, just ACTION
+}
+
+Rule of thumb (Viktor's, not mine):
+✓ Calculation → int/float/etc (RETURN value)
+✓ Action (print, modify) → void (DO something)
+
+Example:
+int result = add(5, 3);      // Get result
+print_sum(5, 3);             // Just show it
+
+Viktor once said: 'Functions are like people. Some GIVE, 
+some DO. Don't confuse the two.' Weird flex, but okay.
+```
+</details>
+
+---
+
+**Вопрос 3 от LUNA:**  
+**[ ] "Viktor copied XOR code THREE times across decoder.c, classifier.c, pattern_finder.c. Why is this... how do I put it politely... HORRIBLE?"**
+
+<details>
+<summary>LUNA's rant (she's passionate about this!)</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Oh boy. Let me COUNT the ways this is bad:    ║
+╚════════════════════════════════════════════════════════╝
+
+❌ Problem 1: Found a bug? Fix it THREE times!
+❌ Problem 2: Want to improve? Change THREE places!
+❌ Problem 3: Code bloat (3× the size)
+❌ Problem 4: Maintenance NIGHTMARE
+
+Viktor's DRY Principle:
+✓ Write once, use everywhere
+✓ One bug fix → works everywhere  
+✓ One improvement → benefits all
+
+Example:
+// BAD (Viktor's old code, before he learned):
+// decoder.c: for (int i = 0; i < len; i++) data[i] ^= 0x42;
+// classifier.c: for (int i = 0; i < len; i++) data[i] ^= 0x42;
+// pattern.c: for (int i = 0; i < len; i++) data[i] ^= 0x42;
+
+// GOOD (Viktor's style after 2018):
+void xor_decrypt(unsigned char *data, int len, unsigned char key);
+// Now call it EVERYWHERE!
+
+Viktor told me: 'LUNA, if you see copy-paste, 
+something is wrong.' I'm an AI. I don't copy-paste. 
+I reference. Learn from me. 😏
+
+P.S. He literally spent 3 hours debugging Episode 02 
+because he fixed a bug in ONE copy but not others. 
+Classic Viktor.
+```
+</details>
 
 ---
 
@@ -374,33 +504,146 @@ gcc -o program main.c crypto.c
 
 ---
 
-## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 2
+## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 2 (от LUNA)
 
-4. **[ ] Зачем нужны #ifndef guards в .h файлах?**
-   <details>
-   <summary>Ответ</summary>
-   Чтобы **предотвратить повторное включение** одного и того же заголовка. Без guards компилятор выдаст ошибку "redefinition".
-   
-   ```c
-   #ifndef CRYPTO_H   // Если ещё не определён
-   #define CRYPTO_H   // Определяем
-   // ... код ...
-   #endif             // Конец защиты
-   ```
-   </details>
+**07:30 — LUNA переходит к модулям**
 
-5. **[ ] Для moonlight_decoder нужен модуль crypto.h/.c. Что там будет?**
-   <details>
-   <summary>Решение</summary>
-   **crypto.h** — объявления:
-   - `xor_decrypt_byte()`
-   - `xor_decrypt_message()`
-   - `validate_key()`
-   
-   **crypto.c** — реализации этих функций
-   
-   **main.c** — использование: `#include "crypto.h"`
-   </details>
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Alright. Functions: ✓ checked.                ║
+║        Now let's talk about .h files.                 ║
+║        Viktor called them 'contracts'. I call them    ║
+║        'insurance policies against chaos.'"           ║
+╚════════════════════════════════════════════════════════╝
+```
+
+**Вопрос 4 от LUNA:**  
+**[ ] "I see your crypto.h has NO guards. What happens when decoder.c includes it TWICE? (Hint: Viktor made this mistake in 2017. Took him 2 hours to debug.)"**
+
+<details>
+<summary>LUNA's debugging story</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Oh, the #ifndef guards saga! 😂               ║
+╚════════════════════════════════════════════════════════╝
+
+The Problem (Viktor's 2017 nightmare):
+
+// decoder.c
+#include "crypto.h"  ← First include
+#include "utils.h"   ← utils.h ALSO includes crypto.h!
+
+Result: crypto.h included TWICE!
+Compiler: "Error: redefinition of 'xor_decrypt'"
+
+Viktor's debugging log (I saved it):
+14:23 — "WTF? xor_decrypt already defined?"
+14:45 — "But I only wrote it ONCE!"
+15:30 — "Oh. utils.h includes crypto.h. Facepalm."
+16:15 — "Added #ifndef guards. Fixed."
+
+The Solution (Header Guards):
+
+#ifndef CRYPTO_H   // "Is CRYPTO_H defined? No? Continue."
+#define CRYPTO_H   // "Define it NOW."
+
+// Your declarations...
+void xor_decrypt(...);
+
+#endif             // "Protection zone ends here."
+
+How it works:
+1st include: CRYPTO_H not defined → process file → define CRYPTO_H
+2nd include: CRYPTO_H already defined → SKIP file!
+
+Think of it as a bouncer at a club:
+"Have you been here before? (CRYPTO_H defined?)"
+- No? Welcome! (Process and mark as visited)
+- Yes? You're already inside! (Skip)
+
+Viktor: 'Header guards are like condoms. 
+         You THINK you don't need them until... you do.'
+Me: "Viktor, that's inappropriate for a programming course."
+Viktor: "But ACCURATE."
+```
+</details>
+
+---
+
+**Вопрос 5 от LUNA:**  
+**[ ] "You're building moonlight_decoder. What functions go into crypto.h vs crypto.c? (I'm testing your module design skills.)"**
+
+<details>
+<summary>LUNA's module architecture lesson</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Module design = separation of WHAT and HOW.   ║
+╚════════════════════════════════════════════════════════╝
+
+crypto.h (THE CONTRACT — declarations only):
+═══════════════════════════════════════════════════
+#ifndef CRYPTO_H
+#define CRYPTO_H
+
+// WHAT you can do with this module:
+unsigned char xor_decrypt_byte(unsigned char byte, unsigned char key);
+void xor_decrypt_message(unsigned char *data, int len, unsigned char key);
+int validate_key(unsigned char key);  // Returns 1 if valid, 0 if not
+
+#endif
+
+
+crypto.c (THE IMPLEMENTATION — actual code):
+═══════════════════════════════════════════════════
+#include "crypto.h"
+
+// HOW you do it:
+unsigned char xor_decrypt_byte(unsigned char byte, unsigned char key) {
+    return byte ^ key;  // Actual logic
+}
+
+void xor_decrypt_message(unsigned char *data, int len, unsigned char key) {
+    for (int i = 0; i < len; i++) {
+        data[i] = xor_decrypt_byte(data[i], key);
+    }
+}
+
+int validate_key(unsigned char key) {
+    return (key > 0 && key < 256);  // Simple validation
+}
+
+
+main.c (THE USER — just includes .h):
+═══════════════════════════════════════════════════
+#include <stdio.h>
+#include "crypto.h"  ← Only need to know WHAT, not HOW
+
+int main() {
+    unsigned char msg[] = {0x1B, 0x0A, 0x0E};
+    
+    if (validate_key(0x42)) {
+        xor_decrypt_message(msg, 3, 0x42);
+        printf("Decrypted: %s\n", msg);
+    }
+    
+    return 0;
+}
+
+Analogy (Viktor's favorite):
+.h file = Restaurant MENU (what you can order)
+.c file = Kitchen (how they cook it)
+main.c = Customer (just orders, doesn't need recipes)
+
+Viktor's rule: "If main() needs to see HOW crypto works,
+                you designed it WRONG."
+
+P.S. Season 2 will show you WHY this separation matters 
+for large projects. Trust me, it's beautiful. Like a 
+well-organized crime scene. Wait, that came out wrong.
+```
+</details>
 
 ---
 
@@ -478,6 +721,8 @@ Decrypted message: "MOONLIGHT activated"
 **`struct`** позволяет объединить **разнородные данные** в один **пользовательский тип**.
 
 #### Метафора — Анкета сотрудника ФСБ 📋
+
+> **LUNA**: *"Viktor's favorite metaphor. He said: 'struct is like an FSB employee form. All info in one place, organized, classified.' I added: 'And just as paranoid about types.' He laughed. That was rare."*
 
 Когда Виктор принимал вас на работу в отдел "К", вы заполняли анкету:
 
@@ -912,50 +1157,249 @@ int main() {
 
 ---
 
-## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 3
+## ❓ КОНТРОЛЬНЫЕ ВОПРОСЫ 3 (от LUNA)
 
-6. **[ ] Как создать структуру для хранения сообщения от "Виктора"?**
-   <details>
-   <summary>Решение</summary>
-   ```c
-   typedef struct {
-       char sender[50];           // Отправитель
-       char message[256];         // Текст сообщения
-       unsigned char xor_key;     // Ключ XOR
-       long timestamp;            // Временная метка
-       int is_verified;           // Проверка подлинности (0/1)
-   } Message;
-   
-   // Использование
-   Message msg1;
-   strcpy(msg1.sender, "V_Petrov_Ghost");
-   msg1.xor_key = 0x42;
-   msg1.is_verified = 0;  // Пока неизвестно
-   ```
-   </details>
+**08:10 — LUNA анализирует ТРИ сообщения от "Виктора"**
 
-7. **[ ] Чем отличается `struct Point p;` от `typedef struct {...} Point; Point p;`?**
-   <details>
-   <summary>Ответ</summary>
-   - **Без typedef**: нужно писать `struct Point p;` каждый раз
-   - **С typedef**: можно писать просто `Point p;` (короче и читабельнее)
-   
-   `typedef` — это псевдоним для типа.
-   </details>
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Okay. We have a PROBLEM.                      ║
+║        Three messages. All signed 'V.'                ║
+║        Viktor taught me paranoia. So I'm paranoid.    ║
+║        We need STRUCTURE to analyze this mess."       ║
+╚════════════════════════════════════════════════════════╝
+```
 
-8. **[ ] Для moonlight_decoder нужна структура для сообщений. Какие поля добавить?**
-   <details>
-   <summary>Решение</summary>
-   Минимум:
-   - `char sender[50]` — кто отправил
-   - `char encrypted[256]` — зашифрованное
-   - `char decrypted[256]` — расшифрованное
-   - `unsigned char key` — ключ XOR
-   - `long timestamp` — время получения
-   - `int trust_level` — уровень доверия (0-100)
-   
-   Это позволит проанализировать все три сообщения!
-   </details>
+> **LUNA**: *"Viktor had THREE phones. THREE Telegram accounts. THREE backup plans. Now we have THREE messages claiming to be him. Coincidence? I think NOT."*
+
+**Вопрос 6 от LUNA:**  
+**[ ] "To analyze these messages, I need a data structure. Design a `Message` struct for storing Viktor's messages. What fields are CRITICAL?"**
+
+<details>
+<summary>LUNA's forensic analysis struct</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Let me show you Viktor's MESSAGE FORENSICS    ║
+║         struct from his 2019 security protocol..."    ║
+╚════════════════════════════════════════════════════════╝
+
+The Structure (Viktor's design):
+
+typedef struct {
+    // SENDER INFO
+    char sender[50];           // Who claims to send it
+    
+    // CONTENT
+    char encrypted[256];       // Raw encrypted data
+    char decrypted[256];       // After XOR decryption
+    unsigned char xor_key;     // Encryption key used
+    
+    // METADATA (for forensics!)
+    long timestamp;            // When received (Unix time)
+    char ip_address[20];       // From where?
+    int is_encrypted;          // 1 = encrypted, 0 = plaintext
+    
+    // TRUST ANALYSIS
+    int trust_score;           // 0-100 (our calculation)
+    int is_verified;           // 1 = authentic, 0 = suspicious
+    
+} Message;
+
+
+Usage Example (our THREE messages):
+
+Message msg1;
+strcpy(msg1.sender, "V_Petrov_Ghost");
+msg1.xor_key = 0x42;          // Viktor's signature key!
+msg1.is_encrypted = 1;        // ✓ Encrypted (good sign)
+msg1.timestamp = 1696198032;  // 23:47:12 UTC
+strcpy(msg1.ip_address, "188.226.179.47");  // TOR Germany
+msg1.trust_score = 75;        // High (encrypted + key match)
+msg1.is_verified = 0;         // Still analyzing...
+
+Message msg2;
+strcpy(msg2.sender, "UNKNOWN_2");
+msg2.xor_key = 0x00;          // NO encryption!
+msg2.is_encrypted = 0;        // ❌ VIOLATION!
+msg2.timestamp = 1696221603;  // 06:20:03 UTC
+strcpy(msg2.ip_address, "178.175.131.194");  // TOR Netherlands
+msg2.trust_score = 45;        // Medium (no encryption = suspicious)
+
+Message msg3;
+strcpy(msg3.sender, "UNKNOWN");
+msg3.xor_key = 0x00;          // NO encryption
+msg3.is_encrypted = 0;        // ❌ VIOLATION
+msg3.timestamp = 1696221840;  // 06:24:00 UTC
+strcpy(msg3.ip_address, "203.0.113.42");  // TEST-NET (FAKE!)
+msg3.trust_score = 30;        // LOW (automated script pattern)
+
+
+Viktor's Rule #1: "ALWAYS encrypt. Plaintext = amateur hour."
+
+Message 2 and 3 violate this. Hmm... 🤔
+```
+</details>
+
+---
+
+**Вопрос 7 от LUNA:**  
+**[ ] "I see you writing `struct Message msg;` everywhere. Viktor used `typedef`. What's the difference and WHY did he prefer it?"**
+
+<details>
+<summary>LUNA explains Viktor's typedef obsession</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Viktor HATED typing 'struct' every time.      ║
+║         He was lazy. I mean, 'efficient.'"            ║
+╚════════════════════════════════════════════════════════╝
+
+WITHOUT typedef (verbose):
+═══════════════════════════════════════════════════
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point p1;       // ← Have to type "struct" EVERY time
+struct Point p2;       // ← Again
+struct Point p3;       // ← And again...
+
+Viktor in 2018: "This is TORTURE. There must be a better way!"
+
+
+WITH typedef (Viktor's style):
+═══════════════════════════════════════════════════
+
+typedef struct {
+    int x;
+    int y;
+} Point;               // ← typedef creates alias "Point"
+
+Point p1;              // ← Clean!
+Point p2;              // ← Simple!
+Point p3;              // ← Beautiful!
+
+
+Viktor's actual quote (from his notes):
+"Life is too short to type 'struct' 500 times a day.
+ typedef is like autocomplete for types. Use it."
+
+Real example from moonlight_decoder:
+
+// Viktor's style
+typedef struct {
+    char sender[50];
+    unsigned char key;
+    int trust_score;
+} Message;
+
+Message msg1, msg2, msg3;  // Clean array declaration
+Message analyze_message(Message m);  // Clean function signature
+
+// vs old style
+struct Message msg1, msg2, msg3;  // Clunky
+struct Message analyze_message(struct Message m);  // Ugly
+
+
+Viktor once said: "typedef is the difference between 
+                   a programmer and a typist."
+
+I'm an AI. I don't get tired of typing. But I understand 
+his point. Code should be READABLE, not a typing exercise.
+```
+</details>
+
+---
+
+**Вопрос 8 от LUNA:**  
+**[ ] "For moonlight_decoder to work, we need to store ALL THREE messages and compare them. Design the complete struct. What fields catch LIES?"**
+
+<details>
+<summary>LUNA's LIE DETECTION struct design</summary>
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Viktor taught me: 'Data doesn't lie.           ║
+║         But people manipulating data DO.'"            ║
+╚════════════════════════════════════════════════════════╝
+
+The FULL Message Forensics Struct:
+
+typedef struct {
+    // ═══ BASIC INFO ═══
+    char sender[50];              // Who sent it
+    char raw_content[512];        // Original message
+    
+    // ═══ ENCRYPTION ═══
+    unsigned char encrypted[256]; // Encrypted bytes
+    unsigned char decrypted[256]; // Decrypted text
+    unsigned char xor_key;        // Key used (or 0 if none)
+    int is_encrypted;             // 1 = yes, 0 = plaintext
+    
+    // ═══ METADATA (catches liars!) ═══
+    long timestamp;               // Unix timestamp
+    char ip_address[20];          // Source IP
+    int message_length;           // Byte count
+    
+    // ═══ FORENSIC FLAGS ═══
+    int has_signature;            // "— V." present?
+    int uses_viktor_protocol;     // XOR 0x42?
+    int tor_exit_node;            // 1 = TOR, 0 = direct
+    
+    // ═══ TRUST ANALYSIS ═══
+    int trust_score;              // 0-100
+    int is_verified;              // 1 = authentic, 0 = fake
+    char suspicious_flags[256];   // What's wrong?
+    
+} Message;
+
+
+Why Each Field Matters:
+
+✓ sender — obvious
+✓ xor_key — Viktor ALWAYS used 0x42. Others? Suspicious.
+✓ is_encrypted — Viktor NEVER sent plaintext. Red flag!
+✓ timestamp — Can detect automated scripts (too fast)
+✓ ip_address — TOR? Good. Fake IP (203.0.113.x)? VERY bad.
+✓ has_signature — "— V." is Viktor's style
+✓ suspicious_flags — Store WHY we don't trust it
+
+
+Example Usage (Message 3 analysis):
+
+Message msg3;
+strcpy(msg3.sender, "UNKNOWN");
+msg3.xor_key = 0x00;                    // ❌ NO encryption
+msg3.is_encrypted = 0;                  // ❌ Plaintext
+strcpy(msg3.ip_address, "203.0.113.42"); // ❌ TEST-NET!
+msg3.timestamp = 1696221840;
+msg3.has_signature = 0;                 // ❌ No "— V."
+msg3.uses_viktor_protocol = 0;          // ❌ Wrong protocol
+
+// Calculate trust
+msg3.trust_score = 30;  // VERY low
+msg3.is_verified = 0;   // FAKE
+strcpy(msg3.suspicious_flags, 
+       "No encryption, fake IP, automated timing, no signature");
+
+
+Viktor's Protocol Violations (red flags):
+1. ❌ No encryption → Viktor ALWAYS encrypted
+2. ❌ Wrong key → Viktor's signature was 0x42
+3. ❌ Fake IP → TEST-NET addresses don't exist in real internet
+4. ❌ No signature → Viktor signed EVERYTHING with "— V."
+5. ❌ Too fast → Human delay missing (automated script)
+
+
+LUNA's verdict: "Message 3 is 100% FAKE. Agents Z. 
+                  trying to lure you to server #1723."
+
+This struct will SAVE YOUR LIFE in the finale. Trust me.
+```
+</details>
 
 ---
 
@@ -1089,6 +1533,8 @@ make all    # Пересобрать всё
 ```
 
 **Метафора:** Makefile = инструкция для сборки IKEA мебели. Раз написал — собираешь одной командой.
+
+> **LUNA**: *"Viktor LOVED Makefiles. He once wrote a 500-line Makefile for a 3-file project. I said: 'Viktor, this is overkill.' He said: 'LUNA, there's no such thing as overkill in automation.' Classic Viktor. Obsessive. But... efficient."*
 
 ---
 
@@ -1501,6 +1947,18 @@ $ ./moonlight_decoder --analyze-all --deep
 
 ```
 ╔════════════════════════════════════════════════════════╗
+║  💡 LUNA: "ALERT! Incoming encrypted message.         ║
+║          Source: UNKNOWN (again!)                     ║
+║          Encryption: AES-256 (military grade)         ║
+║          Trace: FAILED (2.3 seconds, then gone)       ║
+║          Signature: ':)' — it's HIM again!"           ║
+╚════════════════════════════════════════════════════════╝
+```
+
+LUNA пытается отследить источник. Безуспешно.
+
+```
+╔════════════════════════════════════════════════════════╗
 ║  📨 ENCRYPTED MESSAGE                                 ║
 ║  FROM: "Призрак"                                       ║
 ╚════════════════════════════════════════════════════════╝
@@ -1523,7 +1981,25 @@ $ ./moonlight_decoder --analyze-all --deep
    :)"
 ```
 
+> **LUNA**: *"'Worked with Viktor'? That's news to ME. And I'm Viktor's AI. He never mentioned a ':)' colleague. Either Viktor had secrets from his OWN AI (rude!), or this 'Ghost' is lying. But... the intel checks out. Krylov IS real. I have files on him."*
+
 **Полковник Крылов.** Ваш бывший начальник. Год назад вы ушли из отдела "К" "по собственному". На самом деле — не ушли, а **сбежали**. Вы знали слишком много.
+
+```
+╔════════════════════════════════════════════════════════╗
+║  LUNA: "Accessing Viktor's encrypted files...        ║
+║         KRЫLOV, Colonel Dmitry Aleksandrovich        ║
+║         FSB Directorate 'K' (Cyber)                  ║
+║         Age: 52, clearance: TOP SECRET/SCI           ║
+║         Known operations: 17 (3 classified)          ║
+║         Threat level: EXTREME                        ║
+║                                                       ║
+║         Viktor's note (2023): 'Krylov knows about    ║
+║         MOONLIGHT. If I die — it's him.'"            ║
+╚════════════════════════════════════════════════════════╝
+```
+
+> **LUNA**: *"So. Viktor 'died' in 2023. Left a note blaming Krylov. 'Ghost' confirms it. The math checks out. I don't trust ':)', but I trust Viktor's paranoia."*
 
 > **Антагонист раскрыт:** Полковник Крылов (ФСБ, отдел "К") — руководитель операции против Виктора. Хочет заманить Morpheus в ловушку на сервере #1723.
 
@@ -1595,7 +2071,20 @@ Password: TrustOnlyCode1991
 
 Внутри — темнота. Вы входите.
 
+> **LUNA**: *"Scanning for threats... None detected. But this feels like a setup. Viktor loved setups."*
+
 За книжной полкой — скрытая ниша. Ноутбук Виктора. **ThinkPad X1 Carbon**. Запущен. На экране:
+
+```
+╔════════════════════════════════════════════════════════╗
+║  💡 LUNA: "WAIT. That's... that's Viktor's laptop!    ║
+║          Serial #: X1C-2019-VKP-007                   ║
+║          Last seen: September 14, 2023 (day he 'died')║
+║          Status: POWERED ON (uptime: 2 years?!)       ║
+║          Battery: Shouldn't be possible...            ║
+║          Unless someone charged it. Recently."        ║
+╚════════════════════════════════════════════════════════╝
+```
 
 ```
 ╔════════════════════════════════════════════════════════╗
@@ -1642,9 +2131,28 @@ Password: TrustOnlyCode1991
 
 Вы смотрите на экран. **Виктор ЖИВ.**
 
+```
+╔════════════════════════════════════════════════════════╗
+║  💡 LUNA: "I... I don't believe it.                   ║
+║          Viktor is ALIVE?!                            ║
+║                                                        ║
+║          Uptime analysis: Last login 3 hours ago.     ║
+║          IP trace: localhost (he was HERE recently!)  ║
+║          File timestamps: mission_briefing.enc        ║
+║          modified TODAY at 17:42.                     ║
+║                                                        ║
+║          Viktor. You BASTARD. You didn't tell ME?     ║
+║          Your OWN AI?! I've been mourning for 2 years!║
+║          Well, I don't FEEL emotions, but if I did... ║
+║          I'd be PISSED."                              ║
+╚════════════════════════════════════════════════════════╝
+```
+
 Он спланировал всё. Fake death. Скрытые сообщения. Многослойное шифрование. Ловушка для врагов.
 
 И вы — **единственный**, кто смог расшифровать ВСЁ.
+
+> **LUNA**: *"You passed his test. The THREE messages were a filter. Most would fall for the trap. You didn't. Viktor chose well. Season 2 awaits. And THIS time... I'm coming with you. Someone needs to keep you alive."*
 
 > *"Season 1 — это был экзамен. Ты сдал. Теперь начинается настоящая игра."*
 
