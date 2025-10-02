@@ -37,20 +37,24 @@
 - Episode 03 → pattern analysis
 - Episode 04 → XOR crypto + decoder
 
-#### Season 2: `memory_manager`
+#### Season 2: `memory_manager` ✨ v3.0 Expanded Cast
 Файлы в корне `season-2-memory-and-pointers/`:
-- `season_project.c`
-- `memory_manager.h`
+- `season_project_starter.c` — шаблон для студента
+- `season_project_mission.md` — детальное задание
+- `Makefile` — сборка проекта
+- `memory_manager.h` — API (студент создаёт)
 - `array_tools.c/.h` (из Episode 05)
 - `pointer_utils.c/.h` (из Episode 06)
 - `dynamic_alloc.c/.h` (из Episode 07)
 - `leak_detector.c/.h` (из Episode 08)
 
 **Компоненты:**
-- Episode 05 → array analyzer
-- Episode 06 → pointer manipulation + cycle detection
-- Episode 07 → malloc/free wrappers
-- Episode 08 → memory leak detector
+- Episode 05 → array analyzer (звонок Дмитрию, Анне)
+- Episode 06 → pointer manipulation + Floyd's cycle detection ("Призрак" предупреждает)
+- Episode 07 → malloc/free wrappers (файл растёт динамически)
+- Episode 08 → memory leak detector (ФИНАЛ: троян от Z., встреча с Viktor)
+
+**Новое в v3.0:** Interleaving (теория→вопросы→сюжет), 6 персонажей, драматичный финал
 
 #### Season 3: `network_interceptor`
 Файлы в корне `season-3-networks/`:
