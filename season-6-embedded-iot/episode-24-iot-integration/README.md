@@ -367,30 +367,103 @@ char *find_json_value(const char *json, const char *key) {
 
 После успешной интеграции IoT инфраструктуры, вы получаете сообщение:
 
+## 🎬 Финал Season 6 — FINAL SHOWDOWN
+
+**Локация:** Novosibirsk Akademgorodok  
+**Время:** 23 декабря, 23:00 (MSK)  
+**Статус:** 🔴 ACTIVE HOSTILE ENGAGEMENT
+
+---
+
+**22:47. MQTT broker подключен. Все IoT устройства под наблюдением.**
+
+**22:58:34. ALERT — новое подключение:**
 ```
-═══════════════════════════════════════════════════
-🎉 SEASON 6 COMPLETE! 🎉
-═══════════════════════════════════════════════════
-
-Отличная работа, агент.
-
-IoT инфраструктура под контролем:
-✅ Arduino & GPIO
-✅ СКУД & Modbus
-✅ IP Cameras
-✅ MQTT Integration
-
-Физический доступ получен. Теперь нужно работать
-на системном уровне.
-
-Готовься к Season 7: System Programming
-Процессы. Потоки. IPC. Скрытность.
-
-— The Architect
-
-NEXT: Episode 25 → Processes & Daemons
-═══════════════════════════════════════════════════
+Client: shadow-bot | IP: 192.168.1.253 | Subscribed: iot/#
 ```
+
+**Конкуренты из Episode 23. Они здесь. Сейчас.**
+
+**22:58:40. MQTT injection detected:**
+```json
+Topic: iot/access/doors/lab201
+Message: {"event":"door_unlock_override"}
+```
+
+**Lab201 unlocked. Они внутри.**
+
+**23:00:00. GHOST MODE activation:**
+- CAM-006 recording → DISABLED (1 hour)
+- Motion sensor → DISABLED (1 hour)  
+- Alarm → Silent mode (1 hour)
+
+**Полная темнота. Как вы и планировали. Но не вы это сделали.**
+
+**23:01:15. V.:**
+
+```
+ВИДИШЬ? Ghost Mode. Наши методы против нас.
+COUNTER-ATTACK. СЕЙЧАС.
+
+1. Lock Lab201 (MQTT override)
+2. Force CAM-006 online (4K)
+3. Trigger alarm
+
+ЗАПУСКАЙ.
+```
+
+**23:01:30. EXECUTED. Lab201 RE-LOCKED. Competitors TRAPPED.**
+
+CAM-006 (4K, forced online): **3 фигуры у сервера. Паника. Лица видны.**
+
+**23:05:30. Fire alarm triggered (их последний шанс) → ALL DOORS UNLOCK.**
+
+**Они escaped. Но слишком поздно — faces captured in 4K.**
+
+**23:15:00. V. — финальное сообщение:**
+
+```
+┌─────────────────────────────────────────────┐
+│  SEASON 6 COMPLETE                          │
+│  ★★★ PERFECT ★★★                            │
+│                                             │
+│  3 faces captured. Досье собрано.           │
+│  Lab data secured. Evidence complete.       │
+│                                             │
+│  Season 7: System Programming               │
+│  Они знают твои методы.                     │
+│  Пора идти глубже — в тени системы.         │
+│                                             │
+│  48 часов отдыха. Welcome to underground.   │
+│                                             │
+│  P.S. Тот, кто узнал тебя на камере —       │
+│       твой враг в Season 7. Приготовься.    │
+│                                             │
+│  — V.                                       │
+└─────────────────────────────────────────────┘
+```
+
+**🎉 SEASON 6 COMPLETE! 🎉**
+
+```
+╔═══════════════════════════════════════════════════╗
+║  SEASON 6: EMBEDDED & IoT — SUMMARY               ║
+╠═══════════════════════════════════════════════════╣
+║  📅 Ep21: GPIO & Sensors 🏆                       ║
+║  📅 Ep22: Wiegand & Modbus & RFID 🏆              ║
+║  📅 Ep23: RTSP & Cameras (competitors detected) 🏆║
+║  📅 Ep24: MQTT Battle (3 faces captured) 🏆       ║
+║                                                   ║
+║  ✅ IoT Systems MASTERED                          ║
+║  ✅ Competitors IDENTIFIED                        ║
+║  ✅ Evidence COLLECTED                            ║
+║  ⚠️ Enemy knows your face → Season 7 WAR          ║
+╚═══════════════════════════════════════════════════╝
+```
+
+**Достижение:** 🏆 **"IoT Expert"** — полный контроль над IoT
+
+**Cliffhanger:** Враг знает ваше лицо. Season 7 — война в тенях.
 
 ---
 
@@ -400,4 +473,4 @@ NEXT: Episode 25 → Processes & Daemons
 
 ---
 
-*MOONLIGHT Protocol: Season 6 Complete. From bits to bytes, from sensors to systems. 🌐✨*
+*MOONLIGHT Protocol: The real war happens in the shadows. See you there. 🌐*

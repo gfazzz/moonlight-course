@@ -1,0 +1,262 @@
+{
+  "facility": "Novosibirsk Institute of Cybernetics",
+  "scan_date": "2024-12-23T20:00:00Z",
+  "total_devices": 47,
+  "network": "192.168.1.0/24",
+  "mqtt_broker": "192.168.1.10:1883",
+  
+  "devices": [
+    {
+      "id": 1,
+      "type": "IP_CAMERA",
+      "model": "Hikvision DS-2CD2142FWD",
+      "name": "CAM-001",
+      "ip": "192.168.1.101",
+      "mac": "00:11:22:33:44:55",
+      "location": "Entrance Main",
+      "protocols": ["RTSP", "HTTP", "ONVIF", "MQTT"],
+      "mqtt_topics": ["iot/cameras/entrance/status", "iot/cameras/entrance/motion"],
+      "vulnerabilities": ["CVE-2017-7921", "default_credentials"],
+      "risk_level": "HIGH"
+    },
+    {
+      "id": 2,
+      "type": "ACCESS_CONTROL",
+      "model": "Hikvision DS-K2604",
+      "name": "СКУД-Main",
+      "ip": "192.168.1.50",
+      "mac": "00:11:22:AA:BB:CC",
+      "location": "Main entrance",
+      "protocols": ["Wiegand", "RS-485", "TCP/IP", "MQTT"],
+      "mqtt_topics": ["iot/access/doors/entrance", "iot/access/cards/#"],
+      "card_database": "1247 authorized cards",
+      "vulnerabilities": ["MQTT_no_auth", "command_injection"],
+      "risk_level": "CRITICAL"
+    },
+    {
+      "id": 3,
+      "type": "ACCESS_CONTROL",
+      "model": "ZKTeco ProFace X",
+      "name": "СКУД-Lab",
+      "ip": "192.168.1.51",
+      "mac": "00:11:22:DD:EE:FF",
+      "location": "Lab 201 entrance",
+      "protocols": ["Wiegand", "RS-485", "TCP/IP", "MQTT"],
+      "mqtt_topics": ["iot/access/labs/lab201", "iot/access/biometric"],
+      "biometric_database": "347 fingerprints, 89 faces",
+      "vulnerabilities": ["MQTT_command_injection", "weak_encryption"],
+      "risk_level": "CRITICAL"
+    },
+    {
+      "id": 4,
+      "type": "SENSOR",
+      "model": "DHT22",
+      "name": "Sensor-Temp-01",
+      "ip": "192.168.1.70",
+      "mac": "00:AA:BB:CC:DD:01",
+      "location": "Lab 201",
+      "sensor_type": "temperature_humidity",
+      "protocols": ["MQTT"],
+      "mqtt_topics": ["iot/sensors/temperature/lab201"],
+      "data_rate": "every 5 minutes",
+      "vulnerabilities": ["MQTT_no_auth"],
+      "risk_level": "LOW"
+    },
+    {
+      "id": 5,
+      "type": "SENSOR",
+      "model": "PIR HC-SR501",
+      "name": "Sensor-Motion-01",
+      "ip": "192.168.1.71",
+      "mac": "00:AA:BB:CC:DD:02",
+      "location": "Corridor A1",
+      "sensor_type": "motion_detection",
+      "protocols": ["MQTT"],
+      "mqtt_topics": ["iot/sensors/motion/corridor"],
+      "data_rate": "on trigger (30s interval)",
+      "vulnerabilities": ["MQTT_disable_injection"],
+      "risk_level": "MEDIUM"
+    },
+    {
+      "id": 6,
+      "type": "CONTROLLER",
+      "model": "Raspberry Pi 4",
+      "name": "IoT-Controller",
+      "ip": "192.168.1.1",
+      "mac": "DC:A6:32:12:34:56",
+      "location": "Server Room",
+      "os": "Raspbian GNU/Linux 11",
+      "protocols": ["MQTT", "HTTP", "SSH"],
+      "mqtt_topics": ["iot/#"],
+      "role": "Central IoT hub, aggregates all device data",
+      "vulnerabilities": ["MQTT_wildcard_subscribe", "SSH_weak_password"],
+      "risk_level": "CRITICAL"
+    },
+    {
+      "id": 7,
+      "type": "ALARM",
+      "model": "Ajax Hub",
+      "name": "Alarm-Main",
+      "ip": "192.168.1.80",
+      "mac": "00:FF:EE:DD:CC:01",
+      "location": "Security office",
+      "protocols": ["Proprietary RF", "TCP/IP", "MQTT"],
+      "mqtt_topics": ["iot/alarms/status", "iot/alarms/trigger", "iot/alarms/silent_mode"],
+      "zones": 12,
+      "connected_sensors": 47,
+      "vulnerabilities": ["MQTT_silent_mode_injection", "RF_jamming_possible"],
+      "risk_level": "HIGH"
+    },
+    {
+      "id": 8,
+      "type": "FIRE_ALARM",
+      "model": "System Sensor",
+      "name": "Fire-Alarm-Main",
+      "ip": "192.168.1.85",
+      "mac": "00:FF:EE:DD:CC:02",
+      "location": "Building-wide",
+      "protocols": ["RS-485", "TCP/IP", "MQTT"],
+      "mqtt_topics": ["iot/fire_alarm/status", "iot/fire_alarm/trigger"],
+      "safety_protocol": "AUTO_UNLOCK_ALL_DOORS",
+      "vulnerabilities": ["MQTT_false_alarm_injection", "door_unlock_exploit"],
+      "risk_level": "CRITICAL",
+      "exploit_note": "Fire alarm can be triggered via MQTT to unlock all doors (safety protocol abuse)"
+    }
+  ],
+  
+  "network_vulnerabilities": {
+    "mqtt_broker": {
+      "host": "192.168.1.10",
+      "port": 1883,
+      "authentication": false,
+      "allow_anonymous": true,
+      "tls_encryption": false,
+      "vulnerabilities": [
+        "No authentication required",
+        "All clients can publish to any topic",
+        "Wildcard subscriptions allowed",
+        "No rate limiting",
+        "No access control lists (ACL)"
+      ],
+      "risk_level": "CRITICAL",
+      "exploit_potential": "Full IoT network compromise via MQTT injection"
+    },
+    "network_segmentation": {
+      "status": "NONE",
+      "issue": "All IoT devices on flat network 192.168.1.0/24",
+      "risk": "Lateral movement easy, no isolation between critical systems"
+    },
+    "firewall": {
+      "status": "DISABLED",
+      "issue": "All ports accessible from any device",
+      "risk": "No defense in depth"
+    }
+  },
+  
+  "attack_vectors": [
+    {
+      "name": "MQTT Command Injection",
+      "target": "All MQTT-connected devices (47 devices)",
+      "method": "Publish malicious commands to device control topics",
+      "examples": [
+        "iot/access/doors/lab201 → {\"event\":\"door_unlock_override\"}",
+        "iot/cameras/*/command → {\"command\":\"disable_recording\"}",
+        "iot/alarms/silent_mode → {\"command\":\"enable_silent_mode\"}",
+        "iot/fire_alarm/trigger → {\"command\":\"trigger_fire_alarm\"}"
+      ],
+      "success_rate": "100% (no authentication)",
+      "impact": "Complete system compromise"
+    },
+    {
+      "name": "Ghost Mode",
+      "description": "Disable all monitoring in target zone",
+      "steps": [
+        "1. Disable cameras via MQTT",
+        "2. Disable motion sensors via MQTT",
+        "3. Enable alarm silent mode via MQTT",
+        "4. Target zone becomes invisible"
+      ],
+      "duration": "Configurable (up to 24 hours)",
+      "detection_probability": "<1% if executed correctly"
+    },
+    {
+      "name": "Fire Alarm Escape",
+      "description": "Trigger false fire alarm to unlock all doors",
+      "mqtt_command": "iot/fire_alarm/trigger → {\"command\":\"trigger_fire_alarm\"}",
+      "result": "All 47 doors unlock automatically (safety protocol)",
+      "use_case": "Emergency exit, bypass all access control",
+      "risk": "Safety protocol exploited for malicious purposes"
+    },
+    {
+      "name": "Backdoor Installation",
+      "description": "Inject persistent backdoor via IoT controller",
+      "target": "IoT-Controller (192.168.1.1)",
+      "method": "SSH weak password → Root access → Cron job",
+      "payload": "Reverse shell to attacker C2 server",
+      "persistence": "Survives reboot, hidden in system processes"
+    }
+  ],
+  
+  "competitor_activity": {
+    "detected": true,
+    "timestamp": "2024-12-23T22:58:34Z",
+    "source_ip": "192.168.1.253",
+    "client_id": "shadow-bot",
+    "actions": [
+      "Subscribed to iot/# (wildcard monitoring)",
+      "Injected door unlock command → Lab201",
+      "Disabled CAM-006 recording",
+      "Disabled Motion-Lab201 sensor",
+      "Enabled alarm silent mode",
+      "Created Ghost Mode in Lab201",
+      "Attempted multiple escape methods",
+      "Triggered fire alarm as last resort"
+    ],
+    "outcome": "Escaped via fire alarm door unlock, but faces captured on 4K video"
+  },
+  
+  "moonlight_operations": {
+    "timestamp": "2024-12-23T23:01:27Z",
+    "client_id": "moonlight-recon",
+    "counter_actions": [
+      "Emergency door lockdown → Lab201",
+      "Force re-enable CAM-006 recording (4K)",
+      "Triggered critical alarm",
+      "Captured forensic evidence",
+      "Collected MQTT logs",
+      "Identified 3 competitor faces"
+    ],
+    "outcome": "Mission success, evidence secured, Season 6 complete"
+  },
+  
+  "recommendations": {
+    "immediate": [
+      "Enable MQTT authentication (username/password)",
+      "Implement ACLs on MQTT broker",
+      "Segment IoT network (VLANs)",
+      "Enable TLS encryption on MQTT",
+      "Change all default credentials",
+      "Patch known CVEs (Hikvision, etc.)"
+    ],
+    "long_term": [
+      "Implement IDS/IPS for IoT traffic",
+      "Deploy honeypots to detect attackers",
+      "Regular security audits",
+      "Zero-trust architecture",
+      "Hardware security modules (HSM) for critical systems"
+    ]
+  },
+  
+  "mission_status": {
+    "episode": 24,
+    "season": 6,
+    "title": "IoT Integration",
+    "objective": "Master IoT system integration and bypass",
+    "achievement": "IoT Expert",
+    "completion": "100%",
+    "evidence_collected": true,
+    "competitors_identified": true,
+    "season_6_finale": "SUCCESS"
+  }
+}
+

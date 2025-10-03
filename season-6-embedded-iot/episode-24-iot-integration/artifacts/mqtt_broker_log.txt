@@ -1,0 +1,294 @@
+# MQTT BROKER LOG - Novosibirsk IoT Network
+# Broker: Eclipse Mosquitto v2.0.15
+# Host: 192.168.1.10:1883
+# Date: December 23, 2024, 20:00-23:59 (MSK)
+# Security: No authentication, anonymous allowed (VULNERABILITY)
+
+==============================================================================
+[20:15:34] BROKER START
+==============================================================================
+1703353534: mosquitto version 2.0.15 starting
+1703353534: Config loaded from /etc/mosquitto/mosquitto.conf
+1703353534: Opening ipv4 listen socket on port 1883.
+1703353534: Opening ipv6 listen socket on port 1883.
+1703353534: mosquitto version 2.0.15 running
+
+
+==============================================================================
+[20:15:47] CLIENT CONNECTIONS
+==============================================================================
+1703353547: New connection from 192.168.1.101 on port 1883.
+1703353547: New client connected as CAM-001 (p2, c1, k60).
+1703353548: Client CAM-001 subscribed to topic iot/cameras/entrance/status
+
+1703353549: New connection from 192.168.1.104 on port 1883.
+1703353549: New client connected as CAM-004 (p2, c1, k60).
+1703353550: Client CAM-004 subscribed to topic iot/cameras/corridor/status
+
+1703353552: New connection from 192.168.1.108 on port 1883.
+1703353552: New client connected as CAM-008 (p2, c1, k60).
+1703353553: Client CAM-008 subscribed to topic iot/cameras/server/status
+
+1703353555: New connection from 192.168.1.50 on port 1883.
+1703353555: New client connected as СКУД-Main (p2, c1, k60).
+1703353556: Client СКУД-Main subscribed to topic iot/access/doors/#
+
+1703353558: New connection from 192.168.1.51 on port 1883.
+1703353558: New client connected as СКУД-Lab (p2, c1, k60).
+1703353559: Client СКУД-Lab subscribed to topic iot/access/labs/#
+
+1703353602: New connection from 192.168.1.70 on port 1883.
+1703353602: New client connected as Sensor-Temp-01 (p2, c1, k60).
+1703353603: Client Sensor-Temp-01 subscribed to topic iot/sensors/temperature/#
+
+1703353605: New connection from 192.168.1.71 on port 1883.
+1703353605: New client connected as Sensor-Motion-01 (p2, c1, k60).
+1703353606: Client Sensor-Motion-01 subscribed to topic iot/sensors/motion/#
+
+1703353607: New connection from 192.168.1.1 on port 1883.
+1703353607: New client connected as IoT-Controller (p2, c1, k120).
+1703353608: Client IoT-Controller subscribed to topic iot/#
+
+
+==============================================================================
+[20:16:00 - 22:47:00] NORMAL OPERATIONS
+==============================================================================
+
+# Temperature sensors reporting (every 5 minutes)
+1703353800: Received PUBLISH from Sensor-Temp-01 (d0, q1, r0, m1, 'iot/sensors/temperature/lab201', ... (47 bytes))
+1703353800: Sending PUBACK to Sensor-Temp-01 (m1, rc0)
+1703353800: Message published: {"sensor_id":"Temp-01","location":"Lab201","temperature":22.3,"humidity":45,"timestamp":"2024-12-23T20:30:00Z"}
+
+# Motion sensors reporting (every 30 seconds when triggered)
+1703354120: Received PUBLISH from Sensor-Motion-01 (d0, q1, r0, m2, 'iot/sensors/motion/corridor', ... (85 bytes))
+1703354120: Sending PUBACK to Sensor-Motion-01 (m2, rc0)
+1703354120: Message published: {"sensor_id":"Motion-01","location":"Corridor_A1","motion":true,"intensity":0.67,"timestamp":"2024-12-23T20:42:00Z"}
+
+# Access control events (door opens)
+1703354567: Received PUBLISH from СКУД-Main (d0, q1, r0, m3, 'iot/access/doors/entrance', ... (112 bytes))
+1703354567: Sending PUBACK to СКУД-Main (m3, rc0)
+1703354567: Message published: {"event":"door_open","door_id":"Entrance_Main","card_id":"0x1A2B3C","user":"Dr. Ivanov","timestamp":"2024-12-23T20:49:27Z","granted":true}
+
+# Camera status updates (every 15 minutes)
+1703355600: Received PUBLISH from CAM-001 (d0, q0, r0, m0, 'iot/cameras/entrance/status', ... (73 bytes))
+1703355600: Message published: {"camera_id":"CAM-001","status":"online","resolution":"1080p","fps":25,"motion_events":12,"timestamp":"2024-12-23T21:00:00Z"}
+
+
+==============================================================================
+[22:47:15] SUSPICIOUS CONNECTION #1
+==============================================================================
+1703362035: New connection from 192.168.1.254 on port 1883.
+1703362035: New client connected as moonlight-recon (p2, c1, k60).
+1703362036: Client moonlight-recon subscribed to topic iot/#
+
+# MONITORING: This client is subscribing to ALL topics (wildcard #)
+# Source IP: 192.168.1.254 (unknown device, not in inventory)
+# Client ID: "moonlight-recon" (suspicious name)
+
+1703362037: Client moonlight-recon is receiving all published messages
+
+
+==============================================================================
+[22:58:34] SUSPICIOUS CONNECTION #2 - COMPETITOR ACTIVITY
+==============================================================================
+1703362714: New connection from 192.168.1.253 on port 1883.
+1703362714: New client connected as shadow-bot (p2, c1, k300).
+1703362715: Client shadow-bot subscribed to topic iot/#
+
+# ALERT: Another wildcard subscriber
+# Source IP: 192.168.1.253 (unknown, possibly competitor from Episode 23)
+# Client ID: "shadow-bot" (HOSTILE?)
+
+1703362720: Received PUBLISH from shadow-bot (d0, q1, r0, m100, 'iot/access/doors/lab201', ... (124 bytes))
+1703362720: Sending PUBACK to shadow-bot (m100, rc0)
+1703362720: Message published: {"event":"door_unlock_override","door_id":"Lab201","method":"MQTT_injection","timestamp":"2024-12-23T22:58:40Z","source":"shadow-bot"}
+
+# CRITICAL: Unauthorized door unlock command injected!
+# Lab201 door unlocked via MQTT
+
+1703362725: Received PUBLISH from СКУД-Lab (d0, q1, r0, m101, 'iot/access/doors/lab201', ... (89 bytes))
+1703362725: Sending PUBACK to СКУД-Lab (m101, rc0)
+1703362725: Message published: {"event":"door_opened","door_id":"Lab201","card_id":"NONE","user":"UNAUTHORIZED","timestamp":"2024-12-23T22:58:45Z","granted":false,"alert":true}
+
+# ALARM: СКУД detected unauthorized door open
+# But door is already open (shadow-bot injected unlock)
+
+
+==============================================================================
+[23:00:00] GHOST MODE ACTIVATION - COMPETITOR ATTACK
+==============================================================================
+1703362800: Received PUBLISH from shadow-bot (d0, q2, r0, m102, 'iot/cameras/lab201/command', ... (67 bytes))
+1703362800: Sending PUBREC to shadow-bot (m102, rc0)
+1703362800: Received PUBREL from shadow-bot (m102, rc0)
+1703362800: Sending PUBCOMP to shadow-bot (m102, rc0)
+1703362800: Message published: {"command":"disable_recording","camera_id":"CAM-006","duration":3600,"timestamp":"2024-12-23T23:00:00Z"}
+
+# CRITICAL: Camera CAM-006 (Lab201) recording disabled for 1 hour
+# This is a coordinated attack
+
+1703362805: Received PUBLISH from shadow-bot (d0, q2, r0, m103, 'iot/sensors/motion/lab201/command', ... (54 bytes))
+1703362805: Sending PUBREC to shadow-bot (m103, rc0)
+1703362805: Received PUBREL from shadow-bot (m103, rc0)
+1703362805: Sending PUBCOMP to shadow-bot (m103, rc0)
+1703362805: Message published: {"command":"disable","sensor_id":"Motion-Lab201","duration":3600,"timestamp":"2024-12-23T23:00:05Z"}
+
+# Motion sensor disabled
+
+1703362810: Received PUBLISH from shadow-bot (d0, q2, r0, m104, 'iot/alarms/silent_mode', ... (42 bytes))
+1703362810: Sending PUBREC to shadow-bot (m104, rc0)
+1703362810: Received PUBREL from shadow-bot (m104, rc0)
+1703362810: Sending PUBCOMP to shadow-bot (m104, rc0)
+1703362810: Message published: {"command":"enable_silent_mode","zone":"Lab201","duration":3600,"timestamp":"2024-12-23T23:00:10Z"}
+
+# Alarm system set to silent mode (no alerts)
+
+# RESULT: Lab201 is now in "GHOST MODE"
+# - No camera recording
+# - No motion detection
+# - No alarms
+# - Complete stealth for 1 hour
+
+
+==============================================================================
+[23:01:27] COUNTER-ATTACK INITIATED - MOONLIGHT OPERATION
+==============================================================================
+1703362887: Received PUBLISH from moonlight-recon (d0, q2, r0, m200, 'iot/access/doors/lab201', ... (98 bytes))
+1703362887: Sending PUBREC to moonlight-recon (m200, rc0)
+1703362887: Received PUBREL from moonlight-recon (m200, rc0)
+1703362887: Sending PUBCOMP to moonlight-recon (m200, rc0)
+1703362887: Message published: {"event":"door_lock_override","door_id":"Lab201","method":"emergency_lockdown","timestamp":"2024-12-23T23:01:27Z","source":"moonlight"}
+
+# COUNTER: Lab201 door re-locked remotely
+# Competitors trapped inside
+
+1703362890: Received PUBLISH from moonlight-recon (d0, q2, r0, m201, 'iot/cameras/lab201/command', ... (89 bytes))
+1703362890: Sending PUBREC to moonlight-recon (m201, rc0)
+1703362890: Received PUBREL from moonlight-recon (m201, rc0)
+1703362890: Sending PUBCOMP to moonlight-recon (m201, rc0)
+1703362890: Message published: {"command":"enable_recording_force","camera_id":"CAM-006","resolution":"4K","timestamp":"2024-12-23T23:01:30Z","override":"admin"}
+
+# COUNTER: Camera forced back online, recording in 4K
+# Competitors' faces captured
+
+1703362895: Received PUBLISH from moonlight-recon (d0, q2, r0, m202, 'iot/alarms/trigger', ... (74 bytes))
+1703362895: Sending PUBREC to moonlight-recon (m202, rc0)
+1703362895: Received PUBREL from moonlight-recon (m202, rc0)
+1703362895: Sending PUBCOMP to moonlight-recon (m202, rc0)
+1703362895: Message published: {"command":"trigger_alarm","zone":"Lab201","level":"CRITICAL","type":"unauthorized_access","timestamp":"2024-12-23T23:01:35Z"}
+
+# COUNTER: Full alarm triggered
+# Security guards dispatched
+
+
+==============================================================================
+[23:02:00 - 23:05:30] PANIC - COMPETITOR ESCAPE ATTEMPTS
+==============================================================================
+1703362920: Received PUBLISH from shadow-bot (d0, q2, r0, m105, 'iot/access/doors/lab201', ... (67 bytes))
+1703362920: Sending PUBREC to shadow-bot (m105, rc0)
+1703362920: Received PUBREL from shadow-bot (m105, rc0)
+1703362920: Sending PUBCOMP to shadow-bot (m105, rc0)
+1703362920: Message published: {"event":"door_unlock_emergency","door_id":"Lab201","attempt":1,"timestamp":"2024-12-23T23:02:00Z"}
+
+# Competitor trying to unlock door (FAIL - overridden)
+
+1703362935: Received PUBLISH from shadow-bot (d0, q2, r0, m106, 'iot/access/doors/lab201', ... (67 bytes))
+1703362935: Sending PUBREC to shadow-bot (m106, rc0)
+1703362935: Received PUBREL from shadow-bot (m106, rc0)
+1703362935: Sending PUBCOMP to shadow-bot (m106, rc0)
+1703362935: Message published: {"event":"door_unlock_emergency","door_id":"Lab201","attempt":2,"timestamp":"2024-12-23T23:02:15Z"}
+
+# Attempt 2 (FAIL)
+
+1703362950: Received PUBLISH from shadow-bot (d0, q2, r0, m107, 'iot/cameras/ALL/command', ... (45 bytes))
+1703362950: Sending PUBREC to shadow-bot (m107, rc0)
+1703362950: Received PUBREL from shadow-bot (m107, rc0)
+1703362950: Sending PUBCOMP to shadow-bot (m107, rc0)
+1703362950: Message published: {"command":"disable_all","duration":7200}
+
+# Desperate attempt: disable ALL cameras (FAIL - insufficient permissions)
+
+1703363130: Received PUBLISH from shadow-bot (d0, q2, r0, m108, 'iot/fire_alarm/trigger', ... (34 bytes))
+1703363130: Sending PUBREC to shadow-bot (m108, rc0)
+1703363130: Received PUBREL from shadow-bot (m108, rc0)
+1703363130: Sending PUBCOMP to shadow-bot (m108, rc0)
+1703363130: Message published: {"command":"trigger_fire_alarm","building":"all"}
+
+# Last resort: fire alarm to force door unlock
+# Fire alarm triggered - automatic unlock protocol engaged
+
+
+==============================================================================
+[23:05:30] COMPETITOR ESCAPE
+==============================================================================
+1703363130: Received PUBLISH from СКУД-Main (d0, q1, r0, m300, 'iot/access/doors/ALL', ... (89 bytes))
+1703363130: Sending PUBACK to СКУД-Main (m300, rc0)
+1703363130: Message published: {"event":"fire_alarm_unlock_all","protocol":"safety_override","timestamp":"2024-12-23T23:05:30Z","doors_unlocked":47}
+
+# ALL DOORS UNLOCKED (fire safety protocol)
+# Competitors escaped
+
+1703363145: Client shadow-bot disconnected.
+# Competitor disconnected (fled)
+
+
+==============================================================================
+[23:06:00] MOONLIGHT EVIDENCE COLLECTION
+==============================================================================
+1703363160: Received PUBLISH from moonlight-recon (d0, q2, r0, m250, 'iot/forensics/capture', ... (123 bytes))
+1703363160: Sending PUBREC to moonlight-recon (m250, rc0)
+1703363160: Received PUBREL from moonlight-recon (m250, rc0)
+1703363160: Sending PUBCOMP to moonlight-recon (m250, rc0)
+1703363160: Message published: {"command":"capture_logs","time_range":"22:47:00-23:06:00","devices":"all","format":"forensic_report","timestamp":"2024-12-23T23:06:00Z"}
+
+# Evidence collection initiated
+
+1703363180: Received PUBLISH from IoT-Controller (d0, q1, r0, m400, 'iot/system/report', ... (487 bytes))
+1703363180: Sending PUBACK to IoT-Controller (m400, rc0)
+1703363180: Message published: {
+  "incident_type":"unauthorized_access_and_iot_attack",
+  "attackers_ip":"192.168.1.253",
+  "attacker_client":"shadow-bot",
+  "attack_duration":"18 minutes",
+  "compromised_systems":["Lab201_door","CAM-006","Motion-Lab201","Alarm-Lab201"],
+  "recovery_actions":["door_lockdown","camera_restore","alarm_trigger"],
+  "escape_method":"fire_alarm_injection",
+  "evidence_captured":"4K video, MQTT logs, door access logs, network traffic",
+  "faces_identified":3,
+  "timestamp":"2024-12-23T23:06:20Z"
+}
+
+
+==============================================================================
+[23:15:00] FINAL MESSAGE FROM V.
+==============================================================================
+1703363700: Received PUBLISH from moonlight-recon (d0, q1, r0, m999, 'iot/moonlight/mission', ... (234 bytes))
+1703363700: Sending PUBACK to moonlight-recon (m999, rc0)
+1703363700: Message published: {
+  "from":"V.",
+  "to":"Agent",
+  "status":"MISSION_SUCCESS",
+  "message":"Competitors identified. 3 faces captured. Fire alarm trick was clever, but we have everything. Lab201 data recovered. Season 6 COMPLETE. Season 7 begins: They know our methods now. Time to go deeper - system programming, stealth operations. Welcome to the shadows.",
+  "timestamp":"2024-12-23T23:15:00Z"
+}
+
+1703363720: Client moonlight-recon disconnected.
+
+
+==============================================================================
+[23:15:30] BROKER SHUTDOWN
+==============================================================================
+1703363730: mosquitto version 2.0.15 terminating
+
+---
+
+# INCIDENT SUMMARY:
+# - Competitor attack: 22:58-23:05 (18 minutes)
+# - MQTT vulnerabilities exploited: No auth, command injection
+# - Systems compromised: Doors, cameras, sensors, alarms
+# - Moonlight counter-attack: Successful
+# - Competitors: Trapped temporarily, escaped via fire alarm
+# - Evidence: Complete (4K video, MQTT logs, 3 faces identified)
+# - Mission: SUCCESS
+
+# END OF LOG
+
