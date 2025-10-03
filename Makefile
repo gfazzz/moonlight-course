@@ -87,6 +87,12 @@ clean:
 	@echo "Removing episode executables..."
 	@find season-*/episode-* -maxdepth 1 -type f -executable -delete 2>/dev/null || true
 	@find season-*/episode-*/artifacts -maxdepth 1 -type f -executable -delete 2>/dev/null || true
+	@echo "Cleaning solution directories..."
+	@for dir in season-*/episode-*/solution; do \
+		if [ -d "$$dir" ] && [ -f "$$dir/Makefile" ]; then \
+			$(MAKE) -C "$$dir" clean 2>/dev/null || true; \
+		fi; \
+	done
 	@echo "✓ All build artifacts and executables cleaned"
 
 # Alias for clean
