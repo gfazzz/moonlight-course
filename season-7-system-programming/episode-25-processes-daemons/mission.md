@@ -1,140 +1,140 @@
-# Mission Brief: Processes & Daemons
-## Episode 25 — System Level War Begins
+# Брифинг миссии: Процессы & Демоны
+## Episode 25 — Война на системном уровне
 
 ---
 
-## 🎯 Objective
+## 🎯 Цель миссии
 
-**CRITICAL:** Enemy surveillance detected in system (PIDs 3012, 3156).  
-**MISSION:** Create counter-surveillance daemon, monitor enemy, gather intelligence.  
-**DEADLINE:** 6-12 hours until discovery  
-**STATUS:** Season 7 begins — war in the shadows
+**КРИТИЧЕСКАЯ СИТУАЦИЯ:** Обнаружено вражеское наблюдение в системе (PIDs 3012, 3156).  
+**МИССИЯ:** Создать counter-surveillance daemon, отслеживать врага, собрать intelligence.  
+**ДЕДЛАЙН:** 6-12 часов до обнаружения  
+**СТАТУС:** Season 7 начинается — война в тенях
 
 ---
 
-## 📋 Mission Requirements
+## 📋 Требования миссии
 
-### 1. Process Analysis
-- ✅ Identify enemy processes (./tracker, surveillance_d)
-- ✅ Analyze process tree (fork, exec, orphans)
-- ✅ Understand daemon architecture
-- ✅ Map network connections to C2 server
+### 1. Анализ процессов
+- ✅ Идентифицировать вражеские процессы (./tracker, surveillance_d)
+- ✅ Проанализировать дерево процессов (fork, exec, orphans)
+- ✅ Понять архитектуру daemon
+- ✅ Отследить сетевые соединения к C2 серверу
 
-### 2. Daemon Creation
-- ✅ Implement proper UNIX daemon (double fork, setsid)
-- ✅ PID file management (/var/run/moonlight_monitor.pid)
-- ✅ Detach from terminal (close stdin/stdout/stderr)
-- ✅ Background execution (no controlling TTY)
+### 2. Создание Daemon
+- ✅ Реализовать корректный UNIX daemon (double fork, setsid)
+- ✅ Управление PID файлом (/var/run/moonlight_monitor.pid)
+- ✅ Отключиться от терминала (close stdin/stdout/stderr)
+- ✅ Фоновое выполнение (no controlling TTY)
 
-### 3. Signal Handling
+### 3. Обработка сигналов
 - ✅ SIGTERM handler (graceful shutdown + cleanup)
 - ✅ SIGHUP handler (reload configuration)
-- ✅ SIGUSR1/SIGUSR2 (verbosity control)
+- ✅ SIGUSR1/SIGUSR2 (управление verbosity)
 - ✅ SIGCHLD handler (reap zombie processes)
-- ✅ Ignore SIGINT, SIGPIPE (robustness)
+- ✅ Игнорировать SIGINT, SIGPIPE (robustness)
 
-### 4. Stealth Operations
-- ✅ Process name randomization (every 5 min)
-- ✅ CPU usage < 0.5% (avoid detection)
-- ✅ Mimic system process behavior
-- ✅ Network traffic blending
+### 4. Стелс-операции
+- ✅ Рандомизация имени процесса (каждые 5 мин)
+- ✅ CPU usage < 0.5% (избегать обнаружения)
+- ✅ Имитация поведения системных процессов
+- ✅ Смешивание с сетевым трафиком
 
-### 5. Intelligence Gathering
-- ✅ Capture network packets (324+ packets)
-- ✅ Log enemy activity (system_processes.log)
-- ✅ Identify C2 server (185.220.101.42:8080)
-- ✅ Generate intelligence report
+### 5. Сбор Intelligence
+- ✅ Перехват сетевых пакетов (324+ пакетов)
+- ✅ Логирование активности врага (system_processes.log)
+- ✅ Идентификация C2 сервера (185.220.101.42:8080)
+- ✅ Создание intelligence отчёта
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Process Management
+### Управление процессами
 ```bash
-# Create daemon
+# Создать daemon
 ./moonlight_daemon start
 
-# Verify daemon running
+# Проверить запущен ли daemon
 ps aux | grep moonlight_monitor
 
-# Send signals
-kill -USR1 <PID>   # Increase verbosity
-kill -HUP <PID>    # Reload config
+# Отправить сигналы
+kill -USR1 <PID>   # Увеличить verbosity
+kill -HUP <PID>    # Перезагрузить config
 kill -TERM <PID>   # Graceful shutdown
 
-# Check no zombies
+# Проверить отсутствие zombie
 ps aux | grep defunct
 ```
 
-### Stealth Verification
+### Проверка стелса
 ```bash
-# Check CPU usage (should be < 0.5%)
+# Проверить CPU usage (должно быть < 0.5%)
 top -p <PID>
 
-# Verify process name rotation
+# Проверить ротацию имени процесса
 watch -n 10 'ps aux | grep <PID>'
 
-# Network traffic analysis
+# Анализ сетевого трафика
 tcpdump -i eth0 host 185.220.101.42
 ```
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Artifacts (3 files, 785 lines):
-- ✅ `system_processes.log` (281 lines)
-  - Full process monitoring log (14:00-17:30)
-  - Enemy process detection (PID 3012, 3156)
-  - Counter-daemon deployment timeline
-  - Mexican standoff situation documented
+### Артефакты (3 файла, 785 строк):
+- ✅ `system_processes.log` (281 строк)
+  - Полный лог мониторинга процессов (14:00-17:30)
+  - Обнаружение вражеских процессов (PID 3012, 3156)
+  - Таймлайн развёртывания counter-daemon
+  - Задокументирована ситуация Mexican standoff
   
-- ✅ `signal_traces.txt` (374 lines)
-  - Complete signal handling traces (47 signals)
-  - SIGTERM, SIGHUP, SIGUSR1/2, SIGCHLD examples
-  - Signal race condition handling
-  - SIGKILL attack + recovery
-  - Best practices & defensive measures
+- ✅ `signal_traces.txt` (374 строки)
+  - Полные трейсы обработки сигналов (47 сигналов)
+  - Примеры SIGTERM, SIGHUP, SIGUSR1/2, SIGCHLD
+  - Обработка race condition с сигналами
+  - SIGKILL атака + восстановление
+  - Best practices & защитные меры
   
-- ✅ `daemon_config.conf` (130 lines)
-  - Professional daemon configuration
-  - Target monitoring settings
-  - Stealth mode parameters
-  - Logging, alerting, watchdog config
+- ✅ `daemon_config.conf` (130 строк)
+  - Профессиональная конфигурация daemon
+  - Настройки мониторинга целей
+  - Параметры stealth mode
+  - Конфигурация logging, alerting, watchdog
 
-### Code Deliverables:
-- ✅ `solution/processes_daemons.c` (440 lines)
-- ✅ `starter.c` (105 lines)
-- ✅ `solution/Makefile` + root `Makefile`
-
----
-
-## 📊 Success Metrics
-
-- [x] Enemy processes identified and analyzed
-- [x] Counter-daemon created (PID 3789)
-- [x] Stealth mode operational (не обнаружен врагом)
-- [x] Intelligence gathered (324 packets, C2 identified)
-- [x] Signal handling robust (47 signals processed)
-- [x] Zombie processes prevented (SIGCHLD handler)
-- [x] 6-12 hours gained before discovery
+### Код:
+- ✅ `solution/processes_daemons.c` (440 строк)
+- ✅ `starter.c` (105 строк)
+- ✅ `solution/Makefile` + корневой `Makefile`
 
 ---
 
-## ⚠️ Mission Status
+## 📊 Критерии успеха
 
-**ACCOMPLISHED** ✅
-
-Counter-surveillance daemon deployed. Enemy monitored but not neutralized.  
-Time until discovery: 6-12 hours.
-
-**URGENT:** Proceed to Episode 26 immediately.  
-Parallel log analysis required (threads, producer-consumer).
-
----
-
-**Next Mission:** [Episode 26: Threads & Parallelism →](../episode-26-threads-parallelism/)
+- [x] Вражеские процессы идентифицированы и проанализированы
+- [x] Counter-daemon создан (PID 3789)
+- [x] Stealth mode работает (не обнаружен врагом)
+- [x] Intelligence собран (324 пакета, C2 идентифицирован)
+- [x] Обработка сигналов надёжна (47 сигналов обработано)
+- [x] Zombie процессы предотвращены (SIGCHLD handler)
+- [x] Выиграно 6-12 часов до обнаружения
 
 ---
 
-*MOONLIGHT Protocol: Ghost in the machine. Unseen. Unheard. Unstoppable.* 🔧
+## ⚠️ Статус миссии
+
+**ВЫПОЛНЕНА** ✅
+
+Counter-surveillance daemon развёрнут. Враг под наблюдением, но не нейтрализован.  
+Времени до обнаружения: 6-12 часов.
+
+**СРОЧНО:** Немедленно переходить к Episode 26.  
+Требуется параллельный анализ логов (threads, producer-consumer).
+
+---
+
+**Следующая миссия:** [Episode 26: Threads & Parallelism →](../episode-26-threads-parallelism/)
+
+---
+
+*MOONLIGHT Protocol: Призрак в машине. Невидимый. Неслышимый. Неостановимый.* 🔧

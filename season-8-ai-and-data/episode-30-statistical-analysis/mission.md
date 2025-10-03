@@ -1,28 +1,28 @@
-# Mission Brief: Statistical Analysis
+# Брифинг миссии: Статистический анализ
 **Episode 30** | Operation MOONLIGHT — Season 8
 
 ---
 
-## 🎯 Mission Objective
+## 🎯 Цель миссии
 
-**PRIMARY GOAL:** Perform comprehensive statistical analysis on Episode 29 data to identify attack patterns and prepare for ML training.
+**ОСНОВНАЯ ЦЕЛЬ:** Провести комплексный статистический анализ данных Episode 29 для идентификации паттернов атак и подготовки к ML обучению.
 
-**CONTEXT:**  
-Day 2 at Stanford AI Lab. Prof. Chen has prepared 172 network samples showing 2 attack bursts. Your statistical analysis will determine if attacks are significant and ready for neural network training (Episode 31).
+**КОНТЕКСТ:**  
+День 2 в Stanford AI Lab. Prof. Chen подготовил 172 сэмпла сети, показывающих 2 attack burst. Ваш статистический анализ определит, являются ли атаки значимыми и готовы ли данные для обучения нейросети (Episode 31).
 
-**YOUR TASK:**  
-Implement statistical methods in C to analyze attack patterns and prove statistical significance.
+**ВАША ЗАДАЧА:**  
+Реализовать статистические методы на C для анализа паттернов атак и доказательства статистической значимости.
 
-**DELIVERABLE:**  
-Statistical report confirming attack patterns with hypothesis testing (t-test, p-value < 0.05).
+**РЕЗУЛЬТАТ:**  
+Статистический отчёт, подтверждающий паттерны атак с hypothesis testing (t-test, p-value < 0.05).
 
 ---
 
-## 📋 Technical Requirements
+## 📋 Технические требования
 
-### 1. Descriptive Statistics
+### 1. Описательная статистика
 
-**Functions to Implement:**
+**Функции для реализации:**
 
 ```c
 double calculate_mean(double *data, size_t n);
@@ -31,13 +31,13 @@ double calculate_stddev(double *data, size_t n);
 double calculate_percentile(double *data, size_t n, double percentile);
 ```
 
-**Formulas:**
+**Формулы:**
 - **Mean:** μ = (Σ xᵢ) / n
 - **Variance:** σ² = Σ(xᵢ - μ)² / n
 - **Standard Deviation:** σ = √(variance)
-- **Percentile (p):** interpolate between sorted[floor(p*(n-1))] and sorted[ceil(p*(n-1))]
+- **Percentile (p):** интерполировать между sorted[floor(p*(n-1))] и sorted[ceil(p*(n-1))]
 
-**Expected Results:**
+**Ожидаемые результаты:**
 ```
 network_bytes:
   mean: 3687.42, stddev: 1524.73
@@ -50,23 +50,23 @@ response_times:
 
 ---
 
-### 2. Anomaly Detection
+### 2. Обнаружение аномалий
 
-**Method A: Z-score**
+**Метод A: Z-score**
 
 ```c
 int detect_anomaly_zscore(double value, double mean, double stddev) {
     double z = fabs((value - mean) / stddev);
-    return z > 3.0;  // Threshold: 3 standard deviations
+    return z > 3.0;  // Порог: 3 стандартных отклонения
 }
 ```
 
-**Interpretation:**
-- |z| < 2.0: normal
-- 2.0 < |z| < 3.0: suspicious
-- |z| > 3.0: anomaly
+**Интерпретация:**
+- |z| < 2.0: нормально
+- 2.0 < |z| < 3.0: подозрительно
+- |z| > 3.0: аномалия
 
-**Method B: IQR (Interquartile Range)**
+**Метод B: IQR (Interquartile Range)**
 
 ```c
 int detect_anomaly_iqr(double value, double q1, double q3, double iqr) {
@@ -76,20 +76,20 @@ int detect_anomaly_iqr(double value, double q1, double q3, double iqr) {
 }
 ```
 
-**Expected Anomalies:**
-- network_bytes: 12 anomalies (20%) with Z-score, 10 (16.67%) with IQR
-- response_times: 8 anomalies (15.38%)
+**Ожидаемые аномалии:**
+- network_bytes: 12 аномалий (20%) с Z-score, 10 (16.67%) с IQR
+- response_times: 8 аномалий (15.38%)
 
 ---
 
-### 3. Time Series Analysis
+### 3. Анализ временных рядов
 
 **A. Moving Average**
 
 ```c
 void moving_average(double *data, size_t n, int window, double *result) {
-    // For each point i, average window/2 points before and after
-    // Smooths noisy data, reveals trends
+    // Для каждой точки i, усреднить window/2 точек до и после
+    // Сглаживает шумные данные, выявляет тренды
 }
 ```
 
@@ -104,27 +104,27 @@ void exponential_smoothing(double *data, size_t n, double alpha, double *result)
 }
 ```
 
-**Alpha parameter:**
-- α = 0.1: heavy smoothing (slow response)
-- α = 0.5: balanced
-- α = 0.9: light smoothing (fast response)
+**Параметр Alpha:**
+- α = 0.1: тяжёлое сглаживание (медленный отклик)
+- α = 0.5: сбалансированный
+- α = 0.9: лёгкое сглаживание (быстрый отклик)
 
-**C. Trend Detection**
+**C. Обнаружение тренда**
 
 ```c
 double calculate_trend(double *data, size_t n) {
-    // Linear regression slope
-    // slope > 0: increasing trend
-    // slope < 0: decreasing trend
-    // slope ≈ 0: stable
+    // Наклон линейной регрессии
+    // slope > 0: возрастающий тренд
+    // slope < 0: убывающий тренд
+    // slope ≈ 0: стабильный
 }
 ```
 
 ---
 
-### 4. Correlation Analysis
+### 4. Корреляционный анализ
 
-**Pearson Correlation Coefficient:**
+**Коэффициент корреляции Пирсона:**
 
 ```c
 double pearson_correlation(double *x, double *y, size_t n) {
@@ -132,21 +132,21 @@ double pearson_correlation(double *x, double *y, size_t n) {
 }
 ```
 
-**Interpretation:**
-- r = +1.0: perfect positive correlation
-- r = +0.7 to +1.0: strong positive
-- r = +0.3 to +0.7: moderate positive
-- r = -0.3 to +0.3: weak/no correlation
-- r = -1.0: perfect negative correlation
+**Интерпретация:**
+- r = +1.0: идеальная положительная корреляция
+- r = +0.7 to +1.0: сильная положительная
+- r = +0.3 to +0.7: умеренная положительная
+- r = -0.3 to +0.3: слабая/нет корреляции
+- r = -1.0: идеальная отрицательная корреляция
 
-**Expected Correlations:**
-- bytes ↔ response_time: r = 0.89 (strong positive)
-- bytes ↔ packets: r = 0.92 (very strong positive)
-- packets ↔ response_time: r = 0.85 (strong positive)
+**Ожидаемые корреляции:**
+- bytes ↔ response_time: r = 0.89 (сильная положительная)
+- bytes ↔ packets: r = 0.92 (очень сильная положительная)
+- packets ↔ response_time: r = 0.85 (сильная положительная)
 
 ---
 
-### 5. Hypothesis Testing
+### 5. Проверка гипотез
 
 **Two-Sample T-Test:**
 
@@ -158,204 +158,253 @@ double calculate_t_statistic(double *sample1, size_t n1,
     double var1 = calculate_variance(sample1, n1);
     double var2 = calculate_variance(sample2, n2);
     
-    // Standard error
+    // Стандартная ошибка
     double se = sqrt(var1/n1 + var2/n2);
     
     return (mean1 - mean2) / se;
 }
 ```
 
-**Hypothesis:**
-- H₀ (null): Attack periods have same mean as normal periods
-- H₁ (alternative): Attack periods have significantly different mean
+**Гипотеза:**
+- H₀ (нулевая): Периоды атак имеют такое же среднее как нормальные периоды
+- H₁ (альтернативная): Периоды атак имеют значительно отличающееся среднее
 
-**Decision Rule:**
-- If |t| > critical value (≈2.0 for α=0.05): reject H₀
-- Expected: t = 5.47, p < 0.001 → REJECT H₀
+**Правило решения:**
+- Если |t| > критическое значение (≈2.0 для α=0.05): отклонить H₀
+- Ожидается: t = 5.47, p < 0.001 → ОТКЛОНИТЬ H₀
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Test 1: Descriptive Statistics
+### Тест 1: Описательная статистика
 ```bash
 cd solution
 make
 ./statistical_analysis --stats ../artifacts/network_bytes.csv
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-📊 Dataset - Descriptive Statistics:
-  Count: 60
-  Mean: 3687.42
+📊 Dataset - Описательная статистика:
+  Количество: 60
+  Среднее: 3687.42
   StdDev: 1524.73
   Q1 (25%): 2987.00
-  Median (50%): 3198.00
+  Медиана (50%): 3198.00
   Q3 (75%): 3421.00
   IQR: 434.00
 ```
 
-### Test 2: Anomaly Detection
+### Тест 2: Обнаружение аномалий
 ```bash
 ./statistical_analysis --anomaly ../artifacts/network_bytes.csv
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-🔍 Anomaly Detection Report (Z-score method):
-  Total data points: 60
-  Anomalies detected: 12
-  Anomaly rate: 20.00%
-  ⚠️  WARNING: High anomaly rate detected!
+🔍 Отчёт об аномалиях (метод Z-score):
+  Всего точек данных: 60
+  Обнаружено аномалий: 12
+  Процент аномалий: 20.00%
+  ⚠️  ПРЕДУПРЕЖДЕНИЕ: Обнаружен высокий процент аномалий!
 ```
 
-### Test 3: Time Series Analysis
+### Тест 3: Анализ временных рядов
 ```bash
 ./statistical_analysis --timeseries ../artifacts/response_times.csv
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-📈 Time Series Analysis:
-  Data points: 52
-  Trend (slope): 0.47
-  ⚠️  Increasing trend detected
+📈 Анализ временных рядов:
+  Точек данных: 52
+  Тренд (наклон): 0.47
+  ⚠️  Обнаружен возрастающий тренд
 ```
 
-### Test 4: Full Pipeline
+### Тест 4: Полный pipeline
 ```bash
 ./statistical_analysis --all
 ```
 
-**Should process all 3 CSV files and output comprehensive analysis.**
+**Должен обработать все 3 CSV файла и вывести комплексный анализ.**
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Files to Create:
+### Файлы для создания:
 
 1. **`solution/statistical_analysis.c`**  
-   Complete implementation (~480-500 lines)
-   - Descriptive statistics
-   - Anomaly detection (Z-score + IQR)
-   - Time series (MA, exponential smoothing, trend)
-   - Correlation analysis
-   - Hypothesis testing
+   Полная реализация (~480-500 строк)
+   - Описательная статистика
+   - Обнаружение аномалий (Z-score + IQR)
+   - Временные ряды (MA, exponential smoothing, trend)
+   - Корреляционный анализ
+   - Проверка гипотез
 
 2. **`solution/Makefile`**  
-   Cross-platform build (Linux/macOS/FreeBSD)
+   Кроссплатформенная сборка (Linux/macOS/FreeBSD)
 
 3. **`starter.c`**  
-   Skeleton code with TODOs (~170 lines)
+   Скелет кода с TODO (~170 строк)
 
-### Files Provided (in `artifacts/`):
+### Предоставленные файлы (в `artifacts/`):
 
-1. **`network_bytes.csv`** (61 lines)  
-   - 60 samples of bytes transferred per second
-   - Contains 2 attack bursts (indices 30-34, 42-46)
+1. **`network_bytes.csv`** (61 строка)  
+   - 60 сэмплов переданных байт в секунду
+   - Содержит 2 attack burst (indices 30-34, 42-46)
 
-2. **`response_times.csv`** (53 lines)  
-   - 52 samples of response times in milliseconds
-   - 8 SLA violations (>80ms threshold)
+2. **`response_times.csv`** (53 строки)  
+   - 52 сэмпла времён отклика в миллисекундах
+   - 8 нарушений SLA (>80ms порог)
 
-3. **`packet_counts.csv`** (61 lines)  
-   - 60 samples of packets per second
-   - Correlates with bytes_transferred
+3. **`packet_counts.csv`** (61 строка)  
+   - 60 сэмплов пакетов в секунду
+   - Коррелирует с bytes_transferred
 
-4. **`statistical_report.json`** (165 lines)  
-   - Comprehensive analysis results
-   - Attack pattern identification
-   - Correlation matrix
-   - Hypothesis testing results
-   - Viktor's approval note
+4. **`statistical_report.json`** (165 строк)  
+   - Комплексные результаты анализа
+   - Идентификация паттерна атак
+   - Корреляционная матрица
+   - Результаты проверки гипотез
+   - Заметка одобрения Viktor
 
 ---
 
-## 🎯 Success Criteria
+## 🎯 Критерии успеха
 
-✅ **Statistical Accuracy:**  
-- Mean/stddev match expected values (±0.1 tolerance)
-- Percentiles correctly calculated (Q1, median, Q3)
+✅ **Статистическая точность:**  
+- Mean/stddev совпадают с ожидаемыми значениями (±0.1 допуск)
+- Персентили корректно рассчитаны (Q1, median, Q3)
 - IQR = Q3 - Q1
 
-✅ **Anomaly Detection:**  
-- Z-score method: 12 anomalies detected (20%)
-- IQR method: 10 anomalies detected (16.67%)
-- Both methods identify same attack indices
+✅ **Обнаружение аномалий:**  
+- Метод Z-score: 12 аномалий обнаружено (20%)
+- Метод IQR: 10 аномалий обнаружено (16.67%)
+- Оба метода идентифицируют одинаковые индексы атак
 
-✅ **Correlation Analysis:**  
+✅ **Корреляционный анализ:**  
 - bytes ↔ response_time: r > 0.85
 - bytes ↔ packets: r > 0.90
-- All correlations positive (attack causes delays)
+- Все корреляции положительные (атака вызывает задержки)
 
-✅ **Hypothesis Testing:**  
+✅ **Проверка гипотез:**  
 - T-statistic > 3.0
-- P-value < 0.05 (statistically significant)
-- Conclusion: Attacks are NOT random
+- P-value < 0.05 (статистически значимо)
+- Вывод: Атаки НЕ случайны
 
-✅ **Code Quality:**  
-- Cross-platform (Linux/macOS/FreeBSD)
-- No memory leaks (valgrind clean)
-- Efficient algorithms (O(n log n) max)
-
----
-
-## 💡 Hints
-
-1. **Percentile Calculation:**  
-   - Must sort data first (use qsort)
-   - Interpolate between adjacent values
-   - Handle edge cases (n=0, n=1)
-
-2. **Numerical Stability:**  
-   - For variance, use two-pass algorithm
-   - Avoid catastrophic cancellation
-   - Check for division by zero
-
-3. **Time Series:**  
-   - Moving average: handle boundaries carefully
-   - Exponential smoothing: initialize with first value
-   - Trend: use simple linear regression
-
-4. **Correlation:**  
-   - Pearson requires paired data (same length)
-   - Handle case where stddev = 0
-   - Result should be in [-1, 1]
-
-5. **Hypothesis Testing:**  
-   - Separate normal vs attack periods manually
-   - Use unpaired t-test (Welch's variant)
-   - Larger |t| = stronger evidence
+✅ **Качество кода:**  
+- Кроссплатформенность (Linux/macOS/FreeBSD)
+- Нет утечек памяти (valgrind clean)
+- Эффективные алгоритмы (макс O(n log n))
 
 ---
 
-## 📊 Prof. Chen's Approval
+## 💡 Подсказки
 
-**Upon completion, Prof. Chen says:**
+1. **Расчёт персентиля:**  
+   - Сначала нужно отсортировать данные (использовать qsort)
+   - Интерполировать между соседними значениями
+   - Обработать граничные случаи (n=0, n=1)
+
+2. **Численная стабильность:**  
+   - Для variance использовать двупроходный алгоритм
+   - Избегать катастрофического сокращения
+   - Проверять деление на ноль
+
+3. **Временные ряды:**  
+   - Moving average: аккуратно обрабатывать границы
+   - Exponential smoothing: инициализировать первым значением
+   - Trend: использовать простую линейную регрессию
+
+4. **Корреляция:**  
+   - Pearson требует парных данных (одинаковой длины)
+   - Обработать случай когда stddev = 0
+   - Результат должен быть в [-1, 1]
+
+5. **Проверка гипотез:**  
+   - Разделить нормальные vs периоды атак вручную
+   - Использовать unpaired t-test (вариант Welch)
+   - Больший |t| = более сильное доказательство
+
+---
+
+## 📊 Одобрение Prof. Chen
+
+**По завершении Prof. Chen говорит:**
 ```
-"Excellent work, Agent! 👏
+"Отличная работа, Agent! 👏
 
-Your statistical analysis confirms:
-- 2 attack bursts (indices 30-34, 42-46)
-- Strong correlation (r > 0.85)
-- T-test: attacks are statistically significant (p < 0.001)
+Ваш статистический анализ подтверждает:
+- 2 attack burst (indices 30-34, 42-46)
+- Сильная корреляция (r > 0.85)
+- T-test: атаки статистически значимы (p < 0.001)
 
-This proves attacks are NOT random. They're coordinated.
+Это доказывает, что атаки НЕ случайны. Они координированы.
 
-Tomorrow (Episode 31), we train neural network on this data.
-Goal: predict attacks BEFORE they happen.
+Завтра (Episode 31) мы обучим нейросеть на этих данных.
+Цель: предсказать атаки ДО того как они произойдут.
 
-Bring your laptop. We'll code neural network from scratch in C.
-No frameworks. Pure backpropagation and gradient descent.
+Принесите laptop. Мы закодируем нейросеть с нуля на C.
+Никаких фреймворков. Чистая backpropagation и gradient descent.
 
-See you at 09:00 AM. Gates Building, Lab 342.
+Увидимся в 09:00 AM. Gates Building, Lab 342.
 
 - Prof. Chen"
 ```
 
 ---
 
-**Good luck, Agent!** 🚀  
-**Remember:** Anomaly is the key to the solution.
+**Удачи, Agent!** 🚀  
+**Помните:** Аномалия — это ключ к разгадке.
+
+---
+
+**БРИФИНГ МИССИИ:**
+
+**Локация:** Stanford University AI Lab, Gates Building, Lab 342  
+**Время:** December 28, 2024 — 08:00 PST (день 2)  
+**Контакт:** Prof. David Chen (Stanford AI Lab)
+
+**Контекст:**
+После Episode 29 (247.8 MB обработано, 347 угроз найдено), Prof. Chen подготовил refined dataset для статистического анализа:
+- network_bytes.csv (60 сэмплов)
+- response_times.csv (52 сэмпла)
+- packet_counts.csv (60 сэмплов)
+
+**Предварительный анализ показывает:**
+- 2 attack bursts:
+  * 30-34 index: moderate burst (47% увеличение)
+  * 42-46 index: severe flood (115% увеличение)
+
+**Задачи:**
+1. Descriptive statistics (mean, stddev, percentiles)
+2. Anomaly detection (Z-score + IQR методы)
+3. Time series analysis (moving average, trend)
+4. Correlation analysis (3 переменные)
+5. Hypothesis testing (атаки статистически значимы?)
+
+**Методы:**
+- Z-score: |z| > 3.0 → anomaly
+- IQR: вне [Q1-1.5*IQR, Q3+1.5*IQR] → outlier
+- Pearson correlation: измерить линейные связи
+- T-test: сравнить периоды атак vs нормальные
+
+**Ожидаемые результаты:**
+- Корреляции: bytes↔response_time (r=0.89), bytes↔packets (r=0.92)
+- T-test: t=5.47, p<0.001 (HIGHLY SIGNIFICANT)
+- Аномалии: 12 (Z-score), 10 (IQR)
+
+**Встреча:** 10:30 AM, Office 342, Gates Building — представить результаты
+
+**Артефакты созданы:**
+- network_bytes.csv, response_times.csv, packet_counts.csv
+- statistical_report.json (165 строк)
+
+**Успешный результат:** Доказана статистическая значимость атак, данные готовы для Episode 31 (neural network training).
+
+---
+
+**Следующий эпизод:** [Episode 31: Neural Networks →](../episode-31-neural-network/)

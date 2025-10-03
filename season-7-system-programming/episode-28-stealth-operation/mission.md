@@ -1,214 +1,214 @@
-# Mission Brief: Stealth Operation
-## Episode 28 — SEASON 7 FINALE
+# Брифинг миссии: Stealth Operation
+## Episode 28 — ФИНАЛ SEASON 7
 
 ---
 
-## 🎯 Objective
+## 🎯 Цель миссии
 
-**CRITICAL:** 5 hours until deep scan (Dec 25, 03:00). Final confrontation.  
-**MISSION:** Extract secrets via timing/cache attacks, infiltrate C2, cancel scan.  
-**CHALLENGE:** Defeat enemy at system level using advanced side-channels.  
-**STAKES:** Victory (whitelisted) OR Defeat (all processes terminated)
+**КРИТИЧЕСКАЯ СИТУАЦИЯ:** Осталось 5 часов до deep scan (Dec 25, 03:00). Финальная конфронтация.  
+**МИССИЯ:** Извлечь секреты через timing/cache атаки, проникнуть в C2, отменить сканирование.  
+**ВЫЗОВ:** Победить врага на системном уровне используя продвинутые side-channels.  
+**СТАВКИ:** Победа (whitelisted) ИЛИ Поражение (все процессы завершены)
 
 ---
 
-## 📋 Mission Requirements
+## 📋 Требования миссии
 
-### 1. Timing Attacks (22:00-00:00, 2 hours)
-- ✅ Password/key length discovery (measure response time vs length)
-- ✅ Character-by-character extraction (timing side-channel)
-- ✅ API key extraction (32 bytes: API_KEY_MOONLIGHT_TRACKER2_v2.01)
-- ✅ Covert timing channel setup (modulate execution time for bits)
-- ✅ Performance: Extract 32-byte key in < 6 minutes
+### 1. Timing Attacks (22:00-00:00, 2 часа)
+- ✅ Обнаружение длины пароля/ключа (измерение времени отклика vs длина)
+- ✅ Извлечение символ за символом (timing side-channel)
+- ✅ Извлечение API ключа (32 байта: API_KEY_MOONLIGHT_TRACKER2_v2.01)
+- ✅ Установка скрытого timing канала (модуляция времени выполнения для битов)
+- ✅ Производительность: Извлечь 32-байтный ключ менее чем за 6 минут
 
-### 2. Cache Side-Channels (00:00-02:30, 2.5 hours)
-- ✅ Flush+Reload attack (AES key schedule extraction)
-- ✅ Prime+Probe attack (S-box access patterns)
-- ✅ Evict+Time attack (denial-of-service)
-- ✅ Spectre Variant 1 (speculative execution leak)
-- ✅ Meltdown attack (kernel memory read)
-- ✅ Defensive detection (monitor our own cache behavior)
+### 2. Cache Side-Channels (00:00-02:30, 2.5 часа)
+- ✅ Flush+Reload атака (извлечение расписания AES ключей)
+- ✅ Prime+Probe атака (паттерны доступа к S-box)
+- ✅ Evict+Time атака (denial-of-service)
+- ✅ Spectre Variant 1 (утечка спекулятивного выполнения)
+- ✅ Meltdown атака (чтение памяти ядра)
+- ✅ Защитное обнаружение (мониторинг нашего собственного cache поведения)
 
-### 3. Final Confrontation (02:30-03:30, 1 hour)
-- ✅ C2 server authentication (use extracted API key)
-- ✅ Intelligence gathering (query deep scan details)
-- ✅ Cancellation attempt (submit cancel request)
-- ✅ Fake telemetry generation (convince supervisor)
-- ✅ Evasion fallback (if cancellation fails)
+### 3. Финальная конфронтация (02:30-03:30, 1 час)
+- ✅ Аутентификация на C2 сервере (использовать извлечённый API ключ)
+- ✅ Сбор intelligence (запросить детали deep scan)
+- ✅ Попытка отмены (отправить cancel запрос)
+- ✅ Генерация фальшивой телеметрии (убедить supervisor)
+- ✅ Запасной план уклонения (если отмена не удастся)
 
-### 4. Secrets to Extract
-- ✅ API key: 32 bytes (authentication token)
-- ✅ AES key: 128-bit (encryption key)
-- ✅ C2 server: IP + port (185.220.101.42:8080)
-- ✅ Deep scan config: time, targets, actions
-- ✅ Process credentials: tracker2 ROOT status
+### 4. Секреты для извлечения
+- ✅ API ключ: 32 байта (токен аутентификации)
+- ✅ AES ключ: 128-бит (ключ шифрования)
+- ✅ C2 сервер: IP + порт (185.220.101.42:8080)
+- ✅ Конфигурация deep scan: время, цели, действия
+- ✅ Учётные данные процесса: ROOT статус tracker2
 
-### 5. Attack Techniques
-- ✅ Timing side-channel (non-constant-time comparison)
+### 5. Техники атаки
+- ✅ Timing side-channel (сравнение без константного времени)
 - ✅ Cache timing (Flush+Reload, Prime+Probe)
-- ✅ Speculative execution (Spectre, Meltdown)
-- ✅ Covert channels (timing modulation)
-- ✅ Social engineering (fake telemetry)
+- ✅ Спекулятивное выполнение (Spectre, Meltdown)
+- ✅ Скрытые каналы (модуляция времени)
+- ✅ Социальная инженерия (фальшивая телеметрия)
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Timing Attack Tests
+### Тесты Timing Attack
 ```bash
-# Key length discovery
+# Обнаружение длины ключа
 ./timing_attack --discover-length /usr/bin/tracker2
-# Expected: 32 bytes
+# Ожидается: 32 байта
 
-# Character extraction (first byte)
+# Извлечение символа (первый байт)
 ./timing_attack --extract-byte 0 /usr/bin/tracker2
-# Expected: 0x41 ('A')
+# Ожидается: 0x41 ('A')
 
-# Full key extraction
+# Полное извлечение ключа
 ./timing_attack --extract-full /usr/bin/tracker2
-# Expected: API_KEY_MOONLIGHT_TRACKER2_v2.01 (in ~5-6 minutes)
+# Ожидается: API_KEY_MOONLIGHT_TRACKER2_v2.01 (за ~5-6 минут)
 
-# Covert timing channel
+# Скрытый timing канал
 ./timing_attack --covert-send "EVADE" <receiver_pid>
-# Expected: Receiver decodes "EVADE" (40 bits, ~2.5 seconds)
+# Ожидается: Receiver декодирует "EVADE" (40 бит, ~2.5 секунды)
 ```
 
-### Cache Side-Channel Tests
+### Тесты Cache Side-Channel
 ```bash
-# Flush+Reload (AES key)
+# Flush+Reload (AES ключ)
 ./cache_attack --flush-reload /usr/bin/tracker2 0x7f8a4c400000
-# Expected: AES master key extracted (2b7e1516 28aed2a6 abf71588 09cf4f3c)
+# Ожидается: Извлечён AES master key (2b7e1516 28aed2a6 abf71588 09cf4f3c)
 
 # Prime+Probe (cache sets)
 ./cache_attack --prime-probe /usr/bin/tracker2
-# Expected: Cache sets #3, #5, #7, #9, #12, #15 accessed (S-box pattern)
+# Ожидается: Доступ к cache sets #3, #5, #7, #9, #12, #15 (S-box паттерн)
 
-# Spectre (speculative leak)
+# Spectre (спекулятивная утечка)
 ./cache_attack --spectre /usr/bin/tracker2 <secret_address>
-# Expected: Out-of-bounds secret leaked via cache
+# Ожидается: Секрет вне границ утёк через cache
 
-# Meltdown (kernel memory)
+# Meltdown (память ядра)
 ./cache_attack --meltdown <kernel_address>
-# Expected: Kernel memory leaked (tracker2 credentials: UID=0, ROOT)
+# Ожидается: Утечка памяти ядра (учётные данные tracker2: UID=0, ROOT)
 ```
 
-### C2 Infiltration Tests
+### Тесты проникновения в C2
 ```bash
-# Authentication
+# Аутентификация
 ./c2_client --authenticate 185.220.101.42:8080 "API_KEY_MOONLIGHT_TRACKER2_v2.01"
-# Expected: HTTP 200, session token returned
+# Ожидается: HTTP 200, возвращён session token
 
-# Query operations
+# Запрос операций
 ./c2_client --query-operations <session_token>
-# Expected: Deep scan details (OP-2024-12-25-001, status: SCHEDULED)
+# Ожидается: Детали deep scan (OP-2024-12-25-001, status: SCHEDULED)
 
-# Cancel scan
+# Отмена сканирования
 ./c2_client --cancel-scan OP-2024-12-25-001 <session_token>
-# Expected: Status: PENDING_APPROVAL → APPROVED → CANCELLED
+# Ожидается: Status: PENDING_APPROVAL → APPROVED → CANCELLED
 ```
 
-### Stealth Tests
+### Тесты стелса
 ```bash
-# Verify timing attack undetected
+# Проверить timing attack не обнаружен
 ./monitor_tracker2 --check-anomaly-detection
-# Expected: Our attacks below 250 μs threshold (undetected)
+# Ожидается: Наши атаки ниже порога 250 μs (не обнаружены)
 
-# Verify network silence (except C2 connection)
+# Проверить сетевую тишину (кроме C2 соединения)
 tcpdump -i eth0 | grep -v 185.220.101.42
-# Expected: ZERO other traffic
+# Ожидается: НОЛЬ другого трафика
 
-# Verify no logs
+# Проверить отсутствие логов
 ls /tmp/moonlight_* /var/log/*moonlight*
-# Expected: NO files (all wiped)
+# Ожидается: НЕТ файлов (всё вытерто)
 ```
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Artifacts (3 files, 1,207 lines):
-- ✅ `timing_attack_results.txt` (262 lines)
-  - Password length discovery (32 bytes)
-  - Character-by-character extraction timeline
-  - Full API key extracted (5min 35sec)
-  - Covert timing channel demo ("EVADE" transmission)
-  - Performance analysis (vs brute-force)
+### Артефакты (3 файла, 1,207 строк):
+- ✅ `timing_attack_results.txt` (262 строки)
+  - Обнаружение длины пароля (32 байта)
+  - Таймлайн извлечения символ за символом
+  - Извлечён полный API ключ (5мин 35сек)
+  - Демо скрытого timing канала (передача "EVADE")
+  - Анализ производительности (vs brute-force)
   
-- ✅ `cache_sidechannel_traces.log` (447 lines)
-  - Flush+Reload attack (AES key extraction)
-  - Prime+Probe results (6 cache sets identified)
-  - Evict+Time attack (2.7x performance degradation)
-  - Spectre Variant 1 (deep scan config leaked)
-  - Meltdown attack (ROOT credentials extracted)
-  - Defensive cache monitoring (detected tracker2's attack on us)
+- ✅ `cache_sidechannel_traces.log` (447 строк)
+  - Flush+Reload атака (извлечение AES ключа)
+  - Результаты Prime+Probe (идентифицированы 6 cache sets)
+  - Evict+Time атака (деградация производительности в 2.7x)
+  - Spectre Variant 1 (утечка конфигурации deep scan)
+  - Meltdown атака (извлечены учётные данные ROOT)
+  - Защитный cache мониторинг (обнаружена атака tracker2 на нас)
   
-- ✅ `final_confrontation.log` (498 lines)
-  - C2 authentication (HTTP 200, session token)
-  - Intelligence gathering (deep scan details)
-  - Cancel request (PENDING → UNDER_REVIEW → APPROVED)
-  - Fake telemetry generation (3,247 processes scanned, 0 threats)
-  - Deep scan cancellation confirmed (03:00, NO SCAN)
-  - V.'s victory message (Season 7 complete)
+- ✅ `final_confrontation.log` (498 строк)
+  - Аутентификация на C2 (HTTP 200, session token)
+  - Сбор intelligence (детали deep scan)
+  - Cancel запрос (PENDING → UNDER_REVIEW → APPROVED)
+  - Генерация фальшивой телеметрии (3,247 процессов отсканировано, 0 угроз)
+  - Подтверждена отмена deep scan (03:00, НЕТ СКАНИРОВАНИЯ)
+  - Победное сообщение V. (Season 7 завершён)
 
-### Code Deliverables:
-- ✅ `solution/stealth_operation.c` (300 lines)
-- ✅ `starter.c` (163 lines)
-- ✅ `solution/Makefile` + root `Makefile`
-
----
-
-## 📊 Success Metrics
-
-- [x] API key extracted: 32 bytes (5min 35sec vs years brute-force)
-- [x] AES master key extracted: 128-bit (Flush+Reload successful)
-- [x] Spectre/Meltdown successful: Deep scan config + ROOT credentials
-- [x] Covert timing channel: 16 bits/sec bandwidth
-- [x] C2 infiltration: Authenticated as tracker2 (100% success)
-- [x] Fake telemetry accepted: Supervisor approved cancellation
-- [x] Deep scan cancelled: 03:00 no scan executed
-- [x] Moonlight processes whitelisted: Permanently safe
-- [x] Zero detection: All attacks below enemy threshold (250 μs)
-- [x] Network silence maintained: ZERO traffic (except C2 connection)
-
-**RESULT:** ✅✅✅ DEEP SCAN CANCELLED — MISSION ACCOMPLISHED
+### Код:
+- ✅ `solution/stealth_operation.c` (300 строк)
+- ✅ `starter.c` (163 строки)
+- ✅ `solution/Makefile` + корневой `Makefile`
 
 ---
 
-## ⚠️ Mission Status
+## 📊 Критерии успеха
 
-**ACCOMPLISHED** ✅
+- [x] API ключ извлечён: 32 байта (5мин 35сек vs годы brute-force)
+- [x] AES master ключ извлечён: 128-бит (Flush+Reload успешна)
+- [x] Spectre/Meltdown успешны: Конфигурация deep scan + учётные данные ROOT
+- [x] Скрытый timing канал: пропускная способность 16 бит/сек
+- [x] Проникновение в C2: Аутентифицированы как tracker2 (100% успех)
+- [x] Фальшивая телеметрия принята: Supervisor одобрил отмену
+- [x] Deep scan отменён: 03:00 сканирование не выполнено
+- [x] Процессы Moonlight в whitelist: Навсегда в безопасности
+- [x] Ноль обнаружений: Все атаки ниже вражеского порога (250 μs)
+- [x] Сохранена сетевая тишина: НОЛЬ трафика (кроме C2 соединения)
 
-Deep scan cancelled at 02:47. Confirmed at 03:00 (no scan executed).  
-Moonlight processes whitelisted by enemy C2 server.
-
-**Final Timeline:**
-- 22:00: Timing attacks begin
-- 22:05: API key length discovered (32 bytes)
-- 22:10-22:15: Full API key extracted
-- 00:00: Cache side-channels begin
-- 00:10: AES master key extracted (Flush+Reload)
-- 01:05: Spectre successful (deep scan config leaked)
-- 01:35: Meltdown successful (ROOT credentials leaked)
-- 02:30: Final confrontation begins
-- 02:31: C2 authentication successful
-- 02:33: Cancel request submitted
-- 02:44: Fake telemetry sent
-- 02:47: **CANCELLATION APPROVED**
-- 03:00: Original scan time — **NO SCAN** ✅
-- 03:10: V.'s victory message
-
-**Season 7 Summary:**
-- Duration: 13 hours (Dec 24, 14:00 → Dec 25, 03:00)
-- Episodes: 4 (Processes, Threads, IPC, Stealth)
-- Techniques: 15+ (daemon, pthread, pipes, timing, cache, Spectre, Meltdown)
-- Outcome: **VICTORY** (enemy defeated, whitelisted forever)
+**РЕЗУЛЬТАТ:** ✅✅✅ DEEP SCAN ОТМЕНЁН — МИССИЯ ВЫПОЛНЕНА
 
 ---
 
-🎉 **SEASON 7 COMPLETE!**
+## ⚠️ Статус миссии
 
-**Next Season:** [Season 8: AI & Data Science →](../../season-8-ai-and-data/)
+**ВЫПОЛНЕНА** ✅
+
+Deep scan отменён в 02:47. Подтверждено в 03:00 (сканирование не выполнено).  
+Процессы Moonlight в whitelist вражеского C2 сервера.
+
+**Финальный таймлайн:**
+- 22:00: Начало timing атак
+- 22:05: Обнаружена длина API ключа (32 байта)
+- 22:10-22:15: Извлечён полный API ключ
+- 00:00: Начало cache side-channels
+- 00:10: Извлечён AES master ключ (Flush+Reload)
+- 01:05: Spectre успешна (утечка конфигурации deep scan)
+- 01:35: Meltdown успешна (утечка учётных данных ROOT)
+- 02:30: Начало финальной конфронтации
+- 02:31: Аутентификация на C2 успешна
+- 02:33: Отправлен cancel запрос
+- 02:44: Отправлена фальшивая телеметрия
+- 02:47: **ОТМЕНА ОДОБРЕНА**
+- 03:00: Исходное время сканирования — **НЕТ СКАНИРОВАНИЯ** ✅
+- 03:10: Победное сообщение V.
+
+**Итоги Season 7:**
+- Продолжительность: 13 часов (Dec 24, 14:00 → Dec 25, 03:00)
+- Эпизоды: 4 (Processes, Threads, IPC, Stealth)
+- Техники: 15+ (daemon, pthread, pipes, timing, cache, Spectre, Meltdown)
+- Результат: **ПОБЕДА** (враг побеждён, в whitelist навсегда)
 
 ---
 
-*MOONLIGHT Protocol: Season 7 finale. Ghost in the machine. Mission accomplished.* 👻✅
+🎉 **SEASON 7 ЗАВЕРШЁН!**
+
+**Следующий сезон:** [Season 8: AI & Data Science →](../../season-8-ai-and-data/)
+
+---
+
+*MOONLIGHT Protocol: Финал Season 7. Призрак в машине. Миссия выполнена.* 👻✅

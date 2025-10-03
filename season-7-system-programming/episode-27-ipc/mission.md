@@ -1,207 +1,207 @@
-# Mission Brief: Inter-Process Communication
-## Episode 27 — Network Silence Mode
+# Брифинг миссии: Inter-Process Communication
+## Episode 27 — Режим сетевой тишины
 
 ---
 
-## 🎯 Objective
+## 🎯 Цель миссии
 
-**CRITICAL:** Shutdown all network activity after Episode 26 discovery.  
-**MISSION:** Establish covert IPC channels for process communication WITHOUT network.  
-**CHALLENGE:** Zero network packets (enemy monitoring must see NOTHING).  
-**DEADLINE:** 8.5 hours until deep scan (Dec 25, 03:00)
+**КРИТИЧЕСКАЯ СИТУАЦИЯ:** Выключить всю сетевую активность после обнаружения в Episode 26.  
+**МИССИЯ:** Установить скрытые IPC каналы для коммуникации процессов БЕЗ сети.  
+**ВЫЗОВ:** Ноль сетевых пакетов (вражеский мониторинг не должен НИЧЕГО видеть).  
+**ДЕДЛАЙН:** 8.5 часов до deep scan (Dec 25, 03:00)
 
 ---
 
-## 📋 Mission Requirements
+## 📋 Требования миссии
 
 ### 1. Anonymous Pipes
-- ✅ Create pipe pairs (parent-child communication)
-- ✅ Bidirectional pipes (2 pipes for request-response)
-- ✅ File descriptor management (close unused ends)
-- ✅ Handle pipe capacity (65KB Linux default)
-- ✅ Blocking behavior (PIPE_BUF atomicity)
+- ✅ Создать пары pipes (коммуникация родитель-потомок)
+- ✅ Двунаправленные pipes (2 pipes для request-response)
+- ✅ Управление файловыми дескрипторами (закрыть неиспользуемые концы)
+- ✅ Обработать вместимость pipe (65KB Linux default)
+- ✅ Блокирующее поведение (атомарность PIPE_BUF)
 
 ### 2. Named Pipes (FIFOs)
-- ✅ Create FIFOs in filesystem (mkfifo)
-- ✅ Multi-process communication (any process can access)
-- ✅ Stealth FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/ + random names)
-- ✅ Auto-deletion after use (no traces)
-- ✅ Permissions (0600, owner-only)
+- ✅ Создать FIFOs в файловой системе (mkfifo)
+- ✅ Мультипроцессная коммуникация (любой процесс может получить доступ)
+- ✅ Стелс FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/ + случайные имена)
+- ✅ Авто-удаление после использования (без следов)
+- ✅ Разрешения (0600, только владелец)
 
 ### 3. Shared Memory
 - ✅ POSIX shared memory (shm_open, mmap)
-- ✅ Large datasets (50 MB real-time activity log)
+- ✅ Большие датасеты (50 MB лог активности в реальном времени)
 - ✅ Process-shared mutex (PTHREAD_PROCESS_SHARED)
-- ✅ Race condition prevention (mutex synchronization)
-- ✅ Memory-mapped I/O (direct access, no copying)
+- ✅ Предотвращение race condition (синхронизация mutex)
+- ✅ Memory-mapped I/O (прямой доступ, без копирования)
 
 ### 4. Message Queues
 - ✅ POSIX message queues (mq_open, mq_send, mq_receive)
-- ✅ Structured messages (IntelligenceMessage struct)
-- ✅ Priority-based delivery (critical messages first)
+- ✅ Структурированные сообщения (struct IntelligenceMessage)
+- ✅ Доставка на основе приоритета (критические сообщения первыми)
 - ✅ Non-blocking I/O (O_NONBLOCK, mq_timedreceive)
-- ✅ Asynchronous notification (SIGEV_SIGNAL)
+- ✅ Асинхронное уведомление (SIGEV_SIGNAL)
 
 ### 5. Signals
-- ✅ Standard signals (SIGUSR1, SIGUSR2)
-- ✅ Realtime signals (SIGRTMIN-SIGRTMAX)
+- ✅ Стандартные сигналы (SIGUSR1, SIGUSR2)
+- ✅ Realtime сигналы (SIGRTMIN-SIGRTMAX)
 - ✅ Signal payload (sival_int, sival_ptr)
-- ✅ Covert encoding (bit sequences via signal types)
-- ✅ Signal queuing (realtime signals queued, standard not)
+- ✅ Скрытое кодирование (битовые последовательности через типы сигналов)
+- ✅ Очередь сигналов (realtime сигналы в очереди, стандартные нет)
 
-### 6. Performance Analysis
-- ✅ Throughput comparison (pipes vs shared memory vs network)
-- ✅ Latency measurement (sub-millisecond IPC)
-- ✅ Covert channel bandwidth (signals: ~20 bytes/sec)
-- ✅ Trade-offs (speed vs stealth vs complexity)
+### 6. Анализ производительности
+- ✅ Сравнение пропускной способности (pipes vs shared memory vs network)
+- ✅ Измерение задержки (IPC с субмиллисекундной задержкой)
+- ✅ Пропускная способность скрытого канала (сигналы: ~20 байт/сек)
+- ✅ Компромиссы (скорость vs стелс vs сложность)
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Pipe Tests
+### Тесты Pipe
 ```bash
-# Anonymous pipe (parent-child)
+# Anonymous pipe (родитель-потомок)
 ./ipc_test --pipe-anonymous
 
 # Named pipe (FIFO)
 ./ipc_test --pipe-named /tmp/test_fifo
 
-# Bidirectional pipes
+# Двунаправленные pipes
 ./ipc_test --pipe-bidirectional
 
-# Pipe capacity test (blocking)
-./ipc_test --pipe-capacity 100000  # 100 KB write (should block at 65 KB)
+# Тест вместимости pipe (блокировка)
+./ipc_test --pipe-capacity 100000  # Запись 100 KB (должна блокироваться на 65 KB)
 ```
 
-### Shared Memory Tests
+### Тесты Shared Memory
 ```bash
-# Create shared memory
+# Создать shared memory
 ./ipc_test --shm-create /moonlight_test 1048576  # 1 MB
 
-# Attach multiple processes
-./ipc_test --shm-attach /moonlight_test &  # Process 1
-./ipc_test --shm-attach /moonlight_test &  # Process 2
+# Подключить несколько процессов
+./ipc_test --shm-attach /moonlight_test &  # Процесс 1
+./ipc_test --shm-attach /moonlight_test &  # Процесс 2
 
-# Race condition test (without mutex - should corrupt)
+# Тест race condition (без mutex - должно повредить)
 ./ipc_test --shm-race-unsafe
 
-# Mutex synchronization (with mutex - should work)
+# Синхронизация mutex (с mutex - должно работать)
 ./ipc_test --shm-race-safe
 ```
 
-### Message Queue Tests
+### Тесты Message Queue
 ```bash
-# Create message queue
+# Создать message queue
 ./ipc_test --mq-create /test_queue
 
-# Priority test (send low prio, then high prio)
+# Тест приоритета (отправить низкий prio, затем высокий prio)
 ./ipc_test --mq-send /test_queue "Low priority" 1
 ./ipc_test --mq-send /test_queue "HIGH PRIORITY" 9
-./ipc_test --mq-receive /test_queue  # Should receive HIGH PRIORITY first
+./ipc_test --mq-receive /test_queue  # Должен получить HIGH PRIORITY первым
 
-# Non-blocking receive (empty queue)
-./ipc_test --mq-receive-nonblock /test_queue  # Should return EAGAIN immediately
+# Non-blocking receive (пустая очередь)
+./ipc_test --mq-receive-nonblock /test_queue  # Должен вернуть EAGAIN немедленно
 ```
 
-### Signal Tests
+### Тесты Signal
 ```bash
-# Basic signals
-./ipc_test --signal-basic <PID>  # Send SIGUSR1, SIGUSR2
+# Базовые сигналы
+./ipc_test --signal-basic <PID>  # Отправить SIGUSR1, SIGUSR2
 
-# Realtime signals with payload
-./ipc_test --signal-rtmin <PID> 4789  # Send SIGRTMIN with value 4789
+# Realtime сигналы с payload
+./ipc_test --signal-rtmin <PID> 4789  # Отправить SIGRTMIN со значением 4789
 
-# Signal encoding (send string via bit sequence)
-./ipc_test --signal-encode <PID> "ALERT"  # 40 signals (5 bytes × 8 bits)
+# Кодирование сигналов (отправить строку через битовую последовательность)
+./ipc_test --signal-encode <PID> "ALERT"  # 40 сигналов (5 байт × 8 бит)
 ```
 
-### Performance Tests
+### Тесты производительности
 ```bash
-# Pipe throughput
-time ./ipc_test --perf-pipe 52428800  # 50 MB transfer
-# Expected: ~19.5 MB/s
+# Пропускная способность pipe
+time ./ipc_test --perf-pipe 52428800  # Передача 50 MB
+# Ожидается: ~19.5 MB/s
 
-# Shared memory throughput
-time ./ipc_test --perf-shm 52428800  # 50 MB transfer
-# Expected: ~561.8 MB/s (28.8x faster)
+# Пропускная способность shared memory
+time ./ipc_test --perf-shm 52428800  # Передача 50 MB
+# Ожидается: ~561.8 MB/s (быстрее в 28.8x)
 
-# Signal bandwidth
-time ./ipc_test --perf-signal 1000  # 1000 bytes via signals
-# Expected: ~50 seconds (~20 bytes/sec)
+# Пропускная способность сигналов
+time ./ipc_test --perf-signal 1000  # 1000 байт через сигналы
+# Ожидается: ~50 секунд (~20 байт/сек)
 ```
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Artifacts (3 files, 1,090 lines):
-- ✅ `pipe_communication.log` (238 lines)
-  - Daemon shutdown sequence (network silence)
-  - Anonymous pipe creation & data transmission
-  - Named pipes (FIFOs) for multi-process
-  - Stealth FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/, random names, auto-delete)
-  - Bidirectional pipes (2-pipe setup)
-  - Signal-based IPC (bonus: low-bandwidth covert channel)
+### Артефакты (3 файла, 1,090 строк):
+- ✅ `pipe_communication.log` (238 строк)
+  - Последовательность выключения daemon (сетевая тишина)
+  - Создание anonymous pipe и передача данных
+  - Named pipes (FIFOs) для мультипроцессинга
+  - Стелс FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/, случайные имена, авто-удаление)
+  - Двунаправленные pipes (установка 2-pipe)
+  - IPC на основе сигналов (бонус: низкопропускной скрытый канал)
   
-- ✅ `shared_memory.log` (435 lines)
-  - POSIX shared memory creation (shm_open, ftruncate, mmap)
-  - Process attachment (3 processes sharing 50 MB)
-  - Data structure layout (ActivityLog with 10,000 entries)
-  - Real-time monitoring (47 events in 1 minute)
-  - Performance comparison (28.8x faster than pipes)
-  - Race condition demo & mutex synchronization
-  - Process-shared mutex configuration
+- ✅ `shared_memory.log` (435 строк)
+  - Создание POSIX shared memory (shm_open, ftruncate, mmap)
+  - Подключение процесса (3 процесса используют 50 MB)
+  - Структура данных (ActivityLog с 10,000 записями)
+  - Мониторинг в реальном времени (47 событий за 1 минуту)
+  - Сравнение производительности (быстрее в 28.8x чем pipes)
+  - Демо race condition и синхронизация mutex
+  - Конфигурация process-shared mutex
   
-- ✅ `signals_and_message_queues.log` (417 lines)
-  - Signals for covert communication (SIGUSR1/2, SIGRTMIN)
-  - Realtime signals with payload (int transmission)
-  - Signal-based covert encoding (multi-bit, "ALERT" example)
-  - Signal queue reliability (standard vs realtime)
+- ✅ `signals_and_message_queues.log` (417 строк)
+  - Сигналы для скрытой коммуникации (SIGUSR1/2, SIGRTMIN)
+  - Realtime сигналы с payload (int передача)
+  - Скрытое кодирование на основе сигналов (мультибит, пример "ALERT")
+  - Надёжность очереди сигналов (standard vs realtime)
   - POSIX message queues (mq_open, mq_send, mq_receive)
-  - Priority-based delivery (high-priority first)
-  - Non-blocking I/O & timeouts
-  - Asynchronous notification (SIGEV_SIGNAL)
+  - Доставка на основе приоритета (высокий приоритет первым)
+  - Non-blocking I/O и таймауты
+  - Асинхронное уведомление (SIGEV_SIGNAL)
 
-### Code Deliverables:
-- ✅ `solution/ipc.c` (280 lines)
-- ✅ `starter.c` (166 lines)
-- ✅ `solution/Makefile` + root `Makefile`
-
----
-
-## 📊 Success Metrics
-
-- [x] Network traffic: ZERO (daemon shut down, all sockets closed)
-- [x] 5 IPC mechanisms deployed (pipes, FIFOs, shared memory, message queues, signals)
-- [x] Covert channels established (signals = ultra-stealth, kernel-only)
-- [x] Real-time monitoring (50 MB shared memory, 47 events logged)
-- [x] Performance measured (shared memory 28.8x faster than pipes)
-- [x] New threat identified (tracker2, PID 4789)
-- [x] Intelligence gathered (47 events: 12 critical, 23 warnings, 12 info)
-- [x] Data exfiltration detected (2.3 MB to C2 server)
+### Код:
+- ✅ `solution/ipc.c` (280 строк)
+- ✅ `starter.c` (166 строк)
+- ✅ `solution/Makefile` + корневой `Makefile`
 
 ---
 
-## ⚠️ Mission Status
+## 📊 Критерии успеха
 
-**ACCOMPLISHED** ✅
-
-All network activity shut down. IPC channels operational.  
-Enemy network monitoring: sees NOTHING.
-
-**CRITICAL FINDING:**
-- New enemy process: tracker2 (PID 4789) - upgraded surveillance tool
-- Activity: /etc/passwd access, port scanning, ptrace attempts, data exfiltration
-- Deep scan countdown: 5.5 hours remaining (Dec 25, 03:00)
-
-**URGENT:** Proceed to Episode 28 immediately.  
-Stealth operation required. Timing attacks. Final confrontation.
+- [x] Сетевой трафик: НОЛЬ (daemon выключен, все сокеты закрыты)
+- [x] 5 IPC механизмов развёрнуты (pipes, FIFOs, shared memory, message queues, signals)
+- [x] Скрытые каналы установлены (сигналы = ультра-стелс, только kernel)
+- [x] Мониторинг в реальном времени (50 MB shared memory, 47 событий логировано)
+- [x] Производительность измерена (shared memory быстрее в 28.8x чем pipes)
+- [x] Новая угроза идентифицирована (tracker2, PID 4789)
+- [x] Intelligence собран (47 событий: 12 критических, 23 предупреждения, 12 инфо)
+- [x] Обнаружена эксфильтрация данных (2.3 MB на C2 сервер)
 
 ---
 
-**Next Mission:** [Episode 28: Stealth Operation →](../episode-28-stealth-operation/)
+## ⚠️ Статус миссии
+
+**ВЫПОЛНЕНА** ✅
+
+Вся сетевая активность выключена. IPC каналы работают.  
+Вражеский сетевой мониторинг: не видит НИЧЕГО.
+
+**КРИТИЧЕСКАЯ НАХОДКА:**
+- Новый вражеский процесс: tracker2 (PID 4789) - обновлённый инструмент наблюдения
+- Активность: доступ к /etc/passwd, сканирование портов, попытки ptrace, эксфильтрация данных
+- Обратный отсчёт до deep scan: осталось 5.5 часов (Dec 25, 03:00)
+
+**СРОЧНО:** Немедленно переходить к Episode 28.  
+Требуется стелс-операция. Timing attacks. Финальная конфронтация.
 
 ---
 
-*MOONLIGHT Protocol: Silent. Invisible. Untraceable. 📡*
+**Следующая миссия:** [Episode 28: Stealth Operation →](../episode-28-stealth-operation/)
+
+---
+
+*MOONLIGHT Protocol: Тихий. Невидимый. Неотслеживаемый.* 📡

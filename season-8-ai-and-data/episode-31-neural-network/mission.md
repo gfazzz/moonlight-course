@@ -1,81 +1,81 @@
-# Mission Brief: Neural Network from Scratch
+# Брифинг миссии: Нейросеть с нуля
 **Episode 31** | Operation MOONLIGHT — Season 8
 
 ---
 
-## 🎯 Mission Objective
+## 🎯 Цель миссии
 
-**PRIMARY GOAL:** Implement neural network in pure C for binary classification (attack vs normal traffic).
+**ОСНОВНАЯ ЦЕЛЬ:** Реализовать нейросеть на чистом C для бинарной классификации (атака vs нормальный трафик).
 
-**CONTEXT:**  
-Day 3 at Stanford AI Lab. Prof. Chen will teach you backpropagation algorithm. Your neural network must achieve >95% accuracy on training data to proceed to Episode 32 (real-time deployment).
+**КОНТЕКСТ:**  
+День 3 в Stanford AI Lab. Prof. Chen научит вас алгоритму backpropagation. Ваша нейросеть должна достичь >95% точности на тренировочных данных чтобы перейти к Episode 32 (развёртывание в реальном времени).
 
-**YOUR TASK:**  
-Code multi-layer perceptron from scratch using only standard C library (no ML frameworks).
+**ВАША ЗАДАЧА:**  
+Закодировать multi-layer perceptron с нуля используя только стандартную C библиотеку (без ML фреймворков).
 
-**DELIVERABLE:**  
-Trained neural network achieving 100% training accuracy, ready for production deployment (Episode 32).
+**РЕЗУЛЬТАТ:**  
+Обученная нейросеть с точностью 100% на тренировке, готовая к production развёртыванию (Episode 32).
 
 ---
 
-## 📋 Technical Requirements
+## 📋 Технические требования
 
-### 1. Network Architecture
+### 1. Архитектура сети
 
 **Multi-Layer Perceptron (MLP):**
 ```
-Input Layer:  3 neurons (features)
-Hidden Layer: 5 neurons (sigmoid activation)
-Output Layer: 1 neuron (sigmoid activation, binary classification)
+Input Layer:  3 нейрона (признаки)
+Hidden Layer: 5 нейронов (sigmoid activation)
+Output Layer: 1 нейрон (sigmoid activation, бинарная классификация)
 ```
 
-**Input Features:**
-1. `bytes_transferred` (normalized: bytes / 10000.0)
-2. `packets_per_second` (normalized: packets / 300.0)
-3. `response_time_ms` (normalized: time / 100.0)
+**Входные признаки:**
+1. `bytes_transferred` (нормализовано: bytes / 10000.0)
+2. `packets_per_second` (нормализовано: packets / 300.0)
+3. `response_time_ms` (нормализовано: time / 100.0)
 
-**Output:**
-- Value ∈ [0, 1]
-- threshold = 0.5
-- prediction > 0.5 → attack (class 1)
-- prediction ≤ 0.5 → normal (class 0)
+**Вывод:**
+- Значение ∈ [0, 1]
+- порог = 0.5
+- prediction > 0.5 → атака (класс 1)
+- prediction ≤ 0.5 → нормально (класс 0)
 
 ---
 
-### 2. Data Structures
+### 2. Структуры данных
 
 ```c
 typedef struct {
-    // Architecture
+    // Архитектура
     int input_size;    // 3
     int hidden_size;   // 5
     int output_size;   // 1
     
-    // Weights
+    // Веса
     double **weights_input_hidden;   // [3][5]
     double **weights_hidden_output;  // [5][1]
     
-    // Biases
+    // Смещения
     double *bias_hidden;   // [5]
     double *bias_output;   // [1]
     
-    // Activations (forward pass)
+    // Активации (forward pass)
     double *input_activations;   // [3]
     double *hidden_activations;  // [5]
     double *output_activations;  // [1]
     
-    // Gradients (backpropagation)
+    // Градиенты (backpropagation)
     double *hidden_gradients;  // [5]
     double *output_gradients;  // [1]
     
-    // Hyperparameters
+    // Гиперпараметры
     double learning_rate;  // 0.01
 } NeuralNetwork;
 ```
 
 ---
 
-### 3. Activation Functions
+### 3. Функции активации
 
 **Sigmoid:**
 ```c
@@ -89,13 +89,13 @@ double sigmoid_derivative(double x) {
 }
 ```
 
-**Properties:**
-- Range: (0, 1)
-- Differentiable everywhere
-- Smooth gradient
-- Good for binary classification
+**Свойства:**
+- Диапазон: (0, 1)
+- Дифференцируемая везде
+- Гладкий градиент
+- Хороша для бинарной классификации
 
-**Alternative: ReLU (optional enhancement)**
+**Альтернатива: ReLU (опциональное улучшение)**
 ```c
 double relu(double x) {
     return x > 0 ? x : 0;
@@ -138,11 +138,11 @@ for (int o = 0; o < output_size; o++) {
 
 ---
 
-### 5. Backpropagation Algorithm
+### 5. Алгоритм Backpropagation
 
-**Mathematical Foundation (Prof. Chen's lecture):**
+**Математическая основа (лекция Prof. Chen):**
 
-**Output Layer Gradients:**
+**Градиенты Output Layer:**
 ```
 ∂Loss/∂output = (prediction - target)
 
@@ -150,7 +150,7 @@ gradient_output = ∂Loss/∂output * sigmoid'(output)
                 = (prediction - target) * output * (1 - output)
 ```
 
-**Hidden Layer Gradients:**
+**Градиенты Hidden Layer:**
 ```
 ∂Loss/∂hidden = Σ(gradient_output * weight_hidden_output)
 
@@ -158,36 +158,36 @@ gradient_hidden = ∂Loss/∂hidden * sigmoid'(hidden)
                 = (Σ gradient_output * weight) * hidden * (1 - hidden)
 ```
 
-**Weight Updates:**
+**Обновление весов:**
 ```
 Δweight = -learning_rate * gradient * activation
 
 weight_new = weight_old - Δweight
 ```
 
-**Implementation:**
+**Реализация:**
 ```c
 void backpropagation(NeuralNetwork *nn, double *inputs, double target) {
     // 1. Forward pass
     forward_propagation(nn, inputs);
     
-    // 2. Calculate output layer gradients
+    // 2. Рассчитать градиенты output layer
     for (int o = 0; o < nn->output_size; o++) {
         double output = nn->output_activations[o];
         double error = output - target;
         nn->output_gradients[o] = error * sigmoid_derivative(output);
     }
     
-    // 3. Calculate hidden layer gradients (backpropagate)
+    // 3. Рассчитать градиенты hidden layer (backpropagate)
     for (int h = 0; h < nn->hidden_size; h++) {
         double error = 0.0;
-        for (int o = 0; o; o < nn->output_size; o++) {
+        for (int o = 0; o < nn->output_size; o++) {
             error += nn->output_gradients[o] * nn->weights_hidden_output[h][o];
         }
         nn->hidden_gradients[h] = error * sigmoid_derivative(nn->hidden_activations[h]);
     }
     
-    // 4. Update weights: hidden → output
+    // 4. Обновить веса: hidden → output
     for (int h = 0; h < nn->hidden_size; h++) {
         for (int o = 0; o < nn->output_size; o++) {
             double delta = nn->learning_rate * nn->output_gradients[o] * nn->hidden_activations[h];
@@ -195,12 +195,12 @@ void backpropagation(NeuralNetwork *nn, double *inputs, double target) {
         }
     }
     
-    // 5. Update biases: output
+    // 5. Обновить смещения: output
     for (int o = 0; o < nn->output_size; o++) {
         nn->bias_output[o] -= nn->learning_rate * nn->output_gradients[o];
     }
     
-    // 6. Update weights: input → hidden
+    // 6. Обновить веса: input → hidden
     for (int i = 0; i < nn->input_size; i++) {
         for (int h = 0; h < nn->hidden_size; h++) {
             double delta = nn->learning_rate * nn->hidden_gradients[h] * nn->input_activations[i];
@@ -208,7 +208,7 @@ void backpropagation(NeuralNetwork *nn, double *inputs, double target) {
         }
     }
     
-    // 7. Update biases: hidden
+    // 7. Обновить смещения: hidden
     for (int h = 0; h < nn->hidden_size; h++) {
         nn->bias_hidden[h] -= nn->learning_rate * nn->hidden_gradients[h];
     }
@@ -217,21 +217,21 @@ void backpropagation(NeuralNetwork *nn, double *inputs, double target) {
 
 ---
 
-### 6. Training Loop
+### 6. Цикл обучения
 
-**Gradient Descent with Data Shuffling:**
+**Gradient Descent с перемешиванием данных:**
 ```c
 void train_network(NeuralNetwork *nn, Dataset *data, int epochs) {
     for (int epoch = 0; epoch < epochs; epoch++) {
-        // Shuffle data (important for SGD)
+        // Перемешать данные (важно для SGD)
         shuffle_dataset(data);
         
-        // Train on all samples
+        // Обучить на всех сэмплах
         for (int i = 0; i < data->n_samples; i++) {
             backpropagation(nn, data->inputs[i], data->targets[i]);
         }
         
-        // Monitor progress
+        // Мониторить прогресс
         if ((epoch + 1) % 100 == 0) {
             double loss = calculate_loss(nn, data);
             double accuracy = calculate_accuracy(nn, data);
@@ -242,7 +242,7 @@ void train_network(NeuralNetwork *nn, Dataset *data, int epochs) {
 }
 ```
 
-**Loss Function (MSE):**
+**Функция потерь (MSE):**
 ```c
 double calculate_loss(NeuralNetwork *nn, Dataset *data) {
     double total_loss = 0.0;
@@ -259,180 +259,214 @@ double calculate_loss(NeuralNetwork *nn, Dataset *data) {
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Test 1: XOR Problem (Sanity Check)
+### Тест 1: XOR проблема (проверка работоспособности)
 ```bash
 cd solution
 make
 ./neural_network --demo
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-🧠 XOR Problem Demo
+🧠 Демо XOR проблемы
 
-Training Neural Network...
+Обучение нейросети...
 Epoch 1000/5000 | Loss: 0.098234 | Accuracy: 75.00%
 Epoch 5000/5000 | Loss: 0.002341 | Accuracy: 100.00%
 
-📊 XOR Results:
-  0 XOR 0 = 0.0123 (expected 0)
-  0 XOR 1 = 0.9876 (expected 1)
-  1 XOR 0 = 0.9891 (expected 1)
-  1 XOR 1 = 0.0234 (expected 0)
+📊 Результаты XOR:
+  0 XOR 0 = 0.0123 (ожидалось 0)
+  0 XOR 1 = 0.9876 (ожидалось 1)
+  1 XOR 0 = 0.9891 (ожидалось 1)
+  1 XOR 1 = 0.0234 (ожидалось 0)
 ```
 
-### Test 2: Attack Detection Training
+### Тест 2: Обучение обнаружению атак
 ```bash
 ./neural_network --train ../artifacts/training_data.csv
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-📊 Dataset loaded: 60 samples
+📊 Dataset загружен: 60 сэмплов
 
-🧠 Training Neural Network...
-  Architecture: 3 → 5 → 1
+🧠 Обучение нейросети...
+  Архитектура: 3 → 5 → 1
   Learning rate: 0.010
-  Epochs: 1000
+  Эпох: 1000
 
 Epoch    1/1000 | Loss: 0.247851 | Accuracy: 51.67%
 Epoch  100/1000 | Loss: 0.098234 | Accuracy: 76.67%
 Epoch  500/1000 | Loss: 0.014567 | Accuracy: 96.67%
 Epoch 1000/1000 | Loss: 0.005412 | Accuracy: 100.00%
 
-✅ Training complete!
+✅ Обучение завершено!
 
-🎯 Final Accuracy: 100.00%
+🎯 Финальная точность: 100.00%
 ```
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Files to Create:
+### Файлы для создания:
 
-1. **`solution/neural_network.c`** (~490 lines)  
-   - Complete MLP implementation
+1. **`solution/neural_network.c`** (~490 строк)  
+   - Полная реализация MLP
    - Forward propagation
    - Backpropagation
-   - Training loop
-   - XOR demo
-   - Attack detection training
+   - Цикл обучения
+   - XOR демо
+   - Обучение обнаружению атак
 
 2. **`solution/Makefile`**  
-   Cross-platform build
+   Кроссплатформенная сборка
 
-3. **`starter.c`** (~200 lines)  
-   Skeleton code with comprehensive TODOs
+3. **`starter.c`** (~200 строк)  
+   Скелет кода с comprehensive TODO
 
-### Files Provided (in `artifacts/`):
+### Предоставленные файлы (в `artifacts/`):
 
-1. **`training_data.csv`** (61 lines)  
-   - 60 samples (30 normal, 30 attack)
-   - Format: bytes,packets,response_time,is_attack
+1. **`training_data.csv`** (61 строка)  
+   - 60 сэмплов (30 нормальных, 30 атак)
+   - Формат: bytes,packets,response_time,is_attack
 
-2. **`training_log.txt`** (195 lines)  
-   - Complete training session log
-   - Epoch-by-epoch progress
-   - Final metrics
-   - Prof. Chen's notes
-   - Viktor's message
+2. **`training_log.txt`** (195 строк)  
+   - Полный лог тренировочной сессии
+   - Прогресс по эпохам
+   - Финальные метрики
+   - Заметки Prof. Chen
+   - Сообщение Viktor
 
-3. **`test_results.json`** (179 lines)  
-   - Network architecture details
-   - Training configuration
-   - Performance metrics (100% accuracy)
-   - Sample predictions
-   - Learned weights
+3. **`test_results.json`** (179 строк)  
+   - Детали архитектуры сети
+   - Конфигурация обучения
+   - Метрики производительности (100% точность)
+   - Примеры предсказаний
+   - Обученные веса
 
 ---
 
-## 🎯 Success Criteria
+## 🎯 Критерии успеха
 
-✅ **Training Performance:**  
-- Final loss < 0.01
-- Training accuracy > 95% (target: 100%)
-- Convergence within 1000 epochs
+✅ **Производительность обучения:**  
+- Финальная потеря < 0.01
+- Точность обучения > 95% (цель: 100%)
+- Сходимость в течение 1000 эпох
 
-✅ **Classification Metrics:**  
+✅ **Метрики классификации:**  
 - Precision > 95%
 - Recall > 95%
 - F1-score > 95%
-- Zero false negatives (all attacks detected)
+- Ноль ложно-отрицательных (все атаки обнаружены)
 
-✅ **Code Quality:**  
-- No memory leaks (valgrind clean)
-- Cross-platform (Linux/macOS/FreeBSD)
-- Training time < 5 seconds
-- Prediction time < 1ms per sample
+✅ **Качество кода:**  
+- Нет утечек памяти (valgrind clean)
+- Кроссплатформенность (Linux/macOS/FreeBSD)
+- Время обучения < 5 секунд
+- Время предсказания < 1ms на сэмпл
 
-✅ **XOR Test:**  
-- All 4 XOR cases correct (threshold 0.5)
-- Proof that network can learn non-linear functions
+✅ **Тест XOR:**  
+- Все 4 XOR случая корректны (порог 0.5)
+- Доказательство что сеть может учить нелинейные функции
 
 ---
 
-## 💡 Hints
+## 💡 Подсказки
 
-1. **Weight Initialization:**  
-   - Use Xavier initialization: `weight / sqrt(layer_size)`
-   - Prevents vanishing/exploding gradients
-   - Random range: [-1/√n, 1/√n]
+1. **Инициализация весов:**  
+   - Использовать Xavier инициализацию: `weight / sqrt(layer_size)`
+   - Предотвращает vanishing/exploding градиенты
+   - Случайный диапазон: [-1/√n, 1/√n]
 
-2. **Data Normalization:**  
-   - CRITICAL: Normalize all inputs to [0, 1]
-   - bytes: divide by 10000
-   - packets: divide by 300
-   - response_time: divide by 100
+2. **Нормализация данных:**  
+   - КРИТИЧНО: Нормализовать все входы к [0, 1]
+   - bytes: делить на 10000
+   - packets: делить на 300
+   - response_time: делить на 100
 
 3. **Learning Rate:**  
-   - Too high (>0.1): unstable training, oscillations
-   - Too low (<0.001): slow convergence
+   - Слишком высокий (>0.1): нестабильное обучение, осцилляции
+   - Слишком низкий (<0.001): медленная сходимость
    - Sweet spot: 0.01
 
-4. **Debugging Backpropagation:**  
-   - Check: loss should DECREASE
-   - If loss increases: bug in gradient calculation
-   - If loss plateaus: learning rate too low or stuck in local minimum
+4. **Отладка Backpropagation:**  
+   - Проверить: потеря должна УМЕНЬШАТЬСЯ
+   - Если потеря растёт: баг в расчёте градиента
+   - Если потеря стабилизируется: learning rate слишком низкий или застряла в локальном минимуме
 
-5. **Memory Management:**  
-   - Allocate weights as 2D arrays: `double **weights`
-   - Free in reverse order of allocation
-   - Use valgrind to detect leaks
+5. **Управление памятью:**  
+   - Выделить веса как 2D массивы: `double **weights`
+   - Освобождать в обратном порядке выделения
+   - Использовать valgrind для обнаружения утечек
 
 ---
 
-## 📊 Prof. Chen's Approval
+## 📊 Одобрение Prof. Chen
 
-**Upon completion, Prof. Chen says:**
+**По завершении Prof. Chen говорит:**
 ```
-"Excellent work, Agent! 🎉
+"Отличная работа, Agent! 🎉
 
-Your neural network achieved:
-- 100% training accuracy
-- Perfect convergence (700 epochs)
-- Clean backpropagation implementation
-- Production-ready code
+Ваша нейросеть достигла:
+- 100% точности обучения
+- Идеальной сходимости (700 эпох)
+- Чистой реализации backpropagation
+- Production-ready кода
 
-This is PhD-level work, completed in 4 hours.
+Это работа уровня PhD, завершённая за 4 часа.
 
-Tomorrow (Episode 32): Real-time deployment.
-We'll test your model on 1000 LIVE traffic samples.
+Завтра (Episode 32): Развёртывание в реальном времени.
+Мы протестируем вашу модель на 1000 ЖИВЫХ сэмплах трафика.
 
-Block rate > 95% = mission success.
-Block rate < 95% = enemy breakthrough.
+Block rate > 95% = успех миссии.
+Block rate < 95% = прорыв врага.
 
-Get some rest. Final battle tomorrow at 10:00 AM.
+Отдохните. Финальная битва завтра в 10:00 AM.
 
-Remember: training accuracy ≠ real-world performance.
-Be prepared for adversarial attacks.
+Помните: точность обучения ≠ производительность в реальном мире.
+Будьте готовы к adversarial атакам.
 
 - Prof. Chen"
 ```
 
 ---
 
-**Good luck, Agent!** 🚀  
-**Remember:** Teach the machine to think. Pure C. No frameworks.
+**Удачи, Agent!** 🚀  
+**Помните:** Научите машину думать. Чистый C. Без фреймворков.
+
+---
+
+**БРИФИНГ МИССИИ:**
+
+**Локация:** Stanford AI Lab, Gates Building, Lab 342  
+**Время:** December 29, 2024 — 09:00 PST (день 3)  
+**Контакт:** Prof. David Chen + Viktor
+
+**Контекст:**
+После Episodes 29-30 (данные обработаны, статистическая значимость доказана), пора обучить нейросеть для предсказания атак.
+
+**Архитектура:** 3 → 5 → 1 MLP
+- Input: bytes (norm), packets (norm), response_time (norm)
+- Hidden: 5 neurons, sigmoid
+- Output: 1 neuron, sigmoid, threshold 0.5
+
+**Training data:** 60 сэмплов (30 normal, 30 attack)
+
+**Ожидаемые результаты:**
+- Обучение: 100% точность за 700 эпох
+- Loss: <0.01
+- XOR demo: все 4 случая корректны
+
+**Артефакты созданы:**
+- training_data.csv (61 строка)
+- training_log.txt (195 строк)
+- test_results.json (179 строк)
+
+**Успешный результат:** Нейросеть обучена, 100% точность, готова к Episode 32 (deployment).
+
+---
+
+**Следующий эпизод:** [Episode 32: Prediction & Deployment →](../episode-32-prediction/)

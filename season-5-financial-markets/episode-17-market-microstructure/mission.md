@@ -1,73 +1,88 @@
-# Mission 17: Market Microstructure Analysis
+# Миссия 17: Анализ микроструктуры рынка
 
-## 🎯 Objective
+## 🎯 Цель
 
-Analyze OHLCV (Open, High, Low, Close, Volume) data from 47 suspicious tickers to detect market manipulation patterns.
+Проанализировать данные OHLCV (Open, High, Low, Close, Volume) по 47 подозрительным тикерам для обнаружения паттернов рыночных манипуляций.
 
-## 📋 Mission Briefing
+## 📋 Брифинг миссии
 
-**Date:** December 18, 03:15  
-**Location:** Your apartment, Arbat district, Moscow  
-**Status:** URGENT
+**Дата:** 18 декабря, 19:00 EST  
+**Локация:** Manhattan, Financial District, Нью-Йорк (40.7074°N, 74.0113°W)  
+**Статус:** 🔴 СРОЧНО
 
-V. has provided you with encrypted market data on a USB drive. The data contains 6 months of trading history for 47 tickers that show suspicious patterns.
+V. передал зашифрованный USB с рыночными данными. 6 месяцев торговой истории по 47 тикерам с подозрительными паттернами.
 
-**Your mission:**
-1. Parse OHLCV data from CSV files
-2. Calculate bid-ask spreads and detect anomalies
-3. Analyze market depth and liquidity
-4. Identify manipulation patterns (volume spikes, price distortions)
-5. Generate a report on suspicious activities
+**Ваша миссия:**
+1. Распарсить OHLCV данные из CSV файлов
+2. Вычислить bid-ask spread и обнаружить аномалии
+3. Проанализировать market depth и ликвидность
+4. Идентифицировать паттерны манипуляций (volume spikes, искажения цен)
+5. Сгенерировать отчёт о подозрительной активности
 
-**Time limit:** 15 hours 30 minutes (until 18:45)
+**Временной лимит:** До 23:47 EST (4 часа 47 минут)
 
-## 📂 Files Provided
+## 📂 Предоставленные файлы
 
-- `artifacts/market_data.csv` — OHLCV data for 47 tickers
-- `artifacts/suspicious_tickers.txt` — List of tickers to focus on
+- `artifacts/market_data.csv` — OHLCV данные по 47 тикерам
+- `artifacts/suspicious_tickers.txt` — Список подозрительных тикеров
 
-## ✅ Success Criteria
+## ✅ Критерии успеха
 
-Your implementation must:
-- Parse CSV with OHLCV data correctly
-- Calculate bid-ask spread for each candle
-- Detect volume spikes (>3x average)
-- Calculate volatility (standard deviation of returns)
-- Identify at least 5 manipulation patterns
+Ваша реализация должна:
+- Корректно парсить CSV с OHLCV данными
+- Вычислять bid-ask spread для каждой свечи
+- Обнаруживать volume spikes (>3x от среднего)
+- Вычислять волатильность (стандартное отклонение доходностей)
+- Идентифицировать минимум 5 паттернов манипуляций
 
-## 🔍 Expected Output
+## 🔍 Ожидаемый результат
 
 ```
 === Episode 17: Market Microstructure Analysis ===
 
-Loaded 47 tickers
+Загружено 47 тикеров
 
-=== TICKER_A Statistics ===
-Candles: 120
-Avg Volume: 1,234,567
-Volatility: 2.34%
-Volume Spikes (>3x avg): 7
-Suspicious patterns detected!
+=== Статистика TICKER_A ===
+Свечей: 120
+Средний объём: 1,234,567
+Волатильность: 2.34%
+Volume spikes (>3x средний): 7
+Обнаружены подозрительные паттерны!
 
 ...
 
-=== Analysis Complete ===
-Total anomalies found: 23
-Estimated manipulation profit: $2.7M
+=== Анализ завершён ===
+Всего аномалий найдено: 23
+Оценочная прибыль от манипуляций: $2.7M
 ```
 
-## 💡 Hints
+## 💡 Подсказки
 
-- Use `fscanf()` or `fgets()` to parse CSV
-- Bid-ask spread approximation: `(high - low) / close * 100`
-- Volume spike: current volume > 3x average volume
-- Volatility: standard deviation of daily returns
+**Парсинг CSV:**
+```c
+// Используйте fscanf() или fgets()
+FILE *fp = fopen("market_data.csv", "r");
+char line[1024];
+while (fgets(line, sizeof(line), fp)) {
+    // Парсинг OHLCV
+}
+```
 
-## 🏆 Achievement
+**Формулы:**
+- Bid-ask spread (приближение): `(high - low) / close * 100`
+- Volume spike: `текущий_объём > 3 × средний_объём`
+- Волатильность: стандартное отклонение дневных доходностей
 
-**"Market Analyst"** — Successfully detect market manipulation patterns
+**Метрики манипуляций:**
+- Spread > 0.5% (норма 0.01-0.05%)
+- Volume spike > 10x в нестандартное время (23:00-01:00)
+- Order book spoofing (крупные заявки → отмена)
+
+## 🏆 Достижение
+
+**"Market Cartographer"** — Успешное обнаружение паттернов рыночных манипуляций
 
 ---
 
-**Next:** [Episode 18: Trading Algorithms](../episode-18-trading-algorithms/)
+**Следующий эпизод:** [Episode 18: Trading Algorithms](../episode-18-trading-algorithms/)
 

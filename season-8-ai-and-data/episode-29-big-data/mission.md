@@ -1,61 +1,61 @@
-# Mission Brief: Big Data Processing
+# Брифинг миссии: Обработка Big Data
 **Episode 29** | Operation MOONLIGHT — Season 8
 
 ---
 
-## 🎯 Mission Objective
+## 🎯 Цель миссии
 
-**PRIMARY GOAL:** Process massive datasets (247.8 MB network logs + sensor data) to prepare for AI training.
+**ОСНОВНАЯ ЦЕЛЬ:** Обработать массивные датасеты (247.8 MB сетевых логов + данные сенсоров) для подготовки к AI обучению.
 
-**CONTEXT:**  
-6 days after Season 7 victory, we've detected reconnaissance activity. Enemy tested our systems with:
-- SSH brute-force attacks (1,847 attempts)
-- RDP scanning (892 attempts)
-- HTTP flood attacks (654 requests/2s)
-- Physical sensor anomalies (temperature spikes to 38.2°C)
+**КОНТЕКСТ:**  
+6 дней после победы Season 7 мы обнаружили разведывательную активность. Враг тестировал наши системы:
+- SSH brute-force атаки (1,847 попыток)
+- RDP сканирование (892 попытки)
+- HTTP flood атаки (654 запроса/2сек)
+- Физические аномалии сенсоров (температурные скачки до 38.2°C)
 
-**YOUR TASK:**  
-Implement big data processing pipeline in C to analyze ALL collected data and identify attack patterns.
+**ВАША ЗАДАЧА:**  
+Реализовать pipeline обработки big data на C для анализа ВСЕХ собранных данных и идентификации паттернов атак.
 
-**DELIVERABLE:**  
-AI-ready dataset for Episodes 30-32 (statistical analysis → neural networks → prediction).
+**РЕЗУЛЬТАТ:**  
+AI-ready датасет для Episodes 30-32 (статистический анализ → нейросети → предсказание).
 
 ---
 
-## 📋 Technical Requirements
+## 📋 Технические требования
 
-### 1. Memory-Mapped File Processing (mmap)
+### 1. Обработка Memory-Mapped файлов (mmap)
 
-**Requirement:**  
-Process `network_traffic.bin` (247.8 MB, 523,847 records) using memory-mapped I/O.
+**Требование:**  
+Обработать `network_traffic.bin` (247.8 MB, 523,847 записей) используя memory-mapped I/O.
 
-**Implementation:**
+**Реализация:**
 ```c
-// Open binary file
+// Открыть binary файл
 int fd = open("network_traffic.bin", O_RDONLY);
 
-// Get file size
+// Получить размер файла
 struct stat sb;
 fstat(fd, &sb);
 
-// Memory-map file (POSIX - works on Linux/macOS/FreeBSD)
+// Memory-map файл (POSIX - работает на Linux/macOS/FreeBSD)
 void *mapped = mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
-// Optional: Advise kernel about sequential access
+// Опционально: Подсказать ядру о последовательном доступе
 posix_madvise(mapped, sb.st_size, POSIX_MADV_SEQUENTIAL);
 
-// Process as NetworkLog array
+// Обработать как массив NetworkLog
 NetworkLog *logs = (NetworkLog *)mapped;
 size_t count = sb.st_size / sizeof(NetworkLog);
 
-// ... process data ...
+// ... обработка данных ...
 
-// Cleanup
+// Очистка
 munmap(mapped, sb.st_size);
 close(fd);
 ```
 
-**Binary Format:**
+**Бинарный формат:**
 ```c
 typedef struct {
     uint64_t timestamp;      // Unix microseconds
@@ -66,36 +66,36 @@ typedef struct {
     uint16_t protocol;       // 6=TCP, 17=UDP
     uint32_t bytes;
     uint8_t flags;
-    uint8_t status;          // 0=normal, 1=suspicious, 2=threat
+    uint8_t status;          // 0=нормально, 1=подозрительно, 2=угроза
 } __attribute__((packed)) NetworkLog;
 ```
 
-**Expected Analysis:**
-- Total records: 523,847
-- Suspicious entries: ~12,847 (2.45%)
-- Threat entries: ~347 (0.066%)
-- Total bytes transferred: ~1.85 GB
+**Ожидаемый анализ:**
+- Всего записей: 523,847
+- Подозрительных записей: ~12,847 (2.45%)
+- Записей угроз: ~347 (0.066%)
+- Всего байт передано: ~1.85 GB
 
 ---
 
-### 2. Stream Processing (CSV)
+### 2. Stream обработка (CSV)
 
-**Requirement:**  
-Process `sensor_data.csv` using streaming (constant memory usage).
+**Требование:**  
+Обработать `sensor_data.csv` используя streaming (константное использование памяти).
 
-**Implementation:**
+**Реализация:**
 ```c
 FILE *fp = fopen("sensor_data.csv", "r");
 char line[4096];
 
-// Skip header
+// Пропустить заголовок
 fgets(line, sizeof(line), fp);
 
-// Stream process (online algorithm)
+// Stream обработка (online алгоритм)
 SensorData data;
 while (fgets(line, sizeof(line), fp)) {
     if (parse_csv_line(line, &data) == 0) {
-        // Update statistics incrementally (constant memory)
+        // Обновить статистику инкрементально (константная память)
         update_statistics(&stats, data.temperature);
         if (data.anomaly) anomaly_count++;
     }
@@ -104,26 +104,26 @@ while (fgets(line, sizeof(line), fp)) {
 fclose(fp);
 ```
 
-**CSV Format:**
+**CSV формат:**
 ```
 timestamp,sensor_id,temperature,humidity,pressure,anomaly
 1640001000.123,SENSOR_A01,22.5,45.2,1013.25,0
 ```
 
-**Expected Analysis:**
-- Total records: 50
-- Anomalies: 11 (22%)
-- Temperature range: 19.5°C - 38.2°C
-- Critical events: SENSOR_B02 (38.2°C, 88.9% humidity)
+**Ожидаемый анализ:**
+- Всего записей: 50
+- Аномалий: 11 (22%)
+- Диапазон температур: 19.5°C - 38.2°C
+- Критические события: SENSOR_B02 (38.2°C, 88.9% влажности)
 
 ---
 
-### 3. Statistical Aggregation (Thread-Safe)
+### 3. Статистическая агрегация (Thread-Safe)
 
-**Requirement:**  
-Implement thread-safe statistics accumulator for parallel processing.
+**Требование:**  
+Реализовать потокобезопасный аккумулятор статистики для параллельной обработки.
 
-**Functions to Implement:**
+**Функции для реализации:**
 ```c
 typedef struct {
     uint64_t count;
@@ -141,7 +141,7 @@ double get_variance(Statistics *stats);
 double get_stddev(Statistics *stats);
 ```
 
-**Thread Safety:**
+**Потокобезопасность:**
 ```c
 void update_statistics(Statistics *stats, double value) {
     pthread_mutex_lock(&stats->lock);
@@ -158,12 +158,12 @@ void update_statistics(Statistics *stats, double value) {
 
 ---
 
-### 4. Parallel Processing (Optional Enhancement)
+### 4. Параллельная обработка (опциональное улучшение)
 
-**Requirement:**  
-Use 4 worker threads to process data in parallel.
+**Требование:**  
+Использовать 4 worker потока для параллельной обработки данных.
 
-**Implementation:**
+**Реализация:**
 ```c
 #define THREAD_COUNT 4
 
@@ -177,7 +177,7 @@ void *parallel_worker(void *arg) {
     return NULL;
 }
 
-// Create threads
+// Создать потоки
 pthread_t threads[THREAD_COUNT];
 size_t chunk_size = total_records / THREAD_COUNT;
 
@@ -185,7 +185,7 @@ for (int i = 0; i < THREAD_COUNT; i++) {
     pthread_create(&threads[i], NULL, parallel_worker, &args[i]);
 }
 
-// Wait for completion
+// Дождаться завершения
 for (int i = 0; i < THREAD_COUNT; i++) {
     pthread_join(threads[i], NULL);
 }
@@ -193,141 +193,141 @@ for (int i = 0; i < THREAD_COUNT; i++) {
 
 ---
 
-## 🧪 Testing Criteria
+## 🧪 Критерии тестирования
 
-### Test 1: mmap Processing
+### Тест 1: mmap обработка
 ```bash
 cd solution
 make
 ./big_data --mmap ../artifacts/network_traffic.bin
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-📊 Network Traffic Statistics:
-  Count: 523847
-  Mean: 3527.4
+📊 Статистика сетевого трафика:
+  Количество: 523847
+  Среднее: 3527.4
   StdDev: 2184.9
-  ⚠️  Suspicious: 12847 (2.45%)
-  🚨 Threats: 347 (0.066%)
+  ⚠️  Подозрительных: 12847 (2.45%)
+  🚨 Угроз: 347 (0.066%)
 ```
 
-### Test 2: CSV Stream Processing
+### Тест 2: CSV Stream обработка
 ```bash
 ./big_data --stream ../artifacts/sensor_data.csv
 ```
 
-**Expected Output:**
+**Ожидаемый вывод:**
 ```
-📊 Temperature Statistics:
-  Count: 50
-  Mean: 24.82
+📊 Статистика температуры:
+  Количество: 50
+  Среднее: 24.82
   StdDev: 4.15
   Min: 19.5
   Max: 38.2
-  🔴 Anomalies: 11 (22.0%)
+  🔴 Аномалий: 11 (22.0%)
 ```
 
-### Test 3: Full Pipeline
+### Тест 3: Полный pipeline
 ```bash
 ./big_data --all
 ```
 
-**Should process both datasets and output comprehensive analysis.**
+**Должен обработать оба датасета и вывести комплексный анализ.**
 
 ---
 
-## 📦 Deliverables
+## 📦 Результаты миссии
 
-### Files to Create:
+### Файлы для создания:
 
 1. **`solution/big_data.c`**  
-   Complete implementation (~400-500 lines)
+   Полная реализация (~400-500 строк)
 
 2. **`solution/Makefile`**  
-   Cross-platform build (Linux/macOS/FreeBSD)
+   Кроссплатформенная сборка (Linux/macOS/FreeBSD)
 
 3. **`starter.c`**  
-   Skeleton code with TODOs (~150 lines)
+   Скелет кода с TODO (~150 строк)
 
-### Files Provided (in `artifacts/`):
+### Предоставленные файлы (в `artifacts/`):
 
-1. **`network_traffic.bin`** (binary format, 247.8 MB)  
-   - 523,847 NetworkLog records
-   - Contains attack patterns (SSH, RDP, HTTP flood)
+1. **`network_traffic.bin`** (бинарный формат, 247.8 MB)  
+   - 523,847 NetworkLog записей
+   - Содержит паттерны атак (SSH, RDP, HTTP flood)
 
-2. **`sensor_data.csv`** (text format, 3.2 KB)  
-   - 50 sensor readings
-   - 11 anomalies including critical events
+2. **`sensor_data.csv`** (текстовый формат, 3.2 KB)  
+   - 50 показаний сенсоров
+   - 11 аномалий включая критические события
 
 3. **`analysis_results.json`**  
-   - Expected analysis results
-   - Validation data for your implementation
+   - Ожидаемые результаты анализа
+   - Данные для валидации вашей реализации
 
 4. **`network_traffic_sample.txt`**  
-   - Human-readable sample of binary logs
-   - For understanding binary format
+   - Человекочитаемый sample бинарных логов
+   - Для понимания бинарного формата
 
 ---
 
-## 🎯 Success Criteria
+## 🎯 Критерии успеха
 
-✅ **Memory Efficiency:**  
-- mmap uses constant memory (no matter file size)
-- Streaming CSV parser uses <10 KB memory
+✅ **Эффективность памяти:**  
+- mmap использует константную память (независимо от размера файла)
+- Streaming CSV parser использует <10 KB памяти
 
-✅ **Accuracy:**  
-- Statistical calculations match `analysis_results.json`
-- Anomaly detection: 11/50 (22%)
-- Threat detection: 347/523847 (0.066%)
+✅ **Точность:**  
+- Статистические расчёты совпадают с `analysis_results.json`
+- Обнаружение аномалий: 11/50 (22%)
+- Обнаружение угроз: 347/523847 (0.066%)
 
-✅ **Performance:**  
-- Process 247.8 MB in <5 seconds (with mmap)
-- Parallel processing shows 2-4x speedup
+✅ **Производительность:**  
+- Обработка 247.8 MB менее чем за 5 секунд (с mmap)
+- Параллельная обработка показывает ускорение в 2-4x
 
-✅ **Cross-Platform:**  
-- Works on Linux, macOS, FreeBSD
-- No platform-specific code (POSIX only)
+✅ **Кроссплатформенность:**  
+- Работает на Linux, macOS, FreeBSD
+- Нет платформозависимого кода (только POSIX)
 
-✅ **AI Readiness:**  
-- Data quality: GOOD (98.5% completeness)
-- Dataset ready for Episode 30 (statistical analysis)
+✅ **AI готовность:**  
+- Качество данных: ХОРОШЕЕ (98.5% полнота)
+- Датасет готов для Episode 30 (статистический анализ)
 
 ---
 
-## 💡 Hints
+## 💡 Подсказки
 
 1. **mmap vs read():**  
-   - `mmap`: Constant memory, kernel manages paging
-   - `read()`: Need to allocate memory for entire file
+   - `mmap`: Константная память, ядро управляет paging
+   - `read()`: Нужно выделить память для всего файла
 
 2. **Streaming vs Loading:**  
-   - Streaming: Process line-by-line (constant memory)
-   - Loading: Load entire file into memory (not scalable)
+   - Streaming: Обработка построчно (константная память)
+   - Loading: Загрузка всего файла в память (не масштабируется)
 
-3. **Online Statistics:**  
-   - Update mean/variance incrementally
-   - Welford's algorithm for numerical stability
+3. **Online статистика:**  
+   - Обновлять mean/variance инкрементально
+   - Алгоритм Welford для численной стабильности
 
-4. **Thread Safety:**  
-   - Always lock mutex before updating shared state
-   - Keep critical sections minimal
+4. **Потокобезопасность:**  
+   - Всегда блокировать mutex перед обновлением разделяемого состояния
+   - Держать критические секции минимальными
 
-5. **Cross-Platform mmap:**  
-   - POSIX standard: works everywhere
-   - No need for platform detection
+5. **Кроссплатформенный mmap:**  
+   - POSIX стандарт: работает везде
+   - Не нужна платформозависимая детекция
 
 ---
 
-## 📊 Mission Success
+## 📊 Успех миссии
 
-**Upon completion, you will have:**
-- Processed 247.8 MB of network logs
-- Identified 347 active threats
-- Analyzed 11 sensor anomalies
-- Prepared dataset for AI training (Episodes 30-32)
+**По завершении у вас будет:**
+- Обработано 247.8 MB сетевых логов
+- Идентифицировано 347 активных угроз
+- Проанализировано 11 аномалий сенсоров
+- Подготовлен датасет для AI обучения (Episodes 30-32)
 
-**Viktor's Approval Message:**
+**Одобрение Viktor:**
 ```
 Отличная работа, Agent. Dataset готов.
 Episode 30 — statistical analysis. Stanford AI Lab ждёт.
@@ -337,5 +337,40 @@ V.
 
 ---
 
-**Good luck, Agent!** 🚀  
-**Remember:** In data we trust. Let the machines learn.
+**Удачи, Agent!** 🚀  
+**Помните:** В данных мы доверяем. Пусть машины учатся.
+
+---
+
+**БРИФИНГ МИССИИ:**
+
+Продолжение сюжета после Season 7 (6 дней спустя). Viktor и Prof. Chen (Stanford AI Lab) обнаружили разведывательную активность врага. Нужно обработать терабайты данных для:
+
+1. **Немедленного анализа угроз** (Episode 29 - сегодня)
+2. **Статистического доказательства атак** (Episode 30 - завтра)
+3. **Обучения нейросети** (Episode 31 - через 2 дня)
+4. **Развёртывания AI защиты** (Episode 32 - финал)
+
+**Локация:** Mountain View, California (Silicon Valley)  
+**Время:** December 27, 2024 — 14:00 PST  
+**Партнёры:** Viktor + Prof. David Chen (Stanford)  
+**Враг:** Возможно те же силы из Season 7, но с AI capabilities
+
+**Технические детали:**
+- 247.8 MB network_traffic.bin: 523,847 записей (SSH brute-force, RDP scan, HTTP flood)
+- sensor_data.csv: 50 записей (11 аномалий, критическая: SENSOR_B02 38.2°C)
+- Top threats:
+  * 185.220.101.42: SSH brute-force (1,847 attempts)
+  * 45.227.255.190: RDP scanning (892 attempts)
+  * 194.26.192.45: HTTP flood (654 requests/2s)
+
+**Артефакты созданы:**
+- `sensor_data.csv` (3.2 KB, 51 строка)
+- `analysis_results.json` (155 строк)
+- `network_traffic_sample.txt` (26 строк с примерами логов)
+
+**Успешный результат Episode 29:** Dataset validated, quality 98.5%, ready for Episodes 30-32.
+
+---
+
+**Следующий эпизод:** [Episode 30: Statistical Analysis →](../episode-30-statistical-analysis/)
