@@ -24,7 +24,7 @@
 ### 2. Named Pipes (FIFOs)
 - ✅ Create FIFOs in filesystem (mkfifo)
 - ✅ Multi-process communication (any process can access)
-- ✅ Stealth FIFOs (/dev/shm/ + random names)
+- ✅ Stealth FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/ + random names)
 - ✅ Auto-deletion after use (no traces)
 - ✅ Permissions (0600, owner-only)
 
@@ -140,7 +140,7 @@ time ./ipc_test --perf-signal 1000  # 1000 bytes via signals
   - Daemon shutdown sequence (network silence)
   - Anonymous pipe creation & data transmission
   - Named pipes (FIFOs) for multi-process
-  - Stealth FIFOs (/dev/shm/, random names, auto-delete)
+  - Stealth FIFOs (Linux: /dev/shm/, macOS/BSD: /tmp/, random names, auto-delete)
   - Bidirectional pipes (2-pipe setup)
   - Signal-based IPC (bonus: low-bandwidth covert channel)
   

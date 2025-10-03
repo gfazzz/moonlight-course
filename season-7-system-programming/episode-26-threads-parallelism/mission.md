@@ -64,8 +64,9 @@
 # Verify all threads created
 ps -T -p <PID>  # Should show 9 threads (1 main + 8 workers)
 
-# Check thread IDs
-cat /proc/<PID>/task/*/status | grep Tgid
+# Check thread IDs (Linux)
+cat /proc/<PID>/task/*/status | grep Tgid  # Linux
+# macOS/FreeBSD: ps -M -p <PID> or lldb attach
 ```
 
 ### Producer-Consumer Tests

@@ -72,7 +72,7 @@ Deep scan scheduled: Dec 25, 03:00 (**~8.5 hours** remaining).
 
 ## 📚 Теория
 
-### Pipes
+### Pipes (POSIX-compliant, works on Linux/macOS/FreeBSD)
 
 ```c
 int pipefd[2];
@@ -91,18 +91,28 @@ if (fork() == 0) {
 }
 ```
 
-### Shared Memory
+### Shared Memory (POSIX preferred for portability)
 
 ```c
-#include <sys/shm.h>
+#include <sys/mman.h>
+#include <fcntl.h>
 
-int shmid = shmget(IPC_PRIVATE, 1024, IPC_CREAT | 0666);
-char *shmaddr = shmat(shmid, NULL, 0);
+// POSIX shared memory (Linux/macOS/FreeBSD)
+int fd = shm_open("/myshm", O_CREAT | O_RDWR, 0600);
+ftruncate(fd, 1024);
+char *shmaddr = mmap(NULL, 1024, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
 strcpy(shmaddr, "Shared data");
 
-shmdt(shmaddr);
+munmap(shmaddr, 1024);
+shm_unlink("/myshm");
 ```
+
+**Platform notes:**
+- POSIX APIs (shm_open, mmap) work on all UNIX systems
+- SysV APIs (shmget, shmat) also work but less portable
+- macOS: No /dev/shm visible, but shm_open works (kernel-managed)
+- FreeBSD: Similar to Linux, /dev/shm/ or /tmp/
 
 ---
 
@@ -147,7 +157,7 @@ Results:
 ║  🚨 NEW THREAT DETECTED:                                          ║
 ║  PID 4789: /usr/bin/tracker2 (upgraded enemy surveillance)        ║
 ║  Activity:                                                        ║
-║    - FILE_ACCESS: /etc/passwd, /etc/shadow, /proc/*/cmdline      ║
+║    - FILE_ACCESS: /etc/passwd, /etc/shadow, process cmdlines     ║
 ║    - NETWORK_SCAN: ports 22, 80, 443, 9000-9010                   ║
 ║    - SYSTEM_CALL: ptrace(PTRACE_ATTACH) — trying to attach!      ║
 ║    - DATA_EXFILTRATION: 2.3 MB to C2 server 185.220.101.42       ║

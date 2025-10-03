@@ -1,7 +1,9 @@
 # Episode 27: IPC - SOLUTION Makefile
+# Cross-platform: Linux, macOS, FreeBSD
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -pedantic -O2
 LDFLAGS = -lpthread
+# Note: -lrt not needed (POSIX shm_open works without it on Linux/macOS/FreeBSD)
 
 TARGET = ipc
 SOURCES = ipc.c

@@ -84,28 +84,52 @@
 
 ## 📚 Теория
 
-### Process Hiding
+### Timing Attacks (Cross-platform)
 
 ```c
-// Переименование процесса
-void hide_process(char *argv[]) {
-    strcpy(argv[0], "[kworker/0:1]");  // Маскировка
-}
+#include <time.h>
+#include <stdint.h>
 
-// LD_PRELOAD hook (перехват системных вызовов)
-// Для образовательных целей!
+// High-resolution timing (POSIX)
+uint64_t rdtsc() {
+#ifdef __x86_64__
+    uint32_t lo, hi;
+    asm volatile("rdtsc" : "=a"(lo), "=d"(hi));
+    return ((uint64_t)hi << 32) | lo;
+#elif defined(__aarch64__) || defined(__arm64__)
+    uint64_t val;
+    asm volatile("mrs %0, cntvct_el0" : "=r"(val));
+    return val;
+#else
+    // Portable fallback (clock_gettime)
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ts.tv_sec * 1000000000ULL + ts.tv_nsec;
+#endif
+}
 ```
 
-### Stealth Communication
+### Cache Flush (Cross-platform)
 
 ```c
-// Encrypted UNIX socket
-void send_encrypted(int sock, const char *msg, const char *key) {
-    char encrypted[256];
-    xor_encrypt(msg, key, encrypted);
-    send(sock, encrypted, strlen(msg), 0);
+void flush_cache_line(void *addr) {
+#ifdef __x86_64__
+    // Intel/AMD: clflush
+    asm volatile("clflush (%0)" : : "r"(addr));
+#elif defined(__aarch64__) || defined(__arm64__)
+    // ARM64 (Apple Silicon): DC CIVAC
+    asm volatile("dc civac, %0" : : "r"(addr) : "memory");
+#else
+    // Portable fallback
+    __sync_synchronize();
+#endif
 }
 ```
+
+**Platform notes:**
+- x86-64: rdtsc (cycle counter), clflush (cache flush)
+- ARM64 (Apple M1/M2/M3): cntvct_el0 (timer), DC CIVAC (cache)
+- Portable: clock_gettime (all POSIX), __sync_synchronize (GCC/Clang)
 
 ---
 
