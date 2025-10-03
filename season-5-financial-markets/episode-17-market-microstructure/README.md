@@ -46,7 +46,7 @@
 │  ENCRYPTED: AES-256                         │
 │  SIZE: 2.7 GB                               │
 │                                             │
-│  PASSWORD: "Knuth sends his regards"        │
+│  PASSWORD: "Black-Scholes forever"          │
 │  (отсылка к финалу Season 4)               │
 └─────────────────────────────────────────────┘
 ```
@@ -413,7 +413,7 @@ bool detect_spoofing(OrderBook *book);
 - **19:00 → 00:00** — 5 часов, как в Season 4 Episode 13
 
 ### Отсылки к Season 4:
-- **"Knuth sends his regards"** — пароль со встречи на Red Square
+- **"Black-Scholes forever"** — пароль со встречи на Red Square (криптография)
 - **Database Engine** — используется для хранения OHLCV
 - **Hash tables** — для быстрого поиска тикеров
 - **Sorting algorithms** — для сортировки по timestamp
