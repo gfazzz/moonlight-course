@@ -1,6 +1,19 @@
 /*
- * MOONLIGHT Protocol - Episode 22 SOLUTION
- * Industrial Protocols: Wiegand & Modbus
+ * Episode 22: Industrial Protocols & Access Control - SOLUTION
+ * Operation MOONLIGHT - Season 6
+ * 
+ * Mission: Reverse engineer RFID/NFC access control systems
+ * Version: v2.0 Enhanced Edition
+ * 
+ * Implemented features:
+ * ✅ Wiegand 26-bit protocol (parse, generate, validate)
+ * ✅ Modbus RTU (CRC16, read registers, validate frames)
+ * ✅ RFID card emulator with card database
+ * ✅ Access control system simulation
+ * ✅ Authentication and authorization
+ * ✅ Event logging and audit trail
+ * ✅ Brute force attack detection
+ * ✅ Statistics and reporting
  */
 
 #include <stdio.h>
@@ -179,7 +192,160 @@ void print_codes(const CardList *list) {
 }
 
 // ============================================================================
-// MAIN
+// ACCESS CONTROL SYSTEM (v2.0 Enhanced)
+// ============================================================================
+
+#include <time.h>
+
+typedef struct {
+    time_t timestamp;
+    uint8_t fc;
+    uint16_t card_id;
+    bool granted;
+    char reason[64];
+} AccessLog;
+
+typedef struct {
+    Card *authorized_cards;
+    int authorized_count;
+    AccessLog *logs;
+    int log_count;
+    int log_capacity;
+    bool door_locked;
+    int failed_attempts;
+    int successful_access;
+} AccessControlSystem;
+
+AccessControlSystem acs;
+
+void acs_init(void) {
+    acs.authorized_cards = NULL;
+    acs.authorized_count = 0;
+    acs.logs = malloc(1000 * sizeof(AccessLog));
+    acs.log_count = 0;
+    acs.log_capacity = 1000;
+    acs.door_locked = true;
+    acs.failed_attempts = 0;
+    acs.successful_access = 0;
+}
+
+void acs_load_authorized(CardList *list) {
+    acs.authorized_cards = malloc(list->count * sizeof(Card));
+    memcpy(acs.authorized_cards, list->cards, list->count * sizeof(Card));
+    acs.authorized_count = list->count;
+}
+
+bool acs_is_authorized(uint8_t fc, uint16_t id) {
+    for (int i = 0; i < acs.authorized_count; i++) {
+        if (acs.authorized_cards[i].fc == fc && 
+            acs.authorized_cards[i].id == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void acs_log_access(uint8_t fc, uint16_t id, bool granted, const char *reason) {
+    if (acs.log_count >= acs.log_capacity) {
+        acs.log_capacity *= 2;
+        acs.logs = realloc(acs.logs, acs.log_capacity * sizeof(AccessLog));
+    }
+    
+    AccessLog *log = &acs.logs[acs.log_count];
+    log->timestamp = time(NULL);
+    log->fc = fc;
+    log->card_id = id;
+    log->granted = granted;
+    strncpy(log->reason, reason, sizeof(log->reason) - 1);
+    log->reason[sizeof(log->reason) - 1] = '\0';
+    
+    acs.log_count++;
+}
+
+bool acs_try_access(uint32_t wiegand_code) {
+    // Parse card
+    WiegandCard card = parse_wiegand26(wiegand_code);
+    
+    if (!card.valid) {
+        acs_log_access(0, 0, false, "Invalid Wiegand format");
+        acs.failed_attempts++;
+        return false;
+    }
+    
+    // Check authorization
+    bool authorized = acs_is_authorized(card.facility_code, card.card_id);
+    
+    if (authorized) {
+        acs_log_access(card.facility_code, card.card_id, true, "Access granted");
+        acs.door_locked = false;
+        acs.successful_access++;
+        printf("✅ ACCESS GRANTED: FC=%u, ID=%u\n", card.facility_code, card.card_id);
+        return true;
+    } else {
+        acs_log_access(card.facility_code, card.card_id, false, "Unauthorized card");
+        acs.failed_attempts++;
+        printf("❌ ACCESS DENIED: FC=%u, ID=%u (unauthorized)\n", 
+               card.facility_code, card.card_id);
+        return false;
+    }
+}
+
+void acs_print_logs(int last_n) {
+    printf("\n╔═══════════════════════════════════════════════════════════════════╗\n");
+    printf("║                      ACCESS CONTROL LOG                          ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════╝\n\n");
+    
+    int start = (acs.log_count > last_n) ? acs.log_count - last_n : 0;
+    
+    for (int i = start; i < acs.log_count; i++) {
+        AccessLog *log = &acs.logs[i];
+        
+        char time_str[64];
+        struct tm *tm_info = localtime(&log->timestamp);
+        strftime(time_str, sizeof(time_str), "%H:%M:%S", tm_info);
+        
+        const char *emoji = log->granted ? "✅" : "❌";
+        
+        printf("%s [%s] FC=%3u ID=%5u | %s\n",
+               emoji, time_str, log->fc, log->card_id, log->reason);
+    }
+    
+    printf("\n");
+}
+
+void acs_print_statistics(void) {
+    printf("\n╔═══════════════════════════════════════════════════════════════════╗\n");
+    printf("║                    ACCESS CONTROL STATISTICS                      ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════╝\n\n");
+    
+    printf("📊 System Status:\n");
+    printf("   Door: %s\n", acs.door_locked ? "🔒 LOCKED" : "🔓 UNLOCKED");
+    printf("   Authorized Cards: %d\n", acs.authorized_count);
+    printf("   Total Attempts: %d\n", acs.log_count);
+    printf("\n");
+    
+    printf("📈 Access Statistics:\n");
+    printf("   Successful: %d (%.1f%%)\n", 
+           acs.successful_access, 
+           (float)acs.successful_access / acs.log_count * 100);
+    printf("   Failed: %d (%.1f%%)\n",
+           acs.failed_attempts,
+           (float)acs.failed_attempts / acs.log_count * 100);
+    printf("\n");
+    
+    if (acs.failed_attempts > 10) {
+        printf("⚠️  WARNING: High number of failed attempts detected!\n");
+        printf("   Possible brute force attack in progress.\n\n");
+    }
+}
+
+void acs_cleanup(void) {
+    free(acs.authorized_cards);
+    free(acs.logs);
+}
+
+// ============================================================================
+// MAIN & TESTS
 // ============================================================================
 
 void test_wiegand() {
@@ -237,9 +403,66 @@ void test_rfid_emulator() {
     }
 }
 
+void test_access_control() {
+    printf("\n╔═══════════════════════════════════════════════════════════════════╗\n");
+    printf("║            ACCESS CONTROL SYSTEM TEST (v2.0 Enhanced)            ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════╝\n");
+    
+    // Initialize ACS
+    acs_init();
+    
+    // Load authorized cards
+    CardList authorized;
+    authorized.count = 3;
+    authorized.cards[0].fc = 123;
+    authorized.cards[0].id = 45678;
+    authorized.cards[1].fc = 123;
+    authorized.cards[1].id = 45679;
+    authorized.cards[2].fc = 200;
+    authorized.cards[2].id = 12345;
+    
+    generate_all_codes(&authorized);
+    acs_load_authorized(&authorized);
+    
+    printf("\n✅ Access control system initialized\n");
+    printf("   Authorized %d cards\n\n", authorized.count);
+    
+    // Test valid access
+    printf("=== Testing Authorized Access ===\n");
+    acs_try_access(authorized.cards[0].wiegand_code);
+    acs_try_access(authorized.cards[2].wiegand_code);
+    
+    // Test unauthorized access
+    printf("\n=== Testing Unauthorized Access ===\n");
+    uint32_t unauthorized = generate_wiegand26(99, 99999);
+    acs_try_access(unauthorized);
+    
+    // Simulate brute force
+    printf("\n=== Simulating Brute Force Attack ===\n");
+    for (int i = 0; i < 15; i++) {
+        uint32_t fake = generate_wiegand26(100, 10000 + i);
+        acs_try_access(fake);
+    }
+    
+    // Print results
+    acs_print_logs(20);
+    acs_print_statistics();
+    
+    printf("🏆 Achievement Unlocked: \"Access Control Expert\"\n");
+    printf("   You've mastered industrial access control systems.\n\n");
+    
+    // Cleanup
+    acs_cleanup();
+}
+
 int main(int argc, char *argv[]) {
-    printf("MOONLIGHT - Episode 22: Industrial Protocols\n");
-    printf("=============================================\n");
+    printf("╔═══════════════════════════════════════════════════════════════════╗\n");
+    printf("║  Episode 22: Industrial Protocols & Access Control - SOLUTION    ║\n");
+    printf("║                 Operation MOONLIGHT - Season 6                    ║\n");
+    printf("╚═══════════════════════════════════════════════════════════════════╝\n");
+    
+    printf("\n🔧 Location: Novosibirsk Akademgorodok, Russia\n");
+    printf("🎯 Mission: Reverse engineer RFID/NFC access control systems\n");
     
     if (argc > 1) {
         if (strcmp(argv[1], "--wiegand") == 0) {
@@ -248,14 +471,28 @@ int main(int argc, char *argv[]) {
             test_modbus();
         } else if (strcmp(argv[1], "--rfid") == 0) {
             test_rfid_emulator();
+        } else if (strcmp(argv[1], "--acs") == 0) {
+            test_access_control();
         } else {
-            printf("Usage: %s [--wiegand|--modbus|--rfid]\n", argv[0]);
+            printf("\nUsage: %s [--wiegand|--modbus|--rfid|--acs]\n", argv[0]);
+            printf("\nOptions:\n");
+            printf("  --wiegand   Test Wiegand 26-bit protocol\n");
+            printf("  --modbus    Test Modbus RTU protocol\n");
+            printf("  --rfid      Test RFID card emulator\n");
+            printf("  --acs       Test Access Control System (full demo)\n");
+            printf("\n  (no args)   Run all tests\n\n");
         }
     } else {
         test_wiegand();
         test_modbus();
         test_rfid_emulator();
+        test_access_control();
     }
+    
+    printf("\n💡 Mission Complete!\n");
+    printf("   You've successfully reverse engineered the access control system.\n\n");
+    printf("➡️  Next: Episode 23 - IP Cameras & Video Surveillance\n");
+    printf("    Analyze RTSP streams and find blind spots.\n\n");
     
     return 0;
 }
