@@ -1,0 +1,54 @@
+# Network Traffic Log - Episode 29
+# Location: Mountain View, CA (Silicon Valley)
+# Time Range: 2024-12-27 14:00:00 - 2024-12-28 03:45:00 UTC
+# Total Records: 523,847 | File Size: 247.8 MB (binary format)
+#
+# This is a SAMPLE of the full network_traffic.bin (binary format)
+# Full binary format: NetworkLog struct (24 bytes per record)
+#
+# Fields: timestamp, src_ip, dst_ip, src_port, dst_port, protocol, bytes, flags, status
+# Status: 0=normal, 1=suspicious, 2=threat
+
+[2024-12-27 14:00:15.123456] 192.168.1.105 -> 172.217.14.206:443 | TCP | 1247 bytes | NORMAL
+[2024-12-27 14:00:16.234567] 192.168.1.105 -> 172.217.14.206:443 | TCP | 854 bytes | NORMAL
+[2024-12-27 14:00:17.345678] 192.168.1.112 -> 8.8.8.8:53 | UDP | 72 bytes | NORMAL
+[2024-12-27 14:00:18.456789] 192.168.1.105 -> 172.217.14.206:443 | TCP | 2347 bytes | NORMAL
+[2024-12-27 14:00:19.567890] 192.168.1.118 -> 23.211.133.40:80 | TCP | 512 bytes | NORMAL
+
+# ... (normal traffic continues) ...
+
+[2024-12-27 18:42:08.123456] 185.220.101.42 -> 192.168.1.20:22 | TCP | 64 bytes | SYN | SUSPICIOUS
+[2024-12-27 18:42:08.234567] 185.220.101.42 -> 192.168.1.20:22 | TCP | 64 bytes | SYN | SUSPICIOUS
+[2024-12-27 18:42:08.345678] 185.220.101.42 -> 192.168.1.20:22 | TCP | 64 bytes | SYN | SUSPICIOUS
+[2024-12-27 18:42:08.456789] 185.220.101.42 -> 192.168.1.20:22 | TCP | 64 bytes | SYN | SUSPICIOUS
+[2024-12-27 18:42:08.567890] 185.220.101.42 -> 192.168.1.20:22 | TCP | 64 bytes | SYN | SUSPICIOUS
+# SSH brute-force attack detected (1,847 attempts total)
+
+[2024-12-27 21:15:32.123456] 45.227.255.190 -> 192.168.1.50:3389 | TCP | 128 bytes | SYN | SUSPICIOUS
+[2024-12-27 21:15:32.234567] 45.227.255.190 -> 192.168.1.51:3389 | TCP | 128 bytes | SYN | SUSPICIOUS
+[2024-12-27 21:15:32.345678] 45.227.255.190 -> 192.168.1.52:3389 | TCP | 128 bytes | SYN | SUSPICIOUS
+[2024-12-27 21:15:32.456789] 45.227.255.190 -> 192.168.1.53:3389 | TCP | 128 bytes | SYN | SUSPICIOUS
+[2024-12-27 21:15:32.567890] 45.227.255.190 -> 192.168.1.54:3389 | TCP | 128 bytes | SYN | SUSPICIOUS
+# RDP port scanning detected (892 attempts total)
+
+[2024-12-28 01:28:47.123456] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+[2024-12-28 01:28:47.145678] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+[2024-12-28 01:28:47.167890] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+[2024-12-28 01:28:47.189012] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+[2024-12-28 01:28:47.210234] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+[2024-12-28 01:28:47.231456] 194.26.192.45 -> 192.168.1.80:80 | TCP | 4096 bytes | PSH | THREAT
+# HTTP flood attack detected (654 requests in 2 seconds)
+
+# Top Statistics:
+# - Total Bytes: 1.85 GB
+# - Mean Bytes per Record: 3,527.4 bytes
+# - StdDev: 2,184.9 bytes
+# - Suspicious Records: 12,847 (2.45%)
+# - Threat Records: 347 (0.066%)
+
+# Mission Note:
+# This dataset is ready for AI analysis. Patterns indicate coordinated attack
+# from multiple sources. Recommend Episode 30 for statistical pattern analysis.
+#
+# Viktor's note: "The data speaks volumes. Time to let the machines learn." 🤖
+
