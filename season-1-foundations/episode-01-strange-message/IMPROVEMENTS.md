@@ -116,10 +116,10 @@
 
 **Стало (сюжетно):**
 ```
-> LUNA: "Why did Viktor use `unsigned char` instead of just `char`?"
+> LUNA: "Почему Виктор использовал `unsigned char` вместо просто `char`?"
 > 
-> Hint: What happens if `char` is signed and you try to store 0xFF?
-> Viktor's message has bytes like 0xFF, 0xA0, 0xC2... All above 127!
+> Подсказка: Что случится, если `char` знаковый, а ты попытаешься сохранить 0xFF?
+> В сообщении Виктора есть байты типа 0xFF, 0xA0, 0xC2... Все выше 127!
 ```
 
 **Формат:**
@@ -193,9 +193,9 @@
 
 **1. Сократический метод (LUNA):**
 ```
-> LUNA: "Why did Viktor use `unsigned char`?"
+> LUNA: "Почему Виктор использовал `unsigned char`?"
 > *Студент думает*
-> LUNA: "Correct! Here's why..."
+> LUNA: "Верно! Вот почему..."
 ```
 
 **2. Контекстуальное обучение:**

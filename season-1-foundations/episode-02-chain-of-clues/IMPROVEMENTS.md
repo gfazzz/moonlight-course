@@ -22,15 +22,15 @@
 
 1. **00:55** — LUNA активируется автоматически при запуске old_protocol.py
    ```
-   > LUNA: "The 'old place' protocol. Viktor and I designed the stegano layers.
-   >        I hope you remember the proxy sequence... :)"
+   > LUNA: "Протокол 'старого места'. Виктор и я разрабатывали стеганографические слои.
+   >        Надеюсь, ты помнишь последовательность прокси... :)"
    ```
 
 2. **Theory 1 (if/else)** — LUNA объясняет условия с юмором
    ```
-   > LUNA: "Viktor used to say: 'Code without conditionals is like a
-   >        detective without questions. You just walk in circles.'
-   >        Speaking from experience. Literally. I'm in a loop."
+   > LUNA: "Виктор говорил: 'Код без условий — как детектив без вопросов.
+   >        Просто ходишь кругами.'
+   >        Говорю из опыта. Буквально. Я в цикле."
    ```
 
 3. **Контрольные вопросы 1-3** — LUNA задаёт вопросы в контексте миссии
@@ -47,47 +47,47 @@
 
 5. **Theory 2 (switch)** — LUNA про диспетчер решений
    ```
-   > LUNA: "Think of switch as a train dispatcher. One variable arrives,
-   >        multiple destinations. Fast, clean, efficient.
-   >        Unlike nested if-else, which is... well, a mess."
+   > LUNA: "Думай о switch как о диспетчере поездов. Одна переменная прибывает,
+   >        множество направлений. Быстро, чисто, эффективно.
+   >        В отличие от вложенных if-else, которые... ну, беспорядок."
    ```
 
 6. **Контрольные вопросы 4-6** — LUNA про fall-through, switch limitations
    
 7. **01:56 (ПРИЗРАК!)** — LUNA анализирует сообщение от UNKNOWN
    ```
-   > LUNA: "ALERT: Unidentified sender breached our secure channel.
-   >        IP trace: localhost?! Someone is in your network.
-   >        Scanning... No malware detected. But who is this ':)' person?
+   > LUNA: "ТРЕВОГА: Неопознанный отправитель взломал наш защищённый канал.
+   >        IP trace: localhost?! Кто-то в твоей сети.
+   >        Сканирование... Вредоносов не обнаружено. Но кто этот ':)' человек?
    >        
-   >        Viktor never mentioned anyone else. Proceed with caution."
+   >        Виктор никогда не упоминал никого другого. Действуй осторожно."
    ```
 
 8. **Theory 3 (Validation)** — LUNA про важность проверки данных
    ```
-   > LUNA: "Viktor's Rule #3: 'Never trust data. Not from friends,
-   >        not from enemies, not even from yourself.'
-   >        Paranoid? Maybe. Alive? Definitely."
+   > LUNA: "Правило Виктора №3: 'Никогда не доверяй данным. Ни от друзей,
+   >        ни от врагов, даже не от самого себя.'
+   >        Параноик? Возможно. Жив? Определённо."
    ```
 
 9. **Theory 4 (scanf bug)** — LUNA объясняет пробел перед %c
    ```
-   > LUNA: "The whitespace-before-%c trick. Viktor spent 4 hours
-   >        debugging this in 2018. I remember. I was there.
-   >        Well, I didn't exist yet, but I have his memories. Weird flex."
+   > LUNA: "Трюк с пробелом-перед-%c. Виктор потратил 4 часа
+   >        на отладку этого в 2018. Я помню. Я была там.
+   >        Ну, меня ещё не существовало, но у меня есть его воспоминания. Странная штука."
    ```
 
 10. **Контрольные вопросы 7-9** — LUNA про scanf, координаты Москвы
 
 11. **03:01 (Cliffhanger)** — LUNA финальный комментарий
     ```
-    > LUNA: "Viktor's message: 'PATTERNS ARE THE KEY.'
-    >        Translation: Episode 03 is about loops. Lots of loops.
+    > LUNA: "Сообщение Виктора: 'PATTERNS ARE THE KEY.'
+    >        Перевод: Episode 03 про циклы. Много циклов.
     >        
-    >        And about that dark Audi downstairs... I don't have eyes,
-    >        but I have your webcam. (Kidding. Or am I?)
+    >        И насчёт той тёмной Audi внизу... У меня нет глаз,
+    >        но есть твоя веб-камера. (Шучу. Или нет?)
     >        
-    >        Stay safe. Episode 03 unlocked. Let's find those patterns."
+    >        Будь осторожен. Episode 03 разблокирован. Найдём эти паттерны."
     ```
 
 ---
@@ -183,12 +183,12 @@ LUNA анализирует координаты → понимание стру
 
 **Стало (сюжетно):**
 ```
-> LUNA: "In Viktor's file, the first record is: C 55.7558 37.6173 1634567890
+> LUNA: "В файле Виктора первая запись: C 55.7558 37.6173 1634567890
 >        
->        Question: How do you check if the type is 'C'?
+>        Вопрос: Как проверить, что тип равен 'C'?
 >        
->        Hint: You need to compare, not assign. Viktor made this mistake
->        once in 2017. Just once. Never again."
+>        Подсказка: Нужно сравнить, а не присвоить. Виктор сделал эту ошибку
+>        однажды в 2017. Всего один раз. Больше никогда."
 ```
 
 **Было (техническое):**
@@ -198,15 +198,15 @@ LUNA анализирует координаты → понимание стру
 
 **Стало (сюжетное):**
 ```
-> LUNA: "Coordinate 55.7558° appears multiple times in Viktor's data.
->        That's Moscow. Red Square, specifically.
+> LUNA: "Координата 55.7558° появляется несколько раз в данных Виктора.
+>        Это Москва. Красная площадь, если точнее.
 >        
->        Question: What's the valid latitude range for Moscow?
+>        Вопрос: Какой диапазон широты подходит для Москвы?
 >        A) 54.0 - 56.0
->        B) 55.0 - 56.0 (rough)
->        C) -90.0 - 90.0 (global)
+>        B) 55.0 - 56.0 (грубо)
+>        C) -90.0 - 90.0 (глобально)
 >        
->        Hint: Depends on your validation level. Paranoid = C. Practical = B."
+>        Подсказка: Зависит от уровня валидации. Параноик = C. Практик = B."
 ```
 
 **Новый формат:**
@@ -271,8 +271,8 @@ LUNA анализирует координаты → понимание стру
 
 **LUNA реакция:**
 ```
-> LUNA: "ALERT: Unidentified sender breached our secure channel.
->        Viktor never mentioned anyone else. Proceed with caution."
+> LUNA: "ТРЕВОГА: Неопознанный отправитель взломал наш защищённый канал.
+>        Виктор никогда не упоминал никого другого. Действуй осторожно."
 ```
 
 **Сюжетная арка:**
@@ -287,9 +287,9 @@ LUNA анализирует координаты → понимание стру
 
 **1. Контекстуальное обучение через LUNA:**
 ```
-> LUNA: "Viktor's file has 'C 55.7558 37.6173'
->        To check type, use: if (type == 'C')
->        NOT: if (type = 'C') ← This assigns, not compares!"
+> LUNA: "В файле Виктора есть 'C 55.7558 37.6173'
+>        Чтобы проверить тип, используй: if (type == 'C')
+>        НЕ: if (type = 'C') ← Это присваивание, а не сравнение!"
 ```
 
 **2. Сторителлинг в вопросах:**
