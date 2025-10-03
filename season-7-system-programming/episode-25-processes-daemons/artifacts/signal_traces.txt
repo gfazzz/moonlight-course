@@ -1,0 +1,339 @@
+# SIGNAL HANDLING TRACES
+# Process: moonlight_monitor (PID 3789)
+# Target: surveillance_d (PID 3156)
+# Date: December 24, 2024, 16:12-17:45 (MSK)
+# Purpose: Monitor enemy daemon, handle signals gracefully
+
+================================================================================
+SIGNAL HANDLING CONFIGURATION
+================================================================================
+
+Process: moonlight_monitor
+PID: 3789
+User: root
+Working Directory: /
+Daemon: YES
+
+Signal handlers installed:
+- SIGTERM (15): Graceful shutdown with cleanup
+- SIGINT (2): Ignored (prevent Ctrl+C termination)
+- SIGHUP (1): Reload configuration
+- SIGUSR1 (10): Increase verbosity
+- SIGUSR2 (12): Decrease verbosity
+- SIGCHLD (17): Reap zombie children
+- SIGPIPE (13): Ignored (broken pipe protection)
+- SIGALRM (14): Periodic task trigger
+
+
+================================================================================
+[16:12:52] DAEMON STARTUP - Signal setup
+================================================================================
+[16:12:52.001] Installing signal handlers...
+
+Signal: SIGTERM (15)
+Handler: handle_sigterm()
+Action: Log shutdown message, cleanup resources, exit(0)
+```c
+void handle_sigterm(int sig) {
+    syslog(LOG_INFO, "Received SIGTERM, shutting down gracefully...");
+    cleanup_resources();
+    closelog();
+    exit(0);
+}
+```
+
+Signal: SIGINT (2)
+Handler: SIG_IGN
+Action: Ignore (daemon should not respond to Ctrl+C)
+
+Signal: SIGHUP (1)
+Handler: handle_sighup()
+Action: Reload configuration file
+```c
+void handle_sighup(int sig) {
+    syslog(LOG_INFO, "Received SIGHUP, reloading configuration...");
+    reload_config();
+}
+```
+
+Signal: SIGUSR1 (10)
+Handler: handle_sigusr1()
+Action: Increase log verbosity
+```c
+void handle_sigusr1(int sig) {
+    log_level++;
+    syslog(LOG_INFO, "Log verbosity increased to %d", log_level);
+}
+```
+
+Signal: SIGUSR2 (12)
+Handler: handle_sigusr2()
+Action: Decrease log verbosity
+```c
+void handle_sigusr2(int sig) {
+    log_level--;
+    syslog(LOG_INFO, "Log verbosity decreased to %d", log_level);
+}
+```
+
+Signal: SIGCHLD (17)
+Handler: handle_sigchld()
+Action: Reap zombie children
+```c
+void handle_sigchld(int sig) {
+    int status;
+    pid_t pid;
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        syslog(LOG_INFO, "Child process %d terminated with status %d", pid, status);
+    }
+}
+```
+
+Signal: SIGPIPE (13)
+Handler: SIG_IGN
+Action: Ignore (prevents termination on broken socket)
+
+Signal: SIGALRM (14)
+Handler: handle_sigalrm()
+Action: Periodic task (every 60 seconds)
+```c
+void handle_sigalrm(int sig) {
+    perform_periodic_tasks();
+    alarm(60);  // Re-arm for next 60 seconds
+}
+```
+
+[16:12:52.125] All signal handlers installed successfully.
+
+
+================================================================================
+[16:23:47] SIGNAL RECEIVED: SIGUSR1
+================================================================================
+Sender: PID 4021 (bash, user root)
+Command: kill -USR1 3789
+
+[16:23:47.001] Signal caught: SIGUSR1 (10)
+[16:23:47.002] Executing handler: handle_sigusr1()
+[16:23:47.003] Action: Increase log verbosity
+[16:23:47.004] Old verbosity: 2 (INFO)
+[16:23:47.005] New verbosity: 3 (DEBUG)
+[16:23:47.006] Handler completed.
+[16:23:47.007] Main loop resumed.
+
+
+================================================================================
+[16:45:12] SIGNAL RECEIVED: SIGHUP
+================================================================================
+Sender: PID 4089 (systemctl, user root)
+Command: systemctl reload moonlight_monitor
+
+[16:45:12.001] Signal caught: SIGHUP (1)
+[16:45:12.002] Executing handler: handle_sighup()
+[16:45:12.003] Action: Reload configuration
+[16:45:12.004] Reading config file: /etc/moonlight/monitor.conf
+[16:45:12.105] Configuration loaded:
+  - target_pid: 3156
+  - monitor_interval: 60
+  - log_level: 3
+  - stealth_mode: enabled
+  - network_capture: enabled
+[16:45:12.106] Handler completed.
+[16:45:12.107] Configuration applied, continuing operations.
+
+
+================================================================================
+[16:52:33] SIGNAL RECEIVED: SIGCHLD
+================================================================================
+Sender: Kernel (child process terminated)
+Child PID: 4112
+Parent PID: 3789 (moonlight_monitor)
+
+[16:52:33.001] Signal caught: SIGCHLD (17)
+[16:52:33.002] Executing handler: handle_sigchld()
+[16:52:33.003] Calling waitpid(-1, &status, WNOHANG)...
+[16:52:33.004] Child PID 4112 reaped.
+[16:52:33.005] Exit status: 0 (success)
+[16:52:33.006] Child was: Network packet capture subprocess
+[16:52:33.007] No more zombie children.
+[16:52:33.008] Handler completed.
+
+Process state after SIGCHLD:
+- No zombie processes
+- Process table cleaned
+- Resources freed
+
+
+================================================================================
+[17:03:18] SIGNAL RECEIVED: SIGALRM
+================================================================================
+Sender: Kernel (timer expired)
+Alarm set: 60 seconds ago
+
+[17:03:18.001] Signal caught: SIGALRM (14)
+[17:03:18.002] Executing handler: handle_sigalrm()
+[17:03:18.003] Periodic tasks triggered:
+  1. Check target process (PID 3156) - RUNNING
+  2. Capture network packets - 12 packets captured
+  3. Log system status - OK
+  4. Update statistics - Done
+  5. Check disk space - 78% used, OK
+[17:03:18.104] All periodic tasks completed.
+[17:03:18.105] Re-arming alarm for next 60 seconds.
+[17:03:18.106] Handler completed.
+
+
+================================================================================
+[17:15:42] SIGNAL IGNORED: SIGINT
+================================================================================
+Sender: PID 4234 (unknown)
+Signal: SIGINT (2)
+
+[17:15:42.001] Signal delivered: SIGINT (2)
+[17:15:42.002] Handler: SIG_IGN (ignored)
+[17:15:42.003] No action taken.
+[17:15:42.004] Process continues running.
+
+Note: Daemon processes should ignore SIGINT to prevent
+accidental termination via Ctrl+C.
+
+
+================================================================================
+[17:28:09] SIGNAL RACE CONDITION DETECTED
+================================================================================
+Event: Multiple signals received simultaneously
+
+Timeline:
+[17:28:09.001] SIGALRM delivered (periodic task)
+[17:28:09.002] Entering handle_sigalrm()
+[17:28:09.005] SIGUSR1 delivered (while in handler)
+[17:28:09.006] SIGUSR1 queued (cannot interrupt current handler)
+[17:28:09.107] handle_sigalrm() completed
+[17:28:09.108] Returning from signal handler
+[17:28:09.109] Processing queued signal: SIGUSR1
+[17:28:09.110] Entering handle_sigusr1()
+[17:28:09.111] Verbosity increased: 3 → 4
+[17:28:09.112] handle_sigusr1() completed
+[17:28:09.113] All signals processed, main loop resumed
+
+Signal safety:
+- Handlers are NOT reentrant
+- Second signal queued, not lost
+- Proper serialization of signal handling
+
+
+================================================================================
+[17:34:55] ATTACK: SIGKILL attempt (CANNOT BE CAUGHT)
+================================================================================
+[17:34:55] External process attempting to kill daemon...
+
+Command executed by attacker:
+$ kill -KILL 3789
+
+[17:34:55.001] Signal: SIGKILL (9)
+[17:34:55.002] Handler: CANNOT INSTALL (kernel handles directly)
+[17:34:55.003] Result: Process terminated immediately
+[17:34:55.004] No cleanup possible
+[17:34:55.005] Daemon killed.
+
+[17:34:55] PROCESS TERMINATED
+
+Note: SIGKILL (9) and SIGSTOP (19) cannot be caught or ignored.
+This is by design for system administrator control.
+
+
+================================================================================
+[17:35:02] PROCESS RESTARTED - Defensive measures
+================================================================================
+New PID: 4378
+Previous PID: 3789 (killed)
+
+[17:35:02] Daemon restarted by supervisor process.
+[17:35:03] Installing signal handlers again...
+[17:35:04] All handlers installed.
+[17:35:05] Adding SIGKILL protection:
+  - Supervisor process (PID 4377) monitors daemon
+  - If daemon killed, supervisor restarts it
+  - Supervisor runs at higher priority
+  - Supervisor uses watchdog timer
+
+[17:35:06] Defensive architecture:
+```
+PID 1 (init)
+  └─ PID 4377 (supervisor)  ← Monitors daemon
+       └─ PID 4378 (moonlight_monitor)  ← Actual daemon
+```
+
+[17:35:07] Now resilient to SIGKILL attacks.
+
+
+================================================================================
+[17:45:00] SIGNAL STATISTICS (Session Summary)
+================================================================================
+Monitoring period: 1h 32m 8s
+Total signals received: 47
+
+Signal breakdown:
+- SIGALRM (14): 92 times (periodic task, every 60s)
+- SIGCHLD (17): 23 times (child process terminations)
+- SIGHUP (1): 2 times (configuration reload)
+- SIGUSR1 (10): 5 times (increase verbosity)
+- SIGUSR2 (12): 3 times (decrease verbosity)
+- SIGINT (2): 7 times (ignored, attempted Ctrl+C)
+- SIGPIPE (13): 4 times (ignored, broken pipe)
+- SIGTERM (15): 0 times (not received)
+- SIGKILL (9): 1 time (fatal, killed then restarted)
+
+Signal handling efficiency:
+- Average handler execution time: 0.12ms
+- No missed signals
+- No race conditions causing data corruption
+- All zombie processes reaped successfully
+
+
+================================================================================
+SIGNAL HANDLING BEST PRACTICES (Learned)
+================================================================================
+
+✅ DO:
+1. Install handlers for SIGTERM (graceful shutdown)
+2. Ignore SIGPIPE (prevent broken pipe termination)
+3. Handle SIGCHLD (reap zombies)
+4. Use SIGHUP for configuration reload
+5. Keep handlers SHORT and SIMPLE
+6. Use sig_atomic_t for shared variables
+7. Log all signal events
+
+❌ DON'T:
+1. Call non-async-signal-safe functions in handlers
+   (malloc, printf, fprintf - DANGEROUS)
+2. Use locks in signal handlers (deadlock risk)
+3. Ignore SIGTERM (prevents graceful shutdown)
+4. Try to catch SIGKILL or SIGSTOP (impossible)
+5. Perform complex operations in handlers
+6. Use global variables without proper synchronization
+
+🛡️ DEFENSIVE:
+1. Use supervisor process to restart after SIGKILL
+2. Write PID to file for external monitoring
+3. Implement watchdog timers
+4. Log all signal activity for forensics
+5. Test signal handling under stress
+
+
+================================================================================
+MISSION OBJECTIVE: ACCOMPLISHED
+================================================================================
+✅ Process management mastered
+✅ Daemon creation successful
+✅ Signal handling robust
+✅ Enemy daemon monitored
+✅ Counter-daemon deployed
+✅ Resilient to SIGKILL attacks
+
+**Next: Episode 26 - Threads & Parallelism**
+Use threads to analyze enemy activity in parallel.
+
+---
+
+END OF SIGNAL TRACES
+
