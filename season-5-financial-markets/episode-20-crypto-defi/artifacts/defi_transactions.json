@@ -1,0 +1,146 @@
+{
+  "blockchain": "Ethereum",
+  "network": "mainnet",
+  "analysis_period": "2024-06-01 to 2024-11-30",
+  "total_transactions": 8472,
+  "identified_wallets": [
+    "0x1a2b3c4d5e6f7890abcdef1234567890abcdef12",
+    "0x2b3c4d5e6f7890abcdef1234567890abcdef1234",
+    "0x3c4d5e6f7890abcdef1234567890abcdef123456"
+  ],
+  "tornado_cash_deposits": [
+    {
+      "tx_hash": "0xabc123...def456",
+      "date": "2024-09-15T14:23:47Z",
+      "amount_eth": 45.7,
+      "amount_usd": 107432,
+      "from_wallet": "0x1a2b3c4d5e6f7890abcdef1234567890abcdef12",
+      "note": "Post-arbitrage laundering"
+    },
+    {
+      "tx_hash": "0xdef456...abc789",
+      "date": "2024-10-02T08:15:33Z",
+      "amount_eth": 67.3,
+      "amount_usd": 158291,
+      "from_wallet": "0x2b3c4d5e6f7890abcdef1234567890abcdef1234",
+      "note": "Post-pump&dump profits"
+    },
+    {
+      "tx_hash": "0x789abc...def012",
+      "date": "2024-11-08T19:47:21Z",
+      "amount_eth": 122.4,
+      "amount_usd": 287664,
+      "from_wallet": "0x3c4d5e6f7890abcdef1234567890abcdef123456",
+      "note": "Large consolidation before withdrawal"
+    }
+  ],
+  "uniswap_activity": {
+    "total_swaps": 847,
+    "suspicious_patterns": [
+      {
+        "date": "2024-06-20",
+        "pool": "SHIB/ETH",
+        "activity": "massive_buy",
+        "volume_spike": "89x normal",
+        "price_impact": "+217%",
+        "timing": "30 minutes before pump announcement",
+        "manipulation_score": 0.97
+      },
+      {
+        "date": "2024-07-25",
+        "pool": "DOGE/USDT",
+        "activity": "coordinated_dump",
+        "volume": "$4.2M",
+        "price_impact": "-58%",
+        "timing": "Peak of pump cycle",
+        "manipulation_score": 0.93
+      },
+      {
+        "date": "2024-08-14",
+        "pool": "PEPE/WETH",
+        "activity": "liquidity_extraction",
+        "removed_liquidity": "$2.8M",
+        "impact": "Pool collapse, -89% price",
+        "victims": 2847,
+        "manipulation_score": 0.99
+      }
+    ],
+    "flash_loan_attacks": [
+      {
+        "date": "2024-09-03",
+        "protocol": "Aave",
+        "borrowed": "$10M USDC",
+        "duration": "1 block (13 seconds)",
+        "profit": "$284,000",
+        "method": "Price oracle manipulation via Uniswap pool drain"
+      },
+      {
+        "date": "2024-10-17",
+        "protocol": "Compound",
+        "borrowed": "$15M DAI",
+        "duration": "2 blocks (26 seconds)",
+        "profit": "$417,000",
+        "method": "Arbitrage cascade across 5 DEXes"
+      }
+    ]
+  },
+  "shell_company_trail": [
+    {
+      "wallet": "0x1a2b3c4d5e6f7890abcdef1234567890abcdef12",
+      "company": "Cyprus Holdings Ltd",
+      "jurisdiction": "Cyprus",
+      "fiat_offramp": "Binance P2P → Revolut",
+      "amount_withdrawn": "$1.2M",
+      "status": "Active shell"
+    },
+    {
+      "wallet": "0x2b3c4d5e6f7890abcdef1234567890abcdef1234",
+      "company": "Malta Digital Assets SA",
+      "jurisdiction": "Malta",
+      "fiat_offramp": "Kraken → Swiss bank",
+      "amount_withdrawn": "$2.8M",
+      "status": "Under investigation"
+    },
+    {
+      "wallet": "0x3c4d5e6f7890abcdef1234567890abcdef123456",
+      "company": "Singapore Crypto Ventures Pte",
+      "jurisdiction": "Singapore",
+      "fiat_offramp": "OTC desk → Cayman account",
+      "amount_withdrawn": "$6.1M",
+      "status": "Frozen by authorities"
+    }
+  ],
+  "evidence_summary": {
+    "total_profits_crypto": "$10,247,832",
+    "laundered_via_tornado": "$3,127,000",
+    "withdrawn_to_fiat": "$10,100,000",
+    "still_in_crypto": "$147,832",
+    "victims_count": 8472,
+    "jurisdictions_involved": 7,
+    "law_enforcement_alerts": [
+      "Europol Financial Crimes Unit",
+      "FBI Cyber Division",
+      "UK National Crime Agency",
+      "Swiss FINMA",
+      "Singapore MAS"
+    ],
+    "recommended_charges": [
+      "Market manipulation (securities fraud)",
+      "Money laundering (multiple jurisdictions)",
+      "Wire fraud (international)",
+      "Computer fraud",
+      "Conspiracy to commit fraud"
+    ],
+    "estimated_prison_time": "15-25 years (US jurisdiction)"
+  },
+  "mission_critical_finding": {
+    "alert": "FINAL TRANSFER SCHEDULED",
+    "timestamp": "2024-12-20T06:50:00Z",
+    "amount": "$147,832 remaining in crypto",
+    "destination": "Monero mixer (untraceable)",
+    "window": "4 hours 17 minutes remaining",
+    "action_required": "IMMEDIATE EVIDENCE PACKAGE TO EUROPOL",
+    "risk": "After Monero conversion, trail is PERMANENTLY LOST"
+  }
+}
+
