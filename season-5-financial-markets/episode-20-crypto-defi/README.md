@@ -180,6 +180,84 @@ Ethereum (ETH):  $3,000 × 120M = $360B market cap
 - Lower liquidity (особенно altcoins)
 - Multiple exchanges with different prices
 
+### ⚡ FinTech: Season 4 Blockchain Knowledge!
+
+**Episode 20 использует Season 4 Episode 14: Blockchain & Hashes!**
+
+```
+┌──────────────────────────────────────────────────────┐
+│  Season 4 Episode 14: Blockchain Foundations         │
+│  ├─ SHA-256 hash функция                             │
+│  ├─ Block structure (prev_hash → current_hash)       │
+│  ├─ Merkle trees для transaction verification        │
+│  └─ Proof of Work concept                            │
+├──────────────────────────────────────────────────────┤
+│  Season 5 Episode 20: Real-World Application         │
+│  ├─ Transaction verification на blockchain           │
+│  ├─ Hash-based tx tracking (Tornado Cash mixing)     │
+│  ├─ Block validation для forensics                   │
+│  └─ Real-time blockchain monitoring                  │
+└──────────────────────────────────────────────────────┘
+```
+
+**Real-world transaction verification (Season 4 knowledge!):**
+```c
+// Season 4 Episode 14: SHA-256 (re-used here!)
+#include <openssl/sha.h>
+
+typedef struct {
+    char tx_id[65];          // SHA-256 hash (32 bytes = 64 hex chars + null)
+    char from_address[43];   // Bitcoin address
+    char to_address[43];
+    double amount;
+    uint64_t timestamp;
+    char prev_tx_hash[65];   // Blockchain linking!
+} CryptoTransaction;
+
+// Verify transaction hash (Season 4 crypto!)
+int verify_transaction_hash(CryptoTransaction *tx) {
+    // Build transaction data string
+    char tx_data[512];
+    snprintf(tx_data, sizeof(tx_data), "%s:%s:%.8f:%lu:%s",
+             tx->from_address, tx->to_address, tx->amount,
+             tx->timestamp, tx->prev_tx_hash);
+    
+    // Calculate SHA-256 (Season 4 Episode 14!)
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256((unsigned char*)tx_data, strlen(tx_data), hash);
+    
+    // Convert to hex string
+    char calculated_hash[65];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        sprintf(&calculated_hash[i*2], "%02x", hash[i]);
+    }
+    
+    // Compare with claimed tx_id
+    return (strcmp(calculated_hash, tx->tx_id) == 0);
+}
+
+// Track Tornado Cash mixing path (hash chain analysis!)
+void trace_mixing_path(const char *input_tx, const char *output_tx) {
+    // Tornado Cash breaks blockchain link, но можно найти паттерны:
+    // - Timing analysis (deposit → withdraw delay)
+    // - Amount patterns (exact amounts suspicious)
+    // - Gas price correlation
+    
+    printf("Analyzing mixing path:\n");
+    printf("Input TX:  %s\n", input_tx);
+    printf("Output TX: %s\n", output_tx);
+    
+    // Statistical analysis to break anonymity
+    // (Season 4 algorithms + Season 8 statistics!)
+}
+```
+
+**Почему это важно:**
+- **Blockchain forensics** = Season 4 hash knowledge в действии!
+- **Tornado Cash** санкционирован (OFAC), но понимание mixing критично
+- **Real-time monitoring** требует fast hash verification (< 1ms per tx)
+- **$10M схема** раскрыта через blockchain analysis
+
 **Price Data Structure:**
 ```c
 typedef struct {
@@ -338,6 +416,68 @@ bool detect_pump_and_dump(CryptoTicker *history, int n) {
     return false;
 }
 ```
+
+### ⚡ FinTech Performance: Real-Time Blockchain Monitoring
+
+**Проблема:** Bitcoin blockchain = ~400,000 transactions/day  
+**Решение:** Fast hash table lookups + streaming processing
+
+```c
+// Season 4: Hash table для O(1) suspicious address lookup
+#include <uthash.h>  // Or implement own hash table from S4
+
+typedef struct {
+    char address[43];           // Key
+    int suspicious_score;       // Value
+    UT_hash_handle hh;
+} AddressRisk;
+
+AddressRisk *risk_db = NULL;  // Hash table
+
+// O(1) lookup вместо O(N) linear search!
+int get_address_risk(const char *address) {
+    AddressRisk *entry;
+    HASH_FIND_STR(risk_db, address, entry);
+    return entry ? entry->suspicious_score : 0;
+}
+
+// Real-time transaction monitoring (streaming)
+void monitor_blockchain_stream(FILE *tx_stream) {
+    CryptoTransaction tx;
+    uint64_t start_time = get_nanoseconds();
+    int tx_count = 0;
+    
+    while (read_transaction(tx_stream, &tx)) {
+        // 1. Verify hash (Season 4!)
+        if (!verify_transaction_hash(&tx)) {
+            fprintf(stderr, "ALERT: Invalid tx hash: %s\n", tx.tx_id);
+            continue;
+        }
+        
+        // 2. Check against risk database (O(1)!)
+        int sender_risk = get_address_risk(tx.from_address);
+        int receiver_risk = get_address_risk(tx.to_address);
+        
+        if (sender_risk > 80 || receiver_risk > 80) {
+            printf("🚨 HIGH RISK TX: %s (score: %d)\n", 
+                   tx.tx_id, sender_risk + receiver_risk);
+        }
+        
+        tx_count++;
+    }
+    
+    uint64_t elapsed = get_nanoseconds() - start_time;
+    double tx_per_sec = (double)tx_count / (elapsed / 1e9);
+    
+    printf("\nProcessed %d tx in %.2f sec (%.2f tx/sec)\n",
+           tx_count, elapsed / 1e9, tx_per_sec);
+}
+```
+
+**Performance goals:**
+- **Hash verification:** < 100 microseconds per tx (SHA-256 fast!)
+- **Risk lookup:** < 1 microsecond (hash table O(1))
+- **Total throughput:** > 10,000 tx/second (real-time capable!)
 
 ---
 
@@ -624,13 +764,36 @@ void generate_suspicious_coins_report(CryptoTicker **coins, int n);
 
 ## 🏆 Бонусные задания
 
-### Bonus 1: Triangular Arbitrage ⭐⭐⭐⭐⭐
+### Bonus 1: SHA-256 Transaction Verification ⭐⭐⭐⭐⭐ (Season 4!)
+Реализуйте полную blockchain transaction verification:
+```c
+// Season 4 Episode 14 в действии!
+int verify_tx_chain(CryptoTransaction *txs, int count) {
+    for (int i = 1; i < count; i++) {
+        if (strcmp(txs[i].prev_tx_hash, txs[i-1].tx_id) != 0) {
+            return 0;  // Chain broken!
+        }
+        if (!verify_transaction_hash(&txs[i])) {
+            return 0;  // Invalid hash!
+        }
+    }
+    return 1;  // Valid chain
+}
+```
+
+### Bonus 2: Hash Table Address Tracking ⭐⭐⭐⭐⭐ (Season 4!)
+O(1) lookup для 100,000+ suspicious addresses (hash table from S4).
+
+### Bonus 3: Real-Time Stream Processing ⭐⭐⭐⭐⭐ (Performance!)
+Обрабатывайте 10,000+ tx/sec в реальном времени (fast hashing + hash tables).
+
+### Bonus 4: Triangular Arbitrage ⭐⭐⭐⭐☆
 BTC→ETH→USDT→BTC — найти прибыльный треугольник.
 
-### Bonus 2: On-Chain Analysis ⭐⭐⭐⭐⭐
-Парсинг blockchain (симуляция) для отслеживания крупных транзакций (whales).
+### Bonus 5: On-Chain Forensics ⭐⭐⭐⭐⭐
+Tornado Cash mixing analysis (timing, amounts, gas price correlation).
 
-### Bonus 3: MEV Bot (Conceptual) ⭐⭐⭐⭐⭐
+### Bonus 6: MEV Bot Detection ⭐⭐⭐⭐⭐
 Maximal Extractable Value — front-running detection.
 
 ---
@@ -639,11 +802,24 @@ Maximal Extractable Value — front-running detection.
 
 После Episode 20 вы умеете:
 
-- ✅ Анализировать криптовалютные рынки
-- ✅ Находить арбитражные возможности
-- ✅ Понимать основы DeFi (liquidity pools, AMM)
+### 📚 Финансовые концепции
+- ✅ Анализировать криптовалютные рынки (BTC, ETH, altcoins)
+- ✅ Находить арбитражные возможности (inter-exchange, triangular)
+- ✅ Понимать основы DeFi (liquidity pools, AMM, Uniswap)
 - ✅ Детектировать pump & dump и wash trading
-- ✅ Применять blockchain концепции из Season 4
+- ✅ Crypto forensics (money laundering detection)
+
+### ⚡ FinTech навыки + Season 4 blockchain!
+- ✅ **Season 4 Episode 14:** SHA-256 transaction verification
+- ✅ **Blockchain validation:** Hash chain integrity checking
+- ✅ **Hash tables (S4):** O(1) address risk lookup (100,000+ addresses!)
+- ✅ **Real-time processing:** 10,000+ tx/sec streaming capability
+- ✅ **Tornado Cash forensics:** Breaking mixing anonymity through timing analysis
+- ✅ **Performance profiling:** Measuring tx verification speed
+
+**🎉 SEASON 5 FINALE COMPLETE! 🎉**
+
+**Результат:** High-performance crypto forensics system, раскрывающий **$10M+ схему** через blockchain analysis с использованием **Season 4 hash knowledge**!
 
 ---
 

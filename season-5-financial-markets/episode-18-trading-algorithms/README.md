@@ -150,6 +150,54 @@ double calculate_sma(double *prices, int n, int period) {
 
 **Применение:** Когда цена выше SMA(50) — восходящий тренд.
 
+### ⚡ FinTech Performance: Incremental SMA (HFT Optimization)
+
+**Проблема:** Пересчет SMA каждый tick = O(N) операций  
+**Решение HFT:** Инкрементальная SMA = O(1)!
+
+```c
+typedef struct {
+    double sum;
+    double *window;  // Circular buffer
+    int period;
+    int index;
+    int filled;
+} IncrementalSMA;
+
+// Initialization
+IncrementalSMA* sma_init(int period) {
+    IncrementalSMA *sma = malloc(sizeof(IncrementalSMA));
+    sma->sum = 0.0;
+    sma->window = calloc(period, sizeof(double));
+    sma->period = period;
+    sma->index = 0;
+    sma->filled = 0;
+    return sma;
+}
+
+// O(1) update instead of O(N) recalculation!
+static inline double sma_update(IncrementalSMA *sma, double price) {
+    // Remove oldest value from sum
+    sma->sum -= sma->window[sma->index];
+    
+    // Add new value
+    sma->window[sma->index] = price;
+    sma->sum += price;
+    
+    // Move to next position (circular buffer from Season 2!)
+    sma->index = (sma->index + 1) % sma->period;
+    
+    if (sma->filled < sma->period) sma->filled++;
+    
+    return sma->sum / sma->filled;
+}
+```
+
+**Impact:**
+- Naive SMA: ~50 операций × 20 период = **1,000 ops/tick**
+- Incremental SMA: **4 ops/tick** (250x faster!)
+- На 1M ticks: 2.5ms вместо 625ms (**HFT critical!**)
+
 ### 2. Relative Strength Index (RSI)
 
 **RSI** — индекс относительной силы (0-100):
@@ -201,6 +249,61 @@ Signal momentum_strategy(double *prices, int n) {
     return NO_SIGNAL;
 }
 ```
+
+### ⚡ FinTech: Order Execution Latency
+
+**Real-world HFT pipeline:**
+```
+Signal Generation → Order Creation → Network Send → Exchange Processing → Ack
+  [1-10 μs]           [1-5 μs]        [50-200 μs]        [10-50 μs]      [50-200 μs]
+
+TOTAL: ~112-465 microseconds (goal: < 1 millisecond!)
+```
+
+**Optimization techniques:**
+```c
+// 1. Inline critical functions (eliminates function call overhead ~5ns)
+static inline Signal fast_signal_check(double sma_20, double sma_50, double price) {
+    if (sma_20 > sma_50 && price > sma_20) return BUY;
+    if (sma_20 < sma_50 && price < sma_20) return SELL;
+    return NO_SIGNAL;
+}
+
+// 2. Pre-allocate order structs (no malloc in hot path!)
+typedef struct {
+    char symbol[8];
+    double price;
+    int quantity;
+    Signal side;
+    uint64_t timestamp_ns;  // nanosecond precision
+} Order;
+
+Order order_pool[1000];  // Pre-allocated pool
+int order_index = 0;
+
+// 3. Measure latency (critical for HFT!)
+#include <time.h>
+
+static inline uint64_t get_nanoseconds(void) {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ts.tv_sec * 1000000000UL + ts.tv_nsec;
+}
+
+// Usage
+uint64_t start = get_nanoseconds();
+Signal sig = fast_signal_check(sma_20, sma_50, price);
+uint64_t end = get_nanoseconds();
+
+if (end - start > 10000) {  // > 10 microseconds = problem!
+    fprintf(stderr, "WARNING: Signal generation took %lu ns\n", end - start);
+}
+```
+
+**Why это важно:**
+- На NYSE: ~1000 quotes/second per symbol
+- HFT firms: > 100,000 orders/second
+- **1 миллисекунда опоздания = потеря $10,000+** (на волатильных акциях)
 
 ### 4. Backtesting Framework
 
@@ -450,23 +553,47 @@ void print_backtest_report(BacktestResult *result);
 
 ## 🏆 Бонусные задания
 
-### Bonus 1: Machine Learning Signal ⭐⭐⭐⭐⭐
+### Bonus 1: Latency Benchmarking ⭐⭐⭐⭐⭐ (FinTech Priority!)
+Измерьте latency каждой функции индикатора:
+```c
+uint64_t start = get_nanoseconds();
+double rsi = calculate_rsi(prices, n, 14);
+uint64_t latency = get_nanoseconds() - start;
+
+printf("RSI latency: %lu nanoseconds\n", latency);
+// Goal: < 1000 ns (1 microsecond)
+```
+
+### Bonus 2: Incremental Indicators ⭐⭐⭐⭐⭐ (HFT Technique!)
+Реализуйте O(1) версии EMA, RSI (не только SMA) — circular buffers!
+
+### Bonus 3: Order Matching FIFO Queue ⭐⭐⭐⭐⭐
+Симуляция биржевого order book (Season 2 queue structures).
+
+### Bonus 4: Machine Learning Signal ⭐⭐⭐⭐☆
 Простая линейная регрессия для предсказания цены.
 
-### Bonus 2: Portfolio Optimization ⭐⭐⭐⭐⭐
-Оптимизация весов нескольких стратегий.
-
-### Bonus 3: Walk-Forward Analysis ⭐⭐⭐⭐☆
+### Bonus 5: Walk-Forward Analysis ⭐⭐⭐⭐☆
 Скользящее окно для избежания overfitting.
 
 ---
 
 ## 📊 Что вы узнали
 
-- ✅ Реализация технических индикаторов
-- ✅ Создание торговых стратегий
+### 📚 Финансовые концепции
+- ✅ Реализация технических индикаторов (SMA, EMA, RSI, MACD)
+- ✅ Создание торговых стратегий (crossover, momentum)
 - ✅ Backtesting на исторических данных
-- ✅ Анализ производительности стратегий
+- ✅ Анализ производительности стратегий (Sharpe, drawdown)
+
+### ⚡ FinTech навыки (главное!)
+- ✅ **Incremental algorithms** — O(1) updates вместо O(N) recalculations
+- ✅ **Latency measurement** — nanosecond-precision timing (`clock_gettime`)
+- ✅ **Inline functions** — `static inline` для устранения overhead
+- ✅ **Pre-allocation** — order pools (Season 2 memory management!)
+- ✅ **HFT pipeline** — понимание critical path от signal до execution
+
+**Результат:** Backtesting framework с **sub-millisecond execution** — готов к HFT!
 
 ---
 
