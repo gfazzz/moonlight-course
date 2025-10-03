@@ -74,13 +74,14 @@ V. присылает экстренное сообщение:
 
 ## 📚 Теория
 
-### Процессы в Linux
+### Процессы в UNIX/POSIX (Linux/macOS/FreeBSD)
 
 ```c
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
-// Создание нового процесса
+// Создание нового процесса (POSIX-compliant)
 pid_t pid = fork();
 if (pid == 0) {
     // Дочерний процесс
@@ -91,22 +92,40 @@ if (pid == 0) {
 }
 ```
 
-### Создание Daemon
+**Platform notes:**
+- `fork()`, `exec()`, `wait()` — POSIX standard (Linux/macOS/FreeBSD)
+- Portable across all UNIX systems
+
+### Создание Daemon (Cross-platform)
 
 ```c
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 void daemonize() {
     pid_t pid = fork();
     if (pid < 0) exit(1);
     if (pid > 0) exit(0);  // Родитель завершается
     
-    setsid();  // Новая сессия
+    setsid();  // Новая сессия (POSIX)
     chdir("/");  // Рабочая директория
+    umask(0);    // Reset file mode mask
     
-    close(STDIN_FILENO);
-    close(STDOUT_FILENO);
-    close(STDERR_FILENO);
+    // Redirect stdin/stdout/stderr to /dev/null
+    int fd = open("/dev/null", O_RDWR);
+    dup2(fd, STDIN_FILENO);
+    dup2(fd, STDOUT_FILENO);
+    dup2(fd, STDERR_FILENO);
+    if (fd > 2) close(fd);
 }
 ```
+
+**Platform notes:**
+- POSIX daemon creation (works on Linux/macOS/FreeBSD)
+- macOS: Use launchd for production daemons
+- Linux: Use systemd for production services
+- FreeBSD: Use rc.d scripts for production
 
 ---
 

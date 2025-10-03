@@ -66,10 +66,11 @@
 
 ## 📚 Теория
 
-### POSIX Threads
+### POSIX Threads (Linux/macOS/FreeBSD)
 
 ```c
 #include <pthread.h>
+#include <stdio.h>
 
 void *worker(void *arg) {
     int id = *(int *)arg;
@@ -92,7 +93,12 @@ int main() {
 }
 ```
 
-### Mutex
+**Platform notes:**
+- POSIX threads (pthreads) — standard on all UNIX systems
+- Compilation: `gcc -pthread program.c` (Linux/macOS/FreeBSD)
+- Works identically across platforms
+
+### Mutex (Cross-platform)
 
 ```c
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
@@ -104,6 +110,11 @@ void *safe_increment(void *arg) {
     return NULL;
 }
 ```
+
+**Platform notes:**
+- `pthread_mutex_t` — POSIX standard (portable)
+- Error checking: Use `pthread_mutex_lock()` return value
+- Advanced: Priority inheritance mutexes (platform-specific)
 
 ---
 
