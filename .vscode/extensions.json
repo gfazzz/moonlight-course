@@ -1,0 +1,38 @@
+{
+  "recommendations": [
+    // C/C++ Development
+    "ms-vscode.cpptools",
+    "ms-vscode.cpptools-extension-pack",
+    "llvm-vs-code-extensions.vscode-clangd",
+
+    // Debugging
+    "vadimcn.vscode-lldb",
+
+    // Makefile
+    "ms-vscode.makefile-tools",
+
+    // Markdown (документация)
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // Git
+    "eamodio.gitlens",
+
+    // Подсветка TODO/FIXME
+    "wayou.vscode-todo-highlight",
+
+    // Memory debugging (для Season 2)
+    "webfreak.debug",
+
+    // Hex Editor (для работы с бинарными данными)
+    "ms-vscode.hexeditor",
+
+    // Better Comments (для структурированных комментариев)
+    "aaron-bond.better-comments",
+
+    // Error Lens (inline errors)
+    "usernamehw.errorlens"
+  ],
+  "unwantedRecommendations": []
+}
+

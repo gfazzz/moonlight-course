@@ -1,0 +1,127 @@
+{
+  // OPERATION MOONLIGHT - Настройки редактора
+  // Работает в VSCode и Cursor
+
+  // === C/C++ ===
+  "C_Cpp.default.cStandard": "c11",
+  "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+  "C_Cpp.default.intelliSenseMode": "gcc-x64",
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.formatting": "clang-format",
+
+  // Clang-Format для форматирования C кода
+  "C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, IndentWidth: 2, UseTab: Never, ColumnLimit: 100 }",
+
+  // === Markdown ===
+  "markdown.preview.fontSize": 14,
+  "markdown.preview.lineHeight": 1.6,
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+
+  // Markdown lint
+  "markdownlint.config": {
+    "MD013": false,  // Line length - отключаем (длинные строки кода в примерах)
+    "MD033": false,  // Inline HTML - разрешаем (для badges, div align)
+    "MD041": false   // First line heading - разрешаем (для ASCII art)
+  },
+
+  // === Редактор ===
+  "editor.fontSize": 14,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "editor.formatOnSave": false,  // Не форматировать автоматически (может сломать стартовый код)
+  "editor.rulers": [80, 100],
+  "editor.renderWhitespace": "boundary",
+  "editor.minimap.enabled": true,
+
+  // === Файлы ===
+  "files.encoding": "utf8",
+  "files.eol": "\n",  // Unix line endings
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  // Исключения из поиска и автодополнения
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/*.o": true,
+    "**/*.out": true,
+    "**/a.out": true
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/*.code-search": true,
+    "**/.git": true,
+    "**/*.o": true,
+    "**/*.out": true
+  },
+
+  // === Терминал ===
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.fontFamily": "monospace",
+  "terminal.integrated.scrollback": 10000,
+
+  // === Git ===
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+
+  // === Подсветка TODO ===
+  "todohighlight.keywords": [
+    {
+      "text": "TODO:",
+      "color": "#fff",
+      "backgroundColor": "#ffab00",
+      "overviewRulerColor": "rgba(255,171,0,0.8)"
+    },
+    {
+      "text": "FIXME:",
+      "color": "#fff",
+      "backgroundColor": "#f44336",
+      "overviewRulerColor": "rgba(244,67,54,0.8)"
+    },
+    {
+      "text": "NOTE:",
+      "color": "#fff",
+      "backgroundColor": "#2196F3",
+      "overviewRulerColor": "rgba(33,150,243,0.8)"
+    },
+    {
+      "text": "LUNA:",
+      "color": "#000",
+      "backgroundColor": "#FFD700",
+      "overviewRulerColor": "rgba(255,215,0,0.8)"
+    },
+    {
+      "text": "VIKTOR:",
+      "color": "#fff",
+      "backgroundColor": "#607D8B",
+      "overviewRulerColor": "rgba(96,125,139,0.8)"
+    }
+  ],
+
+  // === Специфично для курса ===
+  "files.associations": {
+    "*.c": "c",
+    "*.h": "c",
+    "starter*.c": "c",
+    "solution*.c": "c",
+    ".cursorrules": "plaintext",
+    "Makefile": "makefile"
+  },
+
+  // Не открывать автоматически solution/ (чтобы не спойлерить)
+  "files.watcherExclude": {
+    "**/solution/**": true
+  }
+}
+

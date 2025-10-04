@@ -66,7 +66,7 @@
 
 ## 👨‍💻 Автор
 
-**GitHub:** [@gfazzz](https://github.com/gfazzz)  
+**GitHub:** [@gfazzz](https://github.com/gfazzz)
 **Проект:** [moonlight-course](https://github.com/gfazzz/moonlight-course)
 
 ---
@@ -74,6 +74,22 @@
 ## 📄 Лицензия
 
 Курс распространяется под лицензией **MIT**. См. файл [LICENSE](LICENSE).
+
+---
+
+## 🔗 Связанные проекты
+
+### **KERNEL SHADOWS**
+Спин-офф курс по Linux системному администрированию, действие которого происходит в той же вселенной что и OPERATION MOONLIGHT.
+
+- **Репозиторий:** [github.com/gfazzz/kernel-shadows](https://github.com/gfazzz/kernel-shadows)
+- **Фокус:** Ubuntu Linux, Bash, Networking, Security, DevOps, Docker, Kubernetes
+- **Персонажи:** Новые герои, но LILITH AI — "сестра" LUNA
+- **Структура:** 8 сезонов, 32 эпизода, ~120-160 часов
+- **Стилистика:** Киберпанк-триллер, grey hat hacker perspective
+- **Лицензия:** GPL v3 (копилефт)
+
+Если вы прошли MOONLIGHT и хотите освоить Linux системное администрирование — KERNEL SHADOWS идеальное продолжение!
 
 ---
 
@@ -85,4 +101,5 @@
 
 **Если курс помог вам — поставьте ⭐ на GitHub!**
 
-[github.com/gfazzz/moonlight-course](https://github.com/gfazzz/moonlight-course)
+- [github.com/gfazzz/moonlight-course](https://github.com/gfazzz/moonlight-course) — OPERATION MOONLIGHT (C Programming)
+- [github.com/gfazzz/kernel-shadows](https://github.com/gfazzz/kernel-shadows) — KERNEL SHADOWS (Linux SysAdmin)

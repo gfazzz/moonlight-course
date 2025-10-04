@@ -23,7 +23,7 @@
 
 Каждый сезон собирает компоненты эпизодов в единую библиотеку:
 
-#### Season 1: `moonlight_decoder` 
+#### Season 1: `moonlight_decoder`
 Файлы в корне `season-1-foundations/`:
 - `season_project.c` — main integration
 - `decoder.h` — API
@@ -130,12 +130,50 @@ Trade* load_market_data(const char* symbol) {
 - Process management + IPC
 - Network interception + crypto
 
-#### Season 8: `ml_predictor` (AI & Data Science)
+#### Season 8: `luna_ai` (AI & Data Science) 🤖💡
 **Использует:** Seasons 1-7
-- Memory для больших datasets
-- Algorithms для matrix operations
-- Data structures для neural network
-- Network для distributed processing
+
+**Итоговый проект:** Создание LUNA AI Assistant на C!
+
+Аналог `lilith.sh` из KERNEL SHADOWS, но реализованный на чистом C с использованием машинного обучения:
+
+```c
+// season-8-ai-and-data/season_project_luna.c
+#include "../../season-2-memory-and-pointers/memory_manager.h"  // Datasets
+#include "../../season-4-crypto-and-algorithms/data_structures.h"  // Hash table для knowledge base
+#include "../../season-7-system-programming/ipc.h"  // Взаимодействие с процессами
+#include "neural_network.h"  // Season 8 Episode 31
+#include "nlp_basic.h"  // Season 8 Episode 32
+
+// LUNA AI - Logic Understanding & Neural Algorithm
+// Интерактивный AI помощник для студентов курса
+```
+
+**Компоненты проекта:**
+- Episode 29: Big data processing → обработка диалогов
+- Episode 30: Statistical analysis → анализ паттернов вопросов
+- Episode 31: Neural network → простая модель понимания контекста
+- Episode 32: Prediction → предсказание намерений студента
+
+**Функции LUNA:**
+- `luna quote` — мотивационная цитата от Viktor
+- `luna hint <episode>` — подсказка для эпизода
+- `luna check <episode>` — проверка решения
+- `luna explain <concept>` — объяснение концепции C
+- `luna debug <error>` — помощь с ошибками
+- `luna chat` — интерактивный режим
+
+**Отличия от LILITH:**
+- LUNA (C) — neural network based, technical, pattern recognition
+- LILITH (Bash) — rule-based, sarcastic, system-oriented
+
+**Технологии:**
+- Memory для больших datasets (диалоги, примеры кода)
+- Algorithms для matrix operations (neural network)
+- Data structures для knowledge base (hash table)
+- Network для distributed processing (опционально)
+- Simple NLP на C (tokenization, intent recognition)
+- Perceptron/MLP для классификации вопросов
 
 ---
 
@@ -174,11 +212,11 @@ Trade* load_market_data(const char* symbol) {
 #include "../../season-5-financial-markets/trading_system.h"
 #include "../../season-6-embedded-iot/iot_controller.h"
 #include "../../season-7-system-programming/stealth_agent.h"
-#include "../../season-8-ai-and-data/ml_predictor.h"
+#include "../../season-8-ai-and-data/luna_ai.h"  // 🤖 LUNA помогает в миссии!
 #include "../../season-9-advanced-systems/quantum_sim.h"
 
 // 🚀 MOONLIGHT FINAL: Satellite tracking + orbital mechanics
-// Интеграция ВСЕХ инструментов из 9 сезонов
+// Интеграция ВСЕХ инструментов из 9 сезонов + LUNA AI
 // Mission Impossible: From Earth to Space 🌍→🌌
 ```
 
@@ -216,25 +254,25 @@ season-1-foundations/
 
 ## 🎯 Преимущества подхода
 
-1. **Прогрессивное усложнение**  
+1. **Прогрессивное усложнение**
    От простых функций → к библиотекам → к системам → к мета-системам
 
-2. **Реальное переиспользование кода**  
+2. **Реальное переиспользование кода**
    Студент видит ценность хорошего дизайна: "Этот код я буду использовать в Season 7!"
 
-3. **Практика с `.h` файлами**  
+3. **Практика с `.h` файлами**
    API design, header guards, include paths, dependencies
 
-4. **Мотивация писать чистый код**  
+4. **Мотивация писать чистый код**
    Плохой код в Season 2 будет проблемой в Season 8
 
-5. **Cumulative learning буквально**  
+5. **Cumulative learning буквально**
    Каждый сезон строится на предыдущих через `#include`
 
-6. **Реалистичный опыт**  
+6. **Реалистичный опыт**
    Работа с dependencies как в реальных production проектах
 
-7. **Эмоциональная связь с кодом**  
+7. **Эмоциональная связь с кодом**
    "Это МОЙ decoder, МОЙ memory manager, МОЯ система MOONLIGHT"
 
 ---
@@ -318,12 +356,17 @@ Season Projects — это **не просто технические упраж
 - **Season 2**: Memory Manager для анализа архива без утечек
 - **Season 3**: Network Interceptor для перехвата трафика агентов Z.
 - **Season 4**: Crypto Toolkit для взлома шифров
+- **Season 5**: Trading System для анализа финансовых потоков
+- **Season 6**: IoT Controller для управления embedded системами
+- **Season 7**: Stealth Agent для скрытых операций
+- **Season 8**: **LUNA AI** 🤖 — твой личный AI-помощник на C! (аналог lilith.sh из KERNEL SHADOWS)
+- **Season 9**: Advanced Systems — компилятор, database, quantum simulator
 - **Season 10**: **MOONLIGHT CORE** — финальная система для спутниковой операции 🌌
 
-Студент собирает **свой арсенал инструментов** для финальной миссии!
+Студент собирает **свой арсенал инструментов** для финальной миссии, включая собственного AI-помощника LUNA!
 
 ---
 
-*"Every function you write today, becomes a weapon tomorrow."*  
+*"Every function you write today, becomes a weapon tomorrow."*
 — Operation MOONLIGHT 🌙
 

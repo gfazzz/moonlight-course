@@ -56,13 +56,13 @@ core
 core.*
 
 # IDE files
-.vscode/
+# .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
-.cursor
+
 
 # Personal notes
 **/notes.md

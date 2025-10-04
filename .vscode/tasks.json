@@ -1,0 +1,121 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🧪 Run Episode Tests",
+      "type": "shell",
+      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make test; else echo 'No Makefile found in this directory'; fi",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "🔨 Compile Current File",
+      "type": "shell",
+      "command": "gcc -Wall -Wextra -std=c11 -o ${fileDirname}/${fileBasenameNoExtension} ${file}",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "▶️ Run Current Executable",
+      "type": "shell",
+      "command": "${fileDirname}/${fileBasenameNoExtension}",
+      "group": "build",
+      "dependsOn": ["🔨 Compile Current File"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🔍 Check with Valgrind",
+      "type": "shell",
+      "command": "valgrind --leak-check=full --show-leak-kinds=all ${fileDirname}/${fileBasenameNoExtension}",
+      "group": "test",
+      "dependsOn": ["🔨 Compile Current File"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🧹 Clean Build Artifacts",
+      "type": "shell",
+      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make clean; else rm -f *.o *.out a.out; fi && echo 'Build artifacts cleaned'",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🚀 Build with Makefile",
+      "type": "shell",
+      "command": "cd ${fileDirname} && make",
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "🐛 Debug Current File with GDB",
+      "type": "shell",
+      "command": "gcc -g -Wall -Wextra -std=c11 -o ${fileDirname}/${fileBasenameNoExtension}_debug ${file} && gdb ${fileDirname}/${fileBasenameNoExtension}_debug",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📊 Check Code Style",
+      "type": "shell",
+      "command": "clang-format -style='{BasedOnStyle: LLVM, IndentWidth: 2}' -i ${file} && echo 'Code formatted'",
+      "group": "none",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🤖 LUNA Help (Cursor AI)",
+      "type": "shell",
+      "command": "echo '💡 Ask LUNA in Cursor Chat: \"LUNA, помоги с Episode ${input:episodeNumber}\"'",
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "episodeNumber",
+      "type": "promptString",
+      "description": "Episode number (e.g., 01, 02, etc.)",
+      "default": "01"
+    }
+  ]
+}
+
