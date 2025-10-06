@@ -5,8 +5,8 @@
 
 Спасибо за интерес к развитию курса! Мы рады любому вкладу — от исправления опечаток до создания целых эпизодов.
 
-**Последнее обновление:** 4 октября 2025  
-**Версия:** v0.3.5  
+**Последнее обновление:** 4 октября 2025
+**Версия:** v0.3.5
 **Статус:** 50% готовности (21/42 эпизода)
 
 ---
@@ -133,9 +133,9 @@ episode-XX-название/
 
 > *"Драматическая цитата из сюжета"*
 
-**Местоположение:** Город, страна (координаты)  
-**Время:** Дата и время по сюжету  
-**Длительность:** 2-4 часа  
+**Местоположение:** Город, страна (координаты)
+**Время:** Дата и время по сюжету
+**Длительность:** 2-4 часа
 
 ---
 
@@ -295,7 +295,7 @@ make test
 
 ---
 
-*Время прохождения: ~2-4 часа*  
+*Время прохождения: ~2-4 часа*
 *Сложность: ⭐⭐⭐☆☆ (3/5)*
 ```
 
@@ -649,10 +649,10 @@ a ^= b;
 // Многострочные комментарии для сложной логики
 /*
  * Floyd's Cycle Detection Algorithm (Tortoise and Hare)
- * 
+ *
  * Time:  O(n)
  * Space: O(1)
- * 
+ *
  * Why not hash table? Memory constraint in embedded systems.
  * This algorithm uses only 2 pointers.
  */
@@ -714,11 +714,11 @@ void process_data(const char *input) {
 
 /**
  * Calculate checksum of data buffer using XOR
- * 
+ *
  * @param data    Pointer to data buffer
  * @param length  Length of buffer in bytes
  * @return        XOR checksum (0-255)
- * 
+ *
  * Time:  O(n)
  * Space: O(1)
  */
@@ -727,22 +727,22 @@ unsigned char calculate_checksum(const unsigned char *data, size_t length) {
         fprintf(stderr, "Error: NULL pointer passed to calculate_checksum\n");
         return 0;
     }
-    
+
     unsigned char checksum = 0;
     for (size_t i = 0; i < length; i++) {
         checksum ^= data[i];
     }
-    
+
     return checksum;
 }
 
 /**
  * Read entire file into memory
- * 
+ *
  * @param filename  Path to file
  * @param size      Output: file size in bytes
  * @return          Pointer to allocated buffer, or NULL on error
- * 
+ *
  * NOTE: Caller must free() returned pointer!
  */
 char *read_file(const char *filename, size_t *size) {
@@ -751,18 +751,18 @@ char *read_file(const char *filename, size_t *size) {
         perror("fopen");
         return NULL;
     }
-    
+
     // Get file size
     fseek(fp, 0, SEEK_END);
     long fsize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
-    
+
     if (fsize < 0) {
         fprintf(stderr, "Error: Cannot determine file size\n");
         fclose(fp);
         return NULL;
     }
-    
+
     // Allocate buffer
     char *buffer = malloc(fsize + 1);
     if (buffer == NULL) {
@@ -770,7 +770,7 @@ char *read_file(const char *filename, size_t *size) {
         fclose(fp);
         return NULL;
     }
-    
+
     // Read file
     size_t read_bytes = fread(buffer, 1, fsize, fp);
     if (read_bytes != (size_t)fsize) {
@@ -779,14 +779,14 @@ char *read_file(const char *filename, size_t *size) {
         fclose(fp);
         return NULL;
     }
-    
+
     buffer[fsize] = '\0';  // Null-terminate
     fclose(fp);
-    
+
     if (size != NULL) {
         *size = (size_t)fsize;
     }
-    
+
     return buffer;
 }
 ```
@@ -1053,7 +1053,6 @@ OS: Ubuntu 22.04, gcc 11.3.0
 
 - **GitHub Issues:** для bug reports и feature requests
 - **GitHub Discussions:** для общих вопросов
-- **Email:** (если указан в профиле maintainer)
 
 ### Хотите помочь, но не знаете с чего начать?
 
@@ -1171,5 +1170,5 @@ v0.3.5 (текущая) ─┐
 
 ---
 
-**Последнее обновление:** 4 октября 2025  
+**Последнее обновление:** 4 октября 2025
 **Версия документа:** 2.0 (Comprehensive Edition)
