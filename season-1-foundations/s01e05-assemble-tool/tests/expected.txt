@@ -1,0 +1,18 @@
+=== MOONLIGHT DECODER v2.0 — final build ===
+
+# | label            | bytes | checksum
+--+------------------+-------+---------
+1 | V. intercept     |    75 | 0xA4
+2 | hand-typed file  |    46 | 0xD2
+
+--- V. intercept ---
+MOONLIGHT activated.
+They know.
+Files at old place.
+Trust only code.
+— V.
+
+--- hand-typed file ---
+It's me. I am still alive. Trust the code. -V.
+
+[LUNA] ...he's alive.
