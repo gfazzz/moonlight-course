@@ -1,0 +1,23 @@
+=== DATA CLASSIFIER v2.0 ===
+Pulling the chain of clues...
+
+[OK ] COORD  55.7558, 37.6173
+[OK ] TIME   14:30
+[OK ] ID     42
+[BAD] COORD  99.9900, 37.5000  (out of range — planted marker)
+[OK ] TIME   23:45
+[OK ] ID     17
+[OK ] COORD  40.7128, -74.0060
+[BAD] TIME   25:61  (out of range)
+[BAD] ID     -5  (must be positive)
+[OK ] COORD  55.7500, 37.6000
+[OK ] TIME   02:30
+[OK ] ID     24
+
+=== STATS ===
+Records: 12 | valid: 9  invalid: 3
+Coords: 4  Time: 4  ID: 4
+
+WARNING: 3 planted/corrupt record(s). Ghost was right.
+
+=== CLASSIFICATION COMPLETE ===
