@@ -1,0 +1,11 @@
+=== PATTERN FINDER v2.0 ===
+Reading schedule...
+
+Timestamps: 10
+Intervals:  9
+
+Dominant period: 3600 s (occurs 8x)
+Anomalies (interval != period): 1
+  at interval 5: gap 7200 s
+
+The schedule breaks 1 time(s). That break is the real event.
