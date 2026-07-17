@@ -1,0 +1,4 @@
+=== INTERNET CHECKSUM ===
+computed checksum = 0x2053
+verify (checksum inserted): 0x0000 -> valid
+after corrupting src IP:    0x9700 -> INVALID
