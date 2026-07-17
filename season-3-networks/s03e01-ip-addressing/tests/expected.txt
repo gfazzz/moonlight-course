@@ -1,0 +1,11 @@
+=== IP INFO ===
+203.0.113.42       uint32=3405803818 hex=0xCB00712A  public
+127.0.0.1          uint32=2130706433 hex=0x7F000001  loopback
+10.0.0.5           uint32=167772165  hex=0x0A000005  private
+172.16.3.9         uint32=2886730505 hex=0xAC100309  private
+192.168.1.100      uint32=3232235876 hex=0xC0A80164  private
+8.8.8.8            uint32=134744072  hex=0x08080808  public
+256.1.2.3          INVALID
+55.75.58.37        uint32=927676965  hex=0x374B3A25  public
+
+8 addresses, 7 valid
