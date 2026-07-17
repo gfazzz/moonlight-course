@@ -1,0 +1,8 @@
+=== POINTERS ===
+x=42, *p=42 (p -> x)
+after *p=7: x=7
+
+before swap: x=7 y=99
+after swap:  x=99 y=7
+
+NULL pointer is safe to test: np is NULL
