@@ -1,0 +1,4 @@
+=== HEAP: malloc/free ===
+allocated 10 ints on heap (40 bytes)
+buf[0]=0 buf[9]=81 sum=285
+freed; buf set to NULL: yes

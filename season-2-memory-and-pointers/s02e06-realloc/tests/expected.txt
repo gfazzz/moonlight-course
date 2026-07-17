@@ -1,0 +1,8 @@
+=== REALLOC: growing array ===
+grow -> capacity 2
+grow -> capacity 4
+grow -> capacity 8
+grow -> capacity 16
+len=10 cap=16
+elements: 1 4 9 16 25 36 49 64 81 100 
+sum=385
