@@ -1,0 +1,5 @@
+=== POINTER ARITHMETIC ===
+arr[0]=5, *p=5, *(p+2)=15, p[2]=15
+sum via pointer walk = 105
+arr+n - arr = 6 elements
+max = 30 at index 5
