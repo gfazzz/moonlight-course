@@ -170,6 +170,6 @@ It's me. I am still alive. Trust the code. -V.
 ## Навигация
 
 - Назад: [s01e07 — Файлы и аргументы](../s01e07-files-and-args/)
-- Дальше: **Season 2 — Memory & Pointers** → `s02e01` (когда сезон выйдет в v2.0)
+- Дальше: [**Season 2 — Memory & Pointers**](../../season-2-memory-and-pointers/s02e01-memory-map/) → `s02e01` (Карта памяти)
 
 <sub>Финал Season 1 v2.0. Season 1 v2.0 разукрупнён до 8 серий. Прежний Episode 04 → s01e05 (функции) + s01e06 (модули); struct, сборка и финал — здесь (s01e08).</sub>
