@@ -1,0 +1,6 @@
+=== ENCRYPTED CHANNEL INTERCEPT ===
+reassembled: 9 segments, 71 bytes, 0 gap(s)
+
+--- DECRYPTED MESSAGE ---
+V: Spasskaya Tower, 08:00. Take USB. Season 4: Crypto. Trust the Ghost.
+--- END ---
