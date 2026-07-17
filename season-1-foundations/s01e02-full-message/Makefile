@@ -1,11 +1,15 @@
 # OPERATION MOONLIGHT — s01e01
-# make / make run / make test / make solution / make clean
+# make        — собрать твой decoder из artifacts/
+# make run    — собрать и запустить
+# make test   — прогнать автотест (падает на solution/, если artifacts/ пуст)
+# make solution — запустить эталон
+# make clean  — убрать бинарники
 
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/bytecheck.c
-SOL     := solution/bytecheck.c
-BIN     := bytecheck
+ART     := artifacts/decoder.c
+SOL     := solution/decoder.c
+BIN     := decoder
 
 .PHONY: all run test solution clean
 

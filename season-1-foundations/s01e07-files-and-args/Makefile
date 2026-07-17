@@ -1,11 +1,12 @@
-# OPERATION MOONLIGHT — s01e01
+# OPERATION MOONLIGHT — s01e07
 # make / make run / make test / make solution / make clean
 
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/bytecheck.c
-SOL     := solution/bytecheck.c
-BIN     := bytecheck
+ART     := artifacts/decoder.c
+SOL     := solution/decoder.c
+DATA    := message.enc
+BIN     := decoder
 
 .PHONY: all run test solution clean
 
@@ -14,13 +15,13 @@ all:
 	else echo "Нет $(ART). Скопируй: cp starter.c $(ART)"; fi
 
 run: all
-	@./$(BIN)
+	@./$(BIN) $(DATA)
 
 test:
 	@cd tests && ./test.sh
 
 solution:
-	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol
+	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol $(DATA)
 
 clean:
 	@rm -f $(BIN) $(BIN)_sol

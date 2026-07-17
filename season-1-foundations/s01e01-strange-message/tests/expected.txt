@@ -1,14 +1,8 @@
-=== MOONLIGHT DECODER v2.0 ===
-Intercept from V. — decrypting...
+=== MOONLIGHT — byte check ===
+First intercepted byte: 0x0F
+Key: 0x42
 
-Length: 75 bytes | Key: 0x42
+0x0F ^ 0x42 = 0x4D  ('M')
+0x4D ^ 0x42 = 0x0F  (back to source)
 
---- MESSAGE ---
-MOONLIGHT activated.
-They know.
-Files at old place.
-Trust only code.
-— V.
---- END ---
-
-Checksum: 0xA4
+Key 0x42 works. The message is real. Decode the rest in s01e02.

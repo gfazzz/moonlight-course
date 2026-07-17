@@ -1,0 +1,10 @@
+=== MOONLIGHT DECODER — functions ===
+
+MOONLIGHT activated.
+They know.
+Files at old place.
+Trust only code.
+— V.
+
+Checksum: 0xA4
+Re-encrypted via same xor_crypt(); first byte: 0x0F

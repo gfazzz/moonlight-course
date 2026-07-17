@@ -1,0 +1,14 @@
+=== MOONLIGHT DECODER v2.0 ===
+Intercept from V. — decrypting...
+
+Length: 75 bytes | Key: 0x42
+
+--- MESSAGE ---
+MOONLIGHT activated.
+They know.
+Files at old place.
+Trust only code.
+— V.
+--- END ---
+
+Checksum: 0xA4

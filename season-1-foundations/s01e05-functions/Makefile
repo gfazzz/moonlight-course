@@ -1,11 +1,11 @@
-# OPERATION MOONLIGHT — s01e01
+# OPERATION MOONLIGHT — s01e05
 # make / make run / make test / make solution / make clean
 
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/bytecheck.c
-SOL     := solution/bytecheck.c
-BIN     := bytecheck
+ART     := artifacts/decoder.c
+SOL     := solution/decoder.c
+BIN     := decoder
 
 .PHONY: all run test solution clean
 
