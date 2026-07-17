@@ -1,0 +1,12 @@
+=== STREAM REASSEMBLER ===
+segment seq=49  len=6 (arrival order)
+segment seq=42  len=7 (arrival order)
+segment seq=35  len=7 (arrival order)
+segment seq=28  len=7 (arrival order)
+segment seq=21  len=7 (arrival order)
+segment seq=14  len=7 (arrival order)
+segment seq=7   len=7 (arrival order)
+segment seq=0   len=7 (arrival order)
+
+8 segments, 55 bytes, 0 gap(s)
+reassembled: "GHOST: sort by seq, not arrival. Truth is in the order."
