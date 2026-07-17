@@ -1,0 +1,5 @@
+=== MEMORY: safe handling ===
+copy 0: viktor (len 6)
+copy 1: luna (len 4)
+copy 2: ghost (len 5)
+all copies freed, no leaks

@@ -1,0 +1,7 @@
+=== MOONLIGHT LOGGER ===
+[log] agent online
+[log] dump analyzed
+[log] trojan neutralized
+[log] rendezvous: 55.7558N 37.6173E
+--- 4 entries flushed ---
+all entries freed
