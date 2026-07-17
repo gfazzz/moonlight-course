@@ -1,0 +1,5 @@
+=== TCP LOOPBACK ECHO ===
+server: listening on 127.0.0.1
+server: received "PING" from client
+server: sent "PONG"
+client: exchange ok

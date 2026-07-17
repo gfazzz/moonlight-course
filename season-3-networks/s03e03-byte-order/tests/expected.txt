@@ -1,0 +1,11 @@
+=== BYTE ORDER ===
+host is little-endian
+
+port 443 (0x01BB):
+  in memory (host):     BB 01 
+  htons -> on the wire: 01 BB 
+  wire value read as host = 47873 (wrong); ntohs = 443 (right)
+
+ip 0xCB00712A (203.0.113.42):
+  in memory (host):     2A 71 00 CB 
+  htonl -> on the wire: CB 00 71 2A 
