@@ -1,0 +1,8 @@
+=== MEMORY MAP ===
+sizeof: char=1 int=4 long=8 double=8 ptr=8
+
+int arr[5] occupies 20 bytes
+gap between &arr[i] and &arr[i+1] = 4 bytes (== sizeof(int) = 4)
+all elements contiguous: yes
+
+int x = 42; int *p = &x;  =>  *p reads 42
