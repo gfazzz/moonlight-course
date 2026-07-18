@@ -1,0 +1,10 @@
+=== FREQUENCY ANALYSIS ===
+cipher: ESP XZZYWTRSE WPORPC TD CPLW PGPCJ ECLYDLNETZY DTRYPO HTES L DEZWPY VPJ PGL NLY ACZGP TE
+
+--- top-3 candidates (lower chi2 = better) ---
+shift 11: chi2 =    17.46
+shift 17: chi2 =   176.64
+shift 24: chi2 =   203.13
+
+best shift = 11
+decrypted: THE MOONLIGHT LEDGER IS REAL EVERY TRANSACTION SIGNED WITH A STOLEN KEY EVA CAN PROVE IT
