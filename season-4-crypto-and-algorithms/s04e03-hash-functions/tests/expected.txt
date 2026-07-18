@@ -1,0 +1,19 @@
+=== HASH FUNCTIONS ===
+string       djb2         fnv1a
+MOONLIGHT    0x608EDF96   0xBEC2E834
+VIKTOR       0xD5CE37E4   0xB5E98766
+EVA          0x0B87E3C1   0xDC576099
+GHOST        0x0D2CA24A   0x19181530
+
+--- avalanche: 1 changed character ---
+last  char T->U    djb2:  1/32 bits   fnv1a:  8/32 bits
+first char M->N    djb2: 14/32 bits   fnv1a: 11/32 bits
+
+djb2 barely reacts to a last-byte change: h = h*33 + c
+leaves the final byte in the low bits — weak avalanche.
+
+--- buckets in a 16-slot table (djb2 % 16) ---
+MOONLIGHT    bucket  6
+VIKTOR       bucket  4
+EVA          bucket  1
+GHOST        bucket 10

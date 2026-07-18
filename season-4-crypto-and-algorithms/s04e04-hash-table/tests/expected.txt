@@ -1,0 +1,19 @@
+=== HASH TABLE (chaining, 8 buckets) ===
+
+--- bucket distribution ---
+bucket 0 (2): marcus weiss
+bucket 1 (1): eva
+bucket 2 (1): ghost
+bucket 3 (1): anna
+bucket 4 (3): architect krylov viktor
+bucket 5 (1): luna
+bucket 6 (1): dmitry
+bucket 7 (0):
+
+--- lookups ---
+eva        -> 20
+architect  -> 90
+unknown    -> not found
+
+entries=10 buckets=8 load factor=1.25
+table freed
