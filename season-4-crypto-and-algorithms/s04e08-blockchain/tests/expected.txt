@@ -1,0 +1,17 @@
+=== MOONLIGHT LEDGER (blockchain) ===
+difficulty: top 12 bits must be zero
+
+index data                           prev      nonce       hash
+    0 GENESIS                  0x00000000      45307 0x000D95D2
+    1 TX 4.2M EUR -> ZURICH    0x000D95D2      24386 0x000FC1A1
+    2 TX 1.8M EUR -> LONDON    0x000FC1A1       6266 0x0003746F
+    3 TX 9.6M EUR -> CAYMAN    0x0003746F      16627 0x000426EA
+    4 AUDIT EVA ZIMMERMAN      0x000426EA      20500 0x000CC2AA
+
+verify: chain valid
+
+--- tampering: block 2 amount 1.8M -> 8.1M ---
+verify: BROKEN at block 2
+block 2 stored hash 0x0003746F, recomputed 0x357AF3F3 — mismatch
+
+to hide this, the forger must re-mine block 2 AND every block after it.

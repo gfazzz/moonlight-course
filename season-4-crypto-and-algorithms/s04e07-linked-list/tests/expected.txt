@@ -1,0 +1,11 @@
+=== LINKED LIST ===
+built (head insert): 50 40 30 20 10
+length: 5
+search 30 -> 2
+search 99 -> -1 (not found)
+reversed: 10 20 30 40 50
+
+--- Floyd's cycle detection ---
+cycle in a normal list: no
+after linking tail -> node[2]: cycle detected (meeting at value 40)
+cycle broken; list freed
