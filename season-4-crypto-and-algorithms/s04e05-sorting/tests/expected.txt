@@ -1,0 +1,13 @@
+=== SORTING: O(n^2) vs O(n log n) ===
+
+before: 42 7 19 3 88 15 61 4 23 50 
+after:  3 4 7 15 19 23 42 50 61 88 
+sorted: yes (insertion, 27 comparisons)
+
+--- comparisons vs input size ---
+       n      insertion          merge    ratio
+      64           1018            303     3.4x
+     256          17141           1727     9.9x
+    1024         263213           8970    29.3x
+
+insertion grows ~n^2, merge ~n log n: the gap widens with n.

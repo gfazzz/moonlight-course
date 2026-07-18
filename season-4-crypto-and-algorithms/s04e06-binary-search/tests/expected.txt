@@ -1,0 +1,13 @@
+=== SEARCH: O(n) vs O(log n) ===
+
+demo (16 sorted values): 0 3 6 9 12 15 18 21 24 27 30 33 36 39 42 45
+binary search 27 -> index 9 in 3 steps
+binary search 28 -> not found (4 steps)
+
+--- worst case: searching the LAST element ---
+        n   linear steps   binary steps
+     1024           1024             11
+    65536          65536             17
+  1048576        1048576             21
+
+binary halves the range each step: ~log2(n) steps instead of n.
