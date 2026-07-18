@@ -1,441 +1,61 @@
-# Season 4: "Crypto & Algorithms" 🔐
+# Season 4 — Crypto & Algorithms
 
-> *"In cryptography we trust. In math we believe. In algorithms we build."*
+**Криптография и алгоритмы через расследование финансовой схемы. 8 коротких серий, ~5.5 часа.**
 
-**VERSION: 3.0 Expanded Cast Edition** ⭐
+> *«Секреты защищены не замками, а математикой».*
 
----
-
-## 🌍 География Season 4
-
-**Международная операция — Цюрих + Москва!**
-
-### 📍 Главные локации:
-
-**🇨🇭 Цюрих, Швейцария**
-- **Координаты:** 47.3769°N, 8.5417°E (Zürich)
-- **Eva Zimmerman** — UBS Bank, Senior Cryptographer (главная героиня!)
-- **Dr. Leonard Weiss** — ETH Zürich, профессор
-- **Видеозвонки:** Episodes 13-16 (Eva координирует из Цюриха)
-- **Финал:** Eva прилетает в Москву (рейс Swiss LX1325)
-
-**🇷🇺 Москва, Россия**
-- **Координаты:** 55.7558°N, 37.6173°E (Красная площадь)
-- **Safe house:** Episodes 13-15
-- **Финал:** Красная площадь, 18 декабря 18:00 — встреча команды
-- **Viktor** появляется лично!
-
-**🇳🇱 Нидерланды (упоминание)**
-- **IP:** 185.220.101.47 (TOR exit node, Амстердам)
-- **Координаты:** 52.3676°N, 4.9041°E — след из Season 2!
-
-**Команда:**
-- **Eva Zimmerman** ⭐ — главная героиня (Цюрих → Москва)
-- Dr. Leonard Weiss — ETH Zürich (удалённо)
-- Dmitry Orlov — Москва (консультации)
-- Ghost/Alex — Intelligence (Москва)
-- Viktor — Handler (Москва, личная встреча!)
-- The Architect — антагонист
-
-> 📍 **Детали:** см. [LOCATIONS.md](../LOCATIONS.md) — полная карта Season 4
+Виктор передал USB с тремя зашифрованными файлами. Ева Циммерман, криптограф UBS из Цюриха, помогает их вскрыть — и за ними открывается реестр MOONLIGHT: каждая транзакция подписана украденным ключом. Чтобы доказать подделку, нужен весь арсенал: от классических шифров и частотного анализа до хеш-таблиц, сортировок и цепочки блоков. Финал — Красная площадь, вся команда и неопровержимое доказательство.
 
 ---
 
-## 🎬 СЕЗОННЫЙ ОБЗОР
+## Серии
 
-```
-╔══════════════════════════════════════════════════════════════════╗
-║  СЕЗОН:   4 - CRYPTO & ALGORITHMS                                ║
-║  ВЕРСИЯ:  3.0 Expanded Cast Edition                              ║
-║  ПЕРИОД:  15-18 декабря 2020                                     ║
-║  СТАТУС:  ✅ ЗАВЕРШЁН                                            ║
-║  ЗАДАЧА:  Расшифровать данные, верифицировать blockchain,        ║
-║           оптимизировать алгоритмы, построить Database Engine    ║
-║                                                                  ║
-║  🎭 КОМАНДА:                                                     ║
-║     Eva Zimmerman (UBS Zürich) — Главный криптограф             ║
-║     Dr. Leonard Weiss (ETH) — Академический советник            ║
-║     Dmitry Orlov (Moscow) — Embedded Security Engineer          ║
-║     Ghost/Alex Sokolov — Intelligence                           ║
-║     Viktor Petrov — Handler (ЛИЧНАЯ ВСТРЕЧА!)                   ║
-║     The Architect — Антагонист "Новой Эры"                      ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+| ID | Название | Концепт | Артефакт |
+|----|----------|---------|----------|
+| [s04e01](s04e01-caesar-cipher/) | Шифр Цезаря | подстановка, брутфорс 25 ключей | `caesar.c` |
+| [s04e02](s04e02-frequency-analysis/) | Частотный анализ | хи-квадрат, взлом без перебора | `freq.c` |
+| [s04e03](s04e03-hash-functions/) | Хеш-функции | djb2/FNV-1a, лавина, коллизии | `hashes.c` |
+| [s04e04](s04e04-hash-table/) | Хеш-таблица | корзины, цепочки, load factor | `hashtable.c` |
+| [s04e05](s04e05-sorting/) | Сортировки | insertion vs merge, счётчики | `sorting.c` |
+| [s04e06](s04e06-binary-search/) | Двоичный поиск и Big O | `log n` на практике | `search.c` |
+| [s04e07](s04e07-linked-list/) | Связный список | вставка O(1), цикл Флойда | `list.c` |
+| [s04e08](s04e08-blockchain/) | Блокчейн | цепочка хешей, PoW, подделка | `blockchain.c` |
 
-**Episode 13 завершён.** Три зашифрованных сообщения раскрыты.  
-**Episode 14 завершён.** Blockchain верифицирован, подделка найдена.  
-**Episode 15 завершён.** Логи отсортированы, алгоритмы освоены.  
-**Episode 16 завершён.** Database Engine создан, встреча состоялась.
+Каждая серия: один концепт, одна задача, ~35–55 минут, по шаблону v2.0 (холодное открытие → теория → проверки от LUNA → задача → разбор ошибок → клиффхенгер). Теория «вглубь» и книги — в `theory.md` каждой серии.
 
-**Финал:** V. появляется на Красной площади. *"Настоящая работа только начинается."*
+## Как проходить
 
----
+Оболочка — **Cursor в режиме IDE**; LUNA из сюжета = чат Cursor.
 
-## 📅 Хронология событий
+> **Читай `README.md`, `mission.md` и `theory.md` в режиме предпросмотра, а не в окне редактора.**
+> В Cursor/VS Code: `Cmd+Shift+V` (macOS) или `Ctrl+Shift+V` (Linux/Windows); `Cmd+K V` — сбоку от кода.
+> Так корректно отображаются таблицы и **сворачиваемые ответы** (`<details>`) в блоке «Проверка на канале».
 
-```
-╔═══════════════════════════════════════════════════════════════════╗
-║                    SEASON 4 TIMELINE                              ║
-╠═══════════════════════════════════════════════════════════════════╣
-║                                                                   ║
-║  15 ДЕК, 03:42 → USB от V. с 3 зашифрованными файлами            ║
-║  15 ДЕК, 09:30 → Сообщения расшифрованы, координаты в blockchain ║
-║                                                                   ║
-║  16 ДЕК, 05:27 → Blockchain ledger получен (15,000 блоков)       ║
-║  16 ДЕК, 09:18 → Block #7,250 corrupted, координаты извлечены    ║
-║                                                                   ║
-║  17 ДЕК, 11:15 → 2 млн записей логов, нужна сортировка           ║
-║  17 ДЕК, 16:40 → Алгоритмы реализованы, данные оптимизированы    ║
-║                                                                   ║
-║  17 ДЕК, 22:47 → Финальная задача: 250K документов, Database     ║
-║  18 ДЕК, 17:43 → Database Engine готов                           ║
-║  18 ДЕК, 18:00 → Встреча на Red Square                           ║
-║                                                                   ║
-║  РЕЗУЛЬТАТ: V. появляется. Season 4 завершён.                    ║
-║             "Добро пожаловать в операцию."                        ║
-║                                                                   ║
-╚═══════════════════════════════════════════════════════════════════╝
-```
-
----
-
-## 📚 Эпизоды
-
-### 🔑 [Episode 13: Crypto Basics](episode-13-crypto-basics/)
-```
-┌─────────────────────────────────────────────┐
-│  Сложность: ⭐⭐⭐☆☆                        │
-│  Время:     3-4 часа                        │
-│  Артефакт:  crypto_decoder                  │
-└─────────────────────────────────────────────┘
-```
-
-**Миссия:**  
-15 декабря, 03:42. USB от V. с 3 зашифрованными файлами. Нужно расшифровать XOR, Caesar и multi-layer сообщения за 6 часов.
-
-**Что изучите:**
-- ✅ XOR encryption (reversible, fast)
-- ✅ Caesar cipher + frequency analysis
-- ✅ Chi-squared для автоопределения shift
-- ✅ Vigenère cipher, Affine, ROT13
-- ✅ Known-plaintext attack, brute force
-
-**Результат:**  
-09:30 — все сообщения расшифрованы. Координаты находятся в blockchain ledger.
-
----
-
-### 🔗 [Episode 14: Blockchain & Hashes](episode-14-blockchain-hashes/)
-```
-┌─────────────────────────────────────────────┐
-│  Сложность: ⭐⭐⭐⭐☆                       │
-│  Время:     4-5 часов                       │
-│  Артефакт:  blockchain_verifier             │
-└─────────────────────────────────────────────┘
-```
-
-**Миссия:**  
-16 декабря, 05:27. Blockchain ledger с 15,000 блоков. Кто-то пытался подделать данные. Нужно верифицировать целостность цепи и найти corrupted blocks.
-
-**Что изучите:**
-- ✅ Hash functions (djb2, SHA-256)
-- ✅ Avalanche effect (лавинный эффект)
-- ✅ Proof-of-Work (mining, difficulty)
-- ✅ Blockchain immutability
-- ✅ Cascade validation, collision resolution
-- ✅ Merkle trees (concept)
-
-**Результат:**  
-09:18 — Block #7,250 corrupted (попытка изменить $15.7M → $25M). Координаты извлечены: Red Square, Dec 18, 18:00.
-
----
-
-### 📊 [Episode 15: Sorting & Search](episode-15-sorting-search/)
-```
-┌─────────────────────────────────────────────┐
-│  Сложность: ⭐⭐⭐⭐☆                       │
-│  Время:     3-4 часа                        │
-│  Артефакт:  algorithm_suite + log_analyzer  │
-└─────────────────────────────────────────────┘
-```
-
-**Миссия:**  
-17 декабря, 11:15. 2 миллиона записей логов. Нужно найти подозрительные транзакции. Требуется эффективная сортировка и поиск.
-
-**Что изучите (базовые алгоритмы):**
-- ✅ Sorting: Bubble, Selection, Insertion (базовые O(n²))
-- ✅ Sorting: Merge Sort, Quick Sort (эффективные O(n log n))
-- ✅ Search: Linear O(n), Binary O(log n)
-- ✅ Big O analysis: O(1), O(log n), O(n), O(n log n), O(n²)
-- ✅ Algorithm selection: выбор оптимального алгоритма для задачи
-- ✅ Performance benchmarking и сравнение алгоритмов
-
-**Результат:**  
-16:40 — Логи отсортированы за O(n log n). Подозрительные транзакции найдены. Данные готовы для финальной фазы.
-
----
-
-### 📦 [Episode 16: Data Structures](episode-16-data-structures/) — **ФИНАЛ СЕЗОНА**
-```
-┌─────────────────────────────────────────────┐
-│  Сложность: ⭐⭐⭐⭐☆                       │
-│  Время:     4-5 часов                       │
-│  Артефакт:  moonlight_database_demo         │
-└─────────────────────────────────────────────┘
-```
-
-**Миссия:**  
-17 декабря, 22:47. Финальная задача: 250,000 документов операции. Нужна архитектура для мгновенного поиска, сортированного доступа и истории изменений. Встреча через 19 часов.
-
-**Что изучите (базовые структуры данных):**
-- ✅ Linked Lists (single, double)
-- ✅ Stack (LIFO), Queue (FIFO)
-- ✅ Binary Search Tree (базовый, O(log n) average)
-- ✅ **Hash Tables** (O(1) average, collision handling через chaining)
-- ✅ Floyd's Cycle Detection (callback к Season 2!)
-- ✅ Trade-offs: speed vs memory, average vs worst case
-- ✅ System integration: комбинирование структур данных
-
-**Результат:**  
-18 декабря, 17:43 — Database Demo готов (Hash Table + BST + Linked List + Stack/Queue).  
-18:00 — Красная площадь. V. появляется: *"Добро пожаловать в операцию. Настоящая работа только начинается."*
-
-**TO BE CONTINUED IN SEASON 5...**
-
----
-
-### 🎯 [SEASON PROJECT: crypto_toolkit](season_project_mission.md)
-```
-┌─────────────────────────────────────────────┐
-│  Сложность: 🔴🔴🔴🔴 Very Hard              │
-│  Время:     3-5 часов                       │
-│  Артефакт:  crypto_toolkit (CLI tool)       │
-└─────────────────────────────────────────────┘
-```
-
-**Финальная миссия:**  
-18 декабря, 19:30. После встречи на Красной площади, Viktor передаёт финальное задание: собрать ВСЕ инструменты из Season 4 в единый криптографический toolkit.
-
-**Что объединяете:**
-- ✅ Crypto Module (XOR, Caesar, frequency analysis)
-- ✅ Blockchain Module (PoW, verification, djb2 hash)
-- ✅ Algorithms Module (5 сортировок, binary search, benchmarking)
-- ✅ Data Structures Module (Hash Table, BST, Linked List, Stack/Queue)
-
-**Цель:**  
-Создать production-ready CLI инструмент `crypto_toolkit`, который станет основой для Season 5: Financial Markets.
-
-**Workflow пример:**
 ```bash
-$ ./crypto_toolkit encrypt --xor --key 0x42 --input secret.txt
-$ ./crypto_toolkit blockchain --verify --ledger chain.dat
-$ ./crypto_toolkit sort --algorithm quick --input data.txt
-$ ./crypto_toolkit database --search --key "doc123"
+cd s04e01-caesar-cipher
+cat README.md
+cp starter.c artifacts/caesar.c
+make test                # зелёный тест = серия пройдена
+# из корня сезона: make test — прогон всех 8 серий
 ```
 
-**Результат:**  
-Universal crypto toolkit готов для Season 5 (Algorithmic Trading, High-Frequency Trading).
+Серии с динамической памятью (e04, e05, e06, e07) дополнительно проверяются `-fsanitize=address` — утечки не пройдут. Эталон в `solution/` открывай после честной попытки.
+
+## Season Project: `crypto_toolkit`
+
+Артефакты серий складываются в инструмент сезона: шифры и частотный анализ, хеш-функции и таблица, сортировки и двоичный поиск, связный список и верификатор реестра. Переиспользуется дальше через `#include`.
+
+## Персонажи
+
+- **Ева Циммерман** — криптограф UBS (Цюрих), ведёт сезон.
+- **Виктор Петров** — передал USB; финал: встреча на Красной площади.
+- **Алексей Верещагин** («Призрак») — предупреждает о замкнутой ссылке в цепочке.
+- **Доктор Леонард Вайс** (ETH) — консультации по статистике. **«Архитектор»** — антагонист, подделал реестр.
+
+## Что дальше
+
+Финал разблокирует **Season 5 — Financial Markets** (`s05e01…`): «follow the money» — рынки, риски, торговые алгоритмы.
 
 ---
 
-## 🎭 Сюжетная арка
-
-### АКТ I: Шифрование (Episode 13)
-```
-03:42 → USB от V. с зашифрованными сообщениями
-      → XOR, Caesar, multi-layer encryption
-      → Frequency analysis + Chi-squared
-09:30 → Координаты найдены: "в blockchain ledger"
-```
-
-### АКТ II: Blockchain (Episode 14)
-```
-05:27 → Blockchain ledger (15,000 блоков)
-      → Попытка подделки финансовых данных
-      → Cascade verification, mining simulation
-09:18 → Block #7,250 corrupted
-      → Координаты извлечены: Red Square, Dec 18, 18:00
-```
-
-### АКТ III: Алгоритмы (Episode 15)
-```
-11:15 → 2 млн записей логов
-      → Сортировка: Bubble → Merge → Quick
-      → Поиск: Linear → Binary
-16:40 → O(n log n) достигнуто
-      → Подозрительные транзакции найдены
-```
-
-### АКТ IV: Структуры данных — ФИНАЛ (Episode 16)
-```
-22:47 → 250K документов операции
-      → Hash Table + BST + Linked List + Stack/Queue
-      → Database demo integration
-17:43 → Database Demo готов (O(1) search, O(log n) sorted access)
-18:00 → Red Square, встреча с V.
-      → "Algorithm for life" (пароль)
-      → V.: "Добро пожаловать в операцию."
-      → Season 4 завершён ✅
-```
-
----
-
-## 🏆 Достижения Season 4
-
-```
-╔════════════════════════════════════════════════════════╗
-║  🎖️ CRYPTO ANALYST                                     ║
-║  Освоены: XOR, Caesar, frequency analysis, blockchain  ║
-╠════════════════════════════════════════════════════════╣
-║  🎖️ BLOCKCHAIN ENGINEER                                ║
-║  Освоены: PoW, hashing, immutability, verification     ║
-╠════════════════════════════════════════════════════════╣
-║  🎖️ ALGORITHM MASTER                                   ║
-║  Освоены: 11 базовых алгоритмов, Big O analysis       ║
-╠════════════════════════════════════════════════════════╣
-║  🎖️ DATA ARCHITECT                                     ║
-║  Освоены: 5 базовых структур данных + интеграция      ║
-╚════════════════════════════════════════════════════════╝
-```
-
-**Технические навыки:**
-- ✅ 4 криптографических алгоритма
-- ✅ 5 алгоритмов сортировки (Bubble, Selection, Insertion, Merge, Quick)
-- ✅ 2 алгоритма поиска (Linear, Binary)
-- ✅ 5 структур данных (Linked List, Stack, Queue, BST, Hash Table)
-- ✅ Big O анализ и базовая оценка сложности
-- ✅ Blockchain verification и PoW
-- ✅ Database Demo integration
-
-**Практические навыки:**
-- ✅ Криптоанализ (frequency analysis, Chi-squared)
-- ✅ Верификация целостности данных
-- ✅ Performance benchmarking
-- ✅ Algorithm selection и optimization
-- ✅ System architecture design
-
----
-
-## 🥚 Easter Eggs Season 4
-
-1. **Key 0x42** (Episode 13) → "Answer to Everything" (Hitchhiker's Guide)
-2. **ROT13** → Симметричный шифр (shift 13)
-3. **GENESIS** → Genesis Block (Bitcoin, Jan 3, 2009)
-4. **$15.7M** → Первая Bitcoin транзакция Pizza Day
-5. **djb2 = 5381** → Magic number от Daniel J. Bernstein (1991)
-6. **Block #7,250** → 50 × 145 (не случайность!)
-7. **Red Square coordinates** → 55.7558, 37.6173 (точный центр Кремля)
-8. **Dec 18, 18:00** → 18/18 (двойное 18, символическое значение)
-9. **SHA-256 дважды** → Bitcoin uses SHA256(SHA256(data)) для защиты от length-extension attack
-10. **Merkle Root** → Ralph Merkle (изобретатель в 1979)
-11. **Difficulty 10²²** → Bitcoin 2020 требовал ~150 exahashes/sec (энергия малой страны!)
-12. **Quick Sort pivot** → Выбор среднего элемента для лучшей производительности
-13. **Merge Sort** → Всегда O(n log n) в отличие от Quick Sort!
-14. **Binary Search** → Требует отсортированный массив
-15. **Floyd's Cycle** → Callback к Season 2 Episode 06!
-16. **BST height = 18** → log₂(250,000) ≈ 17.93 (balanced tree)
-17. **Chaining** → Collision handling через linked lists
-18. **"Algorithm for life"** → Пароль встречи
-19. **Hash Table size = 10,000** → Prime number для better distribution
-20. **"Trust in Math, Not in People"** → Философия криптографии и blockchain
-
----
-
-## 📊 Статистика Season 4
-
-```
-┌──────────────────────────────────────────────┐
-│  Эпизоды пройдено:         4 / 4             │
-│  Алгоритмов освоено:       11 базовых        │
-│  Структур данных освоено:  5 базовых         │
-│  Строк кода написано:      ~1,800            │
-│  Документов обработано:    250,000           │
-│  Blockchain блоков:        15,000            │
-│  Логов отсортировано:      2,000,000         │
-│  Database Demo:            ✅ READY          │
-└──────────────────────────────────────────────┘
-```
-
-**Сложность операций (достигнуто):**
-- ⚡ Hash Table: O(1) average search (chaining)
-- 🚀 BST: O(log n) average (unbalanced)
-- 📈 Merge/Quick Sort: O(n log n) average
-- 🔍 Binary Search: O(log n)
-- 🔗 Linked List: O(1) insertion
-
----
-
-## 🔜 Что дальше?
-
-```
-╔══════════════════════════════════════════════════════════╗
-║  SEASON 5: COMING SOON...                                ║
-╠══════════════════════════════════════════════════════════╣
-║                                                          ║
-║  V.: "Добро пожаловать в операцию."                      ║
-║                                                          ║
-║  Красная площадь, 18:00, 18 декабря.                     ║
-║  Встреча состоялась.                                     ║
-║                                                          ║
-║  Database Engine создан.                                 ║
-║  Алгоритмы готовы.                                       ║
-║  Криптография освоена.                                   ║
-║                                                          ║
-║  Теперь — настоящая работа...                            ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝
-```
-
-**Вопросы к Season 5:**
-- Кто такой V.? Почему встреча именно на Red Square?
-- Что за "настоящая работа"?
-- Для чего нужны 250,000 документов?
-- Какая роль Database Engine в операции MOONLIGHT?
-- Что находится в "активной фазе" операции?
-
----
-
-## 🎓 Что вы теперь умеете
-
-После Season 4 вы — **полноценный Computer Scientist**:
-
-### Криптография & Security
-- Реализовывать классические шифры (XOR, Caesar, Vigenère)
-- Проводить frequency analysis и Chi-squared tests
-- Понимать blockchain и Proof-of-Work
-- Верифицировать целостность данных через хеши
-- Детектировать подделки через cascade validation
-
-### Алгоритмы (базовые)
-- Реализовывать 5 алгоритмов сортировки (Bubble, Selection, Insertion, Merge, Quick)
-- Выбирать оптимальный алгоритм для задачи
-- Проводить базовый анализ сложности (Big O)
-- Понимать trade-offs: O(n²) vs O(n log n)
-- Использовать Binary Search для эффективного поиска
-
-### Структуры данных (базовые)
-- Создавать Hash Tables с O(1) поиском (chaining)
-- Реализовывать Binary Search Trees (базовые, unbalanced)
-- Интегрировать несколько структур в единую систему
-- Анализировать trade-offs (speed vs memory)
-- Понимать базовые принципы database design
-
----
-
-<div align="center">
-
-**🌙 MOONLIGHT OPERATION**  
-*Season 4 of 8 — Complete*
-
-**"The Art of Computer Programming is not just a book. It's a philosophy."** — V.
-
-[← Season 3: Networks](../season-3-networks/) | [Main README](../README.md) | Season 5 (Coming Soon)
-
----
-
-**Season 4 Complete!** ✅  
-Crypto → Blockchain → Algorithms → Data Structures
-
-**4 Episodes • 11 Algorithms • 5 Data Structures • 12-15 Hours**
-
-</div>
+<sub>Season 4 v2.0: прежние Episode 13–16 разукрупнены в 8 атомарных серий `s04e01…s04e08`. Закрыты долги плана: у Episode 15 не было решения вовсе, у Episode 16 — лишь частичное; теперь у всех восьми серий рабочие `solution/` и автотесты (§2.4). Shell sort, heapsort и перемешивание Кнута перенесены в Season 8 — устранена размытая граница TAOCP между S4 и S8 (T3). Устаревшие season-документы удалены; история — в git.</sub>
