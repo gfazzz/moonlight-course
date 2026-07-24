@@ -1,0 +1,8 @@
+=== I2C sensor probe (bus addr 0x76) ===
+
+read WHO_AM_I (0xD0) -> 0x58 : sensor OK
+read from 0x08       -> NACK (no device)
+write CTRL_MEAS 0x27 -> ACK
+read STATUS (0xF3)   -> 0x01 (data_ready=1)
+read RAW (0xFA:0xFB) -> 0x0A2B = 2603 -> 26.03 units
+write to 0xD0 (RO)   -> NACK (read-only)

@@ -1,0 +1,17 @@
+=== Wiegand-26 access control (authorized facility 42) ===
+
+badge A (valid): raw=0x2540A73
+  facility=42  card=1337
+  parity: leading(even)=ok trailing(odd)=ok
+  -> GRANT
+
+badge B (tampered): raw=0x2540A53
+  facility=42  card=1321
+  parity: leading(even)=ok trailing(odd)=BAD
+  -> DENY (corrupt card)
+
+badge C (cloned): raw=0x0C6000B
+  facility=99  card=5
+  parity: leading(even)=ok trailing(odd)=ok
+  -> DENY (facility 99 not authorized)
+
