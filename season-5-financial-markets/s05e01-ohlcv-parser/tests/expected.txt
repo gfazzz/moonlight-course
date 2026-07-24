@@ -1,0 +1,10 @@
+=== OHLCV PARSER ===
+parsed 10 bars
+
+price range: 88.10 .. 111.20
+total volume: 1028000  (avg 102800 per bar)
+
+--- volume anomalies (> 3x average) ---
+bar 4: vol 320000 (3.1x), close +12.37%
+bar 8: vol 410000 (4.0x), close -15.68%
+flagged 2 suspicious bar(s)

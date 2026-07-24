@@ -1,0 +1,10 @@
+=== ORDER BOOK ===
+bids: 5 levels, asks: 5 levels
+
+best bid: 99.95
+best ask: 100.05
+spread:   0.10 (10.0 bps)
+mid:      100.000
+
+bid volume: 8000, ask volume: 8300
+imbalance: -0.018 (balanced pressure)
