@@ -1,0 +1,20 @@
+=== GPIO / hardware registers ===
+
+step 1: set LED(1) and LOCK(3) as outputs
+DDR   = 0b00001010  (0x0A)
+
+step 2: read inputs -> door=1 tamper=0
+
+step 3: conditions OK -> LED on, LOCK energized
+PORT  = 0b00001010  (0x0A)
+
+step 4: blink LED twice
+  blink 0: LED=0
+  blink 1: LED=1
+  blink 2: LED=0
+  blink 3: LED=1
+
+step 5: de-energize LOCK
+PORT  = 0b00000010  (0x02)
+
+result: LOCK pin is LOW -> hatch SECURED

@@ -1,0 +1,14 @@
+=== UART frame decode ===
+wire: 8 frames (start + 8 data + even parity + stop)
+
+frame 0: data=0x4F 'O' parity ok stop ok
+frame 1: data=0x50 'P' parity ok stop ok
+frame 2: data=0x45 'E' parity ok stop ok
+frame 3: data=0x4E 'N' parity ok stop ok
+frame 4: data=0x20 ' ' parity ok stop ok
+frame 5: data=0x37 '7' parity ok stop ok
+frame 6: data=0x2A PARITY ERROR (got 0, want 1)
+frame 7: FRAMING ERROR (stop=0)
+
+message: "OPEN 7"
+frames: 6 ok, 2 errors
