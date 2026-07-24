@@ -1,0 +1,12 @@
+=== MONTE CARLO (sequential, 10000 paths, 20 days) ===
+start portfolio: $50000000
+
+mean ending value: $49971665
+
+--- 20-day P&L distribution ---
+worst case:  $-10542439
+95% VaR:     $4717250
+99% VaR:     $6539723
+best case:   $+11152488
+
+Monte Carlo shows the whole distribution, not just one number.

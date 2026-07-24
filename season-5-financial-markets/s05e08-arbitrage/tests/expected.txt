@@ -1,0 +1,12 @@
+=== CRYPTO ARBITRAGE & PUMP-DUMP ===
+token MOON across 4 exchanges
+
+buy  on Binance  @ ask 1.0250
+sell on Kraken   @ bid 1.0480
+gross 2.24%, net after fees 1.64% -> ARBITRAGE
+
+--- pump & dump scan (baseline vol 12125) ---
+PUMP  at bar 4: +32.4% on volume 95000 (7.8x baseline)
+DUMP  at bar 7: -24.1% (1.2000)
+
+SCHEME CONFIRMED: peak 1.6200 (bar 5), bottom 0.6800 (bar 10) -> -58% wipeout
