@@ -1,0 +1,12 @@
+=== VOLATILITY & VaR ===
+portfolio: $50000000, 40 daily returns
+
+mean daily return: -0.188%
+daily volatility:  1.368%
+annualized vol:    21.72%
+
+--- 95% Value at Risk (1 day) ---
+historical VaR:   2.800%  =  $1400000
+parametric VaR:   2.438%  =  $1219225
+
+meaning: on 95% of days the 1-day loss stays below this. the other 5% can be worse.

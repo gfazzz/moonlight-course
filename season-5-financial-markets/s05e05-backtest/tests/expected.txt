@@ -1,0 +1,19 @@
+=== BACKTEST & OVERFITTING ===
+in-sample [0,120), out-of-sample [120,240)
+
+--- grid search on in-sample ---
+fast  3 slow 13: in-sample   -2.11%
+fast  3 slow 21: in-sample   +0.04%
+fast  3 slow 34: in-sample   -0.65%
+fast  5 slow 13: in-sample   -0.08%
+fast  5 slow 21: in-sample   +0.45%
+fast  5 slow 34: in-sample   +1.90%
+fast  8 slow 13: in-sample   -2.44%
+fast  8 slow 21: in-sample   +3.91%
+fast  8 slow 34: in-sample   +0.43%
+
+best in-sample: fast 8 slow 21 -> +3.91%
+same params out-of-sample -> -5.72%
+buy & hold out-of-sample -> -7.29%
+
+lesson: the in-sample winner does not carry over. that gap is overfitting.
