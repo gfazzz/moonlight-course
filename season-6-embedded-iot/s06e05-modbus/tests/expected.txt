@@ -1,0 +1,13 @@
+=== Modbus RTU ===
+
+request  (8 bytes): 11 03 00 6B 00 03 76 87
+  slave=0x11 func=0x03 start=0x006B count=3
+
+response (11 bytes): 11 03 06 02 2B 00 00 00 64 C8 BA
+  CRC ok -> 3 registers:
+    reg[0] VENT = 555
+    reg[1] PUMP = 0
+    reg[2] GATE = 100
+
+corrupt  (11 bytes): 11 03 06 02 D4 00 00 00 64 C8 BA
+  CRC FAIL -> frame rejected

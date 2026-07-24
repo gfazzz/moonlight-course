@@ -1,0 +1,24 @@
+=== sensor stream: ring buffer + FSM (hysteresis) ===
+window K=4, WARN>=60 ALARM>=80, back: <=70 / <=50
+
+t= 0 raw= 30.0 avg= 30.0  NORMAL 
+t= 1 raw= 32.0 avg= 31.0  NORMAL 
+t= 2 raw= 31.0 avg= 31.0  NORMAL 
+t= 3 raw= 33.0 avg= 31.5  NORMAL 
+t= 4 raw= 90.0 avg= 46.5  NORMAL 
+t= 5 raw= 34.0 avg= 47.0  NORMAL 
+t= 6 raw= 32.0 avg= 47.2  NORMAL 
+t= 7 raw= 35.0 avg= 47.8  NORMAL 
+t= 8 raw= 64.0 avg= 41.2  NORMAL 
+t= 9 raw= 70.0 avg= 50.2  NORMAL 
+t=10 raw= 78.0 avg= 61.8  WARNING  <-- ESCALATE
+t=11 raw= 86.0 avg= 74.5  WARNING
+t=12 raw= 92.0 avg= 81.5  ALARM    <-- ESCALATE
+t=13 raw= 88.0 avg= 86.0  ALARM  
+t=14 raw= 60.0 avg= 81.5  ALARM  
+t=15 raw= 45.0 avg= 71.2  ALARM  
+t=16 raw= 33.0 avg= 56.5  WARNING  <-- recover
+t=17 raw= 30.0 avg= 42.0  NORMAL   <-- recover
+
+final state: NORMAL
+note: the 90.0 spike at t=4 was absorbed — no false alarm.
