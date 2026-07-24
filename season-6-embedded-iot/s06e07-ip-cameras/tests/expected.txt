@@ -1,0 +1,19 @@
+=== camera motion detection (8x8, thresh 40) ===
+
+change map ('#' = motion):
+  ##......
+  ##......
+  ........
+  ........
+  ........
+  ........
+  ......##
+  ......##
+
+changed pixels: 8 -> motion DETECTED
+
+per-zone:
+  top-left     : 4 (motion)
+  top-right    : 0 (BLIND — no patrol)
+  bottom-left  : 0 (BLIND — no patrol)
+  bottom-right : 4 (motion)

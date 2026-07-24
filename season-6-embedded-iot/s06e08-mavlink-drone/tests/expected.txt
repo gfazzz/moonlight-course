@@ -1,0 +1,20 @@
+=== MAVLink telemetry decode (Season 6 finale) ===
+
+drone GPS (21 bytes): FE 0D 07 01 C8 21 70 3B B1 20 30 A8 87 31 C0 D4 01 00 2F 43 5E
+  seq=7 sysid=1 msgid=33  checksum ok
+  lat=54.8486 lon=83.0974 alt=120.0 m  battery=47%
+
+drone GPS (corrupt) (21 bytes): FE 0D 07 01 C8 21 70 3B 4E 20 30 A8 87 31 C0 D4 01 00 2F 43 5E
+  checksum FAIL -> frame rejected
+
+--- iot_controller online ---
+  [OK] GPIO lock (e01)
+  [OK] UART link (e02)
+  [OK] I2C sensor (e03)
+  [OK] Wiegand SCUD (e04)
+  [OK] Modbus PLC (e05)
+  [OK] sensor FSM (e06)
+  [OK] camera motion (e07)
+  [OK] drone telemetry (e08)
+
+perimeter mapped. Season 6 complete.
