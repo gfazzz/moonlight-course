@@ -1,222 +1,76 @@
-# 🔧 Season 7: System Programming
+# Season 7 — Systems Programming
 
-**Version:** v2.0 Enhanced Edition  
-**Status:** 🟢 PRODUCTION READY (80% complete)  
-**Quality:** ⭐⭐⭐⭐⭐ 5/5
+**Ядро операционной системы через войну в тенях. 8 коротких серий, ~7 часов.**
 
-> *"To control the system, you must become the system."*
+> *«В тени системы живут процессы. Мы станем одним из них».*
 
-```
-╔══════════════════════════════════════════════════════════╗
-║                 OPERATION MOONLIGHT                      ║
-║                    SEASON 7 / 10                         ║
-║                                                          ║
-║  VERSION:  v2.0 Enhanced Edition                         ║
-║  СТАТУС:   🟢 PRODUCTION READY (80%)                     ║
-║  ТЕМА:     UNIX System Programming                      ║
-║  УРОВЕНЬ:  Advanced                                      ║
-║  QUALITY:  ⭐⭐⭐⭐⭐ 5/5                                 ║
-╚══════════════════════════════════════════════════════════╝
-```
+Организация нашла тебя и запустила слежку изнутри системы: `tracker` сканирует узлы, `surveillance_d` живёт демоном. Прятаться в сети больше негде — прятаться надо среди процессов самой ОС. Season 7 — про то, что стоит между железом (Season 6) и прикладным кодом: процессы, потоки, планировщик, системные вызовы. Проект сезона — `stealth_agent`.
 
-## 🌍 География Season 7
-
-**Операция переходит в США — Bay Area, сердце FreeBSD и UNIX!**
-
-### 📍 Главные локации:
-
-**🇺🇸 Сан-Франциско, Bay Area (Episodes 25-28)**
-- **Координаты:** 37.7749°N, 122.4194°W (San Francisco)
-- **Дата-центр:** Fremont, CA (37.5485°N, 121.9886°W)
-- **Атмосфера:** Кремниевая долина, tech culture, стартапы, FreeBSD roots
-- **История:** Kirk McKusick, Berkeley Software Distribution (BSD)
-
-**Сервер MOONLIGHT:** Дата-центр в Fremont с FreeBSD 14.0
-
-**Команда:**
-- Viktor — координация из Москвы
-- Dmitry — консультации по pthreads (удалённо)
-- Ghost/Alex — covert channels помощь
-
-> 📍 **Детали:** см. [LOCATIONS.md](../LOCATIONS.md) — полная карта Season 7
+Сквозная идея сезона — **C как язык системных вызовов**: то, что нельзя сделать ни на чём другом без обёрток.
 
 ---
 
-## 📋 Обзор сезона
+## Серии
 
-**Уровень:** 🔥🔥🔥🔥 Advanced  
-**Эпизоды:** 25-28 (4 эпизода)  
-**Время прохождения:** ~12-16 часов  
-**Пререквизиты:** Seasons 1-6
-**Локация:** Bay Area, California — там, где родился UNIX!
+| ID | Название | Концепт | Артефакт |
+|----|----------|---------|----------|
+| [s07e01](s07e01-processes-fork/) | Процессы и fork() | двойной возврат, copy-on-write, wait | `fork.c` |
+| [s07e02](s07e02-exec/) | exec | замена образа, коды возврата | `exec.c` |
+| [s07e03](s07e03-daemons/) | Демоны | setsid, отвязка от терминала | `daemon.c` |
+| [s07e04](s07e04-threads/) | Потоки | pthread, параллельный Monte Carlo | `threads.c` |
+| [s07e05](s07e05-race-mutex/) | Гонки и мьютексы | data race, критические секции | `race.c` |
+| [s07e06](s07e06-pipes-ipc/) | Каналы (IPC) | pipe, dup2, конвейеры | `pipes.c` |
+| [s07e07](s07e07-mmap-shared/) | mmap и общая память | MAP_SHARED vs MAP_PRIVATE | `shared.c` |
+| [s07e08](s07e08-signals-stealth/) | Сигналы и финал | sigaction, graceful shutdown | `signals.c` |
 
-### 🎯 Цели сезона
+Каждая серия: один концепт, одна задача, ~45–60 минут, по шаблону v2.0. Теория «вглубь» и книги — в `theory.md` каждой серии.
 
-Погрузитесь в **системное программирование UNIX/Linux/FreeBSD**:
-- Процессы и демоны
-- Многопоточность и параллелизм
-- Межпроцессное взаимодействие (IPC)
-- Системные вызовы и API ОС
+## Детерминизм в конкурентном мире
 
-После этого сезона вы будете **думать как ядро ОС**.
+Главная техническая особенность сезона: **конкурентный код проверяется детерминированно**. Правила, которые ты усвоишь заодно с материалом:
 
----
+- никогда не печатать PID, тайминги и «плавающие» значения в проверяемый вывод;
+- проверять **инварианты** («fork вернул 0 в потомке», «итог под мьютексом точно равен ожидаемому»), а не конкретные числа;
+- плавающие величины выводить в `stderr` (см. `make race` в s07e05) — для глаз, не для теста;
+- воспроизводимый параллелизм строить на данных, а не на удаче: в s07e04 сид ГПСЧ привязан к номеру задачи, поэтому параллельный результат **побитово** совпадает с последовательным.
 
-## 📚 Эпизоды
+Тесты запускают программу по несколько раз и падают, если вывод «поплыл». Зависания ловятся `timeout`.
 
-### Episode 25: Processes & Daemons 🔄
-**"Процессы-невидимки"**
+## Как проходить
 
-**Сюжет:**  
-Обнаружен процесс на сервере, который не должен там быть. Научитесь создавать, анализировать и контролировать процессы. Создайте собственный daemon.
+Оболочка — **Cursor в режиме IDE**; LUNA из сюжета = чат Cursor.
 
-**Теория:**
-- `fork()`, `exec()`, `wait()`
-- Process states (running, zombie, orphan)
-- Daemons и background processes
-- PID, PPID, process tree
-- Signal handling (SIGTERM, SIGKILL, SIGUSR)
-
-**Практика:**
-- Process monitor
-- Daemon creation
-- Signal handlers
-- Process management tool
-
----
-
-### Episode 26: Threads & Parallelism ⚡
-**"Многопоточность"**
-
-**Сюжет:**  
-Анализ огромного лог-файла занимает часы. Распараллельте работу используя потоки. Научитесь избегать race conditions и deadlocks.
-
-**Теория:**
-- POSIX threads (pthread)
-- Thread creation & joining
-- Mutexes и синхронизация
-- Race conditions & deadlocks
-- Thread-safe code
-
-**Практика:**
-- Multi-threaded log analyzer
-- Producer-consumer pattern
-- Thread pool
-- Lock-free algorithms (bonus)
-
----
-
-### Episode 27: Inter-Process Communication 📡
-**"Межпроцессное взаимодействие"**
-
-**Сюжет:**  
-Система MOONLIGHT состоит из множества компонентов. Они должны обмениваться данными. Реализуйте все виды IPC.
-
-**Теория:**
-- Pipes & FIFOs
-- Message queues
-- Shared memory
-- Semaphores
-- Sockets (Unix domain)
-
-**Практика:**
-- Multi-process architecture
-- Message bus
-- Shared memory database
-- Service coordination
-
----
-
-### Episode 28: Stealth Operation 🥷
-**"Скрытая операция"**
-
-**Сюжет:**  
-Финальная проверка: создайте stealth-процесс, который работает незаметно, мониторит систему и отправляет данные. Применяем все навыки Season 7.
-
-**Теория:**
-- Process hiding techniques
-- System call hooking (ethical!)
-- Resource limits (rlimit)
-- chroot jails
-- Capabilities
-
-**Практика:**
-- Stealth monitoring agent
-- Resource-efficient daemon
-- Self-healing process
-- Complete system integration
-
----
-
-## 🎓 Что вы освоите
-
-- ✅ Process management
-- ✅ Multi-threading
-- ✅ IPC механизмы
-- ✅ System call API
-- ✅ Daemon programming
-- ✅ Signal handling
-- ✅ Concurrency patterns
-
-**Уровень:** Senior Systems Engineer 🎖️
-
----
-
-## 🛠 Требования
+> **Читай `README.md`, `mission.md` и `theory.md` в режиме предпросмотра, а не в окне редактора.**
+> В Cursor/VS Code: `Cmd+Shift+V` (macOS) или `Ctrl+Shift+V` (Linux/Windows); `Cmd+K V` — сбоку от кода.
 
 ```bash
-# POSIX-совместимая система
-# Linux, FreeBSD, macOS
-
-# Библиотеки
-- pthread (многопоточность)
-- rt (real-time extensions)
-```
-
----
-
-## 📖 Литература
-
-- "Advanced Programming in the UNIX Environment" — Stevens & Rago ⭐⭐⭐
-- "The Linux Programming Interface" — Michael Kerrisk ⭐⭐⭐
-- "Unix Network Programming" — Stevens
-- Man pages: `man 2 fork`, `man 3 pthread_create`
-
----
-
-## 🎉 Season 7 v2.0 Enhanced Edition — PRODUCTION READY!
-
-**Processes → Threads → IPC → Covert Channels**
-
-**4 Episodes • 12-16 Hours • UNIX System Programming Mastery**  
-**✅ All Solutions Complete • ✅ Professional Code • ✅ Comprehensive Documentation**
-
-### What's New in v2.0:
-
-- ✅ **4 complete solution files** (~1,520 lines of production code)
-- ✅ **Professional implementations:**
-  - Process management: fork/exec/wait, daemons, signals
-  - Multithreading: pthreads, mutex, producer-consumer, thread pool
-  - IPC: pipes, FIFO, shared memory, signals
-  - Security: covert channels, timing attacks, side-channel analysis
-- ✅ **Comprehensive documentation** with examples
-- ✅ **CHANGELOG.md** and **IMPROVEMENTS_SUMMARY.md**
-- ✅ **Professional Makefiles** for all episodes
-- ✅ **Real-world relevance:** POSIX-compliant, production-ready code
-
-### Quality: ⭐⭐⭐⭐⭐ 5/5 — Ready for students!
-
-**Total Solution Code:** ~1,520 lines  
-**Compilation:** All episodes compile cleanly  
-**Completeness:** 20% → 80% (+300%)
-
----
-
-## ⏭️ Следующий сезон
-
-**Season 8: AI & Data Science** — применяем системное программирование для обработки больших данных и ML.
-
-```bash
-cd ../season-8-ai-and-data/episode-29-big-data/
+cd s07e01-processes-fork
 cat README.md
+cp starter.c artifacts/fork.c
+make test                # зелёный тест = серия пройдена
+# из корня сезона: make test — прогон всех 8 серий
 ```
+
+Сезон использует `-std=gnu11` (POSIX-вызовы видны без ручных feature-макросов) и `-pthread` там, где нужны потоки. `sh` — рабочий инструмент сезона: через него запускаются команды и собираются конвейеры.
+
+## Season Project: `stealth_agent`
+
+Артефакты складываются в системного агента: порождение процессов, запуск программ, уход в фон демоном, параллельные вычисления, безопасная работа с общим состоянием, связь через каналы и разделяемую память, управляемость сигналами и чистое завершение. Финал (s07e08) собирает всё вместе.
+
+## Долги плана, закрытые здесь
+
+- **T1 (pthread).** Season 5 обещал параллельный Monte Carlo «после Season 7» — он реализован в [s07e04](s07e04-threads/) и даёт побитово тот же результат, что последовательная версия.
+- **T6 (mmap).** Цепочка «упомянут в S2 → разобран в S7 → используется в S8» зафиксирована явно в [s07e07](s07e07-mmap-shared/).
+
+## Персонажи
+
+- **Виктор (V.)** — предупреждает о слежке, координирует.
+- **LUNA** — тьютор во всех сериях. **Организация** — ведёт слежку изнутри системы.
+
+## Что дальше
+
+Финал разблокирует **Season 8 — AI & Data Science** (`s08e01…`): большие данные, статистика, обучение моделей. Там же придёт черёд честного ГПСЧ и перемешивания Кнута, отложенных в Season 5, а капстоуном станет `luna_ai`.
+
+---
+
+<sub>Season 7 v2.0: прежние Episode 25–28 (заглушки по 243–274 строки, без тестов) развёрнуты в 8 атомарных серий `s07e01…s07e08` с эталонами и детерминированными автотестами. Закрыты долги плана T1 и T6. Устаревшие season-документы удалены; история — в git.</sub>
