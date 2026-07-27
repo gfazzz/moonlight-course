@@ -1,0 +1,32 @@
+=== iot_controller: сборка из модулей S4 + S6 ===
+
+--- модуль Season 4 (ml_hash): адресация устройств ---
+  gate.north   -> slave id 16
+  gate.south   -> slave id 8
+  hvac.main    -> slave id 11
+  pump.a       -> slave id 7
+  cam.roof     -> slave id 11
+
+--- модуль Season 6 (ml_crc): опрос по Modbus ---
+  gate.north   кадр: CRC ok
+  gate.south   кадр: CRC ok
+  hvac.main    кадр: CRC ok
+  pump.a       кадр: CRC FAIL — отброшен
+  cam.roof     кадр: CRC ok
+  принято 4, отброшено 1, баланс: сходится
+
+--- модуль Season 6 (ml_wiegand): контроль доступа ---
+  сотрудник НИИ facility  42 card  1337 -> GRANT
+  подрядчик facility  42 card  9001 -> GRANT
+  клон карты facility  99 card     5 -> DENY (чужой объект)
+  битая карта (поля не извлечены)      -> DENY (кадр повреждён)
+  пропущено 2, отказано 2
+
+--- состав сборки ---
+  [S4] ml_hash.c    — адресация устройств
+  [S6] ml_crc.c     — целостность кадров
+  [S6] ml_wiegand.c — карты доступа
+  [S6] main.c       — контроллер
+
+4 единицы трансляции из 2 сезонов слинкованы в iot_controller.
+сборка работоспособна: да
