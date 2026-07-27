@@ -12,7 +12,7 @@ EPISODES := s10e01-architecture \
             s10e07-pipeline \
             s10e08-final-operation
 
-.PHONY: test list clean
+.PHONY: test list clean project
 
 test:
 	@fail=0; \
@@ -22,6 +22,9 @@ test:
 			echo "PASS"; \
 		else echo "FAIL"; tail -6 /tmp/s10_$$ep.log; fail=1; fi; \
 	done; \
+	printf "%-26s " "project/"; \
+	if $(MAKE) -s -C project test >/tmp/proj_$$$$.log 2>&1 && grep -q PASS /tmp/proj_$$$$.log; then \
+		echo "PASS"; else echo "FAIL"; tail -6 /tmp/proj_$$$$.log; fail=1; fi; \
 	[ $$fail -eq 0 ] && echo "Season 10: все серии зелёные." || { echo "Season 10: есть падения."; exit 1; }
 
 list:
@@ -30,3 +33,7 @@ list:
 clean:
 	@for ep in $(EPISODES); do $(MAKE) -s -C $$ep clean >/dev/null 2>&1 || true; done
 	@echo "clean."
+
+# Season Project: собирается из модулей нескольких сезонов
+project:
+	@$(MAKE) -s -C project run
