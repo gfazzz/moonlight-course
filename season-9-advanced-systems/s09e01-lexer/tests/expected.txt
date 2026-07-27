@@ -1,0 +1,54 @@
+=== лексер языка MOON ===
+
+line   type     text       value
+---------------------------------------
+  2:1  IDENT    x         
+  2:3  ASSIGN   =         
+  2:5  NUM      12         12
+  2:7  SEMI     ;         
+  3:1  KEYWORD  if        
+  3:4  LPAREN   (         
+  3:5  IDENT    x         
+  3:7  GE       >=        
+  3:10 NUM      10         10
+  3:12 RPAREN   )         
+  3:14 LBRACE   {         
+  4:3  IDENT    threat    
+  4:10 ASSIGN   =         
+  4:12 IDENT    x         
+  4:14 STAR     *         
+  4:16 NUM      2          2
+  4:18 PLUS     +         
+  4:20 NUM      1          1
+  4:21 SEMI     ;         
+  5:3  KEYWORD  print     
+  5:9  IDENT    threat    
+  5:15 SEMI     ;         
+  6:1  RBRACE   }         
+  7:1  KEYWORD  while     
+  7:7  LPAREN   (         
+  7:8  IDENT    x         
+  7:10 NE       !=        
+  7:13 NUM      0          0
+  7:14 RPAREN   )         
+  7:16 LBRACE   {         
+  7:18 IDENT    x         
+  7:20 ASSIGN   =         
+  7:22 IDENT    x         
+  7:24 MINUS    -         
+  7:26 NUM      1          1
+  7:27 SEMI     ;         
+  7:29 RBRACE   }         
+  8:1  IDENT    y         
+  8:3  ASSIGN   =         
+  8:5  NUM      3          3
+  8:7  ERROR    @          <-- неизвестный символ
+  8:9  NUM      4          4
+  8:10 SEMI     ;         
+  9:1  EOF      <eof>     
+
+всего токенов: 44 (включая EOF)
+чисел: 8, идентификаторов: 9, ключевых слов: 3
+ошибочных символов: 1
+
+лексер не знает грамматики — он лишь режет поток на слова.
