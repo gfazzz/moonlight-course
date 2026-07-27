@@ -1,111 +1,63 @@
-# OPERATION MOONLIGHT - Main Makefile
-# Root makefile for the entire course
+# OPERATION MOONLIGHT — корневой Makefile
+#
+#   make            — справка
+#   make list       — все сезоны и серии
+#   make test       — прогнать ВЕСЬ курс (80 серий + 7 проектов)
+#   make projects   — запустить сквозные проекты всех сезонов
+#   make clean      — убрать собранные бинарники
 
-.PHONY: help list status clean clean-all
+SEASONS := season-1-foundations \
+           season-2-memory-and-pointers \
+           season-3-networks \
+           season-4-crypto-and-algorithms \
+           season-5-financial-markets \
+           season-6-embedded-iot \
+           season-7-system-programming \
+           season-8-ai-and-data \
+           season-9-advanced-systems \
+           season-10-final-mission
 
-# Default target
+.PHONY: help list test projects clean
+
 help:
-	@echo "╔════════════════════════════════════════════════════╗"
-	@echo "║     OPERATION MOONLIGHT - Interactive C Course    ║"
-	@echo "╚════════════════════════════════════════════════════╝"
+	@echo "OPERATION MOONLIGHT — курс C через расследование"
 	@echo ""
-	@echo "Available commands:"
+	@echo "  make list      — сезоны и серии"
+	@echo "  make test      — прогнать весь курс"
+	@echo "  make projects  — запустить сквозные проекты"
+	@echo "  make clean     — убрать бинарники"
 	@echo ""
-	@echo "  make help        - Show this help message"
-	@echo "  make list        - List all seasons and episodes"
-	@echo "  make status      - Show course progress"
-	@echo "  make clean       - Clean all binaries and build artifacts"
-	@echo "  make clean-all   - Same as clean"
-	@echo ""
-	@echo "To work on specific episode:"
-	@echo "  cd season-X-name/episode-XX-name/"
-	@echo "  make              # Build"
-	@echo "  make run          # Run"
-	@echo "  make test         # Test"
-	@echo ""
-	@echo "Quick start:"
-	@echo "  cd season-1-foundations/episode-01-strange-message/"
+	@echo "Начать:"
+	@echo "  cd season-1-foundations/s01e01-strange-message"
 	@echo "  cat README.md"
 	@echo ""
-	@echo "Good luck, agent! 🎯"
+	@echo "Внутри серии: make test — зелёный тест = серия пройдена."
 
-# List all seasons and episodes
 list:
-	@echo "=== MOONLIGHT Course Structure ==="
-	@echo ""
-	@echo "📁 Season 1: Foundations"
-	@echo "   └─ Episode 01: Strange Message"
-	@echo "   └─ Episode 02: Chain of Clues"
-	@echo "   └─ Episode 03: Patterns in Time"
-	@echo "   └─ Episode 04: First Tool"
-	@echo ""
-	@echo "📁 Season 2: Memory & Pointers"
-	@echo "   └─ Episodes 05-08 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 3: Networks"
-	@echo "   └─ Episodes 09-12 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 4: Crypto & Algorithms"
-	@echo "   └─ Episodes 13-16 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 5: Embedded & Arduino"
-	@echo "   └─ Episodes 17-20 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 6: Low-Voltage Systems"
-	@echo "   └─ Episodes 21-24 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 7: System Programming"
-	@echo "   └─ Episodes 25-28 (Coming soon)"
-	@echo ""
-	@echo "📁 Season 8: AI & Data Science"
-	@echo "   └─ Episodes 29-32 (Coming soon)"
-	@echo ""
-	@echo "📁 Final Operation"
-	@echo "   └─ Final Project (Coming soon)"
-
-# Show progress (simple version)
-status:
-	@echo "=== Course Progress ==="
-	@echo ""
-	@if [ -f .progress ]; then \
-		cat .progress; \
-	else \
-		echo "No progress tracked yet."; \
-		echo "Complete episodes and run 'make test' to track progress."; \
-	fi
-	@echo ""
-	@echo "To update progress, complete episodes and run tests."
-
-# Clean compiled binaries and intermediate files
-clean:
-	@echo "Cleaning compiled binaries and intermediate files..."
-	@find . -type d -name "build" -exec rm -rf {} + 2>/dev/null || true
-	@find . -type f -name "*.o" -delete
-	@find . -type f -name "*.out" -delete
-	@find . -type f -name "a.out" -delete
-	@find . -type f -name "output.txt" -delete
-	@echo "Removing episode executables..."
-	@find season-*/episode-* -maxdepth 1 -type f -executable -delete 2>/dev/null || true
-	@find season-*/episode-*/artifacts -maxdepth 1 -type f -executable -delete 2>/dev/null || true
-	@echo "Cleaning solution directories..."
-	@for dir in season-*/episode-*/solution; do \
-		if [ -d "$$dir" ] && [ -f "$$dir/Makefile" ]; then \
-			$(MAKE) -C "$$dir" clean 2>/dev/null || true; \
-		fi; \
+	@for s in $(SEASONS); do \
+		echo ""; echo "== $$s"; \
+		ls -d $$s/s[0-9]* 2>/dev/null | sed 's|.*/|   |'; \
+		[ -d $$s/project ] && echo "   project/ (сквозной проект сезона)" || true; \
 	done
-	@echo "✓ All build artifacts and executables cleaned"
 
-# Alias for clean
-clean-all: clean
+test:
+	@fail=0; \
+	for s in $(SEASONS); do \
+		printf "%-34s " "$$s"; \
+		if $(MAKE) -s -C $$s test >/tmp/ml_$$s.log 2>&1; then \
+			echo "OK"; \
+		else echo "FAIL"; tail -8 /tmp/ml_$$s.log; fail=1; fi; \
+	done; \
+	echo ""; \
+	[ $$fail -eq 0 ] && echo "Весь курс зелёный." || { echo "Есть падения."; exit 1; }
 
-# Initialize course (create necessary directories)
-init:
-	@echo "Initializing MOONLIGHT course..."
-	@mkdir -p season-1-foundations/episode-01-strange-message/artifacts
-	@mkdir -p season-1-foundations/episode-02-chain-of-clues/artifacts
-	@mkdir -p season-1-foundations/episode-03-patterns-in-time/artifacts
-	@mkdir -p season-1-foundations/episode-04-first-tool/artifacts
-	@touch .progress
-	@echo "✓ Course initialized"
-	@echo ""
-	@echo "Start with: cd season-1-foundations/episode-01-strange-message/"
+projects:
+	@for s in $(SEASONS); do \
+		[ -d $$s/project ] || continue; \
+		echo ""; echo "===== $$s/project ====="; \
+		$(MAKE) -s -C $$s/project run; \
+	done
+
+clean:
+	@for s in $(SEASONS); do $(MAKE) -s -C $$s clean >/dev/null 2>&1 || true; done
+	@echo "clean."
