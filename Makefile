@@ -17,11 +17,12 @@ SEASONS := season-1-foundations \
            season-9-advanced-systems \
            season-10-final-mission
 
-.PHONY: help list test projects clean
+.PHONY: help list test progress projects clean
 
 help:
 	@echo "OPERATION MOONLIGHT — курс C через расследование"
 	@echo ""
+	@echo "  make progress  — где ты сейчас: пройденные серии по сезонам"
 	@echo "  make list      — сезоны и серии"
 	@echo "  make test      — прогнать весь курс"
 	@echo "  make projects  — запустить сквозные проекты"
@@ -32,6 +33,43 @@ help:
 	@echo "  cat README.md"
 	@echo ""
 	@echo "Внутри серии: make test — зелёный тест = серия пройдена."
+
+# Сводка по операции: какие серии решены (тест зелёный на ТВОЁМ коде в artifacts/),
+# какие ещё нет. Серия считается пройденной, только если в artifacts/ есть твой
+# исходник и тест на нём проходит — наличие solution/ роли не играет.
+progress:
+	@echo ""
+	@echo "  ┌──────────────────────────────────────────────────────────────┐"
+	@echo "  │  OPERATION MOONLIGHT — СВОДКА ПО ОПЕРАЦИИ                    │"
+	@echo "  └──────────────────────────────────────────────────────────────┘"
+	@echo ""
+	@total=0; done_all=0; next=""; \
+	for s in $(SEASONS); do \
+		n=0; d=0; \
+		for e in $$s/s[0-9][0-9]e[0-9][0-9]*; do \
+			[ -d "$$e" ] || continue; \
+			n=$$((n+1)); total=$$((total+1)); \
+			if ls $$e/artifacts/*.c >/dev/null 2>&1 && \
+			   $(MAKE) -s -C $$e test >/dev/null 2>&1; then \
+				d=$$((d+1)); done_all=$$((done_all+1)); \
+			elif [ -z "$$next" ]; then next="$$e"; fi; \
+		done; \
+		[ $$n -eq 0 ] && continue; \
+		bar=""; i=0; \
+		while [ $$i -lt $$n ]; do \
+			[ $$i -lt $$d ] && bar="$$bar#" || bar="$$bar."; i=$$((i+1)); \
+		done; \
+		printf "  %-32s [%s] %d/%d\n" "$$(echo $$s | sed 's/season-//;s/-/ /g')" "$$bar" "$$d" "$$n"; \
+	done; \
+	echo ""; \
+	printf "  Всего пройдено: %d из %d серий\n" "$$done_all" "$$total"; \
+	if [ -n "$$next" ]; then \
+		echo ""; printf "  Следующая цель: %s\n" "$$next"; \
+		printf "  → cd %s && cat README.md\n" "$$next"; \
+	else \
+		echo ""; echo "  Все серии пройдены. MOONLIGHT closed."; \
+	fi; \
+	echo ""
 
 list:
 	@for s in $(SEASONS); do \

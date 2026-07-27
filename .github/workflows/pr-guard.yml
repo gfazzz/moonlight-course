@@ -1,0 +1,43 @@
+name: PR guard
+
+# Пулл-реквесты в курс не должны содержать учебных решений.
+#
+# У студента artifacts/*.c отслеживаются намеренно — чтобы у него была история
+# прохождения в собственной ветке (см. .gitignore и CONTRIBUTING.md).
+# Обратная сторона: `git add -A` перед правкой опечатки легко утащит в PR
+# полсезона чужих решений. Эта проверка ловит такое до ревью.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  no-artifacts:
+    name: PR не трогает artifacts/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Проверить состав изменений
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          bad=$(git diff --name-only "$base" "$head" | grep '/artifacts/' | grep -v '\.gitkeep$' || true)
+
+          if [ -n "$bad" ]; then
+            echo "::error::В пулл-реквесте есть файлы из artifacts/ — это учебные решения, им не место в курсе."
+            echo ""
+            echo "Лишние файлы:"
+            echo "$bad" | sed 's/^/  /'
+            echo ""
+            echo "Как починить:"
+            echo "  git rm --cached <файлы>   # убрать из индекса, на диске останутся"
+            echo "  git commit --amend"
+            echo ""
+            echo "На будущее: ветку для PR заводите от чистого main, а решения держите в отдельной ветке."
+            exit 1
+          fi
+
+          echo "Чисто: artifacts/ не затронуты."
