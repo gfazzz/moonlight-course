@@ -78,16 +78,33 @@ list:
 		[ -d $$s/project ] && echo "   project/ (сквозной проект сезона)" || true; \
 	done
 
+# Прогон курса. Лог каждого сезона сохраняется в tests/logs/<сезон>.log —
+# из общего вывода не видно, КАКАЯ серия упала, а из лога видно.
+#
+#   make test                            — весь курс
+#   make test SEASON=season-08-ai-and-data   — один сезон
+LOGDIR := tests/logs
+
 test:
+	@mkdir -p $(LOGDIR)
 	@fail=0; \
-	for s in $(SEASONS); do \
+	for s in $(if $(SEASON),$(SEASON),$(SEASONS)); do \
+		[ -d "$$s" ] || { echo "нет такого сезона: $$s"; exit 2; }; \
 		printf "%-34s " "$$s"; \
-		if $(MAKE) -s -C $$s test >/tmp/ml_$$s.log 2>&1; then \
+		if $(MAKE) -s -C $$s test >$(LOGDIR)/$$s.log 2>&1; then \
 			echo "OK"; \
-		else echo "FAIL"; tail -8 /tmp/ml_$$s.log; fail=1; fi; \
+		else \
+			echo "FAIL   (лог: $(LOGDIR)/$$s.log)"; \
+			echo "  ── упавшие серии:"; \
+			grep -E "^[a-z0-9-]+ +FAIL|FAIL:" $(LOGDIR)/$$s.log | head -20 | sed 's/^/     /'; \
+			echo "  ── подробности:"; \
+			grep -A6 -E "FAIL:" $(LOGDIR)/$$s.log | head -30 | sed 's/^/     /'; \
+			fail=1; \
+		fi; \
 	done; \
 	echo ""; \
-	[ $$fail -eq 0 ] && echo "Весь курс зелёный." || { echo "Есть падения."; exit 1; }
+	if [ $$fail -eq 0 ]; then echo "$(if $(SEASON),Сезон зелёный.,Весь курс зелёный.)"; else \
+		echo "Есть падения. Полные логи: $(LOGDIR)/*.log"; exit 1; fi
 
 projects:
 	@for s in $(SEASONS); do \

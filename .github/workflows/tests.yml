@@ -3,6 +3,9 @@ name: Курс
 # Прогон всех 80 серий и 7 сквозных проектов.
 # Тесты курса детерминированы: никаких таймингов, PID и системного времени
 # в сравниваемом выводе — иначе они бы падали через раз именно здесь.
+#
+# Каждый сезон — отдельная задача матрицы: при падении сразу видно, ГДЕ,
+# а логи всех серий сезона выкладываются артефактом.
 
 on:
   push:
@@ -13,7 +16,53 @@ on:
 
 jobs:
   test:
-    name: make test (${{ matrix.os }})
+    name: ${{ matrix.season }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        season:
+          - season-01-foundations
+          - season-02-memory-and-pointers
+          - season-03-networks
+          - season-04-crypto-and-algorithms
+          - season-05-financial-markets
+          - season-06-embedded-iot
+          - season-07-system-programming
+          - season-08-ai-and-data
+          - season-09-advanced-systems
+          - season-10-final-mission
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Окружение
+        run: |
+          echo "компилятор:"; cc --version | head -1
+          echo "gcc:";        (gcc --version | head -1) || echo "  нет"
+          echo "python3:";    (python3 --version) || echo "  нет"
+          echo "архитектура:"; uname -sm
+          echo "make:";       make --version | head -1
+
+      - name: Тесты сезона
+        run: |
+          set -o pipefail
+          make test SEASON=${{ matrix.season }} 2>&1 | tee test-output.txt
+
+      - name: Логи серий
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-${{ matrix.season }}-${{ matrix.os }}
+          path: |
+            test-output.txt
+            tests/logs/
+          retention-days: 14
+          if-no-files-found: warn
+
+  projects:
+    name: сквозные проекты (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -23,11 +72,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Версия компилятора
-        run: cc --version
+      - name: Сборка проектов сезонов
+        run: |
+          set -o pipefail
+          make projects 2>&1 | tee projects-output.txt
 
-      - name: Все серии
-        run: make test
-
-      - name: Сквозные проекты
-        run: make projects
+      - name: Лог сборки
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-projects-${{ matrix.os }}
+          path: projects-output.txt
+          retention-days: 14
