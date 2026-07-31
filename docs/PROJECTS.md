@@ -87,10 +87,10 @@ make test
 2. **Проверяет исходник** `main.c` на отсутствие скопированных реализаций.
 
 ```bash
-$ cd season-9-advanced-systems/project && make modules
+$ cd season-09-advanced-systems/project && make modules
 Модули сборки:
-  ../../season-4-crypto-and-algorithms/lib/ml_hash.c
-  ../../season-6-embedded-iot/lib/ml_crc.c
+  ../../season-04-crypto-and-algorithms/lib/ml_hash.c
+  ../../season-06-embedded-iot/lib/ml_crc.c
   ../lib/ml_btree.c
   ../lib/ml_kalman.c
   main.c (этот сезон)

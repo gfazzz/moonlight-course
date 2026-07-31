@@ -306,4 +306,4 @@ make test
 
 - Назад: [s10e07 — Ничего не потерялось](../s10e07-pipeline/)
 - Season 10 — обзор: [../README.md](../README.md)
-- Начало пути: [**Season 1 — Foundations**](../../season-1-foundations/)
+- Начало пути: [**Season 1 — Foundations**](../../season-01-foundations/)

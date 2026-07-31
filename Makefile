@@ -6,15 +6,15 @@
 #   make projects   — запустить сквозные проекты всех сезонов
 #   make clean      — убрать собранные бинарники
 
-SEASONS := season-1-foundations \
-           season-2-memory-and-pointers \
-           season-3-networks \
-           season-4-crypto-and-algorithms \
-           season-5-financial-markets \
-           season-6-embedded-iot \
-           season-7-system-programming \
-           season-8-ai-and-data \
-           season-9-advanced-systems \
+SEASONS := season-01-foundations \
+           season-02-memory-and-pointers \
+           season-03-networks \
+           season-04-crypto-and-algorithms \
+           season-05-financial-markets \
+           season-06-embedded-iot \
+           season-07-system-programming \
+           season-08-ai-and-data \
+           season-09-advanced-systems \
            season-10-final-mission
 
 .PHONY: help list test progress projects clean
@@ -29,7 +29,7 @@ help:
 	@echo "  make clean     — убрать бинарники"
 	@echo ""
 	@echo "Начать:"
-	@echo "  cd season-1-foundations/s01e01-strange-message"
+	@echo "  cd season-01-foundations/s01e01-strange-message"
 	@echo "  cat README.md"
 	@echo ""
 	@echo "Внутри серии: make test — зелёный тест = серия пройдена."

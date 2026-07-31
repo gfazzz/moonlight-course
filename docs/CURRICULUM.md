@@ -21,7 +21,7 @@
 | `tests/` | `test.sh` и `expected.txt` |
 
 ```bash
-cd season-1-foundations/s01e01-strange-message
+cd season-01-foundations/s01e01-strange-message
 cp starter.c artifacts/bytecheck.c
 make test
 ```
@@ -105,14 +105,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s01e01](../season-1-foundations/s01e01-strange-message/) | Первый байт | биты, hex, XOR одного байта | `bytecheck.c` |
-| [s01e02](../season-1-foundations/s01e02-full-message/) | Всё сообщение | массивы, `sizeof`, `'\0'` | `decoder.c` |
-| [s01e03](../season-1-foundations/s01e03-chain-of-clues/) | Цепочка зацепок | ветвление, валидация | `classifier.c` |
-| [s01e04](../season-1-foundations/s01e04-patterns-in-time/) | Паттерны во времени | циклы, поиск, интервалы | `pattern_finder.c` |
-| [s01e05](../season-1-foundations/s01e05-functions/) | Функции | функции как контракт | `decoder.c` на функциях |
-| [s01e06](../season-1-foundations/s01e06-modules/) | Модули и сборка | `.h`/`.c`, линковка | модуль `crypto` |
-| [s01e07](../season-1-foundations/s01e07-files-and-args/) | Файлы и аргументы | `fopen`/`fread`, `argv` | `decoder.c` из файла |
-| [s01e08](../season-1-foundations/s01e08-assemble-tool/) | Сборка инструмента | `struct`, Makefile | **`moonlight_decoder`** |
+| [s01e01](../season-01-foundations/s01e01-strange-message/) | Первый байт | биты, hex, XOR одного байта | `bytecheck.c` |
+| [s01e02](../season-01-foundations/s01e02-full-message/) | Всё сообщение | массивы, `sizeof`, `'\0'` | `decoder.c` |
+| [s01e03](../season-01-foundations/s01e03-chain-of-clues/) | Цепочка зацепок | ветвление, валидация | `classifier.c` |
+| [s01e04](../season-01-foundations/s01e04-patterns-in-time/) | Паттерны во времени | циклы, поиск, интервалы | `pattern_finder.c` |
+| [s01e05](../season-01-foundations/s01e05-functions/) | Функции | функции как контракт | `decoder.c` на функциях |
+| [s01e06](../season-01-foundations/s01e06-modules/) | Модули и сборка | `.h`/`.c`, линковка | модуль `crypto` |
+| [s01e07](../season-01-foundations/s01e07-files-and-args/) | Файлы и аргументы | `fopen`/`fread`, `argv` | `decoder.c` из файла |
+| [s01e08](../season-01-foundations/s01e08-assemble-tool/) | Сборка инструмента | `struct`, Makefile | **`moonlight_decoder`** |
 
 ### Season 2 — Memory & Pointers
 
@@ -120,14 +120,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s02e01](../season-2-memory-and-pointers/s02e01-memory-map/) | Карта памяти | адреса, `sizeof`, ASLR | `memmap.c` |
-| [s02e02](../season-2-memory-and-pointers/s02e02-pointers/) | Указатели | `&`, `*`, `NULL` | `swap.c` |
-| [s02e03](../season-2-memory-and-pointers/s02e03-pointer-arithmetic/) | Арифметика указателей | `p[i] ≡ *(p+i)`, разность | `ptr_arith.c` |
-| [s02e04](../season-2-memory-and-pointers/s02e04-chain-navigation/) | Навигация по цепочке | `->`, связанные данные | `navigator.c` |
-| [s02e05](../season-2-memory-and-pointers/s02e05-heap/) | Куча | `malloc`/`free` | `heap.c` |
-| [s02e06](../season-2-memory-and-pointers/s02e06-realloc/) | Растущие буферы | `realloc`, удвоение | `grow.c` |
-| [s02e07](../season-2-memory-and-pointers/s02e07-memory-errors/) | Ошибки памяти | четыре класса, ASan | `safe.c` |
-| [s02e08](../season-2-memory-and-pointers/s02e08-leak-hunt/) | Охота на утечки | владение, освобождение | **`fixed_logger.c`** |
+| [s02e01](../season-02-memory-and-pointers/s02e01-memory-map/) | Карта памяти | адреса, `sizeof`, ASLR | `memmap.c` |
+| [s02e02](../season-02-memory-and-pointers/s02e02-pointers/) | Указатели | `&`, `*`, `NULL` | `swap.c` |
+| [s02e03](../season-02-memory-and-pointers/s02e03-pointer-arithmetic/) | Арифметика указателей | `p[i] ≡ *(p+i)`, разность | `ptr_arith.c` |
+| [s02e04](../season-02-memory-and-pointers/s02e04-chain-navigation/) | Навигация по цепочке | `->`, связанные данные | `navigator.c` |
+| [s02e05](../season-02-memory-and-pointers/s02e05-heap/) | Куча | `malloc`/`free` | `heap.c` |
+| [s02e06](../season-02-memory-and-pointers/s02e06-realloc/) | Растущие буферы | `realloc`, удвоение | `grow.c` |
+| [s02e07](../season-02-memory-and-pointers/s02e07-memory-errors/) | Ошибки памяти | четыре класса, ASan | `safe.c` |
+| [s02e08](../season-02-memory-and-pointers/s02e08-leak-hunt/) | Охота на утечки | владение, освобождение | **`fixed_logger.c`** |
 
 ### Season 3 — Networks
 
@@ -135,14 +135,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s03e01](../season-3-networks/s03e01-ip-addressing/) | IP-адресация | адрес как 32-битное число | `ipinfo.c` |
-| [s03e02](../season-3-networks/s03e02-subnets-cidr/) | Подсети и CIDR | маска, свой/чужой | `subnet.c` |
-| [s03e03](../season-3-networks/s03e03-byte-order/) | Порядок байтов | сетевое представление | `byteorder.c` |
-| [s03e04](../season-3-networks/s03e04-sockets/) | Сокеты | TCP как поток | `echo.c` |
-| [s03e05](../season-3-networks/s03e05-packet-structure/) | Структура пакета | разбор заголовков | `dissect.c` |
-| [s03e06](../season-3-networks/s03e06-checksum/) | Контрольная сумма | целостность vs подлинность | `checksum.c` |
-| [s03e07](../season-3-networks/s03e07-reassembly/) | Сборка потока | позиция вместо очереди | `reassemble.c` |
-| [s03e08](../season-3-networks/s03e08-encrypted-channel/) | Шифрованный канал | конвейер целиком | **`intercept.c`** |
+| [s03e01](../season-03-networks/s03e01-ip-addressing/) | IP-адресация | адрес как 32-битное число | `ipinfo.c` |
+| [s03e02](../season-03-networks/s03e02-subnets-cidr/) | Подсети и CIDR | маска, свой/чужой | `subnet.c` |
+| [s03e03](../season-03-networks/s03e03-byte-order/) | Порядок байтов | сетевое представление | `byteorder.c` |
+| [s03e04](../season-03-networks/s03e04-sockets/) | Сокеты | TCP как поток | `echo.c` |
+| [s03e05](../season-03-networks/s03e05-packet-structure/) | Структура пакета | разбор заголовков | `dissect.c` |
+| [s03e06](../season-03-networks/s03e06-checksum/) | Контрольная сумма | целостность vs подлинность | `checksum.c` |
+| [s03e07](../season-03-networks/s03e07-reassembly/) | Сборка потока | позиция вместо очереди | `reassemble.c` |
+| [s03e08](../season-03-networks/s03e08-encrypted-channel/) | Шифрованный канал | конвейер целиком | **`intercept.c`** |
 
 ### Season 4 — Crypto & Algorithms
 
@@ -150,14 +150,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s04e01](../season-4-crypto-and-algorithms/s04e01-caesar-cipher/) | Шифр Цезаря | подстановка, пространство ключей | `caesar.c` |
-| [s04e02](../season-4-crypto-and-algorithms/s04e02-frequency-analysis/) | Частотный анализ | хи-квадрат, взлом статистикой | `freq.c` |
-| [s04e03](../season-4-crypto-and-algorithms/s04e03-hash-functions/) | Хеш-функции | djb2, FNV-1a, лавина | `hashes.c` |
-| [s04e04](../season-4-crypto-and-algorithms/s04e04-hash-table/) | Хеш-таблица | адрес вместо поиска | `hashtable.c` |
-| [s04e05](../season-4-crypto-and-algorithms/s04e05-sorting/) | Сортировки | O(n²) против O(n log n) | `sorts.c` |
-| [s04e06](../season-4-crypto-and-algorithms/s04e06-binary-search/) | Двоичный поиск | отсекать половину | `bsearch.c` |
-| [s04e07](../season-4-crypto-and-algorithms/s04e07-linked-list/) | Связный список | три указателя, цикл Флойда | `list.c` |
-| [s04e08](../season-4-crypto-and-algorithms/s04e08-blockchain/) | Блокчейн | цепь хешей, PoW | **`blockchain.c`** |
+| [s04e01](../season-04-crypto-and-algorithms/s04e01-caesar-cipher/) | Шифр Цезаря | подстановка, пространство ключей | `caesar.c` |
+| [s04e02](../season-04-crypto-and-algorithms/s04e02-frequency-analysis/) | Частотный анализ | хи-квадрат, взлом статистикой | `freq.c` |
+| [s04e03](../season-04-crypto-and-algorithms/s04e03-hash-functions/) | Хеш-функции | djb2, FNV-1a, лавина | `hashes.c` |
+| [s04e04](../season-04-crypto-and-algorithms/s04e04-hash-table/) | Хеш-таблица | адрес вместо поиска | `hashtable.c` |
+| [s04e05](../season-04-crypto-and-algorithms/s04e05-sorting/) | Сортировки | O(n²) против O(n log n) | `sorts.c` |
+| [s04e06](../season-04-crypto-and-algorithms/s04e06-binary-search/) | Двоичный поиск | отсекать половину | `bsearch.c` |
+| [s04e07](../season-04-crypto-and-algorithms/s04e07-linked-list/) | Связный список | три указателя, цикл Флойда | `list.c` |
+| [s04e08](../season-04-crypto-and-algorithms/s04e08-blockchain/) | Блокчейн | цепь хешей, PoW | **`blockchain.c`** |
 
 ### Season 5 — Financial Markets
 
@@ -165,14 +165,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s05e01](../season-5-financial-markets/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
-| [s05e02](../season-5-financial-markets/s05e02-spread-orderbook/) | Спред и стакан | ликвидность, дисбаланс | `orderbook.c` |
-| [s05e03](../season-5-financial-markets/s05e03-moving-averages/) | Скользящие средние | сглаживание и запаздывание | `ma.c` |
-| [s05e04](../season-5-financial-markets/s05e04-rsi/) | RSI | сила движения, расхождение | `rsi.c` |
-| [s05e05](../season-5-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
-| [s05e06](../season-5-financial-markets/s05e06-volatility-var/) | Волатильность и VaR | риск как распределение | `var.c` |
-| [s05e07](../season-5-financial-markets/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |
-| [s05e08](../season-5-financial-markets/s05e08-arbitrage/) | Арбитраж и разгон | схема как совпадение признаков | **`arbitrage.c`** |
+| [s05e01](../season-05-financial-markets/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
+| [s05e02](../season-05-financial-markets/s05e02-spread-orderbook/) | Спред и стакан | ликвидность, дисбаланс | `orderbook.c` |
+| [s05e03](../season-05-financial-markets/s05e03-moving-averages/) | Скользящие средние | сглаживание и запаздывание | `ma.c` |
+| [s05e04](../season-05-financial-markets/s05e04-rsi/) | RSI | сила движения, расхождение | `rsi.c` |
+| [s05e05](../season-05-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
+| [s05e06](../season-05-financial-markets/s05e06-volatility-var/) | Волатильность и VaR | риск как распределение | `var.c` |
+| [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |
+| [s05e08](../season-05-financial-markets/s05e08-arbitrage/) | Арбитраж и разгон | схема как совпадение признаков | **`arbitrage.c`** |
 
 ### Season 6 — Embedded & IoT
 
@@ -180,14 +180,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s06e01](../season-6-embedded-iot/s06e01-gpio-registers/) | Регистры | бит как физическое состояние | `gpio.c` |
-| [s06e02](../season-6-embedded-iot/s06e02-uart/) | Провод | кадр, скорость, чётность | `uart.c` |
-| [s06e03](../season-6-embedded-iot/s06e03-i2c-spi/) | Шина | адресация, карта регистров | `i2c.c` |
-| [s06e04](../season-6-embedded-iot/s06e04-wiegand-access/) | Карта доступа | разбор поля бит, двойная чётность | `wiegand.c` |
-| [s06e05](../season-6-embedded-iot/s06e05-modbus/) | Промышленный протокол | контрольная сумма, порядок байтов | `modbus.c` |
-| [s06e06](../season-6-embedded-iot/s06e06-sensors-fsm/) | Датчики | кольцевой буфер, автомат, гистерезис | `sensors.c` |
-| [s06e07](../season-6-embedded-iot/s06e07-ip-cameras/) | Видеонаблюдение | разность кадров, цена порога | `motion.c` |
-| [s06e08](../season-6-embedded-iot/s06e08-mavlink-drone/) | Телеметрия | кадр MAVLink, фиксированная точка | **`mavlink.c`** |
+| [s06e01](../season-06-embedded-iot/s06e01-gpio-registers/) | Регистры | бит как физическое состояние | `gpio.c` |
+| [s06e02](../season-06-embedded-iot/s06e02-uart/) | Провод | кадр, скорость, чётность | `uart.c` |
+| [s06e03](../season-06-embedded-iot/s06e03-i2c-spi/) | Шина | адресация, карта регистров | `i2c.c` |
+| [s06e04](../season-06-embedded-iot/s06e04-wiegand-access/) | Карта доступа | разбор поля бит, двойная чётность | `wiegand.c` |
+| [s06e05](../season-06-embedded-iot/s06e05-modbus/) | Промышленный протокол | контрольная сумма, порядок байтов | `modbus.c` |
+| [s06e06](../season-06-embedded-iot/s06e06-sensors-fsm/) | Датчики | кольцевой буфер, автомат, гистерезис | `sensors.c` |
+| [s06e07](../season-06-embedded-iot/s06e07-ip-cameras/) | Видеонаблюдение | разность кадров, цена порога | `motion.c` |
+| [s06e08](../season-06-embedded-iot/s06e08-mavlink-drone/) | Телеметрия | кадр MAVLink, фиксированная точка | **`mavlink.c`** |
 
 ### Season 7 — Systems Programming
 
@@ -195,14 +195,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s07e01](../season-7-system-programming/s07e01-processes-fork/) | Раздвоение | `fork`, ожидание, зомби | `fork.c` |
-| [s07e02](../season-7-system-programming/s07e02-exec/) | Подмена | `exec`, коды возврата | `exec.c` |
-| [s07e03](../season-7-system-programming/s07e03-daemons/) | Жизнь без терминала | сессии, демонизация | `daemon.c` |
-| [s07e04](../season-7-system-programming/s07e04-threads/) | Одновременность | потоки, воспроизводимость | `threads.c` |
-| [s07e05](../season-7-system-programming/s07e05-race-mutex/) | Потерянное обновление | гонка, мьютекс | `race.c` |
-| [s07e06](../season-7-system-programming/s07e06-pipes-ipc/) | Канал | `pipe`, `dup2`, конвейер | `pipes.c` |
-| [s07e07](../season-7-system-programming/s07e07-mmap-shared/) | Общая страница | `mmap`, общее и приватное | `shared.c` |
-| [s07e08](../season-7-system-programming/s07e08-signals-stealth/) | Оклик | сигналы, чистый выход | **`signals.c`** |
+| [s07e01](../season-07-system-programming/s07e01-processes-fork/) | Раздвоение | `fork`, ожидание, зомби | `fork.c` |
+| [s07e02](../season-07-system-programming/s07e02-exec/) | Подмена | `exec`, коды возврата | `exec.c` |
+| [s07e03](../season-07-system-programming/s07e03-daemons/) | Жизнь без терминала | сессии, демонизация | `daemon.c` |
+| [s07e04](../season-07-system-programming/s07e04-threads/) | Одновременность | потоки, воспроизводимость | `threads.c` |
+| [s07e05](../season-07-system-programming/s07e05-race-mutex/) | Потерянное обновление | гонка, мьютекс | `race.c` |
+| [s07e06](../season-07-system-programming/s07e06-pipes-ipc/) | Канал | `pipe`, `dup2`, конвейер | `pipes.c` |
+| [s07e07](../season-07-system-programming/s07e07-mmap-shared/) | Общая страница | `mmap`, общее и приватное | `shared.c` |
+| [s07e08](../season-07-system-programming/s07e08-signals-stealth/) | Оклик | сигналы, чистый выход | **`signals.c`** |
 
 ### Season 8 — AI & Data Science
 
@@ -210,14 +210,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s08e01](../season-8-ai-and-data/s08e01-bigdata-mmap/) | Слишком много | отображение, один проход, Уэлфорд | `bigdata.c` |
-| [s08e02](../season-8-ai-and-data/s08e02-statistics-outliers/) | Что считать аномалией | медиана, размах, маскировка | `stats.c` |
-| [s08e03](../season-8-ai-and-data/s08e03-prng-shuffle/) | Честная монета | смещение тасования, отбраковка | `shuffle.c` |
-| [s08e04](../season-8-ai-and-data/s08e04-shell-heapsort/) | Порядок | шаги Кнута, куча в массиве | `sorts.c` |
-| [s08e05](../season-8-ai-and-data/s08e05-linear-regression/) | Прямая | градиентный спуск, скорость обучения | `regression.c` |
-| [s08e06](../season-8-ai-and-data/s08e06-perceptron/) | Один нейрон | сигмоида, кросс-энтропия, предел | `perceptron.c` |
-| [s08e07](../season-8-ai-and-data/s08e07-backprop/) | Ошибка идёт назад | скрытый слой, цепное правило | `backprop.c` |
-| [s08e08](../season-8-ai-and-data/s08e08-luna-ai/) | luna_ai | полный цикл, честные метрики | **`luna_ai.c`** |
+| [s08e01](../season-08-ai-and-data/s08e01-bigdata-mmap/) | Слишком много | отображение, один проход, Уэлфорд | `bigdata.c` |
+| [s08e02](../season-08-ai-and-data/s08e02-statistics-outliers/) | Что считать аномалией | медиана, размах, маскировка | `stats.c` |
+| [s08e03](../season-08-ai-and-data/s08e03-prng-shuffle/) | Честная монета | смещение тасования, отбраковка | `shuffle.c` |
+| [s08e04](../season-08-ai-and-data/s08e04-shell-heapsort/) | Порядок | шаги Кнута, куча в массиве | `sorts.c` |
+| [s08e05](../season-08-ai-and-data/s08e05-linear-regression/) | Прямая | градиентный спуск, скорость обучения | `regression.c` |
+| [s08e06](../season-08-ai-and-data/s08e06-perceptron/) | Один нейрон | сигмоида, кросс-энтропия, предел | `perceptron.c` |
+| [s08e07](../season-08-ai-and-data/s08e07-backprop/) | Ошибка идёт назад | скрытый слой, цепное правило | `backprop.c` |
+| [s08e08](../season-08-ai-and-data/s08e08-luna-ai/) | luna_ai | полный цикл, честные метрики | **`luna_ai.c`** |
 
 ### Season 9 — Advanced Topics
 
@@ -225,14 +225,14 @@ make test
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s09e01](../season-9-advanced-systems/s09e01-lexer/) | Слова | символы в токены, максимальное совпадение | `lexer.c` |
-| [s09e02](../season-9-advanced-systems/s09e02-parser-ast/) | Структура | рекурсивный спуск, приоритеты | `parser.c` |
-| [s09e03](../season-9-advanced-systems/s09e03-interpreter/) | Смысл | окружение, отложенное вычисление | `interp.c` |
-| [s09e04](../season-9-advanced-systems/s09e04-btree-storage/) | Страницы | B-дерево, расщепление, чтения | `btree.c` |
-| [s09e05](../season-9-advanced-systems/s09e05-wal-durability/) | Намерение | журнал, точка фиксации, откат | `wal.c` |
-| [s09e06](../season-9-advanced-systems/s09e06-tui/) | Экран | буфер кадра, отправка разницы | `tui.c` |
-| [s09e07](../season-9-advanced-systems/s09e07-radar-kalman/) | Кому верить | оценивание при шуме, ковариация | `kalman.c` |
-| [s09e08](../season-9-advanced-systems/s09e08-quantum/) | Два состояния сразу | суперпозиция, интерференция, Гровер | **`quantum.c`** |
+| [s09e01](../season-09-advanced-systems/s09e01-lexer/) | Слова | символы в токены, максимальное совпадение | `lexer.c` |
+| [s09e02](../season-09-advanced-systems/s09e02-parser-ast/) | Структура | рекурсивный спуск, приоритеты | `parser.c` |
+| [s09e03](../season-09-advanced-systems/s09e03-interpreter/) | Смысл | окружение, отложенное вычисление | `interp.c` |
+| [s09e04](../season-09-advanced-systems/s09e04-btree-storage/) | Страницы | B-дерево, расщепление, чтения | `btree.c` |
+| [s09e05](../season-09-advanced-systems/s09e05-wal-durability/) | Намерение | журнал, точка фиксации, откат | `wal.c` |
+| [s09e06](../season-09-advanced-systems/s09e06-tui/) | Экран | буфер кадра, отправка разницы | `tui.c` |
+| [s09e07](../season-09-advanced-systems/s09e07-radar-kalman/) | Кому верить | оценивание при шуме, ковариация | `kalman.c` |
+| [s09e08](../season-09-advanced-systems/s09e08-quantum/) | Два состояния сразу | суперпозиция, интерференция, Гровер | **`quantum.c`** |
 
 ### Season 10 — Final Mission
 

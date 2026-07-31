@@ -7,10 +7,10 @@ CC     := gcc
 CFLAGS := -Wall -Wextra -std=gnu11
 
 ROOT   := ../..
-S4     := $(ROOT)/season-4-crypto-and-algorithms/lib
-S6     := $(ROOT)/season-6-embedded-iot/lib
-S8     := $(ROOT)/season-8-ai-and-data/lib
-S9     := $(ROOT)/season-9-advanced-systems/lib
+S4     := $(ROOT)/season-04-crypto-and-algorithms/lib
+S6     := $(ROOT)/season-06-embedded-iot/lib
+S8     := $(ROOT)/season-08-ai-and-data/lib
+S9     := $(ROOT)/season-09-advanced-systems/lib
 
 INCLUDES := -I$(S4) -I$(S6) -I$(S8) -I$(S9)
 MODULES  := $(S4)/ml_hash.c $(S6)/ml_crc.c $(S8)/ml_stats.c $(S9)/ml_kalman.c

@@ -529,11 +529,11 @@ MOONLIGHT — это курс **самообучения**, где студен�
 **Сертификат = твой репозиторий:**
 ```
 твой форк moonlight-course, ветка с твоими решениями:
-├── season-1-foundations/
+├── season-01-foundations/
 │   ├── s01e01-strange-message/artifacts/bytecheck.c
 │   ├── s01e08-assemble-tool/artifacts/decoder.c   <- moonlight_decoder
 │   └── ...
-├── season-8-ai-and-data/
+├── season-08-ai-and-data/
 │   └── s08e08-luna-ai/artifacts/luna_ai.c         <- LUNA на 200 строк C
 └── season-10-final-mission/
     └── s10e08-final-operation/artifacts/operation.c

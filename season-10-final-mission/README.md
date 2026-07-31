@@ -135,5 +135,5 @@ make && make run
 **80 серий. 34 дня по внутреннему времени. Один язык.**
 
 - Начать: [s10e01 — Порядок сборки](s10e01-architecture/)
-- Назад: [Season 9 — Advanced Topics](../season-9-advanced-systems/)
+- Назад: [Season 9 — Advanced Topics](../season-09-advanced-systems/)
 - Ко всем сезонам: [../README.md](../README.md)

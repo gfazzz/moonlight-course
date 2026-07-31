@@ -35,7 +35,7 @@
 git clone https://github.com/<your>/moonlight-course.git
 cd moonlight-course
 
-cd season-1-foundations/s01e01-strange-message
+cd season-01-foundations/s01e01-strange-message
 cat README.md          # сцена, теория, задача
 ```
 
@@ -72,7 +72,7 @@ make progress    # где ты сейчас: сколько серий прой�
 ```bash
 git checkout -b my-run
 # ... проходишь серии ...
-git add season-1-foundations/s01e01-strange-message/artifacts/
+git add season-01-foundations/s01e01-strange-message/artifacts/
 git commit -m "s01e01: первый байт"
 ```
 
@@ -94,15 +94,15 @@ git fetch upstream && git rebase upstream/main   # твои решения на 
 
 | # | Сезон | Чему учит | Сквозной проект |
 |---|---|---|---|
-| 1 | [Foundations](season-1-foundations/) | типы, циклы, функции, модули, структуры | `moonlight_decoder` |
-| 2 | [Memory & Pointers](season-2-memory-and-pointers/) | указатели, куча, утечки | `memory_manager` |
-| 3 | [Networks](season-3-networks/) | сокеты, протоколы, разбор пакетов | `network_interceptor` |
-| 4 | [Crypto & Algorithms](season-4-crypto-and-algorithms/) | шифры, хеши, сортировки, поиск | `crypto_toolkit` |
-| 5 | [Financial Markets](season-5-financial-markets/) | данные, индикаторы, риск, Monte Carlo | `trading_system` |
-| 6 | [Embedded & IoT](season-6-embedded-iot/) | регистры, UART, I2C, Modbus, дроны | `iot_controller` |
-| 7 | [Systems Programming](season-7-system-programming/) | процессы, потоки, IPC, сигналы | `stealth_agent` |
-| 8 | [AI & Data Science](season-8-ai-and-data/) | статистика, регрессия, нейросети | `luna_ai` |
-| 9 | [Advanced Topics](season-9-advanced-systems/) | компилятор, БД, TUI, фильтры, кубиты | `advanced_systems` |
+| 1 | [Foundations](season-01-foundations/) | типы, циклы, функции, модули, структуры | `moonlight_decoder` |
+| 2 | [Memory & Pointers](season-02-memory-and-pointers/) | указатели, куча, утечки | `memory_manager` |
+| 3 | [Networks](season-03-networks/) | сокеты, протоколы, разбор пакетов | `network_interceptor` |
+| 4 | [Crypto & Algorithms](season-04-crypto-and-algorithms/) | шифры, хеши, сортировки, поиск | `crypto_toolkit` |
+| 5 | [Financial Markets](season-05-financial-markets/) | данные, индикаторы, риск, Monte Carlo | `trading_system` |
+| 6 | [Embedded & IoT](season-06-embedded-iot/) | регистры, UART, I2C, Modbus, дроны | `iot_controller` |
+| 7 | [Systems Programming](season-07-system-programming/) | процессы, потоки, IPC, сигналы | `stealth_agent` |
+| 8 | [AI & Data Science](season-08-ai-and-data/) | статистика, регрессия, нейросети | `luna_ai` |
+| 9 | [Advanced Topics](season-09-advanced-systems/) | компилятор, БД, TUI, фильтры, кубиты | `advanced_systems` |
 | 10 | [Final Mission](season-10-final-mission/) | архитектура, орбиты, защита, приёмка | `moonlight_core` |
 
 Каждый сезон — 8 серий по 30–100 минут. Сюжет ведёт из Москвы в Петербург, Цюрих, Нью-Йорк, Новосибирск и Кремниевую долину — и заканчивается на орбите.
