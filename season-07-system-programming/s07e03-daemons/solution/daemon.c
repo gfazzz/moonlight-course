@@ -21,7 +21,10 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#define REPORT "/tmp/moonlight_s07e03_report.txt"
+/* Путь отчёта уникален для запуска: два экземпляра на одной машине
+   (параллельный make, двое студентов) иначе дерутся за один файл —
+   один удаляет его, пока другой ждёт появления. */
+static char REPORT[64];
 
 /* Ритуал демонизации. Возврат: 1 — мы демон, 0 — мы промежуточный процесс. */
 static int daemonize(void) {
@@ -55,6 +58,7 @@ static int daemonize(void) {
 }
 
 int main(void) {
+    snprintf(REPORT, sizeof REPORT, "/tmp/moonlight_s07e03_report.%d.txt", (int)getpid());
     unlink(REPORT);                     /* чистый старт */
 
     printf("=== демон: жизнь без терминала ===\n\n");

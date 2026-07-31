@@ -80,12 +80,23 @@ int main(void) {
     double naive_mean  = naive_sum / (double)n;
     double var_naive   = (naive_sumsq - naive_sum * naive_mean) / (double)(n - 1);
 
+    /* Относительная ошибка наивной формулы. Само наивное значение печатать
+       в сравниваемый вывод НЕЛЬЗЯ: оно и есть накопленный остаток округления,
+       а значит меняется от порядка операций — на этой же машине -O0 даёт
+       874.25, а -O2 даёт 873.94. Устойчиво здесь только одно: ошибка велика.
+       Точное значение уходит в stderr — для глаз, не для сравнения. */
+    double err_abs = var_naive - var_welford;
+    double err_rel = (err_abs < 0 ? -err_abs : err_abs) / var_welford * 100.0;
+
     printf("min = %.4f\nmax = %.4f\nсреднее = %.6f\n\n", mn, mx, mean);
     printf("дисперсия (Уэлфорд): %.6f\n", var_welford);
-    printf("дисперсия (наивная): %.6f\n", var_naive);
-    printf("расхождение:         %.6f\n", var_naive - var_welford);
-    printf("наивная формула потеряла точность: %s\n",
-           (var_naive - var_welford) != 0.0 ? "да" : "нет");
+    printf("дисперсия (наивная): значение нестабильно (см. stderr)\n");
+    printf("ошибка наивной формулы превышает 1%%: %s\n", err_rel > 1.0 ? "да" : "нет");
+    printf("наивная формула потеряла точность: %s\n", err_abs != 0.0 ? "да" : "нет");
+
+    fprintf(stderr, "[stderr] наивная дисперсия = %.6f, расхождение = %.6f (%.2f%%)\n",
+            var_naive, err_abs, err_rel);
+    fprintf(stderr, "[stderr] это значение НЕ воспроизводится: пересоберите с -O2 и сравните.\n");
 
     /* ---------- 4. Память под данные не выделялась ---------- */
     printf("\nпамяти под данные выделено malloc'ом: %d байт\n", 0);
