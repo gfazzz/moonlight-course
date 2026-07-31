@@ -2,120 +2,96 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "🧪 Run Episode Tests",
+      "label": "Тест текущей серии",
+      "detail": "make test в каталоге открытого файла",
       "type": "shell",
-      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make test; else echo 'No Makefile found in this directory'; fi",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
+      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make test; else cd .. && make test; fi",
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": ["$gcc"]
     },
     {
-      "label": "🔨 Compile Current File",
+      "label": "Тест всего курса",
+      "detail": "make test в корне репозитория — все 80 серий",
       "type": "shell",
-      "command": "gcc -Wall -Wextra -std=c11 -o ${fileDirname}/${fileBasenameNoExtension} ${file}",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      },
+      "command": "make test",
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": ["$gcc"]
     },
     {
-      "label": "▶️ Run Current Executable",
+      "label": "Мой прогресс",
+      "detail": "make progress — сколько серий пройдено",
+      "type": "shell",
+      "command": "make progress",
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "none",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Сквозные проекты сезонов",
+      "detail": "make projects — сборка Season Project каждого сезона",
+      "type": "shell",
+      "command": "make projects",
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Собрать текущий файл",
+      "detail": "gcc с флагами курса",
+      "type": "shell",
+      "command": "gcc -Wall -Wextra -Werror -std=gnu11 -o ${fileDirname}/${fileBasenameNoExtension} ${file}",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Запустить собранное",
       "type": "shell",
       "command": "${fileDirname}/${fileBasenameNoExtension}",
       "group": "build",
-      "dependsOn": ["🔨 Compile Current File"],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
+      "dependsOn": ["Собрать текущий файл"],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": []
     },
     {
-      "label": "🔍 Check with Valgrind",
+      "label": "Санитайзеры (address + undefined)",
+      "detail": "Обязательная проверка в s10e05, полезная везде",
       "type": "shell",
-      "command": "valgrind --leak-check=full --show-leak-kinds=all ${fileDirname}/${fileBasenameNoExtension}",
+      "command": "gcc -Wall -Wextra -std=gnu11 -g -fsanitize=address,undefined -o ${fileDirname}/${fileBasenameNoExtension}_san ${file} && ${fileDirname}/${fileBasenameNoExtension}_san",
       "group": "test",
-      "dependsOn": ["🔨 Compile Current File"],
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🧹 Clean Build Artifacts",
-      "type": "shell",
-      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make clean; else rm -f *.o *.out a.out; fi && echo 'Build artifacts cleaned'",
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "🚀 Build with Makefile",
-      "type": "shell",
-      "command": "cd ${fileDirname} && make",
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "panel": "shared"
-      },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": ["$gcc"]
     },
     {
-      "label": "🐛 Debug Current File with GDB",
+      "label": "Valgrind",
+      "detail": "Поиск утечек — актуально с Season 2",
       "type": "shell",
-      "command": "gcc -g -Wall -Wextra -std=c11 -o ${fileDirname}/${fileBasenameNoExtension}_debug ${file} && gdb ${fileDirname}/${fileBasenameNoExtension}_debug",
+      "command": "valgrind --leak-check=full --show-leak-kinds=all ${fileDirname}/${fileBasenameNoExtension}",
       "group": "test",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
+      "dependsOn": ["Собрать текущий файл"],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": []
     },
     {
-      "label": "📊 Check Code Style",
+      "label": "Отладка через GDB",
       "type": "shell",
-      "command": "clang-format -style='{BasedOnStyle: LLVM, IndentWidth: 2}' -i ${file} && echo 'Code formatted'",
+      "command": "gcc -g -Wall -Wextra -std=gnu11 -o ${fileDirname}/${fileBasenameNoExtension}_debug ${file} && gdb ${fileDirname}/${fileBasenameNoExtension}_debug",
       "group": "none",
-      "presentation": {
-        "reveal": "silent",
-        "panel": "shared"
-      },
+      "presentation": { "reveal": "always", "panel": "dedicated" },
       "problemMatcher": []
     },
     {
-      "label": "🤖 LUNA Help (Cursor AI)",
+      "label": "Убрать продукты сборки",
       "type": "shell",
-      "command": "echo '💡 Ask LUNA in Cursor Chat: \"LUNA, помоги с Episode ${input:episodeNumber}\"'",
+      "command": "cd ${fileDirname} && if [ -f Makefile ]; then make clean; else rm -f *.o *.out a.out; fi",
       "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
+      "presentation": { "reveal": "silent", "panel": "shared" },
       "problemMatcher": []
-    }
-  ],
-  "inputs": [
-    {
-      "id": "episodeNumber",
-      "type": "promptString",
-      "description": "Episode number (e.g., 01, 02, etc.)",
-      "default": "01"
     }
   ]
 }
-

@@ -1,38 +1,30 @@
 {
   "recommendations": [
-    // C/C++ Development
+    // C: подсветка, переходы, IntelliSense
     "ms-vscode.cpptools",
     "ms-vscode.cpptools-extension-pack",
     "llvm-vs-code-extensions.vscode-clangd",
 
-    // Debugging
+    // Отладка
     "vadimcn.vscode-lldb",
+    "webfreak.debug",
 
-    // Makefile
+    // Makefile — в каждой серии свой
     "ms-vscode.makefile-tools",
 
-    // Markdown (документация)
+    // Markdown: README, mission и theory читаются в предпросмотре
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
 
-    // Git
-    "eamodio.gitlens",
-
-    // Подсветка TODO/FIXME
-    "wayou.vscode-todo-highlight",
-
-    // Memory debugging (для Season 2)
-    "webfreak.debug",
-
-    // Hex Editor (для работы с бинарными данными)
+    // Просмотр байтов: пригодится с первой же серии (hex-дамп)
+    // и дальше в Season 6 — кадры протоколов
     "ms-vscode.hexeditor",
 
-    // Better Comments (для структурированных комментариев)
-    "aaron-bond.better-comments",
+    // Ошибки компиляции прямо в строке кода
+    "usernamehw.errorlens",
 
-    // Error Lens (inline errors)
-    "usernamehw.errorlens"
+    "eamodio.gitlens",
+    "wayou.vscode-todo-highlight"
   ],
   "unwantedRecommendations": []
 }
-
