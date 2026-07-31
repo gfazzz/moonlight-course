@@ -25,6 +25,7 @@
    (параллельный make, двое студентов) иначе дерутся за один файл —
    один удаляет его, пока другой ждёт появления. */
 static char REPORT[64];
+static char REPORT_TMP[80];
 
 /* Ритуал демонизации. Возврат: 1 — мы демон, 0 — мы промежуточный процесс. */
 static int daemonize(void) {
@@ -58,8 +59,9 @@ static int daemonize(void) {
 }
 
 int main(void) {
-    snprintf(REPORT, sizeof REPORT, "/tmp/moonlight_s07e03_report.%d.txt", (int)getpid());
-    unlink(REPORT);                     /* чистый старт */
+    snprintf(REPORT,     sizeof REPORT,     "/tmp/moonlight_s07e03_report.%d.txt", (int)getpid());
+    snprintf(REPORT_TMP, sizeof REPORT_TMP, "%s.part", REPORT);
+    unlink(REPORT); unlink(REPORT_TMP);  /* чистый старт */
 
     printf("=== демон: жизнь без терминала ===\n\n");
     fflush(stdout);
@@ -79,7 +81,15 @@ int main(void) {
         printf("ЭТА СТРОКА НЕ ДОЛЖНА ПОЯВИТЬСЯ\n");
         fflush(stdout);
 
-        FILE *f = fopen(REPORT, "w");
+        /* Публикуем отчёт АТОМАРНО: пишем во временное имя, затем rename().
+           Наивный способ — писать сразу в REPORT — содержит гонку: управляющий
+           процесс ждёт ПОЯВЛЕНИЯ файла, а fopen(..., "w") создаёт его пустым
+           задолго до того, как в него попадут строки. Прочитав в этот момент,
+           читатель получит половину отчёта и не узнает об этом.
+           rename() внутри одной файловой системы неделим: читатель видит либо
+           старое состояние (файла нет), либо новое (файл целиком). Тот же
+           принцип, что у журнала в s09e05, — сначала подготовить, потом явить. */
+        FILE *f = fopen(REPORT_TMP, "w");
         if (!f) _exit(1);
         fprintf(f, "[daemon] рабочий каталог = %s\n", cwd);
         fprintf(f, "[daemon] лидер сессии (после 2-го fork): %s\n",
@@ -88,6 +98,7 @@ int main(void) {
                 has_no_tty ? "да" : "нет");
         fprintf(f, "[daemon] отчёт записан, ухожу в фон\n");
         fclose(f);
+        if (rename(REPORT_TMP, REPORT) != 0) _exit(1);
         _exit(0);
     }
 
@@ -95,7 +106,8 @@ int main(void) {
     wait(NULL);                          /* промежуточный потомок завершается сразу */
 
     FILE *f = NULL;
-    for (int i = 0; i < 200 && !f; i++) { f = fopen(REPORT, "r"); if (!f) usleep(10000); }
+    /* 5 с запаса: на нагруженной машине непрерывной сборки планировщик щедр не всем. */
+    for (int i = 0; i < 500 && !f; i++) { f = fopen(REPORT, "r"); if (!f) usleep(10000); }
     if (!f) { printf("отчёт от демона не получен\n"); return 1; }
 
     char line[128];
