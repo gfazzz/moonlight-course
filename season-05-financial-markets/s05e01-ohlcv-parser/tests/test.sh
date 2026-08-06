@@ -25,7 +25,7 @@ echo "OK: собралось."
 "$BIN" "$DATA" > "$OUT" 2>&1 || { echo "FAIL: падение при запуске."; cat "$OUT"; exit 1; }
 
 if diff -u "$EXPECTED" "$OUT"; then
-    echo; echo "PASS: свечи распарсены, аномалии объёма найдены. Дальше — s05e02 (спред)."; rc=0
+    echo; echo "PASS: свечи распарсены, аномалии объёма найдены. Дальше — s05e02 (деньги)."; rc=0
 else
     echo; echo "FAIL: вывод не совпал с expected.txt (см. diff)."; rc=1
 fi

@@ -8,9 +8,9 @@ EPISODES := s05e01-ohlcv-parser \
             s05e03-csv-parser \
             s05e04-time-zones \
             s05e05-backtest \
-            s05e06-volatility-var \
+            s05e06-tick-format \
             s05e07-monte-carlo \
-            s05e08-arbitrage
+            s05e08-unicode-names
 
 .PHONY: test list clean project
 

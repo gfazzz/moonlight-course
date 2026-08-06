@@ -24,7 +24,7 @@ echo "OK: собралось."
 "$BIN" > "$OUT" 2>&1 || { echo "FAIL: падение при запуске."; cat "$OUT"; exit 1; }
 
 if diff -u "$EXPECTED" "$OUT"; then
-    echo; echo "PASS: распределение P&L смоделировано. Дальше — s05e08 (арбитраж, финал)."; rc=0
+    echo; echo "PASS: распределение P&L смоделировано. Дальше — s05e08 (финал сезона)."; rc=0
 else
     echo; echo "FAIL: вывод не совпал (проверь seeded LCG: библиотечный rand() не воспроизводим)."; rc=1
 fi

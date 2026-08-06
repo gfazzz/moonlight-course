@@ -1,9 +1,9 @@
-# OPERATION MOONLIGHT — s05e08 (финал Season 5)
+# OPERATION MOONLIGHT — s05e06
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/arbitrage.c
-SOL     := solution/arbitrage.c
-BIN     := arbitrage
+ART     := artifacts/tick.c
+SOL     := solution/tick.c
+BIN     := tick
 
 .PHONY: all run test solution clean
 
@@ -12,14 +12,14 @@ all:
 	else echo "Нет $(ART). Скопируй: cp starter.c $(ART)"; fi
 
 run: all
-	@./$(BIN)
+	@./$(BIN) $(BIN).bin
 
 test:
 	@cd tests && ./test.sh
 
 solution:
-	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol
+	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol $(BIN).bin
 
 clean:
-	@rm -f $(BIN) $(BIN)_sol
+	@rm -f $(BIN) $(BIN)_sol $(BIN).bin
 	@echo "clean."

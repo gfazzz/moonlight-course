@@ -170,9 +170,9 @@ make test
 | [s05e03](../season-05-financial-markets/s05e03-csv-parser/) | Разбор настоящего CSV | конечный автомат, битые данные | `csv.c` |
 | [s05e04](../season-05-financial-markets/s05e04-time-zones/) | Час, которого не было | эпоха, пояса, разрывы шкалы | `tstamp.c` |
 | [s05e05](../season-05-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
-| [s05e06](../season-05-financial-markets/s05e06-volatility-var/) | Волатильность и VaR | риск как распределение | `var.c` |
+| [s05e06](../season-05-financial-markets/s05e06-tick-format/) | Тиковый поток | бинарный формат, выравнивание | `tick.c` |
 | [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |
-| [s05e08](../season-05-financial-markets/s05e08-arbitrage/) | Арбитраж и разгон | схема как совпадение признаков | **`arbitrage.c`** |
+| [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | Имя, которого нет в таблице | UTF-8, ширина, двойники | **`unicode.c`** |
 
 ### Season 6 — Embedded & IoT
 

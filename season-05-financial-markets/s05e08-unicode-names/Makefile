@@ -1,9 +1,9 @@
-# OPERATION MOONLIGHT — s05e06
+# OPERATION MOONLIGHT — s05e08
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/var.c
-SOL     := solution/var.c
-BIN     := var
+ART     := artifacts/unicode.c
+SOL     := solution/unicode.c
+BIN     := unicode
 
 .PHONY: all run test solution clean
 
