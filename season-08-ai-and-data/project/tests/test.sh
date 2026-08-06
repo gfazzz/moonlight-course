@@ -34,7 +34,14 @@ OUT="$(mktemp /tmp/proj_out.XXXX)"
 "$PROJ/luna_ai" > "$OUT" 2>&1; rc=$?
 [ $rc -eq 0 ] || { echo "FAIL: код возврата $rc"; cat "$OUT"; rm -f "$OUT"; exit 1; }
 grep -q "сборка работоспособна: да" "$OUT" || { echo "FAIL: самопроверка не пройдена."; cat "$OUT"; rm -f "$OUT"; exit 1; }
-grep -q "4 единиц" "$OUT" || grep -q "4 единицы" "$OUT" || { echo "FAIL: неверное число единиц трансляции."; rm -f "$OUT"; exit 1; }
+# Число единиц трансляции берётся из Makefile, а не зашивается в тест.
+NMOD=$(echo "$MODS" | wc -w | tr -d ' ')
+grep -q "$((NMOD + 1)) единиц трансляции" "$OUT" || {
+    echo "FAIL: программа сообщает не о $((NMOD + 1)) единицах трансляции."; rm -f "$OUT"; exit 1; }
+grep -q "битая строка отброшена, а не подставлена нулями: да" "$OUT" || {
+    echo "FAIL: битая запись контрольной выборки не отброшена."; rm -f "$OUT"; exit 1; }
+grep -q "внешняя проверка пройдена: да" "$OUT" || {
+    echo "FAIL: модель не прошла проверку на внешних данных."; rm -f "$OUT"; exit 1; }
 
 if [ -f expected.txt ]; then
     diff -u expected.txt "$OUT" || { echo "FAIL: вывод не совпал с expected.txt."; rm -f "$OUT"; exit 1; }

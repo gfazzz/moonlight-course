@@ -38,18 +38,66 @@ static SrcState state_of(const Source *s) {
 }
 
 /* ---------- представление: буфер экрана ----------
-   Одна ячейка = один байт (как в s09e06), поэтому ВСЕ подписи внутри экрана —
-   только ASCII: кириллица в UTF-8 заняла бы по два байта и разорвала вёрстку. */
-static char scr[H][W];
+   Одна ячейка = один СИМВОЛ (как в s09e06), а не один байт. Подписи внутри
+   экрана поэтому не обязаны быть ASCII: ячейка хранит последовательность
+   байт целиком, а курсор двигается на ширину символа. */
+#define CELL 5                     /* до 4 байт UTF-8 плюс завершающий ноль */
+static char scr[H][W][CELL];
 
-static void clear(void) { memset(scr, ' ', sizeof scr); }
-
-static void put(int x, int y, char c) {
-    if (x < 0 || x >= W || y < 0 || y >= H) return;
-    scr[y][x] = c;
+/* Разбор одной кодовой точки и её ширина — то же, что в s05e08. */
+static int u8_decode(const char *s, unsigned *cp) {
+    const unsigned char *p = (const unsigned char *)s;
+    if (p[0] < 0x80)           { *cp = p[0]; return 1; }
+    if ((p[0] & 0xE0) == 0xC0) { if ((p[1] & 0xC0) != 0x80) return 0;
+        *cp = ((unsigned)(p[0] & 0x1F) << 6) | (p[1] & 0x3F); return *cp < 0x80 ? 0 : 2; }
+    if ((p[0] & 0xF0) == 0xE0) { if ((p[1] & 0xC0) != 0x80 || (p[2] & 0xC0) != 0x80) return 0;
+        *cp = ((unsigned)(p[0] & 0x0F) << 12) | ((unsigned)(p[1] & 0x3F) << 6) | (p[2] & 0x3F);
+        return *cp < 0x800 ? 0 : 3; }
+    if ((p[0] & 0xF8) == 0xF0) { if ((p[1] & 0xC0) != 0x80 || (p[2] & 0xC0) != 0x80
+                                  || (p[3] & 0xC0) != 0x80) return 0;
+        *cp = ((unsigned)(p[0] & 0x07) << 18) | ((unsigned)(p[1] & 0x3F) << 12)
+            | ((unsigned)(p[2] & 0x3F) << 6) | (p[3] & 0x3F);
+        return (*cp < 0x10000 || *cp > 0x10FFFF) ? 0 : 4; }
+    return 0;
 }
+
+static int cp_width(unsigned cp) {
+    if ((cp >= 0x0300 && cp <= 0x036F) || (cp >= 0xFE00 && cp <= 0xFE0F)) return 0;
+    if ((cp >= 0x1100 && cp <= 0x115F) || (cp >= 0x2E80 && cp <= 0xA4CF)
+     || (cp >= 0xAC00 && cp <= 0xD7A3) || (cp >= 0xFF00 && cp <= 0xFF60)) return 2;
+    return 1;
+}
+
+static void clear(void) {
+    for (int y = 0; y < H; y++)
+        for (int x = 0; x < W; x++) { scr[y][x][0] = ' '; scr[y][x][1] = '\0'; }
+}
+
+static void put_cell(int x, int y, const char *g, int len) {
+    if (x < 0 || x >= W || y < 0 || y >= H) return;
+    if (len >= CELL) len = CELL - 1;
+    for (int i = 0; i < len; i++) scr[y][x][i] = g[i];
+    scr[y][x][len] = '\0';
+}
+
+static void put(int x, int y, char c) { put_cell(x, y, &c, 1); }
+
+/* Курсор двигается на ШИРИНУ символа. Символ шириной два знакоместа
+   занимает две ячейки: во второй пустая строка-продолжение, иначе она
+   затрёт его правую половину при выводе. */
 static void text(int x, int y, const char *s) {
-    for (int i = 0; s[i]; i++) put(x + i, y, s[i]);
+    int col = x;
+    for (const char *p = s; *p; ) {
+        unsigned cp;
+        int len = u8_decode(p, &cp);
+        if (!len) { put(col++, y, '?'); p++; continue; }
+        int w = cp_width(cp);
+        if (w == 0) { p += len; continue; }
+        put_cell(col, y, p, len);
+        if (w == 2) put_cell(col + 1, y, "", 0);
+        col += w;
+        p += len;
+    }
 }
 static void box(int x, int y, int w, int h, const char *title) {
     for (int i = 1; i < w - 1; i++) { put(x + i, y, '-'); put(x + i, y + h - 1, '-'); }
@@ -68,7 +116,7 @@ static void gauge(int x, int y, int w, int percent) {
 static void dump(void) {
     for (int y = 0; y < H; y++) {
         putchar('|');
-        for (int x = 0; x < W; x++) putchar(scr[y][x]);
+        for (int x = 0; x < W; x++) fputs(scr[y][x], stdout);
         printf("|\n");
     }
 }
@@ -128,6 +176,14 @@ static void render(Source *src, int nsrc, double window_min, double elev_deg,
     else if (stale > 0)                          verdict = "STATUS: STALE DATA";
     else                                          verdict = "STATUS: NOMINAL";
     text(2, H - 3, verdict);
+
+    /* Подпись оператора и позывной наземной станции — не ASCII. Раньше
+       здесь стояла оговорка «только ASCII», и подпись пришлось бы
+       транслитерировать. Ячейка хранит символ, поэтому не приходится. */
+    text(2, H - 2, "\xD0\xBE\xD0\xBF\xD0\xB5\xD1\x80\xD0\xB0\xD1\x82\xD0\xBE\xD1\x80: "
+                   "\xD0\x9C\xD0\x9E\xD0\xA0\xD0\xA4\xD0\x95\xD0\xA3\xD0\xA1"
+                   "   \xD1\x81\xD1\x82\xD0\xB0\xD0\xBD\xD1\x86\xD0\xB8\xD1\x8F: "
+                   "\xE6\x9D\xB1\xE4\xBA\xAC");
 }
 
 static void frame(const char *title, Source *src, int nsrc,

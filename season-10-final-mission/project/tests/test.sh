@@ -11,25 +11,29 @@ PROJ=".."
 ROOT="../../.."
 
 S4="$ROOT/season-04-crypto-and-algorithms/lib"
+S5="$ROOT/season-05-real-world-data/lib"
 S6="$ROOT/season-06-embedded-iot/lib"
 S8="$ROOT/season-08-ai-and-data/lib"
 S9="$ROOT/season-09-advanced-systems/lib"
 
 echo "--- проверка 1: модули существуют в своих сезонах ---"
-for m in "$S4/ml_hash.c" "$S6/ml_crc.c" "$S8/ml_stats.c" "$S9/ml_kalman.c"; do
+for m in "$S4/ml_hash.c" "$S5/ml_money.c" "$S5/ml_time.c" "$S5/ml_text.c" \
+         "$S6/ml_crc.c" "$S8/ml_stats.c" "$S9/ml_kalman.c"; do
     [ -f "$m" ] || { echo "FAIL: нет модуля $m"; exit 1; }
     echo "  есть: ${m#$ROOT/}"
 done
 
 echo "--- проверка 2: main.c подключает их заголовки ---"
-for h in ml_hash.h ml_crc.h ml_stats.h ml_kalman.h; do
+for h in ml_hash.h ml_money.h ml_time.h ml_text.h ml_crc.h ml_stats.h ml_kalman.h; do
     grep -q "#include \"$h\"" "$PROJ/main.c" || { echo "FAIL: main.c не включает $h"; exit 1; }
     echo "  #include \"$h\""
 done
 
 echo "--- проверка 3: main.c НЕ содержит копий реализаций ---"
 # Реализации обязаны жить в сезонах-источниках, а не быть скопированы сюда.
-for sym in "ml_hash_djb2(const char" "ml_crc16_modbus(const unsigned" "ml_welford_push(MlWelford" "ml_kalman_step(MlKalman"; do
+for sym in "ml_hash_djb2(const char" "ml_money_mul_ppm(ml_money_t" "ml_utc_from_local(const" \
+           "ml_skeleton(const char" "ml_crc16_modbus(const unsigned" \
+           "ml_welford_push(MlWelford" "ml_kalman_step(MlKalman"; do
     if grep -q "^[a-z].*$sym.*{" "$PROJ/main.c"; then
         echo "FAIL: в main.c найдена копия реализации: $sym"; exit 1
     fi
@@ -38,11 +42,13 @@ echo "  копий реализаций нет — только вызовы"
 
 echo "--- проверка 4: сборка из нескольких единиц трансляции ---"
 BIN="$(mktemp -u /tmp/moonlight_core.XXXX)"
-if ! gcc -Wall -Wextra -std=gnu11 -I"$S4" -I"$S6" -I"$S8" -I"$S9" \
-     -o "$BIN" "$S4/ml_hash.c" "$S6/ml_crc.c" "$S8/ml_stats.c" "$S9/ml_kalman.c" "$PROJ/main.c"; then
+MODS="$S4/ml_hash.c $S5/ml_money.c $S5/ml_time.c $S5/ml_text.c \
+      $S6/ml_crc.c $S8/ml_stats.c $S9/ml_kalman.c"
+if ! gcc -Wall -Wextra -std=gnu11 -I"$S4" -I"$S5" -I"$S6" -I"$S8" -I"$S9" \
+     -o "$BIN" $MODS "$PROJ/main.c"; then
     echo "FAIL: не линкуется."; exit 1
 fi
-echo "  слинковано: 4 модуля + main.c"
+echo "  слинковано: 7 модулей + main.c"
 
 echo "--- проверка 5: поведение ---"
 OUT="$(mktemp /tmp/moonlight_out.XXXX)"
@@ -52,11 +58,14 @@ rc=$?
 
 grep -q "баланс сходится: да"        "$OUT" || { echo "FAIL: баланс кадров не сошёлся."; rm -f "$BIN" "$OUT"; exit 1; }
 grep -q "фильтр точнее измерения:  да" "$OUT" || { echo "FAIL: модуль Калмана работает неверно."; rm -f "$BIN" "$OUT"; exit 1; }
+grep -q "неоднозначность обнаружена, а не выбрана молча: да" "$OUT" || { echo "FAIL: разрыв местной шкалы не обнаружен."; rm -f "$BIN" "$OUT"; exit 1; }
+grep -q "суммы сходятся до цента: да"  "$OUT" || { echo "FAIL: расходы не сошлись."; rm -f "$BIN" "$OUT"; exit 1; }
+grep -q "подменённый источник найден: да" "$OUT" || { echo "FAIL: источник-двойник не найден."; rm -f "$BIN" "$OUT"; exit 1; }
 grep -q "сборка работоспособна: да"  "$OUT" || { echo "FAIL: сборка неработоспособна."; rm -f "$BIN" "$OUT"; exit 1; }
 
 diff -u expected.txt "$OUT" || { echo "FAIL: вывод не совпал с expected.txt."; rm -f "$BIN" "$OUT"; exit 1; }
 
 rm -f "$BIN" "$OUT"
 echo
-echo "PASS: moonlight_core собран из модулей S4+S6+S8+S9 и работает."
+echo "PASS: moonlight_core собран из модулей S4+S5+S6+S8+S9 и работает."
 exit 0

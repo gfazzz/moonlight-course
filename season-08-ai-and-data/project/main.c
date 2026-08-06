@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "ml_csv.h"    /* Season 5 */
 #include "ml_hash.h"    /* Season 4 */
 #include "ml_stats.h"   /* Season 8 */
 #include "ml_nn.h"      /* Season 8 */
@@ -26,6 +27,54 @@ static int    idx[NALL];
 static unsigned long rs = 20260727UL;
 static unsigned long rnd(void) { rs = rs * 6364136223846793005UL + 1442695040888963407UL; return (rs >> 33) & 0xFFFFFF; }
 static double runif(void) { return (double)rnd() / 16777216.0; }
+
+/* Контрольная выборка приходит файлом, а не порождается генератором:
+   на своих же случайных числах модель проверять нельзя. Строки даны
+   ровно в том виде, в каком выгрузка их отдаёт, — с шапкой, кавычками,
+   CRLF и одной битой записью. */
+static const char *CALIB =
+    "traffic,err_rate,night_act,label\n"
+    "118.4,0.31,0.72,1\r\n"
+    "22.7,0.05,0.11,0\n"
+    "96.2,0.44,0.58,1\n"
+    "15.3,0.02,0.31,0\n"
+    "131.9,0.52,0.81,1\n"
+    "41.0,0.19,0.24,0\n"
+    "104.5,0.28,0.66,1\n"
+    "8.9,0.01,0.07,0\n"
+    "77.2,0.13,0.49\n"                 /* битая: три поля вместо четырёх */
+    "127.6,0.61,0.93,1\n"
+    "33.1,0.09,0.18,0\n";
+
+typedef struct {
+    double mean[ML_NN_IN], sd[ML_NN_IN];   /* нормировка обучающей выборки */
+    const MlNet *net;
+    int rows, broken, correct;
+} calib_t;
+
+/* Обработчик записи контрольной выборки. */
+static int calib_row(const ml_csv_row *row, void *user) {
+    calib_t *c = (calib_t *)user;
+
+    if (row->status != ML_CSV_OK || row->nfield != ML_NN_IN + 1) { c->broken++; return 1; }
+    if (row->field[0][0] == 't') return 1;              /* шапка */
+
+    double x[ML_NN_IN];
+    for (int f = 0; f < ML_NN_IN; f++) {
+        char *end = NULL;
+        double v = strtod(row->field[f], &end);
+        if (end == row->field[f] || *end != '\0') { c->broken++; return 1; }
+        /* strtod здесь уместен: это измерения, а не деньги. Разница
+           разобрана в s05e02 — сходиться при сверке они не обязаны. */
+        x[f] = (v - c->mean[f]) / c->sd[f];
+    }
+    int truth = row->field[ML_NN_IN][0] - '0';
+    int pred  = (ml_nn_forward(c->net, x, NULL) >= 0.5) ? 1 : 0;
+
+    c->rows++;
+    if (pred == truth) c->correct++;
+    return 1;
+}
 
 static double my_sqrt(double x) {
     if (x <= 0.0) return 0.0;
@@ -54,6 +103,10 @@ int main(void) {
         idx[i] = i;
     }
 
+    /* Нормировка запоминается: контрольную выборку надо привести к тем же
+       единицам, иначе сравнение бессмысленно. */
+    static double norm_mean[ML_NN_IN], norm_sd[ML_NN_IN];
+
     /* --- Season 8 (ml_stats): нормировка по Уэлфорду --- */
     printf("\n--- модуль Season 8 (ml_stats): нормировка признаков ---\n");
     for (int f = 0; f < ML_NN_IN; f++) {
@@ -63,7 +116,9 @@ int main(void) {
         double sd = my_sqrt(ml_welford_var(&w));
         if (sd <= 0) sd = 1.0;
         printf("  %-10s среднее %8.3f  sigma %7.3f\n", feat[f], ml_welford_mean(&w), sd);
-        for (int i = 0; i < NALL; i++) X[i][f] = (X[i][f] - ml_welford_mean(&w)) / sd;
+        norm_mean[f] = ml_welford_mean(&w);
+        norm_sd[f]   = sd;
+        for (int i = 0; i < NALL; i++) X[i][f] = (X[i][f] - norm_mean[f]) / sd;
     }
     printf("  класс «угроза»: %.1f%% выборки\n", 100.0 * pos / NALL);
 
@@ -102,14 +157,33 @@ int main(void) {
     printf("  accuracy %.3f, precision %.3f, recall %.3f, F1 %.3f\n", acc, prec, rec, f1);
     printf("  «всегда норма» дала бы accuracy %.3f при recall 0.000\n", baseline);
 
+    /* --- Season 5 (ml_csv): контрольная выборка приходит файлом --- */
+    printf("\n--- модуль Season 5 (ml_csv): проверка на внешних данных ---\n");
+    calib_t c = { { 0 }, { 0 }, &net, 0, 0, 0 };
+    for (int f = 0; f < ML_NN_IN; f++) { c.mean[f] = norm_mean[f]; c.sd[f] = norm_sd[f]; }
+
+    FILE *cf = fmemopen((void *)CALIB, strlen(CALIB), "rb");
+    long seen = cf ? ml_csv_parse(cf, ',', calib_row, &c) : 0;
+    if (cf) fclose(cf);
+
+    printf("  записей в файле:     %ld\n", seen);
+    printf("  принято:             %d\n", c.rows);
+    printf("  отброшено битых:     %d\n", c.broken);
+    printf("  угадано:             %d из %d\n", c.correct, c.rows);
+    printf("  битая строка отброшена, а не подставлена нулями: %s\n",
+           c.broken == 1 ? "да" : "НЕТ");
+    int calib_ok = (c.broken == 1) && (c.rows == 10) && (c.correct >= 8);
+    printf("  внешняя проверка пройдена: %s\n", calib_ok ? "да" : "НЕТ");
+
     printf("\n--- состав сборки ---\n");
     printf("  [S4] ml_hash.c  — реестр признаков\n");
+    printf("  [S5] ml_csv.c   — чтение контрольной выборки\n");
     printf("  [S8] ml_stats.c — нормировка (Уэлфорд)\n");
     printf("  [S8] ml_nn.c    — сеть и backprop\n");
     printf("  [S8] main.c     — классификатор\n");
-    printf("\n4 единицы трансляции из 2 сезонов слинкованы в luna_ai.\n");
+    printf("\n5 единиц трансляции из 3 сезонов слинкованы в luna_ai.\n");
 
-    int ok = (f1 > 0.7) && (acc > baseline) && (total == NALL - NTRAIN);
+    int ok = (f1 > 0.7) && (acc > baseline) && (total == NALL - NTRAIN) && calib_ok;
     printf("сборка работоспособна: %s\n", ok ? "да" : "НЕТ");
     return ok ? 0 : 1;
 }

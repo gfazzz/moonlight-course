@@ -34,7 +34,12 @@ OUT="$(mktemp /tmp/proj_out.XXXX)"
 "$PROJ/advanced_systems" > "$OUT" 2>&1; rc=$?
 [ $rc -eq 0 ] || { echo "FAIL: код возврата $rc"; cat "$OUT"; rm -f "$OUT"; exit 1; }
 grep -q "сборка работоспособна: да" "$OUT" || { echo "FAIL: самопроверка не пройдена."; cat "$OUT"; rm -f "$OUT"; exit 1; }
-grep -q "5 единиц" "$OUT" || grep -q "5 единицы" "$OUT" || { echo "FAIL: неверное число единиц трансляции."; rm -f "$OUT"; exit 1; }
+# Число единиц трансляции берётся из Makefile, а не зашивается в тест:
+# добавление модуля не должно требовать правки проверки.
+NMOD=$(echo "$MODS" | wc -w | tr -d ' ')
+grep -q "$((NMOD + 1)) единиц трансляции" "$OUT" || {
+    echo "FAIL: программа сообщает не о $((NMOD + 1)) единицах трансляции."; rm -f "$OUT"; exit 1; }
+grep -q "подмена имени обнаружена: да" "$OUT" || { echo "FAIL: имя-двойник не найдено."; rm -f "$OUT"; exit 1; }
 
 if [ -f expected.txt ]; then
     diff -u expected.txt "$OUT" || { echo "FAIL: вывод не совпал с expected.txt."; rm -f "$OUT"; exit 1; }

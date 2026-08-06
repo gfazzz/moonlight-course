@@ -14,6 +14,7 @@
 #include <string.h>
 
 #include "ml_hash.h"     /* Season 4 */
+#include "ml_text.h"     /* Season 5 */
 #include "ml_crc.h"      /* Season 6 */
 #include "ml_btree.h"    /* Season 9 */
 #include "ml_kalman.h"   /* Season 9 */
@@ -61,16 +62,45 @@ int main(void) {
            accepted, tree.used, ml_bt_height(&tree));
 
     /* Season 4: имена превращаются в ключи через хеш. */
-    static const char *names[4] = {"track.alpha", "track.bravo", "track.charlie", "track.delta"};
+    /* Пятое имя выглядит как первое: буква "a" кириллическая. */
+    static const char *names[5] = {
+        "track.alpha", "track.bravo", "track.charlie", "track.delta",
+        "track." "\xD0\xB0" "lpha"
+    };
     printf("\n--- модуль Season 4 (ml_hash): поиск по имени ---\n");
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
         int key = (int)(ml_hash_djb2(names[i]) % 1000);
         long val = -1;
         tree.page_reads = 0;
         int found = ml_bt_search(&tree, key, &val);
-        printf("  %-14s -> ключ %3d: %s, страниц прочитано %ld\n",
-               names[i], key, found ? "найден" : "нет в индексе", tree.page_reads);
+        /* Добивка по знакоместам: "%-14s" считает байты и разъехался бы
+           на пятом имени, где кириллическая буква занимает два (s05e08). */
+        printf("  ");
+        ml_pad_cols(names[i], 15);
+        printf("-> ключ %3d: %s, страниц прочитано %ld\n",
+               key, found ? "найден" : "нет в индексе", tree.page_reads);
     }
+
+    /* --- Season 5: имя как ключ ненадёжно --- */
+    printf("\n--- модуль Season 5 (ml_text): имена, которые не различить ---\n");
+    int twin = -1;
+    for (int i = 0; i < 5 && twin < 0; i++)
+        for (int j = i + 1; j < 5; j++)
+            if (ml_looks_same(names[i], names[j])) { twin = j; break; }
+
+    if (twin >= 0) {
+        int k0 = (int)(ml_hash_djb2(names[0]) % 1000);
+        int k1 = (int)(ml_hash_djb2(names[twin]) % 1000);
+        printf("  [0] и [%d] выглядят одинаково, а ключи разные: %d против %d\n",
+               twin, k0, k1);
+        printf("  значит, в индексе они лежат на разных страницах\n");
+    }
+    /* Мысль, ради которой оба модуля стоят рядом: хеш отвечает «это одна
+       строка?», ml_text — «они выглядят одинаково?». Имя, введённое
+       человеком, проходит первую проверку и проваливает вторую. */
+    int name_ok = (twin > 0) && ml_suspicious_scripts(names[twin])
+               && !ml_suspicious_scripts(names[0]);
+    printf("  подмена имени обнаружена: %s\n", name_ok ? "да" : "НЕТ");
 
     /* --- Season 9: фильтр Калмана --- */
     printf("\n--- модуль Season 9 (ml_kalman): сопровождение ---\n");
@@ -94,12 +124,14 @@ int main(void) {
     printf("--- состав сборки ---\n");
     printf("  [S4] ml_hash.c   — ключи из имён\n");
     printf("  [S6] ml_crc.c    — целостность кадров\n");
+    printf("  [S5] ml_text.c   — подмена имени и ширина колонок\n");
     printf("  [S9] ml_btree.c  — индекс\n");
     printf("  [S9] ml_kalman.c — оценка при шуме\n");
     printf("  [S9] main.c      — подсистема\n");
-    printf("\n5 единиц трансляции из 3 сезонов слинкованы в advanced_systems.\n");
+    printf("\n6 единиц трансляции из 4 сезонов слинкованы в advanced_systems.\n");
 
-    int ok = (accepted + rejected == NREC) && (ml_bt_height(&tree) >= 2) && (sum_est < sum_meas);
+    int ok = (accepted + rejected == NREC) && (ml_bt_height(&tree) >= 2)
+          && (sum_est < sum_meas) && name_ok;
     printf("сборка работоспособна: %s\n", ok ? "да" : "НЕТ");
     return ok ? 0 : 1;
 }

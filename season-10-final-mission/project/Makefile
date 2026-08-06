@@ -8,18 +8,21 @@ CFLAGS := -Wall -Wextra -std=gnu11
 
 ROOT   := ../..
 S4     := $(ROOT)/season-04-crypto-and-algorithms/lib
+S5     := $(ROOT)/season-05-real-world-data/lib
 S6     := $(ROOT)/season-06-embedded-iot/lib
 S8     := $(ROOT)/season-08-ai-and-data/lib
 S9     := $(ROOT)/season-09-advanced-systems/lib
 
-INCLUDES := -I$(S4) -I$(S6) -I$(S8) -I$(S9)
-MODULES  := $(S4)/ml_hash.c $(S6)/ml_crc.c $(S8)/ml_stats.c $(S9)/ml_kalman.c
+INCLUDES := -I$(S4) -I$(S5) -I$(S6) -I$(S8) -I$(S9)
+MODULES  := $(S4)/ml_hash.c \
+            $(S5)/ml_money.c $(S5)/ml_time.c $(S5)/ml_text.c \
+            $(S6)/ml_crc.c $(S8)/ml_stats.c $(S9)/ml_kalman.c
 BIN      := moonlight_core
 
 .PHONY: all run test modules clean
 
 all:
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN) $(MODULES) main.c && echo "OK: $(BIN) (5 единиц трансляции из 4 сезонов)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN) $(MODULES) main.c && echo "OK: $(BIN) (8 единиц трансляции из 5 сезонов)"
 
 run: all
 	@./$(BIN)

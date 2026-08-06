@@ -17,13 +17,27 @@ echo "OK: собралось."
 
 "$BIN" > "$OUT" 2>&1 || { echo "FAIL: падение при запуске."; cat "$OUT"; exit 1; }
 
-# Все строки экрана обязаны быть одной ширины (кириллица внутри ячеек ломает вёрстку).
-python3 - "$OUT" <<'PY' || { echo "FAIL: строки экрана разной ширины — подписи внутри экрана должны быть ASCII."; rm -f "$BIN" "$OUT"; exit 1; }
-import sys
+# Все строки экрана обязаны быть одной ширины В ЗНАКОМЕСТАХ — не в байтах
+# и не в символах. Строка с иероглифами короче остальных по числу символов
+# и длиннее по числу байт, а на экране обязана вставать вровень.
+python3 - "$OUT" <<'PYCHK' || { echo "FAIL: строки экрана разной ширины — проверь учёт ширины символов в text()."; rm -f "$BIN" "$OUT"; exit 1; }
+import sys, unicodedata
+def width(s):
+    w = 0
+    for c in s:
+        if unicodedata.combining(c): continue
+        w += 2 if unicodedata.east_asian_width(c) in 'WF' else 1
+    return w
 rows = [l.rstrip('\n') for l in open(sys.argv[1], encoding='utf-8')
         if l.startswith('|') and l.rstrip('\n').endswith('|')]
-sys.exit(0 if rows and len({len(r) for r in rows}) == 1 else 1)
-PY
+if not rows: sys.exit(1)
+widths = {width(r) for r in rows}
+if len(widths) != 1:
+    print('  ширины строк:', sorted(widths), file=sys.stderr)
+    sys.exit(1)
+# Проверка пуста, если весь экран ASCII: хотя бы одна строка обязана быть не-ASCII.
+sys.exit(0 if any(any(ord(c) > 127 for c in r) for r in rows) else 1)
+PYCHK
 
 grep -q "STATUS: NOMINAL"    "$OUT" || { echo "FAIL: нет штатного состояния."; rm -f "$BIN" "$OUT"; exit 1; }
 grep -q "STATUS: STALE DATA" "$OUT" || { echo "FAIL: устаревание данных не отражается на экране."; rm -f "$BIN" "$OUT"; exit 1; }

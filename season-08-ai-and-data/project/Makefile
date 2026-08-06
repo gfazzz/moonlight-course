@@ -3,14 +3,15 @@ CC     := gcc
 CFLAGS := -Wall -Wextra -std=gnu11
 ROOT   := ../..
 S4     := $(ROOT)/season-04-crypto-and-algorithms/lib
+S5     := $(ROOT)/season-05-real-world-data/lib
 S8     := ../lib
-INCLUDES := -I$(S4) -I$(S8)
-MODULES  := $(S4)/ml_hash.c $(S8)/ml_stats.c $(S8)/ml_nn.c
+INCLUDES := -I$(S4) -I$(S5) -I$(S8)
+MODULES  := $(S4)/ml_hash.c $(S5)/ml_csv.c $(S8)/ml_stats.c $(S8)/ml_nn.c
 BIN      := luna_ai
 
 .PHONY: all run test modules clean
 all:
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN) $(MODULES) main.c && echo "OK: $(BIN) (4 единицы трансляции из 2 сезонов)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(BIN) $(MODULES) main.c && echo "OK: $(BIN) (5 единиц трансляции из 3 сезонов)"
 run: all
 	@./$(BIN)
 modules:
