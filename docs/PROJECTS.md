@@ -49,7 +49,7 @@ make test
 | Сезон | Проект | Модули |
 |---|---|---|
 | S4 | `crypto_toolkit` | `ml_crypto` (S1) + `ml_hash` |
-| S5 | `trading_system` | `ml_hash` (S4) + `ml_indicators` |
+| S5 | `trading_system` | `ml_hash` (S4) + `ml_csv` + `ml_money` + `ml_time` + `ml_text` + `ml_tick` |
 | S6 | `iot_controller` | `ml_hash` (S4) + `ml_crc` + `ml_wiegand` |
 | S7 | `stealth_agent` | `ml_crypto` (S1) + `ml_crc` (S6) + `ml_proc` |
 | S8 | `luna_ai` | `ml_hash` (S4) + `ml_stats` + `ml_nn` |
@@ -66,7 +66,11 @@ make test
 |---|---|---|---|
 | `ml_crypto` | S1 | XOR-шифр, контрольная сумма | S4, S7 |
 | `ml_hash` | S4 | хеш строк, таблица | S5, S6, S8, S9, S10 |
-| `ml_indicators` | S5 | скользящие средние, RSI | S6 (по смыслу) |
+| `ml_money` | s05e02 | суммы целыми, округление | s05e05, s10e07 |
+| `ml_csv` | s05e03 | разбор выгрузки автоматом | s08e02, s10e07 |
+| `ml_time` | s05e04 | календарь и часовые пояса | s10e03 |
+| `ml_tick` | s05e06 | бинарный формат записи | s10e07 |
+| `ml_text` | s05e08 | ширина текста, двойники | s09e06, s10e06 |
 | `ml_crc` | S6 | CRC-16 Modbus и X.25 | S7, S9, S10 |
 | `ml_wiegand` | S6 | разбор поля бит с чётностью | S6 |
 | `ml_proc` | S7 | запуск команд через `fork` + `exec` | S7 |

@@ -71,9 +71,17 @@
 
 ### Season 5 — Финансовые рынки
 
+- **Goldberg, «What Every Computer Scientist Should Know About Floating-Point Arithmetic» (1991)** — почему `0.1` не бывает точной; доступна бесплатно.
+- **Fowler, «Patterns of Enterprise Application Architecture»**, паттерн **Money** — округление как часть контракта, а не деталь реализации.
+- **RFC 4180** — единственная попытка описать CSV; четыре страницы.
+- **Hinnant, «`chrono`-Compatible Low-Level Date Algorithms»** — перевод даты в дни и обратно с полным выводом; доступна бесплатно.
+- **RFC 3339** — запись даты и времени.
+- **Pelkonen et al. «Gorilla: A Fast, Scalable, In-Memory Time Series Database» (VLDB 2015)** — сжатие временных рядов; доступна бесплатно.
+- **UTS #39, «Unicode Security Mechanisms»** — двойники, скелет строки, смешанные алфавиты; самый практичный документ Unicode.
+- **RFC 3629** — UTF-8 в трёх страницах, включая запрет переусложнённой записи.
 - **Harris, «Trading and Exchanges»** — как устроены рынки; лучшая книга по теме.
-- **Smith, «The Scientist and Engineer's Guide to DSP»** — скользящее среднее как фильтр; доступна бесплатно.
 - **Glasserman, «Monte Carlo Methods in Financial Engineering»** — моделирование и генерация случайных чисел.
+- **Shiller, «Financial Markets» (Yale, открытый курс)** — рыночный контекст сезона; к программированию отношения не имеет и потому идёт в сериях отдельным блоком «Если тема зацепила». Доступен бесплатно.
 - **Lowenstein, «When Genius Failed»** — история LTCM; лучшая иллюстрация того, чем кончается недооценённый риск.
 - **Taleb, «Одураченные случайностью»** — про то, как отличают навык от везения.
 

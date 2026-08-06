@@ -70,7 +70,7 @@
 | сортировка Шелла, шаги Кнута | [s08e04](../season-08-ai-and-data/s08e04-shell-heapsort/) | — |
 | пирамидальная сортировка, куча | [s08e04](../season-08-ai-and-data/s08e04-shell-heapsort/) | — |
 | хеш-функции и лавинный эффект | [s04e03](../season-04-crypto-and-algorithms/s04e03-hash-functions/) | s10e08 |
-| хеш-таблица и коллизии | [s04e04](../season-04-crypto-and-algorithms/s04e04-hash-table/) | s05e08, s09e03 |
+| хеш-таблица и коллизии | [s04e04](../season-04-crypto-and-algorithms/s04e04-hash-table/) | s09e03 |
 | связный список, цикл Флойда | [s04e07](../season-04-crypto-and-algorithms/s04e07-linked-list/) | — |
 | кольцевой буфер | [s06e06](../season-06-embedded-iot/s06e06-sensors-fsm/) | s08e01 |
 | B-дерево и страницы | [s09e04](../season-09-advanced-systems/s09e04-btree-storage/) | — |
@@ -148,10 +148,13 @@
 | линейная разделимость, предел перцептрона | [s08e06](../season-08-ai-and-data/s08e06-perceptron/) | — |
 | обратное распространение ошибки | [s08e07](../season-08-ai-and-data/s08e07-backprop/) | — |
 | метрики классификации, F-мера | [s08e08](../season-08-ai-and-data/s08e08-luna-ai/) | s10e08 |
-| скользящее среднее и запаздывание | [s05e03](../season-05-financial-markets/s05e03-moving-averages/) | s06e06 |
+| деньги в фиксированной точке, округление | [s05e02](../season-05-financial-markets/s05e02-fixed-point-money/) | s05e05, s10e07 |
+| конечный автомат разбора, битые данные | [s05e03](../season-05-financial-markets/s05e03-csv-parser/) | s08e02, s09e01, s10e07 |
+| эпоха, часовые пояса, разрывы шкалы | [s05e04](../season-05-financial-markets/s05e04-time-zones/) | s10e03 |
 | подгонка и проверка вне выборки | [s05e05](../season-05-financial-markets/s05e05-backtest/) | s08e03, s08e08 |
-| риск как распределение | [s05e06](../season-05-financial-markets/s05e06-volatility-var/) | — |
+| бинарный формат, выравнивание, порядок байтов | [s05e06](../season-05-financial-markets/s05e06-tick-format/) | s06e05, s06e08, s09e04, s10e07 |
 | Монте-Карло и воспроизводимость | [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | s07e04 |
+| UTF-8, ширина текста, двойники | [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | s09e06, s10e06 |
 | фильтр Калмана, ковариация | [s09e07](../season-09-advanced-systems/s09e07-radar-kalman/) | — |
 
 ---
@@ -215,7 +218,8 @@
 
 | Где | Что делается вручную |
 |---|---|
-| [s05e06](../season-05-financial-markets/s05e06-volatility-var/) | `sqrt` методом Ньютона |
+| [s05e04](../season-05-financial-markets/s05e04-time-zones/) | календарь и часовые пояса без `<time.h>` |
+| [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | разбор UTF-8 и ширина текста без библиотеки |
 | [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | собственный генератор случайных чисел |
 | [s07e04](../season-07-system-programming/s07e04-threads/) | сид от номера задачи, а не общий генератор |
 | [s08e06](../season-08-ai-and-data/s08e06-perceptron/) | `exp` рядом с приведением аргумента |

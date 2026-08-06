@@ -21,7 +21,7 @@
 ```bash
 git checkout main
 git pull upstream main
-git checkout -b fix/s05e03-ema-formula
+git checkout -b fix/s05e03-csv-quotes
 ```
 
 Если уже напортачил:
@@ -41,8 +41,8 @@ git commit --amend
 season-05-financial-markets/
 ├── README.md                    # обзор сезона
 ├── lib/                         # модули сезона для переиспользования дальше
-│   ├── ml_indicators.h
-│   └── ml_indicators.c
+│   ├── ml_money.h
+│   └── ml_money.c
 ├── project/                     # сквозной проект сезона
 │   ├── main.c  Makefile  README.md
 │   └── tests/{test.sh,expected.txt}
@@ -119,7 +119,7 @@ git remote add upstream https://github.com/<автор>/moonlight-course.git
 
 # 2. Ветка от чистого main
 git checkout main && git pull upstream main
-git checkout -b fix/s05e03-ema-formula
+git checkout -b fix/s05e03-csv-quotes
 
 # 3. Правки
 
@@ -128,8 +128,8 @@ make test        # все 80 серий
 make projects    # сквозные проекты
 
 # 5. Коммит и PR
-git commit -am "fix(s05e03): уточнить формулу EMA"
-git push origin fix/s05e03-ema-formula
+git commit -am "fix(s05e03): не терять поле после удвоенной кавычки"
+git push origin fix/s05e03-csv-quotes
 ```
 
 **Именование веток:** `fix/` — исправления, `docs/` — тексты и документация, `feat/` — новое, `test/` — тесты и CI, `i18n/` — переводы.
