@@ -166,7 +166,7 @@ make test
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
 | [s05e01](../season-05-financial-markets/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
-| [s05e02](../season-05-financial-markets/s05e02-spread-orderbook/) | Спред и стакан | ликвидность, дисбаланс | `orderbook.c` |
+| [s05e02](../season-05-financial-markets/s05e02-fixed-point-money/) | Деньги не бывают double | фиксированная точка, округление | `money.c` |
 | [s05e03](../season-05-financial-markets/s05e03-moving-averages/) | Скользящие средние | сглаживание и запаздывание | `ma.c` |
 | [s05e04](../season-05-financial-markets/s05e04-rsi/) | RSI | сила движения, расхождение | `rsi.c` |
 | [s05e05](../season-05-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |

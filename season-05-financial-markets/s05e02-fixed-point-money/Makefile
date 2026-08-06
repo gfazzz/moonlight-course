@@ -1,10 +1,9 @@
 # OPERATION MOONLIGHT — s05e02
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/book.c
-SOL     := solution/book.c
-DATA    := data/book.csv
-BIN     := book
+ART     := artifacts/money.c
+SOL     := solution/money.c
+BIN     := money
 
 .PHONY: all run test solution clean
 
@@ -13,13 +12,13 @@ all:
 	else echo "Нет $(ART). Скопируй: cp starter.c $(ART)"; fi
 
 run: all
-	@./$(BIN) $(DATA)
+	@./$(BIN)
 
 test:
 	@cd tests && ./test.sh
 
 solution:
-	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol $(DATA)
+	@$(CC) $(CFLAGS) -o $(BIN)_sol $(SOL) && ./$(BIN)_sol
 
 clean:
 	@rm -f $(BIN) $(BIN)_sol

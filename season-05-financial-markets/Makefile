@@ -4,7 +4,7 @@
 #   make clean — очистить бинарники
 
 EPISODES := s05e01-ohlcv-parser \
-            s05e02-spread-orderbook \
+            s05e02-fixed-point-money \
             s05e03-moving-averages \
             s05e04-rsi \
             s05e05-backtest \
