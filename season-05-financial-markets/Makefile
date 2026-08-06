@@ -5,8 +5,8 @@
 
 EPISODES := s05e01-ohlcv-parser \
             s05e02-fixed-point-money \
-            s05e03-moving-averages \
-            s05e04-rsi \
+            s05e03-csv-parser \
+            s05e04-time-zones \
             s05e05-backtest \
             s05e06-volatility-var \
             s05e07-monte-carlo \

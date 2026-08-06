@@ -167,8 +167,8 @@ make test
 |---|---|---|---|
 | [s05e01](../season-05-financial-markets/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
 | [s05e02](../season-05-financial-markets/s05e02-fixed-point-money/) | Деньги не бывают double | фиксированная точка, округление | `money.c` |
-| [s05e03](../season-05-financial-markets/s05e03-moving-averages/) | Скользящие средние | сглаживание и запаздывание | `ma.c` |
-| [s05e04](../season-05-financial-markets/s05e04-rsi/) | RSI | сила движения, расхождение | `rsi.c` |
+| [s05e03](../season-05-financial-markets/s05e03-csv-parser/) | Разбор настоящего CSV | конечный автомат, битые данные | `csv.c` |
+| [s05e04](../season-05-financial-markets/s05e04-time-zones/) | Час, которого не было | эпоха, пояса, разрывы шкалы | `tstamp.c` |
 | [s05e05](../season-05-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
 | [s05e06](../season-05-financial-markets/s05e06-volatility-var/) | Волатильность и VaR | риск как распределение | `var.c` |
 | [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |

@@ -1,9 +1,9 @@
-# OPERATION MOONLIGHT — s05e03
+# OPERATION MOONLIGHT — s05e04
 CC      := gcc
 CFLAGS  := -Wall -Wextra -std=c11
-ART     := artifacts/ma.c
-SOL     := solution/ma.c
-BIN     := ma
+ART     := artifacts/tstamp.c
+SOL     := solution/tstamp.c
+BIN     := tstamp
 
 .PHONY: all run test solution clean
 

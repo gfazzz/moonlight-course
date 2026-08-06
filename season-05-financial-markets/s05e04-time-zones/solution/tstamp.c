@@ -1,0 +1,291 @@
+/* OPERATION MOONLIGHT — s05e04 «Час, которого не было»
+ * Эталонное решение: tstamp.c
+ *
+ * Нью-Йорк, 9 октября, 15:50.
+ *
+ * Сделки в журнале помечены местным временем биржи. В ночь осеннего
+ * перехода один час прожит дважды — и сделок в нём втрое больше обычного.
+ * А в ночь весеннего перехода в журнале есть метки, которых в тот день
+ * не существовало.
+ *
+ * Концепт серии:
+ *   - эпоха и метка времени как число секунд, а не как текст;
+ *   - UTC против местного времени;
+ *   - переход на летнее время: час, прожитый дважды, и час, пропущенный;
+ *   - почему длительность нельзя считать вычитанием настенных меток.
+ *
+ * Детерминизм: ни одного обращения к системным часам и ни одной функции
+ * из <time.h>. Календарь и правила переходов свои — иначе тест сломался бы
+ * при обновлении базы часовых поясов в дистрибутиве. Собирается без -lm.
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+
+/* ---------- календарь ---------- */
+
+/* Дней от 1970-01-01 по григорианскому календарю.
+   Алгоритм сдвигает начало года на март: тогда високосный день оказывается
+   последним днём «года» и не разрывает формулу для номера дня. */
+static int64_t days_from_civil(int y, int m, int d) {
+    y -= (m <= 2);
+    int64_t era = (y >= 0 ? y : y - 399) / 400;
+    unsigned yoe = (unsigned)(y - era * 400);                 /* год в эре, 0..399  */
+    unsigned doy = (unsigned)((153 * (m + (m > 2 ? -3 : 9)) + 2) / 5 + d - 1);
+    unsigned doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;     /* день в эре         */
+    return era * 146097 + (int64_t)doe - 719468;
+}
+
+static void civil_from_days(int64_t z, int *yy, int *mm, int *dd) {
+    z += 719468;
+    int64_t era = (z >= 0 ? z : z - 146096) / 146097;
+    unsigned doe = (unsigned)(z - era * 146097);
+    unsigned yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+    int64_t  y   = (int64_t)yoe + era * 400;
+    unsigned doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    unsigned mp  = (5 * doy + 2) / 153;
+    unsigned d   = doy - (153 * mp + 2) / 5 + 1;
+    unsigned m   = mp + (mp < 10 ? 3 : (unsigned)-9);
+    *yy = (int)(y + (m <= 2)); *mm = (int)m; *dd = (int)d;
+}
+
+/* День недели: 0 — воскресенье. 1970-01-01 был четвергом, отсюда +11. */
+static int weekday_from_days(int64_t z) { return (int)(((z % 7) + 11) % 7); }
+
+/* Дата n-го воскресенья месяца. n > 0 — считая с начала, n < 0 — с конца. */
+static int64_t nth_sunday(int y, int m, int n) {
+    if (n > 0) {
+        int64_t first = days_from_civil(y, m, 1);
+        int64_t shift = (7 - weekday_from_days(first)) % 7;
+        return first + shift + 7 * (n - 1);
+    }
+    int mdays[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+    int last_d = mdays[m];
+    if (m == 2) {
+        int leap = (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+        last_d += leap;
+    }
+    int64_t last = days_from_civil(y, m, last_d);
+    return last - weekday_from_days(last) - 7 * (-n - 1);
+}
+
+/* ---------- метка времени ---------- */
+
+typedef struct { int y, mo, d, h, mi, s; } civil_t;
+
+static int64_t secs_from_civil(civil_t c) {
+    return days_from_civil(c.y, c.mo, c.d) * 86400
+         + (int64_t)c.h * 3600 + (int64_t)c.mi * 60 + c.s;
+}
+
+static civil_t civil_from_secs(int64_t t) {
+    /* Деление к нулю неверно для дат до эпохи: −1 секунда лежит в 1969 году,
+       а не в 1970. Приводим к делению вниз. */
+    int64_t days = t / 86400, rem = t % 86400;
+    if (rem < 0) { rem += 86400; days -= 1; }
+
+    civil_t c;
+    civil_from_days(days, &c.y, &c.mo, &c.d);
+    c.h  = (int)(rem / 3600);
+    c.mi = (int)(rem % 3600 / 60);
+    c.s  = (int)(rem % 60);
+    return c;
+}
+
+static void fmt(int64_t t, char *buf, size_t n) {
+    civil_t c = civil_from_secs(t);
+    snprintf(buf, n, "%04d-%02d-%02d %02d:%02d:%02d",
+             c.y, c.mo, c.d, c.h, c.mi, c.s);
+}
+
+/* ---------- часовой пояс ---------- */
+
+/* Правила свои, а не из системной базы: база обновляется вместе с
+   дистрибутивом, и тест, зависящий от неё, однажды покраснеет без всякой
+   правки кода. Для сцены достаточно правил, действующих в США с 2007 года. */
+typedef struct {
+    const char *name;
+    const char *abbr_std, *abbr_dst;
+    int  std_off, dst_off;          /* секунды от UTC */
+    int  has_dst;
+    int  start_month, start_nth;    /* переход вперёд */
+    int  end_month,   end_nth;      /* переход назад  */
+    int  switch_hour_local;         /* час местного времени в момент перехода */
+} tz_t;
+
+static const tz_t NY = {
+    "America/New_York", "EST", "EDT",
+    -5 * 3600, -4 * 3600, 1,
+    3,  2,        /* второе воскресенье марта   */
+    11, 1,        /* первое воскресенье ноября  */
+    2
+};
+
+/* Момент весеннего перехода в UTC: местные часы показывают switch_hour,
+   и в этот миг ещё действует зимнее смещение. */
+static int64_t dst_start_utc(const tz_t *z, int year) {
+    int64_t day = nth_sunday(year, z->start_month, z->start_nth);
+    return day * 86400 + (int64_t)z->switch_hour_local * 3600 - z->std_off;
+}
+
+/* Момент осеннего перехода: в этот миг ещё действует летнее смещение. */
+static int64_t dst_end_utc(const tz_t *z, int year) {
+    int64_t day = nth_sunday(year, z->end_month, z->end_nth);
+    return day * 86400 + (int64_t)z->switch_hour_local * 3600 - z->dst_off;
+}
+
+/* Смещение, действующее в данный момент UTC. */
+static int tz_offset_at(const tz_t *z, int64_t utc) {
+    if (!z->has_dst) return z->std_off;
+    civil_t c = civil_from_secs(utc);
+    int64_t a = dst_start_utc(z, c.y), b = dst_end_utc(z, c.y);
+    return (utc >= a && utc < b) ? z->dst_off : z->std_off;
+}
+
+static const char *tz_abbr_at(const tz_t *z, int64_t utc) {
+    return tz_offset_at(z, utc) == z->dst_off ? z->abbr_dst : z->abbr_std;
+}
+
+/* UTC -> местное настенное время (как число секунд «настенной» шкалы). */
+static int64_t local_from_utc(const tz_t *z, int64_t utc) {
+    return utc + tz_offset_at(z, utc);
+}
+
+/* ---------- обратное преобразование: здесь и живёт вся сложность ---------- */
+
+enum { LT_UNIQUE = 0, LT_AMBIGUOUS = 1, LT_NONEXISTENT = 2 };
+
+/* Местное настенное время -> UTC.
+   Пробуем оба смещения и проверяем каждое на согласованность: если,
+   вычтя смещение, мы попадаем в момент, где действует именно оно, —
+   вариант настоящий.
+     оба настоящие  -> час прожит дважды;
+     ни одного      -> такого местного времени не существовало.
+   Обе ситуации бывают ровно раз в год, и обе — данные, а не ошибка. */
+static int utc_from_local(const tz_t *z, int64_t local, int64_t *a, int64_t *b) {
+    int64_t c1 = local - z->std_off;
+    int64_t c2 = local - z->dst_off;
+    int ok1 = (tz_offset_at(z, c1) == z->std_off);
+    int ok2 = z->has_dst && (tz_offset_at(z, c2) == z->dst_off);
+
+    if (ok1 && ok2 && c1 != c2) { *a = c2; *b = c1; return LT_AMBIGUOUS; }
+    if (ok1) { *a = *b = c1; return LT_UNIQUE; }
+    if (ok2) { *a = *b = c2; return LT_UNIQUE; }
+    return LT_NONEXISTENT;
+}
+
+/* ---------- журнал сделок ---------- */
+
+typedef struct { const char *id; civil_t local; } trade_t;
+
+/* Метки местного времени биржи, как они лежат в выгрузке. */
+static const trade_t JOURNAL[] = {
+    { "T-4417", { 2024,  3, 10,  1, 45,  0 } },   /* до весеннего перехода   */
+    { "T-4418", { 2024,  3, 10,  2, 15,  0 } },   /* этого времени не было   */
+    { "T-4419", { 2024,  3, 10,  2, 30,  0 } },   /* и этого тоже            */
+    { "T-4420", { 2024,  3, 10,  3, 05,  0 } },   /* после перехода          */
+    { "T-8871", { 2024, 11,  3,  0, 40,  0 } },   /* до осеннего перехода    */
+    { "T-8872", { 2024, 11,  3,  1, 10,  0 } },   /* час прожит дважды       */
+    { "T-8873", { 2024, 11,  3,  1, 50,  0 } },   /* и этот тоже             */
+    { "T-8874", { 2024, 11,  3,  2, 20,  0 } },   /* после перехода          */
+    { "T-9001", { 2024,  6, 14, 14, 30,  0 } },   /* обычный летний день     */
+    { "T-9002", { 2024, 12, 19, 14, 30,  0 } }    /* обычный зимний день     */
+};
+#define NTRADES ((int)(sizeof JOURNAL / sizeof JOURNAL[0]))
+
+/* Сделки ночи осеннего перехода: часы местного времени, как в выгрузке. */
+static const int NIGHT_HOURS[] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,                       /* 00:xx — двенадцать */
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,             /* 01:xx — тридцать семь */
+    2,2,2,2,2,2,2,2,2,2,2                          /* 02:xx — одиннадцать */
+};
+#define NNIGHT ((int)(sizeof NIGHT_HOURS / sizeof NIGHT_HOURS[0]))
+
+int main(void) {
+    char a[40], b[40];
+
+    printf("=== метки времени в журнале биржи ===\n");
+    printf("пояс: %s (%s %+03d:00 / %s %+03d:00)\n\n",
+           NY.name, NY.abbr_std, NY.std_off / 3600, NY.abbr_dst, NY.dst_off / 3600);
+
+    /* ---------- 1. Где проходят переходы ---------- */
+    printf("--- переходы 2024 года ---\n");
+    int64_t spring = dst_start_utc(&NY, 2024);
+    int64_t autumn = dst_end_utc(&NY, 2024);
+
+    fmt(spring, a, sizeof a);
+    printf("весна:  %s UTC — местные часы прыгнули с 02:00 на 03:00\n", a);
+    fmt(autumn, a, sizeof a);
+    printf("осень:  %s UTC — местные часы вернулись с 02:00 на 01:00\n\n", a);
+
+    /* ---------- 2. Разбор меток ---------- */
+    printf("--- разбор меток журнала ---\n");
+    printf("сделка   местная метка         статус         UTC\n");
+
+    int n_amb = 0, n_none = 0;
+    for (int i = 0; i < NTRADES; i++) {
+        int64_t local = secs_from_civil(JOURNAL[i].local);
+        int64_t u1, u2;
+        int kind = utc_from_local(&NY, local, &u1, &u2);
+
+        civil_t c = JOURNAL[i].local;
+        printf("%-8s %04d-%02d-%02d %02d:%02d:%02d  ",
+               JOURNAL[i].id, c.y, c.mo, c.d, c.h, c.mi, c.s);
+
+        if (kind == LT_UNIQUE) {
+            fmt(u1, a, sizeof a);
+            printf("однозначная    %s %s\n", a, tz_abbr_at(&NY, u1));
+        } else if (kind == LT_AMBIGUOUS) {
+            n_amb++;
+            fmt(u1, a, sizeof a); fmt(u2, b, sizeof b);
+            printf("ДВАЖДЫ         %s или %s\n", a, b);
+        } else {
+            n_none++;
+            printf("НЕ СУЩЕСТВУЕТ  —\n");
+        }
+    }
+
+    printf("\nметок в пропавшем часу:  %d\n", n_none);
+    printf("меток в удвоенном часу:  %d\n", n_amb);
+
+    /* ---------- 3. Длительность по настенным часам ---------- */
+    printf("\n--- длительность сделки, начатой до перехода ---\n");
+
+    int64_t open_u  = autumn - 10 * 60;            /* 01:50 EDT           */
+    int64_t close_u = autumn + 20 * 60;            /* 01:20 EST           */
+
+    fmt(local_from_utc(&NY, open_u),  a, sizeof a);
+    fmt(local_from_utc(&NY, close_u), b, sizeof b);
+    printf("открыта:  %s %s\n", a, tz_abbr_at(&NY, open_u));
+    printf("закрыта:  %s %s\n", b, tz_abbr_at(&NY, close_u));
+
+    int64_t wall_diff = local_from_utc(&NY, close_u) - local_from_utc(&NY, open_u);
+    int64_t utc_diff  = close_u - open_u;
+    printf("по настенным часам: %+lld мин\n", (long long)(wall_diff / 60));
+    printf("по шкале UTC:       %+lld мин\n", (long long)(utc_diff / 60));
+    printf("настенные часы дали отрицательную длительность: %s\n",
+           wall_diff < 0 ? "да" : "нет");
+
+    /* ---------- 4. Плотность сделок в ночь перехода ---------- */
+    printf("\n--- сделки в ночь на 3 ноября, по часам местного времени ---\n");
+    int cnt[3] = { 0, 0, 0 };
+    for (int i = 0; i < NNIGHT; i++) cnt[NIGHT_HOURS[i]]++;
+
+    for (int h = 0; h < 3; h++) {
+        printf("%02d:xx  %3d  ", h, cnt[h]);
+        for (int k = 0; k < cnt[h]; k++) putchar('#');
+        putchar('\n');
+    }
+    int base = (cnt[0] + cnt[2]) / 2;
+    printf("\nобычный час:      %d сделок\n", base);
+    printf("час 01:xx:        %d сделок\n", cnt[1]);
+    printf("превышение втрое: %s\n", cnt[1] >= base * 3 ? "да" : "нет");
+    printf("объяснение:       час 01:xx в эту ночь прожит дважды\n");
+
+    /* ---------- 5. Вывод ---------- */
+    printf("\nудвоенный час — это календарь, а не аномалия.\n");
+    printf("пропавший час — это не календарь: таких меток биржа не выдаёт.\n");
+
+    return 0;
+}
