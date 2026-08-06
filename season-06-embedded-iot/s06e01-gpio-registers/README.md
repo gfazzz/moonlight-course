@@ -200,6 +200,6 @@ make test
 
 ## Навигация
 
-- Назад: [Season 5 — Financial Markets](../../season-05-financial-markets/) (финал: [s05e08](../../season-05-financial-markets/s05e08-unicode-names/))
+- Назад: [Season 5 — Real-World Data](../../season-05-real-world-data/) (финал: [s05e08](../../season-05-real-world-data/s05e08-unicode-names/))
 - Season 6 — обзор: [../README.md](../README.md)
 - Дальше: **[s06e02 — UART](../s06e02-uart/)**

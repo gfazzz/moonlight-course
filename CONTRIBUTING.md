@@ -38,7 +38,7 @@ git commit --amend
 10 сезонов × 8 серий = 80 серий. Каталог серии называется `sNNeNN-краткое-имя`:
 
 ```
-season-05-financial-markets/
+season-05-real-world-data/
 ├── README.md                    # обзор сезона
 ├── lib/                         # модули сезона для переиспользования дальше
 │   ├── ml_money.h

@@ -248,7 +248,7 @@ make test
 cd project && make modules && make run
 ```
 
-**Разблокировано:** Season 5 — Financial Markets.
+**Разблокировано:** Season 5 — Real-World Data.
 
 ---
 
@@ -266,4 +266,4 @@ cd project && make modules && make run
 
 - Назад: [s04e07 — Связный список](../s04e07-linked-list/)
 - Season 4 — обзор: [../README.md](../README.md)
-- Дальше: [**Season 5 — Financial Markets**](../../season-05-financial-markets/)
+- Дальше: [**Season 5 — Real-World Data**](../../season-05-real-world-data/)

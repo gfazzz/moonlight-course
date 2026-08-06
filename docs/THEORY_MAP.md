@@ -148,13 +148,13 @@
 | линейная разделимость, предел перцептрона | [s08e06](../season-08-ai-and-data/s08e06-perceptron/) | — |
 | обратное распространение ошибки | [s08e07](../season-08-ai-and-data/s08e07-backprop/) | — |
 | метрики классификации, F-мера | [s08e08](../season-08-ai-and-data/s08e08-luna-ai/) | s10e08 |
-| деньги в фиксированной точке, округление | [s05e02](../season-05-financial-markets/s05e02-fixed-point-money/) | s05e05, s10e07 |
-| конечный автомат разбора, битые данные | [s05e03](../season-05-financial-markets/s05e03-csv-parser/) | s08e02, s09e01, s10e07 |
-| эпоха, часовые пояса, разрывы шкалы | [s05e04](../season-05-financial-markets/s05e04-time-zones/) | s10e03 |
-| подгонка и проверка вне выборки | [s05e05](../season-05-financial-markets/s05e05-backtest/) | s08e03, s08e08 |
-| бинарный формат, выравнивание, порядок байтов | [s05e06](../season-05-financial-markets/s05e06-tick-format/) | s06e05, s06e08, s09e04, s10e07 |
-| Монте-Карло и воспроизводимость | [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | s07e04 |
-| UTF-8, ширина текста, двойники | [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | s09e06, s10e06 |
+| деньги в фиксированной точке, округление | [s05e02](../season-05-real-world-data/s05e02-fixed-point-money/) | s05e05, s10e07 |
+| конечный автомат разбора, битые данные | [s05e03](../season-05-real-world-data/s05e03-csv-parser/) | s08e02, s09e01, s10e07 |
+| эпоха, часовые пояса, разрывы шкалы | [s05e04](../season-05-real-world-data/s05e04-time-zones/) | s10e03 |
+| подгонка и проверка вне выборки | [s05e05](../season-05-real-world-data/s05e05-backtest/) | s08e03, s08e08 |
+| бинарный формат, выравнивание, порядок байтов | [s05e06](../season-05-real-world-data/s05e06-tick-format/) | s06e05, s06e08, s09e04, s10e07 |
+| Монте-Карло и воспроизводимость | [s05e07](../season-05-real-world-data/s05e07-monte-carlo/) | s07e04 |
+| UTF-8, ширина текста, двойники | [s05e08](../season-05-real-world-data/s05e08-unicode-names/) | s09e06, s10e06 |
 | фильтр Калмана, ковариация | [s09e07](../season-09-advanced-systems/s09e07-radar-kalman/) | — |
 
 ---
@@ -206,7 +206,7 @@
 
 | Где | Что проверяется |
 |---|---|
-| [s05e01](../season-05-financial-markets/s05e01-ohlcv-parser/) | инвариант свечи |
+| [s05e01](../season-05-real-world-data/s05e01-ohlcv-parser/) | инвариант свечи |
 | [s07e01](../season-07-system-programming/s07e01-processes-fork/) | свойства вместо идентификаторов процессов |
 | [s07e05](../season-07-system-programming/s07e05-race-mutex/) | итог под мьютексом точно равен ожидаемому |
 | [s09e05](../season-09-advanced-systems/s09e05-wal-durability/) | инвариант держится при сбое в любой точке |
@@ -218,9 +218,9 @@
 
 | Где | Что делается вручную |
 |---|---|
-| [s05e04](../season-05-financial-markets/s05e04-time-zones/) | календарь и часовые пояса без `<time.h>` |
-| [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | разбор UTF-8 и ширина текста без библиотеки |
-| [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | собственный генератор случайных чисел |
+| [s05e04](../season-05-real-world-data/s05e04-time-zones/) | календарь и часовые пояса без `<time.h>` |
+| [s05e08](../season-05-real-world-data/s05e08-unicode-names/) | разбор UTF-8 и ширина текста без библиотеки |
+| [s05e07](../season-05-real-world-data/s05e07-monte-carlo/) | собственный генератор случайных чисел |
 | [s07e04](../season-07-system-programming/s07e04-threads/) | сид от номера задачи, а не общий генератор |
 | [s08e06](../season-08-ai-and-data/s08e06-perceptron/) | `exp` рядом с приведением аргумента |
 | [s10e02](../season-10-final-mission/s10e02-orbital/) | тригонометрия рядами |

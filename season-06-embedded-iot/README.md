@@ -115,5 +115,5 @@ make run
 **[Season 7 — Systems Programming](../season-07-system-programming/)**: процессы, потоки, сигналы, системные вызовы. И параллельный Монте-Карло, обещанный ещё в Season 5.
 
 - Начать: [s06e01 — Регистры](s06e01-gpio-registers/)
-- Назад: [Season 5 — Financial Markets](../season-05-financial-markets/)
+- Назад: [Season 5 — Real-World Data](../season-05-real-world-data/)
 - Ко всем сезонам: [../README.md](../README.md)

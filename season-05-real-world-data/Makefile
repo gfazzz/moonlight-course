@@ -28,7 +28,7 @@ test:
 	[ $$fail -eq 0 ] && echo "Season 5: все серии зелёные." || { echo "Season 5: есть падения."; exit 1; }
 
 list:
-	@echo "Season 5 — Financial Markets:"; for ep in $(EPISODES); do echo "  $$ep"; done
+	@echo "Season 5 — Real-World Data:"; for ep in $(EPISODES); do echo "  $$ep"; done
 
 clean:
 	@for ep in $(EPISODES); do $(MAKE) -s -C $$ep clean >/dev/null 2>&1 || true; done

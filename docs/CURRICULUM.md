@@ -89,7 +89,7 @@ make test
 | S2 Memory & Pointers | 5.0 | S7 Systems Programming | 7.2 |
 | S3 Networks | 5.6 | S8 AI & Data Science | 7.7 |
 | S4 Crypto & Algorithms | 6.2 | S9 Advanced Topics | 12.0 |
-| S5 Financial Markets | 6.2 | S10 Final Mission | 12.2 |
+| S5 Real-World Data | 6.2 | S10 Final Mission | 12.2 |
 
 **Итого ~74 часа** чистого времени на задачи. С чтением теории и разбором эталонов — вдвое больше.
 
@@ -159,20 +159,20 @@ make test
 | [s04e07](../season-04-crypto-and-algorithms/s04e07-linked-list/) | Связный список | три указателя, цикл Флойда | `list.c` |
 | [s04e08](../season-04-crypto-and-algorithms/s04e08-blockchain/) | Блокчейн | цепь хешей, PoW | **`blockchain.c`** |
 
-### Season 5 — Financial Markets
+### Season 5 — Real-World Data
 
 > *«Число без процедуры, которой оно получено, не значит ничего»*
 
 | ID | Название | Концепт | Артефакт |
 |---|---|---|---|
-| [s05e01](../season-05-financial-markets/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
-| [s05e02](../season-05-financial-markets/s05e02-fixed-point-money/) | Деньги не бывают double | фиксированная точка, округление | `money.c` |
-| [s05e03](../season-05-financial-markets/s05e03-csv-parser/) | Разбор настоящего CSV | конечный автомат, битые данные | `csv.c` |
-| [s05e04](../season-05-financial-markets/s05e04-time-zones/) | Час, которого не было | эпоха, пояса, разрывы шкалы | `tstamp.c` |
-| [s05e05](../season-05-financial-markets/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
-| [s05e06](../season-05-financial-markets/s05e06-tick-format/) | Тиковый поток | бинарный формат, выравнивание | `tick.c` |
-| [s05e07](../season-05-financial-markets/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |
-| [s05e08](../season-05-financial-markets/s05e08-unicode-names/) | Имя, которого нет в таблице | UTF-8, ширина, двойники | **`unicode.c`** |
+| [s05e01](../season-05-real-world-data/s05e01-ohlcv-parser/) | Первая свеча | OHLCV, инвариант, битые данные | `parse.c` |
+| [s05e02](../season-05-real-world-data/s05e02-fixed-point-money/) | Деньги не бывают double | фиксированная точка, округление | `money.c` |
+| [s05e03](../season-05-real-world-data/s05e03-csv-parser/) | Разбор настоящего CSV | конечный автомат, битые данные | `csv.c` |
+| [s05e04](../season-05-real-world-data/s05e04-time-zones/) | Час, которого не было | эпоха, пояса, разрывы шкалы | `tstamp.c` |
+| [s05e05](../season-05-real-world-data/s05e05-backtest/) | Бэктест и подгонка | проверка вне выборки | `backtest.c` |
+| [s05e06](../season-05-real-world-data/s05e06-tick-format/) | Тиковый поток | бинарный формат, выравнивание | `tick.c` |
+| [s05e07](../season-05-real-world-data/s05e07-monte-carlo/) | Монте-Карло | моделирование, воспроизводимость | `montecarlo.c` |
+| [s05e08](../season-05-real-world-data/s05e08-unicode-names/) | Имя, которого нет в таблице | UTF-8, ширина, двойники | **`unicode.c`** |
 
 ### Season 6 — Embedded & IoT
 

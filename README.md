@@ -98,7 +98,7 @@ git fetch upstream && git rebase upstream/main   # твои решения на 
 | 2 | [Memory & Pointers](season-02-memory-and-pointers/) | указатели, куча, утечки | `memory_manager` |
 | 3 | [Networks](season-03-networks/) | сокеты, протоколы, разбор пакетов | `network_interceptor` |
 | 4 | [Crypto & Algorithms](season-04-crypto-and-algorithms/) | шифры, хеши, сортировки, поиск | `crypto_toolkit` |
-| 5 | [Financial Markets](season-05-financial-markets/) | данные, индикаторы, риск, Monte Carlo | `trading_system` |
+| 5 | [Real-World Data](season-05-real-world-data/) | деньги, битые выгрузки, время, форматы, UTF-8 | `trading_system` |
 | 6 | [Embedded & IoT](season-06-embedded-iot/) | регистры, UART, I2C, Modbus, дроны | `iot_controller` |
 | 7 | [Systems Programming](season-07-system-programming/) | процессы, потоки, IPC, сигналы | `stealth_agent` |
 | 8 | [AI & Data Science](season-08-ai-and-data/) | статистика, регрессия, нейросети | `luna_ai` |

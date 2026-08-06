@@ -10,7 +10,7 @@ SEASONS := season-01-foundations \
            season-02-memory-and-pointers \
            season-03-networks \
            season-04-crypto-and-algorithms \
-           season-05-financial-markets \
+           season-05-real-world-data \
            season-06-embedded-iot \
            season-07-system-programming \
            season-08-ai-and-data \

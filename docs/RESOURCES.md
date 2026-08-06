@@ -69,7 +69,7 @@
 - **CLRS**, гл. 10–11 — списки, хеш-таблицы, разрешение коллизий.
 - **Ferguson, Schneier, Kohno, «Cryptography Engineering»** — про то, как криптографию ломают на практике, а не в теории.
 
-### Season 5 — Финансовые рынки
+### Season 5 — Настоящие данные
 
 - **Goldberg, «What Every Computer Scientist Should Know About Floating-Point Arithmetic» (1991)** — почему `0.1` не бывает точной; доступна бесплатно.
 - **Fowler, «Patterns of Enterprise Application Architecture»**, паттерн **Money** — округление как часть контракта, а не деталь реализации.
