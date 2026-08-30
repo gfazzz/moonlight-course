@@ -181,7 +181,7 @@ cd season-06-embedded-iot/s06e05-modbus && make test
 macOS 15.2, Apple clang 17.0.0, GNU Make 3.81
 ```
 
-Вопросы по прохождению — не в issues, а в [Discussions](../../discussions).
+Вопросы по прохождению — не в issues, а в [Discussions](https://github.com/gfazzz/moonlight-course/discussions).
 
 ---
 

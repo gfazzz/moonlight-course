@@ -84,3 +84,14 @@ jobs:
           name: log-projects-${{ matrix.os }}
           path: projects-output.txt
           retention-days: 14
+
+  links:
+    name: ссылки между документами
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Вычитка глазами не ловит ссылку на несуществующий файл: читается текст
+      # ссылки, а не её цель. Уже ловились solution/sorts.c при sorting.c.
+      - name: Проверить внутренние ссылки
+        run: make links

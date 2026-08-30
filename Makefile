@@ -17,7 +17,7 @@ SEASONS := season-01-foundations \
            season-09-advanced-systems \
            season-10-final-mission
 
-.PHONY: help list test progress projects clean
+.PHONY: help list test progress projects links check clean
 
 help:
 	@echo "OPERATION MOONLIGHT — курс C через расследование"
@@ -25,6 +25,8 @@ help:
 	@echo "  make progress  — где ты сейчас: пройденные серии по сезонам"
 	@echo "  make list      — сезоны и серии"
 	@echo "  make test      — прогнать весь курс"
+	@echo "  make links     — проверить ссылки между документами"
+	@echo "  make check     — links + test (как в CI)"
 	@echo "  make projects  — запустить сквозные проекты"
 	@echo "  make clean     — убрать бинарники"
 	@echo ""
@@ -105,6 +107,12 @@ test:
 	echo ""; \
 	if [ $$fail -eq 0 ]; then echo "$(if $(SEASON),Сезон зелёный.,Весь курс зелёный.)"; else \
 		echo "Есть падения. Полные логи: $(LOGDIR)/*.log"; exit 1; fi
+
+links:
+	@bash tools/check_links.sh
+
+# То же, что гоняет CI: ссылки и весь курс.
+check: links test
 
 projects:
 	@for s in $(SEASONS); do \
