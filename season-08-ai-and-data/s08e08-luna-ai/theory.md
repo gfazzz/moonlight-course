@@ -141,9 +141,3 @@ F1        = 2·P·R / (P + R)
 - **Hastie, Tibshirani, Friedman, «The Elements of Statistical Learning», гл. 7** — оценка моделей и выбор.
 - **Provost & Fawcett, «Data Science for Business», гл. 7–8** — цена ошибок, ROC и PR, разбор на бизнес-задачах.
 - **Bishop, «Pattern Recognition and Machine Learning», гл. 4** — классификация и метрики.
-
-## Спросить у LUNA
-
-- «Почему F-мера — гармоническое среднее, а не обычное?»
-- «Когда PR-кривая информативнее ROC и почему?»
-- «Какие формы утечки данных встречаются чаще всего и как их ловить?»

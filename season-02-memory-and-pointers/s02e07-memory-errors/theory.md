@@ -133,9 +133,3 @@ gcc -fsanitize=address -fno-omit-frame-pointer -g file.c && ./a.out
 - **Serebryany et al., «AddressSanitizer: A Fast Address Sanity Checker», USENIX ATC 2012** — как устроен ASan; десять страниц, читается легко.
 - **CWE-401, 415, 416, 787, 125** — каталог классов с примерами реальных CVE.
 - **Erickson, «Hacking: The Art of Exploitation», гл. 3** — как переполнение превращается в захват управления.
-
-## Спросить у LUNA
-
-- «Почему падение из-за порчи кучи происходит не там, где ошибка? Что портится?»
-- «Покажи вывод ASan для use-after-free и объясни, что означает второй стек в отчёте.»
-- «Как устроена теневая память ASan и почему замедление всего вдвое?»

@@ -122,9 +122,3 @@ if (WIFSIGNALED(status)) signum = WTERMSIG(status);
 - **Stevens & Rago, «Advanced Programming in the UNIX Environment», гл. 8** — процессы и связка `fork`/`exec`.
 - **Kerrisk, «The Linux Programming Interface», гл. 24–26** — `fork`, `wait`, зомби, с деталями поведения Linux.
 - **`man 2 fork`, `man 2 waitpid`** — первоисточник; раздел ERRORS полезнее описания.
-
-## Спросить у LUNA
-
-- «Почему `fork()` дёшев, если формально копирует всё адресное пространство?»
-- «Что произойдёт, если не сбросить буфер перед `fork()`, и почему только при перенаправлении?»
-- «Чем `_exit()` отличается от `exit()` и когда разница видна?»

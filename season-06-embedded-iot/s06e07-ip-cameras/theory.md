@@ -116,9 +116,3 @@ bg[y][x] = alpha * cur[y][x] + (1 - alpha) * bg[y][x];
 - **Szeliski, «Computer Vision: Algorithms and Applications», гл. 9** — детект движения и модели фона; доступна бесплатно.
 - **Stauffer & Grimson, «Adaptive Background Mixture Models for Real-Time Tracking» (1999)** — классическая работа про смесь гауссиан.
 - **Antonakakis et al., «Understanding the Mirai Botnet», USENIX Security (2017)** — разбор ботнета и того, как он собирался.
-
-## Спросить у LUNA
-
-- «Что такое ROC-кривая и как по ней выбирают порог детектора?»
-- «Почему адаптивная модель фона теряет объект, застывший надолго?»
-- «Как устроена двухступенчатая схема — дешёвый детектор плюс дорогой классификатор?»

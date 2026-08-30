@@ -122,9 +122,3 @@ if (WIFSIGNALED(status)) code = 128 + WTERMSIG(status);
 - **Stevens & Rago, «Advanced Programming in the UNIX Environment», гл. 8.10** — семейство `exec` с таблицей различий.
 - **Kerrisk, «The Linux Programming Interface», гл. 27** — выполнение программ, наследование, `FD_CLOEXEC`.
 - **`man 2 execve`** — раздел о том, что сохраняется при вызове, стоит прочитать целиком.
-
-## Спросить у LUNA
-
-- «Почему `exec` не возвращается при успехе и что это значит для кода после него?»
-- «Чем `execv` отличается от `execvp` и когда поиск по `PATH` опасен?»
-- «Что означают коды возврата 126, 127 и 130?»

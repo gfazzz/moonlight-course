@@ -122,9 +122,3 @@ sigaction(SIGTERM, &sa, NULL);
 - **Kerrisk, «The Linux Programming Interface», гл. 20–22** — сигналы, эталонное изложение.
 - **Stevens & Rago, «Advanced Programming in the UNIX Environment», гл. 10** — сигналы с историей расхождения System V и BSD.
 - **`man 7 signal`, `man 7 signal-safety`** — первоисточник и список безопасных функций.
-
-## Спросить у LUNA
-
-- «Почему из обработчика сигнала нельзя вызывать `printf`?»
-- «Зачем флагу нужны и `volatile`, и `sig_atomic_t`?»
-- «Почему `SIGKILL` нельзя перехватить и как это меняет проектирование завершения?»

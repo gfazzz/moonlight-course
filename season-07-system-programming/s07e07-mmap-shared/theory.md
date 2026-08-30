@@ -118,9 +118,3 @@ pthread_mutexattr_destroy(&attr);
 - **Kerrisk, «The Linux Programming Interface», гл. 49** — отображения памяти, самое полное описание.
 - **Stevens & Rago, «Advanced Programming in the UNIX Environment», гл. 14.8 и 15.9** — `mmap` и разделяемая память.
 - **`man 2 mmap`, `man 3 pthread_mutexattr_setpshared`** — первоисточник.
-
-## Спросить у LUNA
-
-- «Чем общее отображение отличается от приватного и как это связано с `fork()`?»
-- «Почему мьютекс в разделяемой памяти требует особого атрибута?»
-- «Что такое устойчивый мьютекс и зачем он нужен при работе с общей памятью?»

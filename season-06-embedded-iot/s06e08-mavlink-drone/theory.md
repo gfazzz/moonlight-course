@@ -127,9 +127,3 @@ if (!checksum_ok(frame, total_len)) {
 - **MAVLink Developer Guide** — спецификация, включая описание `CRC_EXTRA` и генерации кода.
 - **Rodday et al., «Exploring Security Vulnerabilities of Unmanned Aerial Vehicles» (2016)** — разбор незащищённого канала управления на коммерческом аппарате.
 - **Koopman & Chakravarty, «Cyclic Redundancy Code (CRC) Polynomial Selection for Embedded Networks» (2004)** — почему полиномы выбирают, а не берут первый попавшийся.
-
-## Спросить у LUNA
-
-- «Зачем в MAVLink нужен CRC_EXTRA и какую проблему он решает?»
-- «Почему координаты передают целыми числами, умноженными на 10⁷?»
-- «Что можно узнать о полёте по одной только перехваченной телеметрии?»

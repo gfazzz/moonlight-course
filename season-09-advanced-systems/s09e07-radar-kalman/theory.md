@@ -132,9 +132,3 @@ v += K1 · (z − x)
 - **Kalman, «A New Approach to Linear Filtering and Prediction Problems» (1960)** — оригинальная статья.
 - **Labbe, «Kalman and Bayesian Filters in Python»** — лучшее интуитивное введение, с кодом и графиками; доступно бесплатно.
 - **Brown & Hwang, «Introduction to Random Signals and Applied Kalman Filtering»** — классический учебник с полной теорией.
-
-## Спросить у LUNA
-
-- «Как фильтр оценивает скорость, если измеряется только координата?»
-- «Что такое расходимость фильтра и как её увидеть по невязкам?»
-- «Чем расширенный фильтр отличается от сигма-точечного и когда нужен фильтр частиц?»
